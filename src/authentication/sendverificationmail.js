@@ -1,54 +1,51 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
-import { setUserCredentials } from "../store/action/action";
 import {
     Link
 } from 'react-router-dom';
 import '../custom.css'
-import { MdEmail, MdLock } from 'react-icons/md';
+import { MdEmail } from 'react-icons/md';
 import axios from 'axios';
 import Loader from 'react-loader-spinner'
 
-class Signin extends Component {
+class SendVerificationCode extends Component {
     constructor(props) {
         super(props);
         this.state = {
             loader: false,
             showerror: false,
-            email: 'abddullahshah1111@gmail.com',
-            password: '123456',
+            email: 'abddullahshah@gmail.com',
         }
-        this.signin = this.signin.bind(this);
+        this.sendCode = this.sendCode.bind(this);
     }
 
-    signin() {
-        let { email, password, } = this.state;
+    sendCode() {
+        let { email, } = this.state;
         this.setState({
             loader: !this.state.loader
         })
-        let cloneSigninData = {
+        let cloneData = {
             email,
-            password
+            createdAt: new Date().getTime()
         }
         var options = {
             method: 'POST',
-            url: `${this.props.bseUrl}/signin/signinAdmin/`,
+            url: `${this.props.bseUrl}/resetpasswordAdmin/sendcode/`,
             headers:
             {
                 'cache-control': 'no-cache',
                 "Allow-Cross-Origin": '*',
             },
-            data: cloneSigninData
+            data: cloneData
         };
         axios(options)
             .then((data) => {
-                console.log(data.data, "USER_LOGIN_SUCCESSFULLY")
+                console.log(data.data, "SEND_EMAIL_SUCCESSFULLY")
                 this.setState({
                     loader: !this.state.loader
                 })
-                this.props.setUserCredentials(data.data)
             }).catch((err) => {
-                console.log(err.response.data.message, "ERROR_ON_SIGN_IN")
+                console.log(err.response.data.message, "ERROR_ON_SEND_EMAIL_")
                 // alert(err.response.data.message)
                 this.setState({
                     loader: !this.state.loader,
@@ -65,7 +62,7 @@ class Signin extends Component {
     }
 
     render() {
-        const { email, password, err, showerror, loader } = this.state;
+        const { email, err, showerror, loader } = this.state;
         return (
             <div>
                 <div style={{ display: "flex", flexBasis: "100%", backgroundColor: "#F7F8F8" }}>
@@ -82,21 +79,13 @@ class Signin extends Component {
                                         </div>
                                         <input type="text" className="form-control" placeholder="Email Address" aria-label="Email Address" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
                                     </div>
-
-                                    {/* Password */}
-                                    <div className="input-group mb-3" style={{ marginTop: 10 }}>
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text" id="basic-addon1" style={{ backgroundColor: "#EC5F59" }}><MdLock style={{ color: "white", }} /></span>
-                                        </div>
-                                        <input type="password" className="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" value={password} onChange={(e) => { this.setState({ password: e.target.value }) }} />
-                                    </div>
                                     {
                                         (loader) ?
                                             (<div>
                                                 <Loader type="ThreeDots" color="#EC5F59" height={40} width={40} />
                                             </div>)
-                                            : <button className="button" style={{ marginTop: 10, }} onClick={this.signin} >
-                                                <span className="buttonmatter">Sign in</span>
+                                            : <button className="button" style={{ marginTop: 10, }} onClick={this.sendCode} >
+                                                <span className="buttonmatter">Reset Password</span>
                                             </button>
                                     }
                                     {
@@ -106,11 +95,7 @@ class Signin extends Component {
                                     }
                                     <br /><br />
                                     <center>
-                                        <div className="textLink"> <Link to='/Sendverificationmail'>Forgot your password</Link></div>
-                                    </center>
-                                    <center>
-                                        <div className="textLink"> <Link to='/Signup'>Don't have an account yet? <span style={{ color: "#EC5F59" }}>Sign up</span></Link>
-                                        </div>
+                                        <div className="textLink"> <Link to='/Signin'>Back to login</Link></div>
                                     </center>
                                 </div>
                             </center>
@@ -137,10 +122,7 @@ function mapStateToProp(state) {
 }
 function mapDispatchToProp(dispatch) {
     return ({
-        setUserCredentials: (user) => {
-            dispatch(setUserCredentials(user));
-        },
     })
 }
 
-export default connect(mapStateToProp, mapDispatchToProp)(Signin);
+export default connect(mapStateToProp, mapDispatchToProp)(SendVerificationCode);
