@@ -6,25 +6,30 @@ import {
 } from 'react-router-dom';
 import Modal from 'react-responsive-modal';
 import '../custom.css'
-
+import axios from 'axios';
+import Loader from 'react-loader-spinner'
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { MdEmail, MdDescription, MdLocalPhone, MdLock } from 'react-icons/md';
 import { TiBusinessCard } from 'react-icons/ti';
 import { GiWorld } from 'react-icons/gi';
 import SimpleMap from '../components/googlemap';
+import history from '../History';
+import swal from 'sweetalert2';
 
 class Signup extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loader: false,
+            showerror: false,
             open: false,
-            email: '',
-            password: '',
-            about: '',
-            businessName: '',
-            telephone: '',
-            websiteUrl: '',
-            addressline1: '',
+            email: 'abddullahshah123@gmail.com',
+            password: '123456',
+            about: 'Best developer in karachi',
+            businessName: 'Dot n Dot Graphics',
+            telephone: '+923452153709',
+            websiteUrl: 'nothing',
+            addressline1: 'R592-sector 8',
             addressline2: '',
         }
         this.signup = this.signup.bind(this);
@@ -41,25 +46,85 @@ class Signup extends Component {
 
     signup() {
         const { email, password, about, businessName, telephone, websiteUrl, addressline1, addressline2 } = this.state;
-        let user = {
-            email: email,
-            password: password,
-            about: about,
-            businessName: businessName,
-            telePhone: telephone,
-            websiteUrl: websiteUrl,
-            addressLine1: addressline1,
-            addressLine2: addressline2,
-            // latitude: latitude,
-            // longitude: longitude,
-            // createdAt: createdAt,
+        if (email !== '' && password !== '' && about !== '' && businessName !== '' && telephone !== '' && addressline1 !== '') {
+            this.setState({
+                loader: !this.state.loader
+            })
+            let user = {
+                email: email,
+                password: password,
+                about: about,
+                businessName: businessName,
+                telePhone: telephone,
+                websiteUrl: websiteUrl,
+                addressLine1: addressline1,
+                addressLine2: addressline2,
+                latitude: "24.5",
+                longitude: "63.4",
+                createdAt: new Date().getTime()
 
+            }
+            var options = {
+                method: 'POST',
+                url: `${this.props.bseUrl}/signupadmin/`,
+                headers:
+                {
+                    'cache-control': 'no-cache',
+                    "Allow-Cross-Origin": '*',
+                },
+                data: user
+            };
+            axios(options)
+                .then((data) => {
+                    console.log(data.data, "USER_SIGN_UP_SUCCESSFULLY")
+                    this.setState({
+                        loader: !this.state.loader
+                    })
+                    swal.fire(
+                        'Success!',
+                         data.data.message,
+                        'success'
+                    )
+                    history.push("Signin")
+                }).catch((err) => {
+                    console.log(err.response.data.message, "ERROR_ON_SIGN_UP")
+                    // alert(err.response.data.message)
+                    this.setState({
+                        loader: !this.state.loader,
+                        err: err.response.data.message,
+                        showerror: true
+                    }, () => {
+                        setTimeout(() => {
+                            this.setState({
+                                showerror: false
+                            })
+                        }, 10000)
+                    })
+                })
         }
-        console.log(user, "SIGNUP_DATA")
+        else {
+            this.setState({
+                err: "All fields are required",
+                showerror: true
+            }, () => {
+                setTimeout(() => {
+                    this.setState({
+                        showerror: false
+                    })
+                }, 10000)
+            })
+        }
+
     }
 
     render() {
-        const { open, email, password, about, businessName, telephone, websiteUrl, addressline1, addressline2 } = this.state;
+        const {
+            open, email, password,
+            about, businessName,
+            telephone, websiteUrl,
+            addressline1, addressline2,
+            err, showerror, loader
+        } = this.state;
         return (
             <div>
                 <div style={{ display: "flex", flexBasis: "100%", backgroundColor: "#F7F8F8" }}>
@@ -132,18 +197,31 @@ class Signup extends Component {
                                         </div>
                                         <input type="text" className="form-control" placeholder="Address Line2" aria-label="Address Line2" aria-describedby="basic-addon1" value={addressline2} onChange={(e) => { this.setState({ addressline2: e.target.value }) }} />
                                     </div>
+
                                     <center>
                                         <div className="textLink" onClick={this.onOpenModal}>Shop Location
                                         </div>
                                     </center>
 
-                                    <button className="button" style={{ marginTop: 10, }} onClick={this.signup} >
-                                        <span className="buttonmatter">Signup</span>
-                                    </button>
+                                    {
+                                        (loader) ?
+                                            (<div>
+                                                <Loader type="ThreeDots" color="#EC5F59" height={40} width={40} />
+                                            </div>)
+                                            : <button className="button" style={{ marginTop: 10, }} onClick={this.signup} >
+                                                <span className="buttonmatter">Signup</span>
+                                            </button>
+                                    }
+
+                                    {
+                                        (showerror) ? (
+                                            <div style={{ color: "red", marginTop: 12 }}>{err}</div>
+                                        ) : null
+                                    }
 
                                     <br /><br />
                                     <center>
-                                        <div className="textLink"> <Link to='/signin'>Already have an account? <span style={{color:"#EC5F59"}}>Sign in</span></Link>
+                                        <div className="textLink"> <Link to='/signin'>Already have an account? <span style={{ color: "#EC5F59" }}>Sign in</span></Link>
                                         </div>
                                     </center>
                                 </div>
@@ -177,6 +255,7 @@ class Signup extends Component {
 
 function mapStateToProp(state) {
     return ({
+        bseUrl: state.root.bseUrl,
     })
 }
 function mapDispatchToProp(dispatch) {
