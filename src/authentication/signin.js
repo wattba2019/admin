@@ -8,6 +8,7 @@ import '../custom.css'
 import { MdEmail, MdLock } from 'react-icons/md';
 import axios from 'axios';
 import Loader from 'react-loader-spinner'
+import swal from 'sweetalert2';
 
 class Signin extends Component {
     constructor(props) {
@@ -15,8 +16,10 @@ class Signin extends Component {
         this.state = {
             loader: false,
             showerror: false,
-            email: 'abddullahshah@gmail.com',
-            password: '123456',
+            // email: 'abddullahshah@gmail.com',
+            // password: '123456',
+            email: '',
+            password: '',
         }
         this.signin = this.signin.bind(this);
     }
@@ -46,6 +49,11 @@ class Signin extends Component {
                 this.setState({
                     loader: !this.state.loader
                 })
+                swal.fire(
+                    'Success!',
+                     "USER LOGIN SUCCESSFULLY",
+                    'success'
+                )
                 this.props.setUserCredentials(data.data)
             }).catch((err) => {
                 console.log(err.response.data.message, "ERROR_ON_SIGN_IN")
@@ -120,7 +128,7 @@ class Signin extends Component {
                     <div style={{ display: "flex", flexBasis: "50%", }}>
                         <img alt="BackGroundImage" src={require('../assets/signinBackground.png')}
                             width="100%"
-                            // height="90%"
+                            // height="100%"
                             height={window.innerHeight}
                         />
                     </div>

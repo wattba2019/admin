@@ -23,14 +23,23 @@ class Signup extends Component {
             loader: false,
             showerror: false,
             open: false,
-            email: 'abddullahshah123@gmail.com',
-            password: '123456',
-            about: 'Best developer in karachi',
-            businessName: 'Dot n Dot Graphics',
-            telephone: '+923452153709',
-            websiteUrl: 'nothing',
-            addressline1: 'R592-sector 8',
+            // email: 'abddullahshah123@gmail.com',
+            // password: '123456',
+            // about: 'Best developer in karachi',
+            // businessName: 'Dot n Dot Graphics',
+            // telephone: '+923452153709',
+            // websiteUrl: 'nothing',
+            // addressline1: 'R592-sector 8',
+            // addressline2: '',
+            email: '',
+            password: '',
+            about: '',
+            businessName: '',
+            telephone: '',
+            websiteUrl: '',
+            addressline1: '',
             addressline2: '',
+
         }
         this.signup = this.signup.bind(this);
     }
@@ -82,7 +91,7 @@ class Signup extends Component {
                     })
                     swal.fire(
                         'Success!',
-                         data.data.message,
+                        data.data.message,
                         'success'
                     )
                     history.push("Signin")
