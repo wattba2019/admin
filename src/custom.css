@@ -1,0 +1,26 @@
+
+.button{
+border:0.5px solid #EC5F59;
+border-radius: 5px;
+width: 60%;
+height: 40px;   
+position: relative;
+background-color: rgba(241, 90,103, 1);
+background-image: linear-gradient(#E96A69, #F45671);
+}
+
+.buttonmatter{
+color: white;
+cursor: pointer;
+}
+
+.textLink{
+color:#007BFE;
+/* text-decoration: none; */
+}
+
+.textLink:hover{
+color:  rgb(2, 90, 184);;
+cursor: pointer;
+text-decoration: underline;
+}
