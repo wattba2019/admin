@@ -7,6 +7,7 @@ import '../custom.css'
 import { MdEmail } from 'react-icons/md';
 import axios from 'axios';
 import Loader from 'react-loader-spinner'
+import history from '../History';
 
 class SendVerificationCode extends Component {
     constructor(props) {
@@ -14,7 +15,7 @@ class SendVerificationCode extends Component {
         this.state = {
             loader: false,
             showerror: false,
-            email: 'abddullahshah@gmail.com',
+            email: '',
         }
         this.sendCode = this.sendCode.bind(this);
     }
@@ -44,6 +45,7 @@ class SendVerificationCode extends Component {
                 this.setState({
                     loader: !this.state.loader
                 })
+                history.push({ pathname: "VerifyCode", state: email })
             }).catch((err) => {
                 console.log(err.response.data.message, "ERROR_ON_SEND_EMAIL_")
                 // alert(err.response.data.message)
@@ -70,7 +72,8 @@ class SendVerificationCode extends Component {
                         <div style={{ flexBasis: "100%", marginTop: "30%" }}>
                             <center>
                                 <div style={{ width: "50%", }} className="center">
-                                    <h2 className="input-group mb-6 inputCenter" >Sign in</h2>
+                                    <h2>Forgot password</h2>
+                                    <p style={{ color: "grey" }}>we will need just your email to send you password reset instruction</p>
 
                                     {/* Email */}
                                     <div className="input-group mb-3" style={{ marginTop: 20 }}>

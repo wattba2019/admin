@@ -1,54 +1,54 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
-import { setUserCredentials } from "../store/action/action";
 import {
     Link
 } from 'react-router-dom';
 import '../custom.css'
-import { MdEmail, MdLock } from 'react-icons/md';
+import { MdVerifiedUser } from 'react-icons/md';
 import axios from 'axios';
 import Loader from 'react-loader-spinner'
+import history from '../History';
 
-class Signin extends Component {
+class VerifyCode extends Component {
     constructor(props) {
         super(props);
         this.state = {
             loader: false,
             showerror: false,
-            email: 'abddullahshah@gmail.com',
-            password: '123456',
+            code: '',
         }
-        this.signin = this.signin.bind(this);
+        this.verifyCode = this.verifyCode.bind(this);
     }
 
-    signin() {
-        let { email, password, } = this.state;
+    verifyCode() {
+        let { code, } = this.state;
         this.setState({
             loader: !this.state.loader
         })
-        let cloneSigninData = {
-            email,
-            password
+        let cloneData = {
+            email: this.props.location.state,
+            code,
+            createdAt: new Date().getTime()
         }
         var options = {
             method: 'POST',
-            url: `${this.props.bseUrl}/signin/signinAdmin/`,
+            url: `${this.props.bseUrl}/resetpasswordAdmin/verifycode/`,
             headers:
             {
                 'cache-control': 'no-cache',
                 "Allow-Cross-Origin": '*',
             },
-            data: cloneSigninData
+            data: cloneData
         };
         axios(options)
             .then((data) => {
-                console.log(data.data, "USER_LOGIN_SUCCESSFULLY")
+                console.log(data.data, "VERIFICATION_SUCCESSFULLY")
                 this.setState({
                     loader: !this.state.loader
                 })
-                this.props.setUserCredentials(data.data)
+                history.push({ pathname: "ChangePassword", state: this.props.location.state })
             }).catch((err) => {
-                console.log(err.response.data.message, "ERROR_ON_SIGN_IN")
+                console.log(err.response.data.message, "ERROR_ON_VERIFICATION")
                 // alert(err.response.data.message)
                 this.setState({
                     loader: !this.state.loader,
@@ -65,7 +65,7 @@ class Signin extends Component {
     }
 
     render() {
-        const { email, password, err, showerror, loader } = this.state;
+        const { code, err, showerror, loader } = this.state;
         return (
             <div>
                 <div style={{ display: "flex", flexBasis: "100%", backgroundColor: "#F7F8F8" }}>
@@ -73,30 +73,23 @@ class Signin extends Component {
                         <div style={{ flexBasis: "100%", marginTop: "30%" }}>
                             <center>
                                 <div style={{ width: "50%", }} className="center">
-                                    <h2 className="input-group mb-6 inputCenter" >Sign in</h2>
+                                    <h2>Find Your Account</h2>
+                                    <p style={{ color: "grey" }}>Type 6 digit code</p>
 
-                                    {/* Email */}
+                                    {/* code */}
                                     <div className="input-group mb-3" style={{ marginTop: 20 }}>
                                         <div className="input-group-prepend">
-                                            <span className="input-group-text" id="basic-addon1" style={{ backgroundColor: "#EC5F59" }}><MdEmail style={{ color: "white", }} /></span>
+                                            <span className="input-group-text" id="basic-addon1" style={{ backgroundColor: "#EC5F59" }}><MdVerifiedUser style={{ color: "white", }} /></span>
                                         </div>
-                                        <input type="text" className="form-control" placeholder="Email Address" aria-label="Email Address" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
-                                    </div>
-
-                                    {/* Password */}
-                                    <div className="input-group mb-3" style={{ marginTop: 10 }}>
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text" id="basic-addon1" style={{ backgroundColor: "#EC5F59" }}><MdLock style={{ color: "white", }} /></span>
-                                        </div>
-                                        <input type="password" className="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" value={password} onChange={(e) => { this.setState({ password: e.target.value }) }} />
+                                        <input type="text" className="form-control" placeholder="Verification code" aria-label="Verification code" aria-describedby="basic-addon1" value={code} onChange={(e) => { this.setState({ code: e.target.value }) }} />
                                     </div>
                                     {
                                         (loader) ?
                                             (<div>
                                                 <Loader type="ThreeDots" color="#EC5F59" height={40} width={40} />
                                             </div>)
-                                            : <button className="button" style={{ marginTop: 10, }} onClick={this.signin} >
-                                                <span className="buttonmatter">Sign in</span>
+                                            : <button className="button" style={{ marginTop: 10, }} onClick={this.verifyCode} >
+                                                <span className="buttonmatter">Next</span>
                                             </button>
                                     }
                                     {
@@ -106,11 +99,7 @@ class Signin extends Component {
                                     }
                                     <br /><br />
                                     <center>
-                                        <div className="textLink"> <Link to='/Sendverificationmail'>Forgot your password</Link></div>
-                                    </center>
-                                    <center>
-                                        <div className="textLink"> <Link to='/Signup'>Don't have an account yet? <span style={{ color: "#EC5F59" }}>Sign up</span></Link>
-                                        </div>
+                                        <div className="textLink"> <Link to='/Signin'>Back to login</Link></div>
                                     </center>
                                 </div>
                             </center>
@@ -137,10 +126,7 @@ function mapStateToProp(state) {
 }
 function mapDispatchToProp(dispatch) {
     return ({
-        setUserCredentials: (user) => {
-            dispatch(setUserCredentials(user));
-        },
     })
 }
 
-export default connect(mapStateToProp, mapDispatchToProp)(Signin);
+export default connect(mapStateToProp, mapDispatchToProp)(VerifyCode);
