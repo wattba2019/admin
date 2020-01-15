@@ -14,6 +14,21 @@ color: white;
 cursor: pointer;
 }
 
+.buttonsidebar{
+    border-top:0.5px solid #EC5F59;
+    border-radius: 5px;
+    width: 60%;
+    height: 40px;   
+    position: relative;
+    /* background-color: rgba(241, 90,103, 1); */
+    /* background-image: linear-gradient(#E96A69, #F45671); */
+    cursor: pointer;
+}
+.buttonsidebar:hover{
+    background-color: rgba(199, 174, 176, 0.2);
+    cursor: pointer;
+    }
+
 .textLink{
 color:#007BFE;
 /* text-decoration: none; */
@@ -41,8 +56,8 @@ text-decoration: underline;
     border-radius: 50px;
     margin: 0 auto; */
 
-    width: 8vw;
-    height: 8vw;
+    width: 100px;
+    height:100px;
     border-radius: 50%;
     background: white;
 }
@@ -55,9 +70,9 @@ text-decoration: underline;
      /* height:90%;
      width: 90%;
      border-radius: 50px; */
-     margin-top: 4.5%;
-     width: 7vw;
-     height: 7vw;
+     margin-top: 4%;
+     width: 90px;
+     height: 90px;
      border-radius: 50%;
      
     }
