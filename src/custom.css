@@ -24,3 +24,52 @@ color:  rgb(2, 90, 184);;
 cursor: pointer;
 text-decoration: underline;
 }
+
+.sideBarBackGroud{
+    background-color: rgba(241, 90,103, 1);
+    background-image: linear-gradient(#D95A4F, #F45671);
+    }
+    
+.drawerBackground {
+    width: 100%;
+}
+    
+.drawerBackgroundnested {
+    /* background-color:white;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    margin: 0 auto; */
+
+    width: 8vw;
+    height: 8vw;
+    border-radius: 50%;
+    background: white;
+}
+   
+.profileinputnone {
+    display: none;
+   }
+   
+   .profileImage {
+     /* height:90%;
+     width: 90%;
+     border-radius: 50px; */
+     margin-top: 4.5%;
+     width: 7vw;
+     height: 7vw;
+     border-radius: 50%;
+     
+    }
+   
+    .profileImageupload {
+     background-color: whitesmoke;
+     height:35%;
+     width: 35%;
+     position: relative;
+     top: -32%;
+     left: 38%;
+     border-radius: 80px;
+     justify-content: center;
+     align-items: center;
+    }

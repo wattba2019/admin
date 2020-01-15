@@ -8,13 +8,15 @@ import Signin from './authentication/signin';
 import Sendverificationmail from './authentication/sendverificationmail';
 import VerifyCode from './authentication/verifycode';
 import ChangePassword from './authentication/changepassword';
+import Home from './app/home';
 
 class Routers extends Component {
     render() {
         return (
             <Router history={history}>
                 <div>
-                    <Route exact path="/" component={Signin} />
+                    <Route path="/Home" component={Home} />
+                    <Route exact path="/" component={Home} />
                     <Route path="/Signin" component={Signin} />
                     <Route path="/Signup" component={Signup} />
                     <Route path="/Sendverificationmail" component={Sendverificationmail} />

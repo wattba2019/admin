@@ -15,7 +15,8 @@ class SendVerificationCode extends Component {
         this.state = {
             loader: false,
             showerror: false,
-            email: '',
+            email: 'abddullahshah@gmail.com',
+            // email: '',
         }
         this.sendCode = this.sendCode.bind(this);
     }

@@ -16,10 +16,10 @@ class Signin extends Component {
         this.state = {
             loader: false,
             showerror: false,
-            // email: 'abddullahshah@gmail.com',
-            // password: '123456',
-            email: '',
-            password: '',
+            email: 'abddullahshah@gmail.com',
+            password: '123456',
+            // email: '',
+            // password: '',
         }
         this.signin = this.signin.bind(this);
     }
