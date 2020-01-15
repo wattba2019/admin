@@ -112,7 +112,7 @@ class Home extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="buttonsidebar" style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "95%", height: 50,background:"white" }}>
+                                <div className="buttonsidebar" style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "95%", height: 50, background: "white" }}>
                                     <div style={{ display: "flex", width: "90%", }}>
                                         <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
                                             <AiFillGift style={{ color: "#EC5F59", fontSize: 18, marginTop: 5 }} />
@@ -138,11 +138,12 @@ class Home extends Component {
                     </div >
 
                     <div style={{ display: "flex", flexBasis: "85%", }}>
-                        {/* <img alt="BackGroundImage" src={require('../assets/signinBackground.png')}
-                            width="100%"
-                            // height="100%"
-                            height={window.innerHeight}
-                        /> */}
+                        <div style={{ width: "100%", height: "8%", float: "right", textAlign: "right",  }}>
+                            <img alt="BackGroundImage" src={require('../assets/logo.png')} style={{ marginRight: "4%", marginTop: "0.5%" }}
+                                width="140"
+                                height="80%"
+                            />
+                        </div>
                     </div>
                 </div>
             </div >
