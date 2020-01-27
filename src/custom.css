@@ -8,6 +8,15 @@ position: relative;
 background-color: rgba(241, 90,103, 1);
 background-image: linear-gradient(#E96A69, #F45671);
 }
+.buttonAdd{
+    border:0.5px solid #EC5F59;
+    border-radius: 5px;
+    width: 15%;
+    height: 40px;   
+    position: relative;
+    background-color: rgba(241, 90,103, 1);
+    background-image: linear-gradient(#E96A69, #F45671);
+    }
 
 .buttonmatter{
 color: white;
@@ -27,7 +36,8 @@ cursor: pointer;
 .buttonsidebar:hover{
     background-color: rgba(199, 174, 176, 0.2);
     cursor: pointer;
-    }
+}
+
 
 .textLink{
 color:#007BFE;
@@ -64,6 +74,7 @@ text-decoration: underline;
    
 .profileinputnone {
     display: none;
+    cursor: pointer;
    }
    
    .profileImage {
@@ -88,3 +99,16 @@ text-decoration: underline;
      justify-content: center;
      align-items: center;
     }
+
+
+    .cardshadow{
+        /* border: 1px solid; */
+        padding: 10px;
+        /* box-shadow: 5px 5px 15px #808080, 
+        5px 5px 15px grey, 
+        5px 5px 25px grey; */
+        /* box-shadow: 5px 5px 5px 5px #aaaaaa; */
+        color: white;
+        box-shadow: 2px 2px 8px #aaaaaa;
+        /* opacity: 0.4; */
+        }

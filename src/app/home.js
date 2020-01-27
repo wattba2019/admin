@@ -14,6 +14,7 @@ import { GiScissors } from 'react-icons/gi';
 import { AiOutlineUser, AiFillGift } from 'react-icons/ai';
 import { FiClock } from 'react-icons/fi';
 import { GoSignOut } from 'react-icons/go';
+import Services from './services';
 
 class Home extends Component {
     constructor(props) {
@@ -137,12 +138,18 @@ class Home extends Component {
                         </div>
                     </div >
 
-                    <div style={{ display: "flex", flexBasis: "85%", }}>
-                        <div style={{ width: "100%", height: "8%", float: "right", textAlign: "right",  }}>
+                    <div style={{
+                        display: "flex", flexBasis: "85%",
+                        // background: "red"
+                    }}>
+                        <div style={{ width: "100%", height: "8%", float: "right", textAlign: "right", }}>
                             <img alt="BackGroundImage" src={require('../assets/logo.png')} style={{ marginRight: "4%", marginTop: "0.5%" }}
                                 width="140"
                                 height="80%"
                             />
+
+
+                            <Services />
                         </div>
                     </div>
                 </div>
