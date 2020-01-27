@@ -17,6 +17,17 @@ background-image: linear-gradient(#E96A69, #F45671);
     background-color: rgba(241, 90,103, 1);
     background-image: linear-gradient(#E96A69, #F45671);
     }
+.buttonSave{
+        border:0.5px solid #EC5F59;
+        border-radius: 5px;
+        width: 15%;
+        height: 40px;   
+     /* top: 50; */
+        position: relative;
+        background-color: rgba(241, 90,103, 1);
+        background-image: linear-gradient(#E96A69, #F45671);
+}
+    
 
 .buttonmatter{
 color: white;

@@ -10,27 +10,23 @@ import Loader from 'react-loader-spinner'
 import swal from 'sweetalert2';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoMdCheckmark } from 'react-icons/io';
-import Modal from 'react-responsive-modal';
-
+// import Modal from 'react-responsive-modal';
+import { Button, DatePicker, version, Modal } from "antd";
+import "antd/dist/antd.css";
+// import "./index.css";
 class Services extends Component {
     constructor(props) {
         super(props);
         this.state = {
             loader: false,
             showerror: false,
-            open: false,
-            email: ""
+            email: "",
+            modal2Visible: false,
         }
     }
-
-    onOpenModal = () => {
-        this.setState({ open: true });
-    };
-
-    onCloseModal = () => {
-        this.setState({ open: false });
-    };
-
+    setModal2Visible(modal2Visible) {
+        this.setState({ modal2Visible });
+    }
 
     render() {
         const { open, email } = this.state;
@@ -112,7 +108,7 @@ class Services extends Component {
                         </div>
 
                         <div style={{ flex: 1.5, }}>
-                            <button type="button" class="btn btn-light" style={{ width: "100%", borderWidth: 0.5, borderColor: "grey" }} onClick={this.onOpenModal}>Edit Service</button>
+                            <button type="button" class="btn btn-light" style={{ width: "100%", borderWidth: 0.5, borderColor: "grey" }} onClick={() => this.setModal2Visible(true)}>Edit Service</button>
                         </div>
                     </div>
                     {/* card End */}
@@ -128,30 +124,92 @@ class Services extends Component {
                             </div>
                         </div>
                     </div>
-
-
                 </div>
 
-                {/* modal */}
-
                 <div>
-                    <Modal style={{}} open={open} onClose={this.onCloseModal}>
-                        <div style={{ display: "flex", flex: 1, flexDirection: "column", background: "red", marginTop: 20, width: "100%",  }}>
-                            New Service
+                    <Modal
+                        footer={null}
+                        // title="Vertically centered modal dialog"
+                        centered
+                        visible={this.state.modal2Visible}
+                        onOk={() => this.setModal2Visible(false)}
+                        onCancel={() => this.setModal2Visible(false)}
+                    >
+                        <div style={{ display: "flex", flex: 1, flexDirection: "column", width: "100%", fontSize: "1.1vw", fontWeight: "bold", }}>
+                            <div style={{ fontSize: 18 }}>
+                                New Service
+                           </div>
 
-                            <div style={{ display: "flex", flex: 1, width: "100%", background: "green", marginTop: 20, justifyContent: "center", alignItems: "center" }}>
-                                <div className="input-group mb-3" style={{ width: "50%", margin: "3%" }}>
-                                    <input type="text" className="form-control" placeholder="Service Name" aria-label="Service Name" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
+                            <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center" }}>
+
+                                <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
+                                    <div style={{ width: "100%", }}>
+                                        <input type="text" className="form-control" placeholder=" Service Name" aria-label=" Service Name" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
+                                    </div>
                                 </div>
-                                <div className="input-group mb-3" style={{ width: "30%", margin: "3%" }}>
-                                    <input type="text" className="form-control" placeholder="Price" aria-label="Price" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
+
+                                <div style={{ display: "flex", flex: 1, margin: "1.5%", }} >
+                                    <div style={{ width: "100%", }}>
+                                        <input type="text" className="form-control" placeholder="Price $" aria-label="Price $" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
+                                    </div>
+                                </div>
+
+                                <div style={{ display: "flex", flex: 1, margin: "1.5%", }} >
+
                                 </div>
                             </div>
 
+                            <div style={{ marginTop: 10, fontSize: 18 }}>
+                                Extra Service
+                           </div>
+
+                            <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", }}>
+                                <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
+                                    <div style={{ width: "100%", }}>
+                                        <input type="text" className="form-control" placeholder=" Service Name" aria-label=" Service Name" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
+                                    </div>
+                                </div>
+
+                                <div style={{ display: "flex", flex: 1, margin: "1.5%", }} >
+                                    <div style={{ width: "100%", }}>
+                                        <input type="text" className="form-control" placeholder="Price $" aria-label="Price $" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
+                                    </div>
+                                </div>
+
+                                <div style={{ display: "flex", flex: 1, margin: "1.5%", }} >
+                                    <button className="buttonAdd" style={{ minWidth: 80, width: "100%" }} onClick={this.signin} >
+                                        <span className="buttonmatter" style={{ fontSize: 15, }}>Save</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div style={{ marginTop: 10, display: "flex", flexDirection: "row", alignItems: "center" }}>
+                                <div class="btn btn-light" style={{ display: "flex", backgroundColor: "#EC5F59", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
+                                    <AiOutlinePlus style={{ color: "#ffffff", fontSize: 25 }} />
+                                </div>
+                                <div style={{ marginLeft: "2%", fontSize: 14 }}>
+                                    Add Extra Service
+                                </div>
+                            </div>
+
+                            <div style={{ marginTop: 10, display: "flex", height: 50, flexDirection: "row", alignItems: "center", justifyContent: "center", alignItems: "center", }}>
+
+                                <button className="buttonAdd" style={{ minWidth: 80, width: "35%", margin: "1%" }} onClick={this.signin} >
+                                    <span className="buttonmatter" style={{ fontSize: 15, }}>Save</span>
+                                </button>
+
+                                <button type="button" class="btn btn-light" style={{ width: "35%", margin: "1%", minWidth: 80, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => this.setModal2Visible(true)}>Edit Service</button>
+
+                            </div>
                         </div>
+
+
+
                     </Modal>
                 </div>
-            </div>
+
+
+            </div >
         )
     }
 }
