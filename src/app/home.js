@@ -14,7 +14,8 @@ import { GiScissors } from 'react-icons/gi';
 import { AiOutlineUser, AiFillGift } from 'react-icons/ai';
 import { FiClock } from 'react-icons/fi';
 import { GoSignOut } from 'react-icons/go';
-import Services from './services';
+// import Services from './services';
+import Bookings from './bookings';
 
 class Home extends Component {
     constructor(props) {
@@ -149,7 +150,8 @@ class Home extends Component {
                             />
 
 
-                            <Services />
+                            {/* <Services /> */}
+                            <Bookings />
                         </div>
                     </div>
                 </div>
