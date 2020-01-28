@@ -40,7 +40,7 @@ class Home extends Component {
         const { } = this.state;
         return (
             <div>
-                <div style={{ display: "flex", flexBasis: "100%", backgroundColor: "#F7F8F8" }}>
+                <div style={{ display: "flex", flexBasis: "100%", backgroundColor: "#F7F8F8", }}>
                     <div style={{ display: "flex", flexBasis: "15%", width: "15%", minWidth: 200, height: window.innerHeight }} className="sideBarBackGroud">
                         <div style={{ flexBasis: "100%", marginTop: "10%" }}>
                             <center>
@@ -140,7 +140,7 @@ class Home extends Component {
                     </div >
 
                     <div style={{
-                        display: "flex", flexBasis: "85%",
+                        display: "flex", flexBasis: "85%",backgroundColor: "#F7F8F8",
                         // background: "red"
                     }}>
                         <div style={{ width: "100%", height: "8%", float: "right", textAlign: "right", }}>
@@ -148,8 +148,6 @@ class Home extends Component {
                                 width="140"
                                 height="80%"
                             />
-
-
                             {/* <Services /> */}
                             <Bookings />
                         </div>

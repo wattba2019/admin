@@ -9,9 +9,14 @@ import axios from 'axios';
 import Loader from 'react-loader-spinner'
 import swal from 'sweetalert2';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { FaLock, FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import { IoMdCheckmark } from 'react-icons/io';
-import Modal from 'react-responsive-modal';
+import BookingRaw from '../components/BookingRaw';
+import "antd/dist/antd.css";
+import { DatePicker } from 'antd';
+import { Table } from 'antd';
 
+const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 class Bookings extends Component {
     constructor(props) {
         super(props);
@@ -30,132 +35,152 @@ class Bookings extends Component {
     onCloseModal = () => {
         this.setState({ open: false });
     };
-
+    datePicker = (date, dateString) => {
+        console.log(date, dateString);
+    }
 
     render() {
         const { open, email } = this.state;
         return (
             <div style={{
-                display: "flex", flexDirection: "column", flex: 1, width: "100%", justifyContent: "center", alignItems: "center",
+                display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center",
                 // background: "yellow",
+                flexDirection: "column",
             }}>
                 <div style={{
                     display: "flex", flex: 1, width: "90%", justifyContent: "space-between",
-                    // backgroundColor: "#49BE56"
+                    padding: 5,
+                    //   backgroundColor: "green", 
                 }}>
-                    <div style={{ minWidth: 150 }}>
-                        <span style={{ fontSize: 18, fontWeight: "bold" }}>Services Provided</span>
+                    <div style={{
+                        flex: 6, minWidth: 200, alignItems: "center", display: "flex"
+                        // background: "blue",
+                    }}>
+                        <p style={{ margin: "2%", textAlign: "left", fontSize: 18, fontWeight: "bold", }}>Booking Calender</p>
                     </div>
-                    <div style={{ background: "red", justifyContent: "space-between", display: "flex",padding:250 }}>
-                        <button style={{ minWidth: 160,margin:"1%" }} className="buttonAdd" onClick={this.signin} >
-                            <span className="buttonmatter" style={{  }}>Refresh</span>
+                    <div style={{ flex: 4, justifyContent: "flex-end", display: "flex", flexDirection: "row", }}>
+                        <button class="btn btn-light" style={{ minWidth: 140, width: "60%", margin: "2%" }} className="buttonAdd" onClick={this.signin} >
+                            <span className="buttonmatter" style={{ fontSize: 12, }}>Refresh</span>
                         </button>
-                        <button type="button" class="btn btn-light" style={{ margin:"1%",minWidth: 160, height: 40, borderWidth: 0.5, borderColor: "grey" }} onClick={this.onOpenModal}>
-                            Export Bookings
-                            </button>
+                        <button type="button" class="btn btn-light" style={{ width: "60%", margin: "2%", borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => this.setModal2Visible(true)}>Export Bookings</button>
                     </div>
                 </div>
 
-                <div style={{ display: "flex", flex: 8, marginTop: "3%" }}>
-                    {/* card start */}
-                    <div className="cardshadow" style={{
-                        display: "flex", height: "20vw", width: "16vw", minWidth: 220, minHeight: 300, margin: "3%",
-                        backgroundColor: "white", flexDirection: "column"
+
+
+                <div style={{
+                    display: "flex", flex: 1, width: "90%", justifyContent: "space-between",
+                    padding: 5,
+                }}>
+                    <div style={{ flex: 6, minWidth: 200, alignItems: "center", display: "flex" }}>
+                        <DatePicker style={{ margin: "2%", }} onChange={() => this.datePicker()} />
+
+                    </div>
+                    <div style={{ flex: 4, minWidth: 200, justifyContent: "flex-end", display: "flex", flexDirection: "row", }}>
+                    </div>
+                </div>
+
+
+                <div style={{
+                    display: "flex", flex: 1, width: "90%",
+                    paddingLeft: 15, flexDirection: "column"
+                }}>
+                    <div style={{
+                        display: "flex", justifyContent: "space-between", width: "15%",minWidth:150, color: "#4A4A4A", paddingBottom:5,fontSize:11
                     }}>
-
-                        <div style={{ display: "flex", flex: 0.5, padding: 5, color: "black", fontWeight: "bold", flexDirection: "row", justifyContent: "space-between", alignItems: "center", }}>
-                            <div>
-                                Shaving
-                            </div>
-                            <div style={{ display: "flex", backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                <IoMdCheckmark style={{ color: "white", }} />
-                            </div>
-                        </div>
-
-                        <div style={{ display: "flex", flex: 0.5, color: "black", fontWeight: "-moz-initial", fontSize: 24 }}>
-                            $50
-                        </div>
-
-                        <div style={{ display: "flex", flex: 0.5, color: "black", fontWeight: "bold", marginTop: 5, }}>
-                            Extra Services
-                        </div>
-
-                        <div style={{ display: "flex", flex: 5, padding: 5, color: "black", fontWeight: "bold", flexDirection: "column", justifyContent: "center", alignItems: "center", }}>
-                            <div style={{ display: "flex", width: "100%", margin: 10, justifyContent: "space-between", alignItems: "center", fontWeight: "normal", color: "#535353" }}>
-                                <div>
-                                    Extra Services 1
-                                </div>
-                                <div style={{ marginLeft: "10%", color: "#535353" }}>
-                                    $20
-                                </div>
-                                <div style={{ display: "flex", backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                    <IoMdCheckmark style={{ color: "white", }} />
-                                </div>
-                            </div>
-                            <div style={{ display: "flex", width: "100%", margin: 10, justifyContent: "space-between", alignItems: "center", fontWeight: "normal", color: "#535353" }}>
-                                <div>
-                                    Extra Services 2
-                                </div>
-                                <div style={{ marginLeft: "10%", color: "#535353" }}>
-                                    $20
-                                </div>
-                                <div style={{ display: "flex", backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                    <IoMdCheckmark style={{ color: "white", }} />
-                                </div>
-                            </div>
-                            <div style={{ display: "flex", width: "100%", margin: 10, justifyContent: "space-between", alignItems: "center", fontWeight: "normal", color: "#535353" }}>
-                                <div>
-                                    Extra Services 3
-                                </div>
-                                <div style={{ marginLeft: "10%", color: "#535353" }}>
-                                    $20
-                                </div>
-                                <div style={{ display: "flex", backgroundColor: "#B5B6B7", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                    <IoMdCheckmark style={{ color: "white", }} />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div style={{ flex: 1.5, }}>
-                            <button type="button" class="btn btn-light" style={{ width: "100%", borderWidth: 0.5, borderColor: "grey" }} onClick={this.onOpenModal}>Edit Service</button>
-                        </div>
+                        <a style={{alignItems: "center",display:"flex",justifyContent:"center"}}>
+                            <FaAngleLeft style={{ fontSize: 14, color:"#F45671"}} />
+                            Previous Day</a>
+                        <a style={{alignItems: "center",display:"flex",justifyContent:"center"}}>
+                            Next Day
+                        <FaAngleRight style={{ fontSize: 14,color:"#F45671" }} />
+                        </a>
                     </div>
-                    {/* card End */}
-
-                    {/* add button */}
-                    <div className="cardshadow" style={{
-                        display: "flex", height: "20vw", width: "16vw", minWidth: 220, minHeight: 300, margin: "3%",
-                        backgroundColor: "white", flexDirection: "column"
+                    <div style={{
+                        display: "flex", flex: 1, width: "100%",
                     }}>
-                        <div style={{ display: "flex", flex: 1, color: "black", fontWeight: "bold", flexDirection: "row", justifyContent: "center", alignItems: "center", }}>
-                            <div class="btn btn-light" style={{ display: "flex", width: "35%", height: "24%", backgroundColor: "#E9E9EA", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                <AiOutlinePlus style={{ color: "#494949", fontSize: 25 }} />
+                        <div className="boxShadow" style={{ flex: 8, background: "#fff", justifyContent: "flex-start", alignItems: "flex-start", display: "flex", padding: 15, flexDirection: "column" }}>
+
+                            <div style={{ fontWeight: "bold" }}>
+                                Friday, Nov 1 , 2019
+                        </div>
+                            <div style={{ fontSize: 11 }}>
+                                Bookings
+                        </div>
+                            <div style={{ marginTop: 15, width: "100%" }}>
+                                <table class="table table-striped table table-sm">
+                                    <tbody>
+                                        <BookingRaw
+                                            time="8:00 am" lock="#F45671" nameColor1="#49BE56" name1="David ukwa"
+                                            name2="David ukwa" nameColor2="#49BE56"
+                                            name3="Simon ejilogo" nameColor3="#F45671"
+                                            name4="Simon ejilogo" nameColor4="#F45671"
+                                        />
+                                        <BookingRaw
+                                            time="9:00 am" lock="#49BE56" nameColor1="#49BE56" name1="David ukwa"
+                                            name2="David ukwa" nameColor2="#D9B70B"
+                                        // name3="Simon ejilogo" nameColor3="#49BE56"
+                                        // name4="Simon ejilogo" nameColor4="#F45671"
+                                        />
+                                        <BookingRaw
+                                            time="10:00 am" lock="#49BE56"
+                                        />
+                                        <BookingRaw
+                                            time="11:00 am" lock="#49BE56"
+                                            name1="Simon ejilogo" nameColor1="#F45671"
+                                        />
+                                        <BookingRaw
+                                            time="12:00 am" lock="#49BE56"
+                                            name1="Simon ejilogo" nameColor1="#F45671"
+                                        />
+                                        <BookingRaw
+                                            time="1:00 pm" lock="#F45671"
+                                        />
+                                        <BookingRaw
+                                            time="2:00 pm" lock="#F45671"
+                                        />
+                                        <BookingRaw
+                                            time="3:00 pm" lock="#49BE56"
+                                        />
+                                        <BookingRaw
+                                            time="4:00 pm" lock="#49BE56" nameColor1="#F45671" name1="David ukwa"
+                                            name2="David ukwa" nameColor2="#F45671"
+                                            name3="Simon ejilogo" nameColor3="#F45671"
+                                        />
+                                        <BookingRaw
+                                            time="5:00 pm" lock="#49BE56" nameColor1="#F45671" name1="David ukwa"
+
+                                        />
+                                        <BookingRaw
+                                            time="6:00 pm" lock="#49BE56" nameColor1="#F45671" name1="David ukwa"
+                                        />
+                                        <BookingRaw
+                                            time="7:00 pm" lock="#49BE56"
+                                        />
+                                        <BookingRaw
+                                            time="8:00 pm" lock="#F45671" nameColor1="#F45671" name1="David ukwa"
+                                            nameColor2="#F45671" name2="David ukwa"
+                                        />
+                                        <BookingRaw
+                                            time="9:00 pm" lock="#F45671"
+                                        />
+                                        <BookingRaw
+                                            time="10:00 pm" lock="#F45671"
+                                        />
+                                    </tbody>
+                                </table>
+
                             </div>
+                        </div>
+                        <div style={{ flex: 2, minWidth: 200, justifyContent: "flex-end", display: "flex", flexDirection: "row", }}>
+
                         </div>
                     </div>
 
-
                 </div>
 
-                {/* modal */}
 
-                <div>
-                    <Modal style={{}} open={open} onClose={this.onCloseModal}>
-                        <div style={{ display: "flex", flex: 1, flexDirection: "column", background: "red", marginTop: 20, width: "100%", }}>
-                            New Service
 
-                            <div style={{ display: "flex", flex: 1, width: "100%", background: "green", marginTop: 20, justifyContent: "center", alignItems: "center" }}>
-                                <div className="input-group mb-3" style={{ width: "50%", margin: "3%" }}>
-                                    <input type="text" className="form-control" placeholder="Service Name" aria-label="Service Name" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
-                                </div>
-                                <div className="input-group mb-3" style={{ width: "30%", margin: "3%" }}>
-                                    <input type="text" className="form-control" placeholder="Price" aria-label="Price" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
-                                </div>
-                            </div>
-
-                        </div>
-                    </Modal>
-                </div>
             </div>
         )
     }
