@@ -10,11 +10,11 @@ import Loader from 'react-loader-spinner'
 import swal from 'sweetalert2';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoMdCheckmark } from 'react-icons/io';
-// import Modal from 'react-responsive-modal';
 import { Button, DatePicker, version, Modal } from "antd";
 import "antd/dist/antd.css";
-// import "./index.css";
-class Services extends Component {
+import TextareaAutosize from 'react-textarea-autosize';
+
+class SpecialOffers extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -37,26 +37,27 @@ class Services extends Component {
             }}>
                 <div style={{
                     display: "flex", flex: 1, width: "90%", justifyContent: "space-between",
-                    // backgroundColor: "#49BE56"
+                    // backgroundColor: "#49BE5s"
                 }}>
                     <div style={{ minWidth: 150 }}>
-                        <span style={{ fontSize: 18, fontWeight: "bold" }}>Services Provided</span>
+                        <span style={{ fontSize: 18, fontWeight: "bold" }}>Special Offers</span>
                     </div>
-                    <button style={{ minWidth: 80 }} className="buttonAdd" onClick={this.signin} >
-                        <span className="buttonmatter" style={{ fontSize: 12, }}>Add Service</span>
+                    <button style={{ minWidth: 120,  width: "20%"}} className="buttonAdd" onClick={this.signin} >
+                        <span className="buttonmatter" style={{ fontSize: 12,  }}>Add Special Offers</span>
                     </button>
+
                 </div>
 
                 <div style={{ display: "flex", flex: 8, marginTop: "3%" }}>
                     {/* card start */}
                     <div className="cardshadow" style={{
-                        display: "flex", height: "20vw", width: "16vw", minWidth: 220, minHeight: 300, margin: "3%",
+                        display: "flex", height: "14vw", width: "16vw", minWidth: 230, minHeight: 240, margin: "3%",
                         backgroundColor: "white", flexDirection: "column"
                     }}>
 
                         <div style={{ display: "flex", flex: 0.5, padding: 5, color: "black", fontWeight: "bold", flexDirection: "row", justifyContent: "space-between", alignItems: "center", }}>
                             <div>
-                                Shaving
+                                Special Offer 1
                             </div>
                             <div style={{ display: "flex", backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
                                 <IoMdCheckmark style={{ color: "white", }} />
@@ -64,47 +65,11 @@ class Services extends Component {
                         </div>
 
                         <div style={{ display: "flex", flex: 0.5, color: "black", fontWeight: "-moz-initial", fontSize: 24 }}>
-                            $50
+                            $25
                         </div>
 
-                        <div style={{ display: "flex", flex: 0.5, color: "black", fontWeight: "bold", marginTop: 5, }}>
-                            Extra Services
-                        </div>
-
-                        <div style={{ display: "flex", flex: 5, padding: 5, color: "black", fontWeight: "bold", flexDirection: "column", justifyContent: "center", alignItems: "center", }}>
-                            <div style={{ display: "flex", width: "100%", margin: 10, justifyContent: "space-between", alignItems: "center", fontWeight: "normal", color: "#535353" }}>
-                                <div>
-                                    Extra Services 1
-                                </div>
-                                <div style={{ marginLeft: "10%", color: "#535353" }}>
-                                    $20
-                                </div>
-                                <div style={{ display: "flex", backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                    <IoMdCheckmark style={{ color: "white", }} />
-                                </div>
-                            </div>
-                            <div style={{ display: "flex", width: "100%", margin: 10, justifyContent: "space-between", alignItems: "center", fontWeight: "normal", color: "#535353" }}>
-                                <div>
-                                    Extra Services 2
-                                </div>
-                                <div style={{ marginLeft: "10%", color: "#535353" }}>
-                                    $20
-                                </div>
-                                <div style={{ display: "flex", backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                    <IoMdCheckmark style={{ color: "white", }} />
-                                </div>
-                            </div>
-                            <div style={{ display: "flex", width: "100%", margin: 10, justifyContent: "space-between", alignItems: "center", fontWeight: "normal", color: "#535353" }}>
-                                <div>
-                                    Extra Services 3
-                                </div>
-                                <div style={{ marginLeft: "10%", color: "#535353" }}>
-                                    $20
-                                </div>
-                                <div style={{ display: "flex", backgroundColor: "#B5B6B7", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                    <IoMdCheckmark style={{ color: "white", }} />
-                                </div>
-                            </div>
+                        <div style={{ display: "flex", flex: 0.5, color: "#535353", marginTop: 5, textAlign: "left", marginTop: 10 }}>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text industry's
                         </div>
 
                         <div style={{ flex: 1.5, }}>
@@ -115,11 +80,11 @@ class Services extends Component {
 
                     {/* add button */}
                     <div className="cardshadow" style={{
-                        display: "flex", height: "20vw", width: "16vw", minWidth: 220, minHeight: 300, margin: "3%",
+                        display: "flex", height: "14vw", width: "16vw", minWidth: 230, minHeight: 240, margin: "3%",
                         backgroundColor: "white", flexDirection: "column"
                     }}>
                         <div style={{ display: "flex", flex: 1, color: "black", fontWeight: "bold", flexDirection: "row", justifyContent: "center", alignItems: "center", }}>
-                            <div class="btn btn-light" style={{ display: "flex", width: "35%", height: "24%", backgroundColor: "#E9E9EA", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
+                            <div class="btn btn-light" style={{ display: "flex", width: "35%", height: "35%", backgroundColor: "#E9E9EA", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
                                 <AiOutlinePlus style={{ color: "#494949", fontSize: 25 }} />
                             </div>
                         </div>
@@ -137,14 +102,14 @@ class Services extends Component {
                     >
                         <div style={{ display: "flex", flex: 1, flexDirection: "column", width: "100%", fontSize: "1.1vw", fontWeight: "bold", }}>
                             <div style={{ fontSize: 18 }}>
-                                New Service
+                                New Offer
                            </div>
 
                             <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center" }}>
 
                                 <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
                                     <div style={{ width: "100%", }}>
-                                        <input type="text" className="form-control" placeholder=" Service Name" aria-label=" Service Name" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
+                                        <input type="text" className="form-control" placeholder=" Special Offer Name" aria-label=" Special Offer Name" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
                                     </div>
                                 </div>
 
@@ -160,37 +125,19 @@ class Services extends Component {
                             </div>
 
                             <div style={{ marginTop: 10, fontSize: 18 }}>
-                                Extra Service
+                                Desciption
                            </div>
 
                             <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", }}>
-                                <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
-                                    <div style={{ width: "100%", }}>
-                                        <input type="text" className="form-control" placeholder=" Service Name" aria-label=" Service Name" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
-                                    </div>
-                                </div>
 
                                 <div style={{ display: "flex", flex: 1, margin: "1.5%", }} >
-                                    <div style={{ width: "100%", }}>
-                                        <input type="text" className="form-control" placeholder="Price $" aria-label="Price $" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
-                                    </div>
-                                </div>
 
-                                <div style={{ display: "flex", flex: 1, margin: "1.5%", }} >
-                                    <button className="buttonAdd" style={{ minWidth: 80, width: "100%" }} onClick={this.signin} >
-                                        <span className="buttonmatter" style={{ fontSize: 15, }}>Save</span>
-                                    </button>
+                                    <TextareaAutosize style={{ width: "100%" }} maxRows={8} minRows={4} />
+
                                 </div>
                             </div>
 
-                            <div style={{ marginTop: 10, display: "flex", flexDirection: "row", alignItems: "center" }}>
-                                <div class="btn btn-light" style={{ display: "flex", backgroundColor: "#EC5F59", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                    <AiOutlinePlus style={{ color: "#ffffff", fontSize: 25 }} />
-                                </div>
-                                <div style={{ marginLeft: "2%", fontSize: 14 }}>
-                                    Add Extra Service
-                                </div>
-                            </div>
+
 
                             <div style={{ marginTop: 10, display: "flex", height: 50, flexDirection: "row", alignItems: "center", justifyContent: "center", alignItems: "center", }}>
 
@@ -222,4 +169,4 @@ function mapDispatchToProp(dispatch) {
     })
 }
 
-export default connect(mapStateToProp, mapDispatchToProp)(Services);
+export default connect(mapStateToProp, mapDispatchToProp)(SpecialOffers);

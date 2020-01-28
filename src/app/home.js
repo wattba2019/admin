@@ -15,6 +15,8 @@ import { AiOutlineUser, AiFillGift } from 'react-icons/ai';
 import { FiClock } from 'react-icons/fi';
 import { GoSignOut } from 'react-icons/go';
 import Services from './services';
+import SpecialOffers from './specialOffers';
+import StyleList from './stylelist';
 
 class Home extends Component {
     constructor(props) {
@@ -139,7 +141,7 @@ class Home extends Component {
                     </div >
 
                     <div style={{
-                        display: "flex", flexBasis: "85%",
+                        display: "flex", flexBasis: "85%", backgroundColor: "#F7F8F8"
                         // background: "red"
                     }}>
                         <div style={{ width: "100%", height: "8%", float: "right", textAlign: "right", }}>
@@ -148,8 +150,9 @@ class Home extends Component {
                                 height="80%"
                             />
 
-
-                            <Services />
+                            {/* <Services /> */}
+                            {/* <SpecialOffers /> */}
+                            <StyleList />
                         </div>
                     </div>
                 </div>
