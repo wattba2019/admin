@@ -150,8 +150,13 @@ class Home extends Component {
                                 height="80%"
                             />
 
+
                             {/* <Services /> */}
                             <SpecialOffers />
+
+                            <Services />
+                            {/* <SpecialOffers />   <Bookings /> */}
+
                             {/* <StyleList /> */}
                         </div>
                     </div>

@@ -116,6 +116,18 @@ text-decoration: underline;
         padding: 10px;
         color: white;
         box-shadow: 2px 2px 8px #aaaaaa;
+
+        /* opacity: 0.4; */
+        }
+
+
+    .boxShadow{
+        -webkit-box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
+        -moz-box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
+        box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
+        
+        }
+
         }
 
         
@@ -136,3 +148,4 @@ text-decoration: underline;
     .cardButtonBorder:hover{
         cursor: pointer;
     }
+
