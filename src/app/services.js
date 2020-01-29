@@ -10,6 +10,7 @@ import Loader from 'react-loader-spinner'
 import swal from 'sweetalert2';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoMdCheckmark } from 'react-icons/io';
+import { MdDeleteForever } from 'react-icons/md';
 // import Modal from 'react-responsive-modal';
 import { Button, DatePicker, version, Modal } from "antd";
 import "antd/dist/antd.css";
@@ -21,15 +22,70 @@ class Services extends Component {
             loader: false,
             showerror: false,
             email: "",
-            modal2Visible: false,
+            serviceName: "",
+            price: "",
+            extraService: [
+                // {
+                //     serviceName: "Abcd",
+                //     Price: 500
+                // },
+                // {
+                //     serviceName: "123",
+                //     Price: 500
+                // },
+                // {
+                //     serviceName: "test",
+                //     Price: 500
+                // }
+            ],
+            extraServiceqty: [1],
+            modal2Visible: true,
         }
     }
     setModal2Visible(modal2Visible) {
         this.setState({ modal2Visible });
     }
 
+    // addExtraService = (input, type, index) => {
+    //     console.log(input, type, index, "DATA")
+    //     // alert("work")
+
+    //     // this.setState({ extraServiceqty: input });
+
+    //     let data = {
+
+    //     }
+
+
+    //     if (type === "serviceName") {
+    //         data.serviceName = input
+    //     }
+    //     else {
+    //         data.price = input
+    //     }
+
+    // }
+
+
+    addExtraService = (input, type, index) => {
+        console.log(input, type, index, "DATA")
+    }
+
+
+    addExtraServiceField = () => {
+        let data = this.state.extraServiceqty
+        data.push(1)
+        this.setState({ extraServiceqty: data });
+    }
+
+    delExtraService = (index) => {
+        let data = this.state.extraServiceqty
+        data.splice(index, 1)
+        this.setState({ extraServiceqty: data });
+    }
+
     render() {
-        const { open, email } = this.state;
+        const { email, serviceName, price, extraService, extraServiceqty } = this.state;
         return (
             <div style={{
                 display: "flex", flexDirection: "column", flex: 1, width: "100%", justifyContent: "center", alignItems: "center",
@@ -108,7 +164,7 @@ class Services extends Component {
                         </div>
 
                         <div style={{ flex: 1.5, }}>
-                            <button type="button" class="btn btn-light" style={{ width: "100%", borderWidth: 0.5, borderColor: "grey" }} onClick={() => this.setModal2Visible(true)}>Edit Service</button>
+                            <button type="button" className="btn btn-light" style={{ width: "100%", borderWidth: 0.5, borderColor: "grey" }} onClick={() => this.setModal2Visible(true)}>Edit Service</button>
                         </div>
                     </div>
                     {/* card End */}
@@ -119,7 +175,7 @@ class Services extends Component {
                         backgroundColor: "white", flexDirection: "column"
                     }}>
                         <div style={{ display: "flex", flex: 1, color: "black", fontWeight: "bold", flexDirection: "row", justifyContent: "center", alignItems: "center", }}>
-                            <div class="btn btn-light" style={{ display: "flex", width: "35%", height: "24%", backgroundColor: "#E9E9EA", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
+                            <div className="btn btn-light" style={{ display: "flex", width: "35%", height: "24%", backgroundColor: "#E9E9EA", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
                                 <AiOutlinePlus style={{ color: "#494949", fontSize: 25 }} />
                             </div>
                         </div>
@@ -144,13 +200,13 @@ class Services extends Component {
 
                                 <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
                                     <div style={{ width: "100%", }}>
-                                        <input type="text" className="form-control" placeholder=" Service Name" aria-label=" Service Name" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
+                                        <input type="text" className="form-control" placeholder=" Service Name" aria-label=" Service Name" aria-describedby="basic-addon1" value={serviceName} onChange={(e) => { this.setState({ serviceName: e.target.value }) }} />
                                     </div>
                                 </div>
 
                                 <div style={{ display: "flex", flex: 1, margin: "1.5%", }} >
                                     <div style={{ width: "100%", }}>
-                                        <input type="text" className="form-control" placeholder="Price $" aria-label="Price $" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
+                                        <input type="text" className="form-control" placeholder="Price $" aria-label="Price $" aria-describedby="basic-addon1" value={price} onChange={(e) => { this.setState({ price: e.target.value }) }} />
                                     </div>
                                 </div>
 
@@ -163,28 +219,37 @@ class Services extends Component {
                                 Extra Service
                            </div>
 
-                            <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", }}>
-                                <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
-                                    <div style={{ width: "100%", }}>
-                                        <input type="text" className="form-control" placeholder=" Service Name" aria-label=" Service Name" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
-                                    </div>
-                                </div>
+                            {
+                                extraServiceqty.map((key, index) => {
+                                    return (
+                                        <div key={index} style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", }}>
+                                            <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
+                                                <div style={{ width: "100%", }}>
+                                                    <input type="text" className="form-control" placeholder=" Service Name" aria-label=" Service Name" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.addExtraService(e.target.value, "serviceName", index) }} />
+                                                </div>
+                                            </div>
 
-                                <div style={{ display: "flex", flex: 1, margin: "1.5%", }} >
-                                    <div style={{ width: "100%", }}>
-                                        <input type="text" className="form-control" placeholder="Price $" aria-label="Price $" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
-                                    </div>
-                                </div>
+                                            <div style={{ display: "flex", flex: 1, margin: "1.5%", }} >
+                                                <div style={{ width: "100%", }}>
+                                                    <input type="text" className="form-control" placeholder="Price $" aria-label="Price $" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.addExtraService(e.target.value, "price", index) }} />
+                                                </div>
+                                            </div>
 
-                                <div style={{ display: "flex", flex: 1, margin: "1.5%", }} >
-                                    <button className="buttonAdd" style={{ minWidth: 80, width: "100%" }} onClick={this.signin} >
-                                        <span className="buttonmatter" style={{ fontSize: 15, }}>Save</span>
-                                    </button>
-                                </div>
-                            </div>
+                                            <div style={{ display: "flex", flex: 1, margin: "1.5%", }} >
+                                                <button className="buttonAdd buttonmatter" style={{ minWidth: 80, width: "100%", justifyContent: "center", alignItems: "center" }} onClick={() => this.delExtraService(index)} >
+                                                    {/* <span className="buttonmatter" style={{ fontSize: 15, }}>Save</span> */}
+                                                    <MdDeleteForever className="buttonmatter" style={{ color: "white", fontSize: 20, marginTop: 5 }} />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
 
-                            <div style={{ marginTop: 10, display: "flex", flexDirection: "row", alignItems: "center" }}>
-                                <div class="btn btn-light" style={{ display: "flex", backgroundColor: "#EC5F59", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
+
+
+                            <div onClick={this.addExtraServiceField} style={{ marginTop: 10, display: "flex", flexDirection: "row", alignItems: "center" }}>
+                                <div className="btn btn-light" style={{ display: "flex", backgroundColor: "#EC5F59", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
                                     <AiOutlinePlus style={{ color: "#ffffff", fontSize: 25 }} />
                                 </div>
                                 <div style={{ marginLeft: "2%", fontSize: 14 }}>
@@ -198,7 +263,7 @@ class Services extends Component {
                                     <span className="buttonmatter" style={{ fontSize: 15, }}>Save</span>
                                 </button>
 
-                                <button type="button" class="btn btn-light" style={{ width: "35%", margin: "1%", minWidth: 80, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => this.setModal2Visible(true)}>Edit Service</button>
+                                <button type="button" className="btn btn-light" style={{ width: "35%", margin: "1%", minWidth: 80, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => this.setModal2Visible(true)}>Edit Service</button>
 
                             </div>
                         </div>
