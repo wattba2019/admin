@@ -5,6 +5,7 @@ const INITIAL_STATE = {
     // bseUrl: "http://192.168.200.130:3002",
     userProfile: {},
     currentLocation: null,
+    services: []
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -14,6 +15,12 @@ export default (state = INITIAL_STATE, action) => {
                 ...state,
                 userProfile: action.payload
             };
+        case ActionTypes.FETCHED_SERVICES:
+            return {
+                ...state,
+                services: action.payload
+            };
+
         default:
             return state;
     }

@@ -45,3 +45,30 @@ export function addService(service) {
     }
 }
 
+
+export function getServices(userID) {
+    return dispatch => {
+        var options = {
+            method: 'GET',
+            url: `${baseURL.baseURL}/servicesget/${userID}`,
+            headers:
+            {
+                'cache-control': 'no-cache',
+                "Allow-Cross-Origin": '*',
+            }
+        };
+        axios(options)
+            .then((services) => {
+                console.log(services, 'fetched services');
+                dispatch({ type: ActionTypes.FETCHED_SERVICES, payload: services.data.data })
+
+            })
+            .catch((err) => {
+                console.log(err, "Error in fetching services")
+                // alert(err.response.data.message)
+            })
+    }
+}
+
+
+//servicesget
