@@ -1,8 +1,8 @@
 import ActionTypes from '../constant/constant';
+import baseURL from '../../config/config';
 
 const INITIAL_STATE = {
-    bseUrl: "https://fathomless-citadel-43321.herokuapp.com",
-    // bseUrl: "http://192.168.200.130:3002",
+    bseUrl: baseURL.baseURL,
     userProfile: {},
     currentLocation: null,
     services: []
