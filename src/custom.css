@@ -113,14 +113,10 @@ text-decoration: underline;
 
 
     .cardshadow{
-        /* border: 1px solid; */
         padding: 10px;
-        /* box-shadow: 5px 5px 15px #808080, 
-        5px 5px 15px grey, 
-        5px 5px 25px grey; */
-        /* box-shadow: 5px 5px 5px 5px #aaaaaa; */
         color: white;
         box-shadow: 2px 2px 8px #aaaaaa;
+
         /* opacity: 0.4; */
         }
 
@@ -131,3 +127,25 @@ text-decoration: underline;
         box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
         
         }
+
+        }
+
+        
+    .cardshadowWithButton{
+        color: white;
+        box-shadow: 2px 2px 8px #aaaaaa;
+    }
+
+            
+    .cardButtonBorder{
+        border-top:1px solid #C3C3C4;
+    }
+            
+    .cardButtonBorderRight{
+        border-right:1px solid #C3C3C4;
+    }
+
+    .cardButtonBorder:hover{
+        cursor: pointer;
+    }
+

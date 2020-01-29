@@ -14,8 +14,9 @@ import { GiScissors } from 'react-icons/gi';
 import { AiOutlineUser, AiFillGift } from 'react-icons/ai';
 import { FiClock } from 'react-icons/fi';
 import { GoSignOut } from 'react-icons/go';
-// import Services from './services';
-import Bookings from './bookings';
+import Services from './services';
+import SpecialOffers from './specialOffers';
+import StyleList from './stylelist';
 
 class Home extends Component {
     constructor(props) {
@@ -40,7 +41,7 @@ class Home extends Component {
         const { } = this.state;
         return (
             <div>
-                <div style={{ display: "flex", flexBasis: "100%", backgroundColor: "#F7F8F8", }}>
+                <div style={{ display: "flex", flexBasis: "100%", backgroundColor: "#F7F8F8" }}>
                     <div style={{ display: "flex", flexBasis: "15%", width: "15%", minWidth: 200, height: window.innerHeight }} className="sideBarBackGroud">
                         <div style={{ flexBasis: "100%", marginTop: "10%" }}>
                             <center>
@@ -140,7 +141,7 @@ class Home extends Component {
                     </div >
 
                     <div style={{
-                        display: "flex", flexBasis: "85%",backgroundColor: "#F7F8F8",
+                        display: "flex", flexBasis: "85%", backgroundColor: "#F7F8F8"
                         // background: "red"
                     }}>
                         <div style={{ width: "100%", height: "8%", float: "right", textAlign: "right", }}>
@@ -148,8 +149,10 @@ class Home extends Component {
                                 width="140"
                                 height="80%"
                             />
-                            {/* <Services /> */}
-                            <Bookings />
+
+                            <Services />
+                            {/* <SpecialOffers />   <Bookings /> */}
+                            {/* <StyleList /> */}
                         </div>
                     </div>
                 </div>
