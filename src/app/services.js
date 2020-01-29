@@ -117,7 +117,8 @@ class Services extends Component {
                         <span className="buttonmatter" style={{ fontSize: 12, }}>Add Service</span>
                     </button>
                 </div>
-                <ServiceCard services={services} />
+                <ServiceCard services={services} setModal2Visible={this.setModal2Visible} />
+
                 <div>
                     <ServiceModal modalState={this.state} setModal2Visible={this.setModal2Visible} addExtraServiceField={this.addExtraServiceField} delExtraService={this.delExtraService} addExtraService={this.addExtraService} saveService={this.saveService} that={this} />
                 </div>

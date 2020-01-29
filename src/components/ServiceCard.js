@@ -140,7 +140,7 @@ class ServiceCard extends Component {
                     backgroundColor: "white", flexDirection: "column"
                 }}>
                     <div style={{ display: "flex", flex: 1, color: "black", fontWeight: "bold", flexDirection: "row", justifyContent: "center", alignItems: "center", }}>
-                        <div className="btn btn-light" onClick={() => this.setModal2Visible(true)} style={{ display: "flex", width: "35%", height: "24%", backgroundColor: "#E9E9EA", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
+                        <div className="btn btn-light" onClick={() => this.props.setModal2Visible(true)} style={{ display: "flex", width: "35%", height: "24%", backgroundColor: "#E9E9EA", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
                             <AiOutlinePlus style={{ color: "#494949", fontSize: 25 }} />
                         </div>
                     </div>
