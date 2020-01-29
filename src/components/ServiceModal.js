@@ -6,7 +6,7 @@ import { Modal } from "antd";
 class ServiceModal extends Component {
     render() {
         console.log(this.props, '****')
-        const { email, serviceName, price, extraService, extraServiceqtyArr, modal2Visible } = this.props.modalState;
+        const { email, serviceName, price, extraService, extraServiceqtyArr, modal2Visible, modal2VisibleEdit } = this.props.modalState;
         const { that } = this.props;
         console.log(this.props, '****')
         return (
@@ -14,14 +14,23 @@ class ServiceModal extends Component {
                 footer={null}
                 // title="Vertically centered modal dialog"
                 centered
-                visible={modal2Visible}
-                onOk={() => this.props.setModal2Visible(false)}
-                onCancel={() => this.props.setModal2Visible(false)}
+                visible={modal2Visible || modal2VisibleEdit}
+                onOk={() => {
+                    this.props.setModal2Visible(false);
+                    this.props.setModal2VisibleEdit(false);
+                }}
+                onCancel={() => {
+                    this.props.setModal2Visible(false);
+                    this.props.setModal2VisibleEdit(false);
+
+                }}
             >
                 <div style={{ display: "flex", flex: 1, flexDirection: "column", width: "100%", fontSize: "1.1vw", fontWeight: "bold", }}>
                     <div style={{ fontSize: 18 }}>
-                        New Service
-               </div>
+                        {
+                            (modal2VisibleEdit) ? (<span>Edit Service</span>) : (<span>New Service</span>)
+                        }
+                    </div>
 
                     <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center" }}>
 
@@ -88,10 +97,10 @@ class ServiceModal extends Component {
                     <div style={{ marginTop: 10, display: "flex", height: 50, flexDirection: "row", alignItems: "center", justifyContent: "center", alignItems: "center", }}>
 
                         <button className="buttonAdd" style={{ minWidth: 80, width: "35%", margin: "1%" }} onClick={this.props.saveService} >
-                            <span className="buttonmatter" style={{ fontSize: 15, }}>Add</span>
+                            <span className="buttonmatter" style={{ fontSize: 15, }}> {(modal2VisibleEdit) ? (<span>Update</span>) : (<span>Add</span>)}</span>
                         </button>
 
-                        <button type="button" className="btn btn-light" style={{ width: "35%", margin: "1%", minWidth: 80, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => this.props.setModal2Visible(false)}>Cancel</button>
+                        <button type="button" className="btn btn-light" style={{ width: "35%", margin: "1%", minWidth: 80, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => { this.props.setModal2Visible(false); this.props.setModal2VisibleEdit(false); }}>Cancel</button>
 
                     </div>
                 </div>

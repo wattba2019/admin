@@ -1,6 +1,6 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
-import { setUserCredentials, addService, getServices } from "../store/action/action";
+import { setUserCredentials, addService, getServices, updateService } from "../store/action/action";
 import {
     Link
 } from 'react-router-dom';
@@ -32,6 +32,8 @@ class Services extends Component {
             extraService: [],
             extraServiceqty: 1,
             modal2Visible: false,
+            modal2VisibleEdit: false,
+            editService: {}
         }
         this.state.extraServiceqtyArr = Array.apply(null, { length: this.state.extraServiceqty });
 
@@ -40,6 +42,7 @@ class Services extends Component {
         this.delExtraService = this.delExtraService.bind(this);
         this.addExtraService = this.addExtraService.bind(this);
         this.saveService = this.saveService.bind(this);
+        this.setModal2VisibleEdit = this.setModal2VisibleEdit.bind(this);
 
         this.props.getServices((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254');
     }
@@ -47,6 +50,29 @@ class Services extends Component {
 
     setModal2Visible(modal2Visible) {
         this.setState({ modal2Visible });
+    }
+    setModal2VisibleEdit(modal2VisibleEdit, editService) {
+        if (modal2VisibleEdit) {
+
+            console.log(editService, 'editService');
+            let serviceName = editService.serviceName;
+            let price = editService.price;
+            let extraService = editService.extraServices;
+            let extraServiceqty = editService.extraServices.length;
+            let extraServiceqtyArr = Array.apply(null, { length: extraServiceqty });
+            this.setState({ modal2VisibleEdit });
+            this.setState({ editService, serviceName, price, extraService, extraServiceqty, extraServiceqtyArr });
+        }
+        else {
+            let serviceName = '';
+            let price = '';
+            let extraService = '';
+            let extraServiceqty = 1;
+            let extraServiceqtyArr = Array.apply(null, { length: extraServiceqty });
+            let editService = {};
+            this.setState({ modal2VisibleEdit });
+            this.setState({ editService, serviceName, price, extraService, extraServiceqty, extraServiceqtyArr });
+        }
     }
 
     addExtraService = (input, type, index) => {
@@ -83,8 +109,13 @@ class Services extends Component {
             userId: (this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254',
             extraServices: this.state.extraService
         }
-        this.props.addService(service);
-        this.state.extraServiceqtyArr = Array.apply(null, { length: this.state.extraServiceqty });
+        if (this.state.modal2Visible) {
+            this.props.addService(service);
+        }
+        else {
+            service.serviceID = this.state.editService._id;
+            this.props.updateService(service);
+        }
 
         let extraServiceqtyArr = Array.apply(null, { length: 1 });
         this.setState({
@@ -93,7 +124,10 @@ class Services extends Component {
             extraService: [],
             extraServiceqty: 1,
             modal2Visible: false,
-            extraServiceqtyArr
+            modal2VisibleEdit: false,
+            extraServiceqtyArr,
+            editService: {}
+
         })
     }
 
@@ -117,11 +151,14 @@ class Services extends Component {
                         <span className="buttonmatter" style={{ fontSize: 12, }}>Add Service</span>
                     </button>
                 </div>
-                <ServiceCard services={services} setModal2Visible={this.setModal2Visible} />
+
+
+                <ServiceCard services={services} setModal2Visible={this.setModal2Visible} setModal2VisibleEdit={this.setModal2VisibleEdit} />
 
                 <div>
-                    <ServiceModal modalState={this.state} setModal2Visible={this.setModal2Visible} addExtraServiceField={this.addExtraServiceField} delExtraService={this.delExtraService} addExtraService={this.addExtraService} saveService={this.saveService} that={this} />
+                    <ServiceModal modalState={this.state} setModal2Visible={this.setModal2Visible} setModal2VisibleEdit={this.setModal2VisibleEdit} addExtraServiceField={this.addExtraServiceField} delExtraService={this.delExtraService} addExtraService={this.addExtraService} saveService={this.saveService} that={this} />
                 </div>
+
             </div >
         )
     }
@@ -142,6 +179,9 @@ function mapDispatchToProp(dispatch) {
         },
         getServices: (uid) => {
             dispatch(getServices(uid));
+        },
+        updateService: (service) => {
+            dispatch(updateService(service));
         },
 
 

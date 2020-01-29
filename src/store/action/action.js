@@ -71,4 +71,40 @@ export function getServices(userID) {
 }
 
 
+
+export function updateService(service) {
+    return dispatch => {
+        console.log('inside action', service);
+        var options = {
+            method: 'PUT',
+            url: `${baseURL.baseURL}/servicesget/${service.serviceID}/`,
+            headers:
+            {
+                'cache-control': 'no-cache',
+                "Allow-Cross-Origin": '*',
+            },
+            data: service
+        };
+        axios(options)
+            .then((data) => {
+                console.log(data.data, "Service added successfully.")
+                swal.fire(
+                    'Success!',
+                    data.data.message,
+                    'success'
+                )
+            }).catch((err) => {
+                console.log(err.response.data.message, "ERROR_ON_SAVING")
+                // alert(err.response.data.message)
+                swal.fire(
+                    'Error!',
+                    'Something went wrong.',
+                    'error'
+                )
+
+            })
+    }
+}
+
+
 //servicesget
