@@ -1,6 +1,6 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
-import { setUserCredentials } from "../store/action/action";
+import { setUserCredentials, addService } from "../store/action/action";
 import {
     Link
 } from 'react-router-dom';
@@ -29,20 +29,18 @@ class Services extends Component {
             price: "",
             extraService: [],
             extraServiceqty: 1,
-            // extraServiceqtyArr: Array.apply(null, { length: state.extraServiceqty }),
             modal2Visible: false,
         }
-
         this.state.extraServiceqtyArr = Array.apply(null, { length: this.state.extraServiceqty });
 
         this.setModal2Visible = this.setModal2Visible.bind(this);
         this.addExtraServiceField = this.addExtraServiceField.bind(this);
         this.delExtraService = this.delExtraService.bind(this);
         this.addExtraService = this.addExtraService.bind(this);
-
-
+        this.saveService = this.saveService.bind(this);
 
     }
+
 
     setModal2Visible(modal2Visible) {
         this.setState({ modal2Visible });
@@ -72,6 +70,28 @@ class Services extends Component {
         extraServiceqty = --extraServiceqty;
         let extraServiceqtyArr = Array.apply(null, { length: extraServiceqty });
         this.setState({ extraServiceqty, extraServiceqtyArr, extraService }, () => { console.log(this.state) });
+    }
+
+    saveService() {
+        console.log('saved service called');
+        let service = {
+            serviceName: this.state.serviceName,
+            price: this.state.price,
+            userId: (this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254',
+            extraServices: this.state.extraService
+        }
+        this.props.addService(service);
+        this.state.extraServiceqtyArr = Array.apply(null, { length: this.state.extraServiceqty });
+
+        let extraServiceqtyArr = Array.apply(null, { length: 1 });
+        this.setState({
+            serviceName: "",
+            price: "",
+            extraService: [],
+            extraServiceqty: 1,
+            modal2Visible: false,
+            extraServiceqtyArr
+        })
     }
 
     render() {
@@ -165,7 +185,7 @@ class Services extends Component {
                         backgroundColor: "white", flexDirection: "column"
                     }}>
                         <div style={{ display: "flex", flex: 1, color: "black", fontWeight: "bold", flexDirection: "row", justifyContent: "center", alignItems: "center", }}>
-                            <div className="btn btn-light" style={{ display: "flex", width: "35%", height: "24%", backgroundColor: "#E9E9EA", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
+                            <div className="btn btn-light"  onClick={() => this.setModal2Visible(true)}  style={{ display: "flex", width: "35%", height: "24%", backgroundColor: "#E9E9EA", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
                                 <AiOutlinePlus style={{ color: "#494949", fontSize: 25 }} />
                             </div>
                         </div>
@@ -173,7 +193,7 @@ class Services extends Component {
                 </div>
 
                 <div>
-                    <ServiceModal modalState={this.state} setModal2Visible={this.setModal2Visible} addExtraServiceField={this.addExtraServiceField} delExtraService={this.delExtraService} addExtraService={this.addExtraService} />
+                    <ServiceModal modalState={this.state} setModal2Visible={this.setModal2Visible} addExtraServiceField={this.addExtraServiceField} delExtraService={this.delExtraService} addExtraService={this.addExtraService} saveService={this.saveService} that={this} />
                 </div>
             </div >
         )
@@ -183,13 +203,14 @@ class Services extends Component {
 function mapStateToProp(state) {
     return ({
         bseUrl: state.root.bseUrl,
+        uid: state.root.userProfile._id
     })
 }
 function mapDispatchToProp(dispatch) {
     return ({
-        // setUserCredentials: (user) => {
-        //     dispatch(setUserCredentials(user));
-        // },
+        addService: (service) => {
+            dispatch(addService(service));
+        },
     })
 }
 

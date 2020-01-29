@@ -7,6 +7,7 @@ class ServiceModal extends Component {
     render() {
         console.log(this.props, '****')
         const { email, serviceName, price, extraService, extraServiceqtyArr, modal2Visible } = this.props.modalState;
+        const { that } = this.props;
         console.log(this.props, '****')
         return (
             <Modal
@@ -26,13 +27,13 @@ class ServiceModal extends Component {
 
                         <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
                             <div style={{ width: "100%", }}>
-                                <input type="text" className="form-control" placeholder=" Service Name" aria-label=" Service Name" aria-describedby="basic-addon1" value={serviceName} onChange={(e) => { this.setState({ serviceName: e.target.value }) }} />
+                                <input type="text" className="form-control" placeholder=" Service Name" aria-label=" Service Name" aria-describedby="basic-addon1" value={serviceName} onChange={(e) => { that.setState({ serviceName: e.target.value }) }} />
                             </div>
                         </div>
 
                         <div style={{ display: "flex", flex: 1, margin: "1.5%", }} >
                             <div style={{ width: "100%", }}>
-                                <input type="text" className="form-control" placeholder="Price $" aria-label="Price $" aria-describedby="basic-addon1" value={price} onChange={(e) => { this.setState({ price: e.target.value }) }} />
+                                <input type="text" className="form-control" placeholder="Price $" aria-label="Price $" aria-describedby="basic-addon1" value={price} onChange={(e) => { that.setState({ price: e.target.value }) }} />
                             </div>
                         </div>
 
@@ -86,8 +87,8 @@ class ServiceModal extends Component {
 
                     <div style={{ marginTop: 10, display: "flex", height: 50, flexDirection: "row", alignItems: "center", justifyContent: "center", alignItems: "center", }}>
 
-                        <button className="buttonAdd" style={{ minWidth: 80, width: "35%", margin: "1%" }} onClick={this.signin} >
-                            <span className="buttonmatter" style={{ fontSize: 15, }}>Save</span>
+                        <button className="buttonAdd" style={{ minWidth: 80, width: "35%", margin: "1%" }} onClick={this.props.saveService} >
+                            <span className="buttonmatter" style={{ fontSize: 15, }}>Add</span>
                         </button>
 
                         <button type="button" className="btn btn-light" style={{ width: "35%", margin: "1%", minWidth: 80, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => this.props.setModal2Visible(false)}>Cancel</button>
