@@ -33,7 +33,8 @@ class Services extends Component {
             extraServiceqty: 1,
             modal2Visible: false,
             modal2VisibleEdit: false,
-            editService: {}
+            editService: {},
+            indexToEdit: undefined
         }
         this.state.extraServiceqtyArr = Array.apply(null, { length: this.state.extraServiceqty });
 
@@ -51,7 +52,7 @@ class Services extends Component {
     setModal2Visible(modal2Visible) {
         this.setState({ modal2Visible });
     }
-    setModal2VisibleEdit(modal2VisibleEdit, editService) {
+    setModal2VisibleEdit(modal2VisibleEdit, editService, indexToEdit) {
         if (modal2VisibleEdit) {
 
             console.log(editService, 'editService');
@@ -61,7 +62,7 @@ class Services extends Component {
             let extraServiceqty = editService.extraServices.length;
             let extraServiceqtyArr = Array.apply(null, { length: extraServiceqty });
             this.setState({ modal2VisibleEdit });
-            this.setState({ editService, serviceName, price, extraService, extraServiceqty, extraServiceqtyArr });
+            this.setState({ editService, serviceName, price, extraService, extraServiceqty, extraServiceqtyArr, indexToEdit });
         }
         else {
             let serviceName = '';
@@ -70,8 +71,9 @@ class Services extends Component {
             let extraServiceqty = 1;
             let extraServiceqtyArr = Array.apply(null, { length: extraServiceqty });
             let editService = {};
+            let indexToEdit = undefined;
             this.setState({ modal2VisibleEdit });
-            this.setState({ editService, serviceName, price, extraService, extraServiceqty, extraServiceqtyArr });
+            this.setState({ editService, serviceName, price, extraService, extraServiceqty, extraServiceqtyArr, indexToEdit });
         }
     }
 
@@ -114,7 +116,7 @@ class Services extends Component {
         }
         else {
             service.serviceID = this.state.editService._id;
-            this.props.updateService(service);
+            this.props.updateService(service, this.state.indexToEdit);
         }
 
         let extraServiceqtyArr = Array.apply(null, { length: 1 });
@@ -126,8 +128,8 @@ class Services extends Component {
             modal2Visible: false,
             modal2VisibleEdit: false,
             extraServiceqtyArr,
-            editService: {}
-
+            editService: {},
+            indexToEdit: undefined
         })
     }
 
@@ -180,8 +182,8 @@ function mapDispatchToProp(dispatch) {
         getServices: (uid) => {
             dispatch(getServices(uid));
         },
-        updateService: (service) => {
-            dispatch(updateService(service));
+        updateService: (service, indexToEdit) => {
+            dispatch(updateService(service, indexToEdit));
         },
 
 

@@ -62,7 +62,6 @@ export function getServices(userID) {
             .then((services) => {
                 console.log(services, 'fetched services');
                 dispatch({ type: ActionTypes.FETCHED_SERVICES, payload: services.data.data })
-
             })
             .catch((err) => {
                 console.log(err, "Error in fetching services")
@@ -73,7 +72,7 @@ export function getServices(userID) {
 
 
 
-export function updateService(service) {
+export function updateService(service, indexToEdit) {
     return dispatch => {
         console.log('inside action', service);
         var options = {
@@ -88,7 +87,10 @@ export function updateService(service) {
         };
         axios(options)
             .then((data) => {
-                console.log(data.data, "Service added successfully.")
+                console.log(data.data, "Service updated successfully.");
+                service.indexToEdit = indexToEdit;
+                dispatch({ type: ActionTypes.UPDATE_SERVICES, payload: service })
+
                 swal.fire(
                     'Success!',
                     data.data.message,

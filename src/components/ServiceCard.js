@@ -62,7 +62,7 @@ class ServiceCard extends Component {
                                     </div>
 
                                     <div style={{ flex: 1.5, }}>
-                                        <button type="button" className="btn btn-light" style={{ width: "100%", borderWidth: 0.5, borderColor: "grey" }} onClick={() => this.props.setModal2VisibleEdit(true, service)}>Edit Service</button>
+                                        <button type="button" className="btn btn-light" style={{ width: "100%", borderWidth: 0.5, borderColor: "grey" }} onClick={() => this.props.setModal2VisibleEdit(true, service, index)}>Edit Service</button>
                                     </div>
                                 </div>
                             )

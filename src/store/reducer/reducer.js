@@ -27,6 +27,14 @@ export default (state = INITIAL_STATE, action) => {
                 ...state,
                 services: updatedServices
             };
+        case ActionTypes.UPDATE_SERVICES:
+            let editedServices = state.services.slice(0);
+            let indexToUpdate = action.payload.indexToEdit;
+            editedServices.splice(indexToUpdate, 1, action.payload);
+            return {
+                ...state,
+                services: editedServices
+            };
 
 
         default:

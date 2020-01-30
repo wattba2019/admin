@@ -1,7 +1,8 @@
- const ActionTypes = {
-    SAVE_USER:'SAVE_USER',
+const ActionTypes = {
+    SAVE_USER: 'SAVE_USER',
     FETCHED_SERVICES: 'FETCHED_SERVICES',
-    ADD_SERVICE: 'ADD_SERVICE'
+    ADD_SERVICE: 'ADD_SERVICE',
+    UPDATE_SERVICES: 'UPDATE_SERVICES'
 }
 
 export default ActionTypes;
