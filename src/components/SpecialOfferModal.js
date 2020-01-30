@@ -4,27 +4,33 @@ import { Button, DatePicker, version, Modal, Upload, Icon, message } from "antd"
 import TextareaAutosize from 'react-textarea-autosize';
 
 
-const fileList = [];
-const props = {
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    listType: 'picture',
-    defaultFileList: [...fileList],
-
-    onChange(info) {
-        const { status } = info.file;
-        if (status !== 'uploading') {
-            console.log(info.file, info.fileList);
-        }
-        if (status === 'done') {
-            message.success(`${info.file.name} file uploaded successfully.`);
-        } else if (status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
-        }
-    },
-};
-
-
 class SpecialOfferModal extends Component {
+    state = {
+        imageFile: {}
+    }
+
+    uploadProps = {
+        listType: 'picture',
+        multiple: false,
+    };
+    beforeUploadEvent(file) {
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+        if (!isJpgOrPng) {
+            message.error('You can only upload JPG/PNG file!');
+        }
+        const isLt2M = file.size / 1024 / 1024 < 10;
+        if (!isLt2M) {
+            message.error('Image must smaller than 10MB!');
+        }
+        console.log(file, 'filelll')
+
+        // else {
+        //     this.setState({ imageFile: {} })
+        // }
+        // return isJpgOrPng && isLt2M;
+        return false;
+    }
+
     render() {
         const { email } = this.props.modalState;
         const { that } = this.props;
@@ -43,10 +49,25 @@ class SpecialOfferModal extends Component {
                 <div style={{ display: "flex", flex: 1, flexDirection: "column", width: "100%", fontSize: "1.1vw", fontWeight: "bold", }}>
 
                     <div style={{ margin: "1.5%" }}>
-                        <Upload {...props}>
-                            <Button>
-                                <Icon type="upload" /> Upload Image
-                                    </Button>
+                        <Upload {...this.uploadProps}
+                            onChange={(info) => {
+                                const { status } = info.file;
+                                console.log(info, 'image');
+                                if (info.fileList.length > 0) {
+                                    that.setState({ imageFile: info.file })
+                                }
+                                else {
+                                    that.setState({ imageFile: {} })
+                                }
+                            }}
+                            beforeUpload={this.beforeUploadEvent.bind(this)}>
+                            {
+                                Object.keys(that.state.imageFile).length > 0 ? null : (
+                                    <Button>
+                                        <Icon type="upload" /> Upload Image
+                               </Button>
+                                )
+                            }
                         </Upload>
 
                     </div>
@@ -99,7 +120,7 @@ class SpecialOfferModal extends Component {
 
                     </div>
                 </div>
-            </Modal>
+            </Modal >
         )
     }
 }
