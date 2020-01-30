@@ -26,7 +26,8 @@ export function addService(service) {
         };
         axios(options)
             .then((data) => {
-                console.log(data.data, "Service added successfully.")
+                console.log(data.data.result, "Service added successfully.");
+                dispatch({ type: ActionTypes.ADD_SERVICE, payload: data.data.result })
                 swal.fire(
                     'Success!',
                     data.data.message,

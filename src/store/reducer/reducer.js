@@ -20,6 +20,14 @@ export default (state = INITIAL_STATE, action) => {
                 ...state,
                 services: action.payload
             };
+        case ActionTypes.ADD_SERVICE:
+            let updatedServices = state.services.slice(0);
+            updatedServices.push(action.payload);
+            return {
+                ...state,
+                services: updatedServices
+            };
+
 
         default:
             return state;
