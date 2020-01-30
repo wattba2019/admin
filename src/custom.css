@@ -1,148 +1,146 @@
-
 .button{
-border:0.5px solid #EC5F59;
-border-radius: 5px;
-width: 60%;
-height: 40px;   
-position: relative;
-background-color: rgba(241, 90,103, 1);
-background-image: linear-gradient(#E96A69, #F45671);
-}
-.buttonAdd{
     border:0.5px solid #EC5F59;
     border-radius: 5px;
-    width: 15%;
+    width: 60%;
     height: 40px;   
     position: relative;
     background-color: rgba(241, 90,103, 1);
     background-image: linear-gradient(#E96A69, #F45671);
     }
-.buttonSave{
+    .buttonAdd{
         border:0.5px solid #EC5F59;
         border-radius: 5px;
         width: 15%;
         height: 40px;   
-     /* top: 50; */
         position: relative;
         background-color: rgba(241, 90,103, 1);
         background-image: linear-gradient(#E96A69, #F45671);
-}
-    
-
-.buttonmatter{
-color: white;
-cursor: pointer;
-}
-
-.buttonsidebar{
-    border-top:0.5px solid #EC5F59;
-    border-radius: 5px;
-    width: 60%;
-    height: 40px;   
-    position: relative;
-    /* background-color: rgba(241, 90,103, 1); */
-    /* background-image: linear-gradient(#E96A69, #F45671); */
-    cursor: pointer;
-}
-.buttonsidebar:hover{
-    background-color: rgba(199, 174, 176, 0.2);
-    cursor: pointer;
-}
-
-
-.textLink{
-color:#007BFE;
-/* text-decoration: none; */
-}
-
-.textLink:hover{
-color:  rgb(2, 90, 184);;
-cursor: pointer;
-text-decoration: underline;
-}
-
-.sideBarBackGroud{
-    background-color: rgba(241, 90,103, 1);
-    background-image: linear-gradient(#D95A4F, #F45671);
-    }
-    
-.drawerBackground {
-    width: 100%;
-}
-    
-.drawerBackgroundnested {
-    /* background-color:white;
-    width: 100px;
-    height: 100px;
-    border-radius: 50px;
-    margin: 0 auto; */
-
-    width: 100px;
-    height:100px;
-    border-radius: 50%;
-    background: white;
-}
-   
-.profileinputnone {
-    display: none;
-    cursor: pointer;
-   }
-   
-   .profileImage {
-     /* height:90%;
-     width: 90%;
-     border-radius: 50px; */
-     margin-top: 4%;
-     width: 90px;
-     height: 90px;
-     border-radius: 50%;
-     
-    }
-   
-    .profileImageupload {
-     background-color: whitesmoke;
-     height:35%;
-     width: 35%;
-     position: relative;
-     top: -32%;
-     left: 38%;
-     border-radius: 80px;
-     justify-content: center;
-     align-items: center;
-    }
-
-
-    .cardshadow{
-        padding: 10px;
-        color: white;
-        box-shadow: 2px 2px 8px #aaaaaa;
-
-        /* opacity: 0.4; */
         }
-
-
-    .boxShadow{
-        -webkit-box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
-        -moz-box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
-        box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
+    .buttonSave{
+            border:0.5px solid #EC5F59;
+            border-radius: 5px;
+            width: 15%;
+            height: 40px;   
+         /* top: 50; */
+            position: relative;
+            background-color: rgba(241, 90,103, 1);
+            background-image: linear-gradient(#E96A69, #F45671);
+    }
         
-        }
-        
-    .cardshadowWithButton{
-        color: white;
-        box-shadow: 2px 2px 8px #aaaaaa;
+    
+    .buttonmatter{
+    color: white;
+    cursor: pointer;
     }
-
-            
-    .cardButtonBorder{
-        border-top:1px solid #C3C3C4;
-    }
-            
-    .cardButtonBorderRight{
-        border-right:1px solid #C3C3C4;
-    }
-
-    .cardButtonBorder:hover{
+    
+    .buttonsidebar{
+        border-top:0.5px solid #EC5F59;
+        border-radius: 5px;
+        width: 60%;
+        height: 40px;   
+        position: relative;
+        /* background-color: rgba(241, 90,103, 1); */
+        /* background-image: linear-gradient(#E96A69, #F45671); */
         cursor: pointer;
     }
-
+    .buttonsidebar:hover{
+        background-color: rgba(199, 174, 176, 0.2);
+        cursor: pointer;
+    }
+    
+    
+    .textLink{
+    color:#007BFE;
+    /* text-decoration: none; */
+    }
+    
+    .textLink:hover{
+    color:  rgb(2, 90, 184);;
+    cursor: pointer;
+    text-decoration: underline;
+    }
+    
+    .sideBarBackGroud{
+        background-color: rgba(241, 90,103, 1);
+        background-image: linear-gradient(#D95A4F, #F45671);
+        }
+        
+    .drawerBackground {
+        width: 100%;
+    }
+        
+    .drawerBackgroundnested {
+        /* background-color:white;
+        width: 100px;
+        height: 100px;
+        border-radius: 50px;
+        margin: 0 auto; */
+    
+        width: 100px;
+        height:100px;
+        border-radius: 50%;
+        background: white;
+    }
+       
+    .profileinputnone {
+        display: none;
+        cursor: pointer;
+       }
+       
+       .profileImage {
+         /* height:90%;
+         width: 90%;
+         border-radius: 50px; */
+         margin-top: 4%;
+         width: 90px;
+         height: 90px;
+         border-radius: 50%;
+         
+        }
+       
+        .profileImageupload {
+         background-color: whitesmoke;
+         height:35%;
+         width: 35%;
+         position: relative;
+         top: -32%;
+         left: 38%;
+         border-radius: 80px;
+         justify-content: center;
+         align-items: center;
+        }
+    
+    
+        .cardshadow{
+            padding: 10px;
+            color: white;
+            box-shadow: 2px 2px 8px #aaaaaa;
+    
+            /* opacity: 0.4; */
+            }
+    
+    
+        .boxShadow{
+            -webkit-box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
+            -moz-box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
+            box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
+            
+            }
+            
+        .cardshadowWithButton{
+            color: white;
+            box-shadow: 2px 2px 8px #aaaaaa;
+        }
+    
+                
+        .cardButtonBorder{
+            border-top:1px solid #C3C3C4;
+        }
+                
+        .cardButtonBorderRight{
+            border-right:1px solid #C3C3C4;
+        }
+    
+        .cardButtonBorder:hover{
+            cursor: pointer;
+        }
