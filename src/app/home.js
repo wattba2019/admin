@@ -152,8 +152,8 @@ class Home extends Component {
                             />
                             {/* <Bookings /> */}
                             {/* <Services /> */}
-                            <StyleList />
-                            {/* <SpecialOffers /> */}
+                            {/* <StyleList /> */}
+                            <SpecialOffers />
                         </div>
                     </div>
                 </div>
