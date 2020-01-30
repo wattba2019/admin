@@ -11,6 +11,8 @@ export function setUserCredentials(userCredentials) {
 }
 
 
+/* Actions for Services */
+
 export function addService(service) {
     return dispatch => {
         console.log('inside action', service);
@@ -110,4 +112,62 @@ export function updateService(service, indexToEdit) {
 }
 
 
-//servicesget
+/* Actions for Services */
+
+
+
+
+
+
+/* Actions for Special Offer */
+
+export function addSpecialOffer(specialOffer) {
+    return dispatch => {
+        console.log('specialOffer', specialOffer);
+        var bodyFormData = new FormData();
+        bodyFormData.append('packageName', specialOffer.offerName);
+        bodyFormData.append('packageDescription', specialOffer.offerDescription);
+        bodyFormData.append('price', specialOffer.price);
+        bodyFormData.append('imgs', specialOffer.imageFile);
+        bodyFormData.append('userId', specialOffer.userId);
+
+
+        var options = {
+            method: 'POST',
+            url: `${baseURL.baseURL}/packagesandoffers/add/`,
+            headers:
+            {
+                'cache-control': 'no-cache',
+                "Allow-Cross-Origin": '*',
+            },
+            data: bodyFormData
+        };
+        axios(options)
+            .then((data) => {
+                console.log(data, "Special offer added successfully.");
+                dispatch({ type: ActionTypes.ADD_SPECIAL_OFFER, payload: data.data.result })
+                swal.fire(
+                    'Success!',
+                    data.data.message,
+                    'success'
+                )
+            }).catch((err) => {
+                console.log(err.response.data.message, "ERROR_ON_SAVING")
+                // alert(err.response.data.message)
+                swal.fire(
+                    'Error!',
+                    'Something went wrong.',
+                    'error'
+                )
+
+            })
+    }
+}
+
+
+
+
+
+
+
+

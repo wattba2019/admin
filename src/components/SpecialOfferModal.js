@@ -112,11 +112,11 @@ class SpecialOfferModal extends Component {
 
                     <div style={{ marginTop: 10, display: "flex", height: 50, flexDirection: "row", alignItems: "center", justifyContent: "center", alignItems: "center", }}>
 
-                        <button className="buttonAdd" style={{ minWidth: 80, width: "35%", margin: "1%" }} onClick={this.signin} >
-                            <span className="buttonmatter" style={{ fontSize: 15, }}>Save</span>
+                        <button className="buttonAdd" style={{ minWidth: 80, width: "35%", margin: "1%" }} onClick={() => that.addSpecialOffer()} >
+                            <span className="buttonmatter" style={{ fontSize: 15, }}>Add Special Offer</span>
                         </button>
 
-                        <button type="button" class="btn btn-light" style={{ width: "35%", margin: "1%", minWidth: 80, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => that.setModal2Visible(true)}>Edit Service</button>
+                        <button type="button" class="btn btn-light" style={{ width: "35%", margin: "1%", minWidth: 80, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => that.setModal2Visible(false)}>Cancel</button>
 
                     </div>
                 </div>

@@ -5,7 +5,8 @@ const INITIAL_STATE = {
     bseUrl: baseURL.baseURL,
     userProfile: {},
     currentLocation: null,
-    services: []
+    services: [],
+    specialPackage: []
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -35,6 +36,15 @@ export default (state = INITIAL_STATE, action) => {
                 ...state,
                 services: editedServices
             };
+
+        case ActionTypes.ADD_SPECIAL_OFFER:
+            let updatedSpecialPackage = state.specialPackage.slice(0);
+            updatedSpecialPackage.push(action.payload);
+            return {
+                ...state,
+                specialPackage: updatedSpecialPackage
+            };
+
 
 
         default:
