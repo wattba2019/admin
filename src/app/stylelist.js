@@ -10,11 +10,24 @@ import Loader from 'react-loader-spinner'
 import swal from 'sweetalert2';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoMdCheckmark } from 'react-icons/io';
+import { MdDeleteForever } from 'react-icons/md';
 // import Modal from 'react-responsive-modal';
 import { Button, DatePicker, version, Modal, Input, TimePicker } from "antd";
 import TextareaAutosize from 'react-textarea-autosize';
 
 import "antd/dist/antd.css";
+
+
+import { Upload, Icon, } from 'antd';
+
+function getBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
 
 const { Search } = Input;
 
@@ -27,8 +40,32 @@ class StyleList extends Component {
             showerror: false,
             email: "",
             modal2Visible: true,
+            weekDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+            serviceNameFieldQty: [1],
+
+            previewVisible: false,
+            previewImage: '',
+            fileList: [],
         }
     }
+
+
+    handleCancel = () => this.setState({ previewVisible: false });
+
+    handlePreview = async file => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+
+        this.setState({
+            previewImage: file.url || file.preview,
+            previewVisible: true,
+        });
+    };
+
+    handleChange = ({ fileList }) => this.setState({ fileList });
+
+
     setModal2Visible(modal2Visible) {
         this.setState({ modal2Visible });
     }
@@ -36,8 +73,40 @@ class StyleList extends Component {
         console.log(time, timeString);
     }
 
+
+    addExtraService = (input, type, index) => {
+        console.log(input, type, index, "DATA")
+    }
+
+
+    addExtraServiceField = () => {
+        let data = this.state.serviceNameFieldQty
+
+        // data.length >= 12 ? null : uploadButton
+
+
+        if (data.length <= 7) {
+            data.push(1)
+        }
+        this.setState({ serviceNameFieldQty: data });
+    }
+
+    delserviceField = (index) => {
+        let data = this.state.serviceNameFieldQty
+        data.splice(index, 1)
+        this.setState({ serviceNameFieldQty: data });
+    }
+
+
     render() {
-        const { open, email } = this.state;
+        const { previewVisible, previewImage, fileList } = this.state;
+        const { open, email, weekDays, serviceNameFieldQty } = this.state;
+        const uploadButton = (
+            <div>
+                <Icon type="plus" />
+                <div className="ant-upload-text">Upload</div>
+            </div>
+        );
         return (
             <div style={{
                 display: "flex", flexDirection: "column", flex: 1, width: "100%", justifyContent: "center", alignItems: "center",
@@ -196,7 +265,7 @@ class StyleList extends Component {
                         onOk={() => this.setModal2Visible(false)}
                         onCancel={() => this.setModal2Visible(false)}
                         bodyStyle={{ height: 600 }}
-                        width={"60%"}
+                        width={"75%"}
                         bodyStyle={{ padding: 0, }}
                     >
                         <div style={{ display: "flex", flex: 1, width: "100%", flexDirection: "column", fontSize: "1.1vw", fontWeight: "bold", background: "red" }}>
@@ -209,8 +278,9 @@ class StyleList extends Component {
                                     <div style={{ fontSize: 18 }}>
                                         New Stylist
                                      </div>
+
                                     {/* Full Name */}
-                                    <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center" }}>
+                                    <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", marginTop: 10, }}>
                                         <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
                                             <div style={{ width: "70%", }}>
                                                 <input type="text" className="form-control" placeholder=" Full Name" aria-label=" Full Name" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
@@ -225,7 +295,6 @@ class StyleList extends Component {
                                         </div>
 
                                         <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", }}>
-
                                             <div style={{ display: "flex", flex: 1, margin: "1.5%", borderRadius: 25 }} >
                                                 <TextareaAutosize style={{ width: "100%" }} maxRows={8} minRows={4} />
                                             </div>
@@ -234,106 +303,173 @@ class StyleList extends Component {
 
                                     {/* working days */}
                                     <div style={{
-                                        display: "flex", flex: 1, flexDirection: "row",
+                                        display: "flex", flex: 1, flexDirection: "row", height: 500,
                                         // background: "red"
                                     }}>
 
                                         <div style={{
-                                            display: "flex", flexDirection: "column", flex: 1.5,
-                                            // background: "green"
+                                            display: "flex", flexDirection: "column", flex: 1.5, height: 300, marginTop: 10
+                                            // background: "red"
                                         }}>
-                                            <p style={{ fontSize: 14 }}>Working Days</p>
-
-                                            <div style={{ display: "flex", margin: "2%", flex: 0.5, color: "black", flexDirection: "row", justifyContent: "space-between", alignItems: "center", }}>
-                                                <div style={{ fontSize: 14, fontWeight: "normal" }}>
-                                                    Monday
+                                            <div style={{
+                                                display: "flex",
+                                                // background: "yellow"
+                                            }}>
+                                                <div style={{ display: "flex", flex: 2 }}>
+                                                    <p style={{ fontSize: 14 }}>Working Days</p>
                                                 </div>
-                                                <div style={{ display: "flex", height: 20, width: 20, backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                                    <IoMdCheckmark style={{ color: "white", }} />
+                                                <div style={{ display: "flex", flex: 1 }}>
                                                 </div>
-                                            </div>
-
-                                            <div style={{ display: "flex", margin: "2%", flex: 0.5, color: "black", flexDirection: "row", justifyContent: "space-between", alignItems: "center", }}>
-                                                <div style={{ fontSize: 14, fontWeight: "normal" }}>
-                                                    Tuesday
-                                                </div>
-                                                <div style={{ display: "flex", height: 20, width: 20, backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                                    <IoMdCheckmark style={{ color: "white", }} />
+                                                <div style={{ display: "flex", flex: 3 }}>
+                                                    <p style={{ fontSize: 14 }}>Break</p>
                                                 </div>
                                             </div>
+                                            {
+                                                weekDays.map((key, index) => {
+                                                    return (
+                                                        <div key={index} style={{
+                                                            display: "flex", flex: 1, color: "black", flexDirection: "row", justifyContent: "space-between", alignItems: "center", height: 30,
+                                                            // background: "green"
+                                                        }}>
+                                                            {/* Day */}
+                                                            <div style={{
+                                                                display: "flex", flex: 2, fontSize: 14, fontWeight: "normal",
+                                                                // background: "orange"
+                                                            }}>
+                                                                {key}
+                                                            </div>
 
-                                            <div style={{ display: "flex", margin: "2%", flex: 0.5, color: "black", flexDirection: "row", justifyContent: "space-between", alignItems: "center", }}>
-                                                <div style={{ fontSize: 14, fontWeight: "normal" }}>
-                                                    Wednesday
-                                                </div>
-                                                <div style={{ display: "flex", height: 20, width: 20, backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                                    <IoMdCheckmark style={{ color: "white", }} />
-                                                </div>
-                                            </div>
+                                                            {/* CheckBox */}
 
-                                            <div style={{ display: "flex", margin: "2%", flex: 0.5, color: "black", flexDirection: "row", justifyContent: "space-between", alignItems: "center", }}>
-                                                <div style={{ fontSize: 14, fontWeight: "normal" }}>
-                                                    Thursday
-                                                </div>
-                                                <div style={{ display: "flex", height: 20, width: 20, backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                                    <IoMdCheckmark style={{ color: "white", }} />
-                                                </div>
-                                            </div>
+                                                            <div style={{ display: "flex", flex: 1, fontWeight: "normal", justifyContent: "center", alignItems: "center", }}>
+                                                                <div style={{ display: "flex", height: 20, width: 20, backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
+                                                                    <IoMdCheckmark style={{ color: "white", }} />
+                                                                </div>
+                                                            </div>
 
-                                            <div style={{ display: "flex", margin: "2%", flex: 0.5, color: "black", flexDirection: "row", justifyContent: "space-between", alignItems: "center", }}>
-                                                <div style={{ fontSize: 14, fontWeight: "normal" }}>
-                                                    Friday
-                                                </div>
-                                                <div style={{ display: "flex", height: 20, width: 20, backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                                    <IoMdCheckmark style={{ color: "white", }} />
-                                                </div>
-                                            </div>
+                                                            {/* Time Picker */}
 
-                                            <div style={{ display: "flex", margin: "2%", flex: 0.5, color: "black", flexDirection: "row", justifyContent: "space-between", alignItems: "center", }}>
-                                                <div style={{ fontSize: 14, fontWeight: "normal" }}>
-                                                    Saturday
-                                                </div>
-                                                <div style={{ display: "flex", height: 20, width: 20, backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                                    <IoMdCheckmark style={{ color: "white", }} />
-                                                </div>
-                                            </div>
-
-                                            <div style={{ display: "flex", margin: "2%", flex: 0.5, color: "black", flexDirection: "row", justifyContent: "space-between", alignItems: "center", }}>
-                                                <div style={{ fontSize: 14, fontWeight: "normal" }}>
-                                                    Sunday
-                                                </div>
-                                                <div style={{ display: "flex", height: 20, width: 20, backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                                    <IoMdCheckmark style={{ color: "white", }} />
-                                                </div>
-                                            </div>
-
+                                                            <div style={{
+                                                                display: "flex", flex: 3, flexDirection: "row", justifyContent: "center", alignItems: "center", height: 40,
+                                                                // background: "yellow"
+                                                            }}>
+                                                                <TimePicker
+                                                                    style={{ width: 95, margin: "1%" }}
+                                                                    use12Hours format="h:mm a"
+                                                                    placeholder={"Time"}
+                                                                    onChange={this.onChange} />
+                                                                <span style={{ margin: "1%", fontWeight: "normal" }}>to</span>
+                                                                <TimePicker
+                                                                    style={{ width: 95, margin: "1%" }}
+                                                                    use12Hours format="h:mm a"
+                                                                    placeholder={"Time"}
+                                                                    onChange={this.onChange} />
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                })
+                                            }
                                         </div>
-
-                                        <div style={{
-                                            display: "flex", flex: 2, flexDirection: "column", marginLeft: "3.5%",
-                                            background: "grey"
-                                        }}>
-                                            <p style={{ fontSize: 14 }}>Break</p>
-                                            <div>
-                                                <div style>
-                                                    <TimePicker use12Hours format="h:mm a" onChange={this.onChange} />
-                                                </div>
-                                            </div>
-                                        </div>
-
                                     </div>
-
                                 </div>
 
                                 {/* 2nd card */}
 
-                                <div style={{ display: "flex", flex: 1.7, background: "#FFFFFF" }}>
-                                    123
+                                <div style={{
+                                    display: "flex", flexDirection: "column", flex: 1.7, padding: "2.5%",
+                                    background: "#FFFFFF"
+                                }}>
+                                    <div style={{
+                                        display: "flex", flex: 10, flexDirection: "column",
+                                        // background: "red"
+                                    }}>
+
+                                        <div style={{ fontSize: 18 }}>
+                                            Services provided
+                                        </div>
+
+                                        {
+                                            serviceNameFieldQty.map((key, index) => {
+                                                return (
+                                                    <div key={index} style={{
+                                                        display: "flex", width: "100%", justifyContent: "center", alignItems: "center", marginTop: 10, minWidth: "80%",
+                                                        // background: "red"
+                                                    }}>
+                                                        <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
+                                                            <div style={{ width: "95%", }}>
+                                                                <input type="text" className="form-control" placeholder="Service Name" aria-label="Service Name" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
+                                                            </div>
+                                                        </div>
+                                                        <div style={{ display: "flex", height: 28, width: 28, backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
+                                                            <IoMdCheckmark style={{ color: "white", }} />
+                                                        </div>
+                                                        <div onClick={() => this.delserviceField(index)} style={{ display: "flex", height: 28, width: 28, backgroundColor: "#EC5F59", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5, marginLeft: "5%" }}>
+                                                            {/* <IoMdCheckmark style={{ color: "white", }} /> */}
+                                                            <MdDeleteForever className="buttonmatter" style={{ color: "white", fontSize: 20, }} />
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+
+                                    </div>
+
+                                    <div style={{
+                                        display: "flex", flex: 1, flexDirection: "column",
+                                        // background: "green"
+                                    }}>
+                                        <div style={{ marginTop: 10, display: "flex", flexDirection: "row", alignItems: "center" }}>
+                                            <div onClick={this.addExtraServiceField} className="btn btn-light" style={{ display: "flex", backgroundColor: "#EC5F59", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
+                                                <AiOutlinePlus style={{ color: "#ffffff", fontSize: 25 }} />
+                                            </div>
+                                            <div style={{ marginLeft: "2%", fontSize: 14 }}>
+                                                Add Extra Service
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
                                 {/* 3rd card */}
 
-                                <div style={{ display: "flex", flex: 2, background: "#F7F8F8" }}>
-                                    123
+                                <div style={{
+                                    display: "flex", flexDirection: "column", flex: 2, padding: "2.5%",
+                                    background: "#F7F8F8"
+                                }}>
+                                    <div style={{
+                                        display: "flex", flex: 10, flexDirection: "column",
+                                        // background: "red"
+                                    }}>
+
+                                        <div style={{ fontSize: 18 }}>
+                                            Gallery
+                                        </div>
+
+                                        <div className="clearfix" style={{ marginTop: 10, }}>
+                                            <Upload
+                                                multiple={true}
+                                                showUploadList={{ showDownloadIcon: false }}
+                                                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                                listType="picture-card"
+                                                fileList={fileList}
+                                                onPreview={this.handlePreview}
+                                                onChange={this.handleChange}
+                                            >
+                                                {fileList.length >= 12 ? null : uploadButton}
+                                            </Upload>
+                                            <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+                                                <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                                            </Modal>
+                                        </div>
+
+
+                                    </div>
+
+                                    {/* <div style={{
+                                        display: "flex", flex: 1, flexDirection: "column",
+                                        background: "green"
+                                    }}>
+                                        Footer
+                                    </div> */}
                                 </div>
                             </div>
 
