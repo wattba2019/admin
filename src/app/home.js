@@ -25,6 +25,7 @@ class Home extends Component {
         this.state = {
             loader: false,
             showerror: false,
+            route:"bookings"
         }
     }
 

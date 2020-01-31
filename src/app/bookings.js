@@ -15,6 +15,7 @@ import BookingRaw from '../components/BookingRaw';
 import "antd/dist/antd.css";
 import { DatePicker } from 'antd';
 import { Table } from 'antd';
+import ReactSwipe from 'react-swipe';
 
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 class Bookings extends Component {
@@ -23,25 +24,37 @@ class Bookings extends Component {
         this.state = {
             loader: false,
             showerror: false,
-            open: false,
-            email: ""
+            bookingDataWithDate: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1,]
+
         }
     }
 
-    onOpenModal = () => {
-        this.setState({ open: true });
-    };
-
-    onCloseModal = () => {
-        this.setState({ open: false });
-    };
     datePicker = (date, dateString) => {
         console.log(date, dateString);
     }
 
     render() {
-        const { open, email } = this.state;
+        const { bookingDataWithDate } = this.state
+        let reactSwipeEl;
+
         return (
+            // <div>
+            // <ReactSwipe
+            //     className="carousel"
+            //     swipeOptions={{ continuous: false }}
+            //     ref={el => (reactSwipeEl = el)}
+            // >
+            //     <div>
+
+
+            //     </div>
+            //     {/* <div>PANE 2</div>
+            //     <div>PANE 3</div> */}
+            // </ReactSwipe>
+            //     {/* <button onClick={() => reactSwipeEl.next()}>Next</button> */}
+            //     {/* <button onClick={() => reactSwipeEl.prev()}>Previous</button> */}
+            // </div>
+
             <div style={{
                 display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center",
                 // background: "yellow",
@@ -95,104 +108,117 @@ class Bookings extends Component {
                     <div style={{
                         display: "flex", justifyContent: "space-between", width: "15%", minWidth: 150, color: "#4A4A4A", paddingBottom: 5, fontSize: 11
                     }}>
-                        <a style={{ alignItems: "center", display: "flex", justifyContent: "center" }}>
+                        <a onClick={() => reactSwipeEl.next()} style={{ alignItems: "center", display: "flex", justifyContent: "center" }}>
                             <FaAngleLeft style={{ fontSize: 14, color: "#F45671" }} />
                             Previous Day</a>
-                        <a style={{ alignItems: "center", display: "flex", justifyContent: "center" }}>
+                        <a onClick={() => reactSwipeEl.prev()} style={{ alignItems: "center", display: "flex", justifyContent: "center" }}>
                             Next Day
-                        <FaAngleRight style={{ fontSize: 14, color: "#F45671" }} />
+                            <FaAngleRight style={{ fontSize: 14, color: "#F45671" }} />
                         </a>
                     </div>
 
-                    {/* Booking Table */}
 
-                    <div style={{
-                        display: "flex", flex: 1, width: "100%", marginTop: 15, marginBottom: 25
-                    }}>
-                        <div className="boxShadow" style={{ flex: 8, background: "#fff", justifyContent: "flex-start", alignItems: "flex-start", display: "flex", padding: 15, flexDirection: "column" }}>
+                    <ReactSwipe
+                        className="carousel"
+                        swipeOptions={{ continuous: false }}
+                        ref={el => (reactSwipeEl = el)}
+                    >
+                        {/* Booking Table */}
 
-                            <div style={{ fontWeight: "bold" }}>
-                                Friday, Nov 1 , 2019
-                            </div>
+                        {
+                            bookingDataWithDate.map((key, index) => {
+                                return (
+                                    <div key={index} style={{
+                                        display: "flex", flex: 1, marginTop: 15, marginBottom: 25
+                                    }}>
+                                        <div style={{ flex: 8, background: "#fff", justifyContent: "flex-start", alignItems: "flex-start", display: "flex", padding: 15, flexDirection: "column" }}>
 
-                            <div style={{ fontSize: 11 }}>
-                                Bookings
-                            </div>
+                                            <div style={{ fontWeight: "bold" }}>
+                                                Friday, Nov 1 , 2019
+                                            </div>
 
-                            <div style={{ marginTop: 15, width: "100%" }}>
-                                <table class="table table-striped table table-sm">
-                                    <tbody>
-                                        <BookingRaw
-                                            time="8:00 am" lock="#F45671"
-                                            name1="David ukwa" nameColor1="#49BE56"
-                                            name2="David ukwa" nameColor2="#49BE56"
-                                            name3="Simon ejilogo" nameColor3="#F45671"
-                                            name4="Simon ejilogo" nameColor4="#F45671"
-                                        />
-                                        <BookingRaw
-                                            time="9:00 am" lock="#49BE56" nameColor1="#49BE56" name1="David ukwa"
-                                            name2="David ukwa" nameColor2="#D9B70B"
-                                        />
-                                        <BookingRaw
-                                            time="10:00 am" lock="#49BE56"
-                                        />
-                                        <BookingRaw
-                                            time="11:00 am" lock="#49BE56"
-                                            name1="Simon ejilogo" nameColor1="#F45671"
-                                        />
-                                        <BookingRaw
-                                            time="12:00 am" lock="#49BE56"
-                                            name1="Simon ejilogo" nameColor1="#F45671"
-                                        />
-                                        <BookingRaw
-                                            time="1:00 pm" lock="#F45671"
-                                        />
-                                        <BookingRaw
-                                            time="2:00 pm" lock="#F45671"
-                                        />
-                                        <BookingRaw
-                                            time="3:00 pm" lock="#49BE56"
-                                        />
-                                        <BookingRaw
-                                            time="4:00 pm" lock="#49BE56" nameColor1="#F45671" name1="David ukwa"
-                                            name2="David ukwa" nameColor2="#F45671"
-                                            name3="Simon ejilogo" nameColor3="#F45671"
-                                        />
-                                        <BookingRaw
-                                            time="5:00 pm" lock="#49BE56" nameColor1="#F45671" name1="David ukwa"
+                                            <div style={{ fontSize: 11 }}>
+                                                Bookings
+                                            </div>
 
-                                        />
-                                        <BookingRaw
-                                            time="6:00 pm" lock="#49BE56" nameColor1="#F45671" name1="David ukwa"
-                                        />
-                                        <BookingRaw
-                                            time="7:00 pm" lock="#49BE56"
-                                        />
-                                        <BookingRaw
-                                            time="8:00 pm" lock="#F45671" nameColor1="#F45671" name1="David ukwa"
-                                            nameColor2="#F45671" name2="David ukwa"
-                                        />
-                                        <BookingRaw
-                                            time="9:00 pm" lock="#F45671"
-                                        />
-                                        <BookingRaw
-                                            time="10:00 pm" lock="#F45671"
-                                        />
-                                    </tbody>
-                                </table>
+                                            <div style={{ marginTop: 15, width: "100%" }}>
+                                                <table class="table table-striped table table-sm">
+                                                    <tbody>
+                                                        <BookingRaw
+                                                            time="8:00 am" lock="#F45671"
+                                                            name1="David ukwa" nameColor1="#49BE56"
+                                                            name2="David ukwa" nameColor2="#49BE56"
+                                                            name3="Simon ejilogo" nameColor3="#F45671"
+                                                            name4="Simon ejilogo" nameColor4="#F45671"
+                                                        />
+                                                        <BookingRaw
+                                                            time="9:00 am" lock="#49BE56" nameColor1="#49BE56" name1="David ukwa"
+                                                            name2="David ukwa" nameColor2="#D9B70B"
+                                                        />
+                                                        <BookingRaw
+                                                            time="10:00 am" lock="#49BE56"
+                                                        />
+                                                        <BookingRaw
+                                                            time="11:00 am" lock="#49BE56"
+                                                            name1="Simon ejilogo" nameColor1="#F45671"
+                                                        />
+                                                        <BookingRaw
+                                                            time="12:00 am" lock="#49BE56"
+                                                            name1="Simon ejilogo" nameColor1="#F45671"
+                                                        />
+                                                        <BookingRaw
+                                                            time="1:00 pm" lock="#F45671"
+                                                        />
+                                                        <BookingRaw
+                                                            time="2:00 pm" lock="#F45671"
+                                                        />
+                                                        <BookingRaw
+                                                            time="3:00 pm" lock="#49BE56"
+                                                        />
+                                                        <BookingRaw
+                                                            time="4:00 pm" lock="#49BE56" nameColor1="#F45671" name1="David ukwa"
+                                                            name2="David ukwa" nameColor2="#F45671"
+                                                            name3="Simon ejilogo" nameColor3="#F45671"
+                                                        />
+                                                        <BookingRaw
+                                                            time="5:00 pm" lock="#49BE56" nameColor1="#F45671" name1="David ukwa"
 
-                            </div>
-                        </div>
-                        <div style={{ flex: 2, minWidth: 200, justifyContent: "flex-end", display: "flex", flexDirection: "row", }}>
+                                                        />
+                                                        <BookingRaw
+                                                            time="6:00 pm" lock="#49BE56" nameColor1="#F45671" name1="David ukwa"
+                                                        />
+                                                        <BookingRaw
+                                                            time="7:00 pm" lock="#49BE56"
+                                                        />
+                                                        <BookingRaw
+                                                            time="8:00 pm" lock="#F45671" nameColor1="#F45671" name1="David ukwa"
+                                                            nameColor2="#F45671" name2="David ukwa"
+                                                        />
+                                                        <BookingRaw
+                                                            time="9:00 pm" lock="#F45671"
+                                                        />
+                                                        <BookingRaw
+                                                            time="10:00 pm" lock="#F45671"
+                                                        />
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
 
-                        </div>
-                    </div>
+                                        {/* <div style={{ flex: 8, background: "#fff", justifyContent: "flex-start", alignItems: "flex-start", display: "flex", padding: 15, flexDirection: "column" }}>
 
+                                        </div> */}
+                                    </div>
+                                )
+                            })
+                        }
+
+
+                    </ReactSwipe>
                 </div>
-
-
-
             </div>
+
+
         )
     }
 }

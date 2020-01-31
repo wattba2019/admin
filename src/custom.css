@@ -156,17 +156,19 @@ text-decoration: underline;
     
 }
 
-            .boxShadow{
-        -webkit-box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
-        -moz-box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
-        box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
+.boxShadow{
+    /* box-shadow: 2px 2px 30px 2px  #aaaaaa; */
+    /* box-shadow: 2px 2px 8px #aaaaaa; */
+    
+    -webkit-box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
+     -moz-box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
+     box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
+}
         
-        }
-        
-    .cardshadowWithButton{
-        color: white;
-        box-shadow: 2px 2px 8px #aaaaaa;
-    }
+.cardshadowWithButton{
+    color: white;
+    box-shadow: 2px 2px 8px #aaaaaa;
+ }
 
             
     .cardButtonBorder{
