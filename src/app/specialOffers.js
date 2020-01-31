@@ -1,6 +1,6 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
-import { setUserCredentials } from "../store/action/action";
+import { getSpecialPackages, addSpecialOffer } from "../store/action/action";
 import {
     Link
 } from 'react-router-dom';
@@ -12,7 +12,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { IoMdCheckmark } from 'react-icons/io';
 import { Button, DatePicker, version, Modal, Upload, Icon, message } from "antd";
 import SpecialOfferModal from '../components/SpecialOfferModal';
-import { addSpecialOffer } from "../store/action/action";
+import SpecialOfferCard from '../components/SpecialOfferCard';
 
 
 import "antd/dist/antd.css";
@@ -32,6 +32,8 @@ class SpecialOffers extends Component {
 
         }
         this.addSpecialOffer = this.addSpecialOffer.bind(this);
+
+        this.props.getSpecialPackages((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254');
     }
     setModal2Visible(modal2Visible) {
         this.setState({ modal2Visible });
@@ -50,14 +52,15 @@ class SpecialOffers extends Component {
         this.setState({
             offerName: '',
             price: '',
-            offerDescription:'',
+            offerDescription: '',
             imageFile: {},
             modal2Visible: false
         })
     }
 
     render() {
-        const { open, email } = this.state;
+        // const { open, email } = this.state;
+        const { specialPackages } = this.props;
         return (
             <div style={{
                 display: "flex", flexDirection: "column", flex: 1, width: "100%", justifyContent: "center", alignItems: "center",
@@ -76,48 +79,7 @@ class SpecialOffers extends Component {
 
                 </div>
 
-                <div style={{ display: "flex", flex: 8, marginTop: "3%" }}>
-                    {/* card start */}
-                    <div className="cardshadow" style={{
-                        display: "flex", height: "14vw", width: "16vw", minWidth: 230, minHeight: 240, margin: "3%",
-                        backgroundColor: "white", flexDirection: "column"
-                    }}>
-
-                        <div style={{ display: "flex", flex: 0.5, padding: 5, color: "black", fontWeight: "bold", flexDirection: "row", justifyContent: "space-between", alignItems: "center", }}>
-                            <div>
-                                Special Offer 1
-                            </div>
-                            <div style={{ display: "flex", backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                <IoMdCheckmark style={{ color: "white", }} />
-                            </div>
-                        </div>
-
-                        <div style={{ display: "flex", flex: 0.5, color: "black", fontWeight: "-moz-initial", fontSize: 24 }}>
-                            $25
-                        </div>
-
-                        <div style={{ display: "flex", flex: 0.5, color: "#535353", marginTop: 5, textAlign: "left", marginTop: 10 }}>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text industry's
-                        </div>
-
-                        <div style={{ flex: 1.5, }}>
-                            <button type="button" class="btn btn-light" style={{ width: "100%", borderWidth: 0.5, borderColor: "grey" }} onClick={() => this.setModal2Visible(true)}>Edit Service</button>
-                        </div>
-                    </div>
-                    {/* card End */}
-
-                    {/* add button */}
-                    <div className="cardshadow" style={{
-                        display: "flex", height: "14vw", width: "16vw", minWidth: 230, minHeight: 240, margin: "3%",
-                        backgroundColor: "white", flexDirection: "column"
-                    }}>
-                        <div style={{ display: "flex", flex: 1, color: "black", fontWeight: "bold", flexDirection: "row", justifyContent: "center", alignItems: "center", }} onClick={() => this.setModal2Visible(true)} >
-                            <div class="btn btn-light" style={{ display: "flex", width: "35%", height: "35%", backgroundColor: "#E9E9EA", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                <AiOutlinePlus style={{ color: "#494949", fontSize: 25 }} />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <SpecialOfferCard specialPackages={specialPackages} />
 
                 <div>
                     <SpecialOfferModal modalState={this.state} setModal2Visible={this.setModal2Visible} that={this} />
@@ -131,7 +93,7 @@ function mapStateToProp(state) {
     return ({
         bseUrl: state.root.bseUrl,
         uid: state.root.userProfile._id,
-
+        specialPackages: state.root.specialPackages
     })
 }
 function mapDispatchToProp(dispatch) {
@@ -139,6 +101,10 @@ function mapDispatchToProp(dispatch) {
         addSpecialOffer: (specialOffer) => {
             dispatch(addSpecialOffer(specialOffer));
         },
+        getSpecialPackages: (userId) => {
+            dispatch(getSpecialPackages(userId));
+        },
+
     })
 }
 

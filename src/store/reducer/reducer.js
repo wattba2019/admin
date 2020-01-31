@@ -6,7 +6,7 @@ const INITIAL_STATE = {
     userProfile: {},
     currentLocation: null,
     services: [],
-    specialPackage: []
+    specialPackages: []
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -42,8 +42,16 @@ export default (state = INITIAL_STATE, action) => {
             updatedSpecialPackage.push(action.payload);
             return {
                 ...state,
-                specialPackage: updatedSpecialPackage
+                specialPackages: updatedSpecialPackage
             };
+
+        case ActionTypes.FETCHED_SPECIAL_PACKAGE:
+            return {
+                ...state,
+                specialPackages: action.payload
+            };
+
+
 
 
 

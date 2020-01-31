@@ -167,7 +167,34 @@ export function addSpecialOffer(specialOffer) {
 
 
 
+export function getSpecialPackages(userID) {
+    return dispatch => {
+        var options = {
+            method: 'GET',
+            url: `${baseURL.baseURL}/packagesandoffersget/${userID}`,
+            headers:
+            {
+                'cache-control': 'no-cache',
+                "Allow-Cross-Origin": '*',
+            }
+        };
+        axios(options)
+            .then((specialPackages) => {
+                console.log(specialPackages, 'fetched specialPackages');
+                dispatch({ type: ActionTypes.FETCHED_SPECIAL_PACKAGE, payload: specialPackages.data.data })
+            })
+            .catch((err) => {
+                console.log(err, "Error in fetching packages")
+                // alert(err.response.data.message)
+            })
+    }
+}
 
 
 
 
+
+
+
+
+/* Actions for Special Offer */
