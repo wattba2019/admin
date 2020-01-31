@@ -5,19 +5,14 @@ import {
     Link
 } from 'react-router-dom';
 import '../custom.css'
-import axios from 'axios';
-import Loader from 'react-loader-spinner'
-import swal from 'sweetalert2';
-import { AiOutlinePlus } from 'react-icons/ai';
-import { FaLock, FaAngleLeft, FaAngleRight } from 'react-icons/fa';
-import { IoMdCheckmark } from 'react-icons/io';
+import {  FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import BookingRaw from '../components/BookingRaw';
 import "antd/dist/antd.css";
 import { DatePicker } from 'antd';
-import { Table } from 'antd';
 import ReactSwipe from 'react-swipe';
 
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
+
 class Bookings extends Component {
     constructor(props) {
         super(props);
@@ -38,27 +33,10 @@ class Bookings extends Component {
         let reactSwipeEl;
 
         return (
-            // <div>
-            // <ReactSwipe
-            //     className="carousel"
-            //     swipeOptions={{ continuous: false }}
-            //     ref={el => (reactSwipeEl = el)}
-            // >
-            //     <div>
-
-
-            //     </div>
-            //     {/* <div>PANE 2</div>
-            //     <div>PANE 3</div> */}
-            // </ReactSwipe>
-            //     {/* <button onClick={() => reactSwipeEl.next()}>Next</button> */}
-            //     {/* <button onClick={() => reactSwipeEl.prev()}>Previous</button> */}
-            // </div>
-
             <div style={{
                 display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center",
-                // background: "yellow",
                 flexDirection: "column",
+                background: "#F7F8F8",
             }}>
                 {/* Headers */}
 
