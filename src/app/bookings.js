@@ -47,6 +47,8 @@ class Bookings extends Component {
                 // background: "yellow",
                 flexDirection: "column",
             }}>
+                {/* Headers */}
+
                 <div style={{
                     display: "flex", flex: 1, width: "90%", justifyContent: "space-between",
                     padding: 5,
@@ -62,11 +64,13 @@ class Bookings extends Component {
                         <button class="btn btn-light" style={{ minWidth: 140, width: "60%", margin: "2%" }} className="buttonAdd" onClick={this.signin} >
                             <span className="buttonmatter" style={{ fontSize: 12, }}>Refresh</span>
                         </button>
-                        <button type="button" class="btn btn-light" style={{ width: "60%", margin: "2%", borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => this.setModal2Visible(true)}>Export Bookings</button>
+                        <button type="button" class="btn btn-light" style={{ width: "60%", margin: "2%", borderWidth: 0.5, borderColor: "grey", height: 40 }}>Export Bookings</button>
                     </div>
                 </div>
 
+                {/* Body */}
 
+                {/* Date picker */}
 
                 <div style={{
                     display: "flex", flex: 1, width: "90%", justifyContent: "space-between",
@@ -85,33 +89,42 @@ class Bookings extends Component {
                     display: "flex", flex: 1, width: "90%",
                     paddingLeft: 15, flexDirection: "column"
                 }}>
+
+                    {/* Next and Previous Day */}
+
                     <div style={{
-                        display: "flex", justifyContent: "space-between", width: "15%",minWidth:150, color: "#4A4A4A", paddingBottom:5,fontSize:11
+                        display: "flex", justifyContent: "space-between", width: "15%", minWidth: 150, color: "#4A4A4A", paddingBottom: 5, fontSize: 11
                     }}>
-                        <a style={{alignItems: "center",display:"flex",justifyContent:"center"}}>
-                            <FaAngleLeft style={{ fontSize: 14, color:"#F45671"}} />
+                        <a style={{ alignItems: "center", display: "flex", justifyContent: "center" }}>
+                            <FaAngleLeft style={{ fontSize: 14, color: "#F45671" }} />
                             Previous Day</a>
-                        <a style={{alignItems: "center",display:"flex",justifyContent:"center"}}>
+                        <a style={{ alignItems: "center", display: "flex", justifyContent: "center" }}>
                             Next Day
-                        <FaAngleRight style={{ fontSize: 14,color:"#F45671" }} />
+                        <FaAngleRight style={{ fontSize: 14, color: "#F45671" }} />
                         </a>
                     </div>
+
+                    {/* Booking Table */}
+
                     <div style={{
-                        display: "flex", flex: 1, width: "100%",
+                        display: "flex", flex: 1, width: "100%", marginTop: 15, marginBottom: 25
                     }}>
                         <div className="boxShadow" style={{ flex: 8, background: "#fff", justifyContent: "flex-start", alignItems: "flex-start", display: "flex", padding: 15, flexDirection: "column" }}>
 
                             <div style={{ fontWeight: "bold" }}>
                                 Friday, Nov 1 , 2019
-                        </div>
+                            </div>
+
                             <div style={{ fontSize: 11 }}>
                                 Bookings
-                        </div>
+                            </div>
+
                             <div style={{ marginTop: 15, width: "100%" }}>
                                 <table class="table table-striped table table-sm">
                                     <tbody>
                                         <BookingRaw
-                                            time="8:00 am" lock="#F45671" nameColor1="#49BE56" name1="David ukwa"
+                                            time="8:00 am" lock="#F45671"
+                                            name1="David ukwa" nameColor1="#49BE56"
                                             name2="David ukwa" nameColor2="#49BE56"
                                             name3="Simon ejilogo" nameColor3="#F45671"
                                             name4="Simon ejilogo" nameColor4="#F45671"
@@ -119,8 +132,6 @@ class Bookings extends Component {
                                         <BookingRaw
                                             time="9:00 am" lock="#49BE56" nameColor1="#49BE56" name1="David ukwa"
                                             name2="David ukwa" nameColor2="#D9B70B"
-                                        // name3="Simon ejilogo" nameColor3="#49BE56"
-                                        // name4="Simon ejilogo" nameColor4="#F45671"
                                         />
                                         <BookingRaw
                                             time="10:00 am" lock="#49BE56"

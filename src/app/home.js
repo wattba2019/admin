@@ -42,117 +42,121 @@ class Home extends Component {
         const { } = this.state;
         return (
             <div>
-                <div style={{ display: "flex", flexBasis: "100%", backgroundColor: "#F7F8F8" }}>
-                    <div style={{ display: "flex", flexBasis: "15%", width: "15%", minWidth: 200, height: window.innerHeight }} className="sideBarBackGroud">
-                        <div style={{ flexBasis: "100%", marginTop: "10%" }}>
-                            <center>
-                                <div style={{ width: "50%", }} className="center">
-                                    <div>
-                                        <center>
-                                            <div className="drawerBackgroundnested" >
-                                                <img src={require('../../src/assets/noPhoto.jpg')} className="profileImage" />
-                                                <label htmlFor="inputGroupFile01" className="profileImageupload" style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
-                                                    <MdCameraEnhance style={{ color: "grey", fontSize: 18 }} />
-                                                </label>
-                                            </div>
-                                            <input
-                                                onChange={(e) =>
-                                                    this.imagePick(e.target.files[0])
-                                                }
-                                                type="file"
-                                                id="inputGroupFile01"
-                                                className="profileinputnone"
-                                            />
-                                        </center>
-                                    </div>
-                                </div>
-                                <div className="buttonsidebar" style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop: 20, width: "95%", height: 50, }}>
-                                    <div style={{ display: "flex", width: "90%", }}>
-                                        <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
-                                            <FaRegCalendarCheck style={{ color: "white", fontSize: 18, marginTop: 5 }} />
-                                        </div>
-                                        <div style={{ flex: 6, color: "white", fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}>
-                                            Bookings
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="buttonsidebar" style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "95%", height: 50, }}>
-                                    <div style={{ display: "flex", width: "90%", }}>
-                                        <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
-                                            <GiScissors style={{ color: "white", fontSize: 18, marginTop: 5 }} />
-                                        </div>
-                                        <div style={{ flex: 6, color: "white", fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}>
-                                            Services
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="buttonsidebar" style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "95%", height: 50, }}>
-                                    <div style={{ display: "flex", width: "90%", }}>
-                                        <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
-                                            <AiOutlineUser style={{ color: "white", fontSize: 18, marginTop: 5 }} />
-                                        </div>
-                                        <div style={{ flex: 6, color: "white", fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}>
-                                            Stylelists
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="buttonsidebar" style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "95%", height: 50, }}>
-                                    <div style={{ display: "flex", width: "90%", }}>
-                                        <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
-                                            <FiClock style={{ color: "white", fontSize: 18, marginTop: 5 }} />
-                                        </div>
-                                        <div style={{ flex: 6, color: "white", fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}>
-                                            Working Hours
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="buttonsidebar" style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "95%", height: 50, }}>
-                                    <div style={{ display: "flex", width: "90%", }}>
-                                        <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
-                                            <FaRegCalendarAlt style={{ color: "white", fontSize: 18, marginTop: 5 }} />
-                                        </div>
-                                        <div style={{ flex: 6, color: "white", fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}>
-                                            Working Calendar
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="buttonsidebar" style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "95%", height: 50, background: "white" }}>
-                                    <div style={{ display: "flex", width: "90%", }}>
-                                        <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
-                                            <AiFillGift style={{ color: "#EC5F59", fontSize: 18, marginTop: 5 }} />
-                                        </div>
-                                        <div style={{ flex: 6, fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}>
-                                            Special Offers
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div className="buttonsidebar" style={{ display: "flex", marginTop: "100%", alignItems: "center", justifyContent: "center", width: "100%", height: 50, }}>
-                                    <div style={{ display: "flex", width: "90%", }}>
-                                        <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
-                                            <GoSignOut style={{ color: "white", fontSize: 18, marginTop: 5 }} />
+                <div class="sidenav">
+                    <div style={{ flexBasis: "100%", marginTop: "10%" }}>
+                        <center>
+                            <div style={{ width: "50%", }} className="center">
+                                <div>
+                                    <center>
+                                        <div className="drawerBackgroundnested" >
+                                            <img src={require('../../src/assets/noPhoto.jpg')} className="profileImage" />
+                                            <label htmlFor="inputGroupFile01" className="profileImageupload" style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
+                                                <MdCameraEnhance style={{ color: "grey", fontSize: 18 }} />
+                                            </label>
                                         </div>
-                                        <div style={{ flex: 6, color: "white", fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}>
-                                            Sign out
-                                        </div>
-                                    </div>
+                                        <input
+                                            onChange={(e) =>
+                                                this.imagePick(e.target.files[0])
+                                            }
+                                            type="file"
+                                            id="inputGroupFile01"
+                                            className="profileinputnone"
+                                        />
+                                    </center>
                                 </div>
-                            </center>
-                        </div>
-                    </div >
+                            </div>
+                            <div className="buttonsidebar" style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop: 20, width: "95%", height: 50, }}>
+                                <div style={{ display: "flex", width: "90%", }}>
+                                    <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
+                                        <FaRegCalendarCheck style={{ color: "white", fontSize: 18, marginTop: 5 }} />
+                                    </div>
+                                    <div style={{ flex: 6, color: "white", fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}>
+                                        Bookings
+                                        </div>
+                                </div>
+                            </div>
+                            <div className="buttonsidebar" style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "95%", height: 50, }}>
+                                <div style={{ display: "flex", width: "90%", }}>
+                                    <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
+                                        <GiScissors style={{ color: "white", fontSize: 18, marginTop: 5 }} />
+                                    </div>
+                                    <div style={{ flex: 6, color: "white", fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}>
+                                        Services
+                                        </div>
+                                </div>
+                            </div>
+                            <div className="buttonsidebar" style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "95%", height: 50, }}>
+                                <div style={{ display: "flex", width: "90%", }}>
+                                    <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
+                                        <AiOutlineUser style={{ color: "white", fontSize: 18, marginTop: 5 }} />
+                                    </div>
+                                    <div style={{ flex: 6, color: "white", fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}>
+                                        Stylelists
+                                        </div>
+                                </div>
+                            </div>
+                            <div className="buttonsidebar" style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "95%", height: 50, }}>
+                                <div style={{ display: "flex", width: "90%", }}>
+                                    <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
+                                        <FiClock style={{ color: "white", fontSize: 18, marginTop: 5 }} />
+                                    </div>
+                                    <div style={{ flex: 6, color: "white", fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}>
+                                        Working Hours
+                                        </div>
+                                </div>
+                            </div>
+                            <div className="buttonsidebar" style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "95%", height: 50, }}>
+                                <div style={{ display: "flex", width: "90%", }}>
+                                    <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
+                                        <FaRegCalendarAlt style={{ color: "white", fontSize: 18, marginTop: 5 }} />
+                                    </div>
+                                    <div style={{ flex: 6, color: "white", fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}>
+                                        Working Calendar
+                                        </div>
+                                </div>
+                            </div>
+                            <div className="buttonsidebar" style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "95%", height: 50, background: "white" }}>
+                                <div style={{ display: "flex", width: "90%", }}>
+                                    <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
+                                        <AiFillGift style={{ color: "#EC5F59", fontSize: 18, marginTop: 5 }} />
+                                    </div>
+                                    <div style={{ flex: 6, fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}>
+                                        Special Offers
+                                        </div>
+                                </div>
+                            </div>
 
-                    <div style={{
-                        display: "flex", flexBasis: "85%", backgroundColor: "#F7F8F8"
-                        // background: "red"
-                    }}>
+                            <div className="buttonsidebar" style={{ display: "flex", marginTop: "100%", alignItems: "center", justifyContent: "center", width: "100%", height: 50, }}>
+                                <div style={{ display: "flex", width: "90%", }}>
+                                    <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
+                                        <GoSignOut style={{ color: "white", fontSize: 18, marginTop: 5 }} />
+                                    </div>
+                                    <div style={{ flex: 6, color: "white", fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}>
+                                        Sign out
+                                        </div>
+                                </div>
+                            </div>
+                        </center>
+                    </div>
+                </div>
+
+                <div class="main">
+                    <div
+                        style={{
+                            display: "flex", flexBasis: "85%",
+                            height: window.innerHeight,
+                            backgroundColor: "#F7F8F8"
+                            // background: "red"
+                        }}>
                         <div style={{ width: "100%", height: "8%", float: "right", textAlign: "right", }}>
                             <img alt="BackGroundImage" src={require('../assets/logo.png')} style={{ marginRight: "4%", marginTop: "0.5%" }}
                                 width="140"
                                 height="80%"
                             />
-                            {/* <Bookings /> */}
+                            <Bookings />
                             {/* <Services /> */}
-                            <StyleList />
+                            {/* <StyleList /> */}
                             {/* <SpecialOffers /> */}
                         </div>
                     </div>

@@ -61,14 +61,42 @@ cursor: pointer;
 text-decoration: underline;
 }
 
-.sideBarBackGroud{
+.sidenav {
+    height: 100%;
+    width: 220px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    /* background-color: #111; */
+    overflow-x: hidden;
+    padding-top: 20px;
     background-color: rgba(241, 90,103, 1);
     background-image: linear-gradient(#D95A4F, #F45671);
-    }
+  }
+  
+  .main {
+    margin-left: 220px; 
+    /* background-color: rgba(241, 90,103, 1); */
+
+  }
+  
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+ 
+
+/* 
+.sideBarBackGroud{
+    height: 100%;
+    background-color: rgba(241, 90,103, 1);
+    background-image: linear-gradient(#D95A4F, #F45671);
+    } */
     
-.drawerBackground {
+/* .drawerBackground {
     width: 100%;
-}
+} */
     
 .drawerBackgroundnested {
     /* background-color:white;
@@ -116,12 +144,19 @@ text-decoration: underline;
         padding: 10px;
         color: white;
         box-shadow: 2px 2px 8px #aaaaaa;
-
-        /* opacity: 0.4; */
         }
 
+.cardshadowcenter{
+    /* color: white; */
+    /* box-shadow: 2px 2px 8px  #aaaaaa; */
+    box-shadow: 2px 2px 30px 2px  #aaaaaa;
 
-    .boxShadow{
+/* -webkit-box-shadow: 3px 3px 23px 1px #aaaaaa;  */
+/* box-shadow: 3px 3px 23px 1px #aaaaaa; */
+    
+}
+
+            .boxShadow{
         -webkit-box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
         -moz-box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
         box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
@@ -146,3 +181,9 @@ text-decoration: underline;
         cursor: pointer;
     }
 
+
+    .minWidthfor2ndcard{
+overflow: visible;   
+/* scroll-behavior: auto; */
+/* overflow: -moz-scrollbars-none; */
+ }

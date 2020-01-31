@@ -39,7 +39,7 @@ class Services extends Component {
                 // }
             ],
             extraServiceqty: [1],
-            modal2Visible: true,
+            modal2Visible: false,
         }
     }
     setModal2Visible(modal2Visible) {

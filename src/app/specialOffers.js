@@ -58,9 +58,10 @@ class SpecialOffers extends Component {
             loader: false,
             showerror: false,
             email: "",
-            modal2Visible: true,
+            modal2Visible: false,
         }
     }
+
     setModal2Visible(modal2Visible) {
         this.setState({ modal2Visible });
     }
@@ -177,15 +178,10 @@ class SpecialOffers extends Component {
                            </div>
 
                             <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", }}>
-
                                 <div style={{ display: "flex", flex: 1, margin: "1.5%", }} >
-
                                     <TextareaAutosize style={{ width: "100%" }} maxRows={8} minRows={4} />
-
                                 </div>
                             </div>
-
-
 
                             <div style={{ marginTop: 10, display: "flex", height: 50, flexDirection: "row", alignItems: "center", justifyContent: "center", alignItems: "center", }}>
 

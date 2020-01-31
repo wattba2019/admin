@@ -25,7 +25,6 @@ class BookingsRaw extends Component {
         }
     }
     render() {
-        const { open, email } = this.state;
         const {
             time, lock, nameColor1, name1, name2, name3, name4,
             nameColor2, nameColor3, nameColor4,
@@ -34,7 +33,7 @@ class BookingsRaw extends Component {
             <tr style={{}}>
                 <th scope="row">
                     <a style={{
-                        fontWeight: "normal", height: 30,
+                        fontWeight: "normal", height: 35,
                         width: 80, padding: 5, flexDirection: "row", display: "flex", color: "#4A4A4A",
                         justifyContent: "space-between", fontSize: 9, alignItems: "center", paddingLeft: 10, paddingRight: 10
                     }}>
@@ -46,7 +45,7 @@ class BookingsRaw extends Component {
                     {name1 &&
                         <a style={{
                             minWidth: 80,
-                            background: nameColor1, color: "#fff", fontWeight: "normal", height: 25,
+                            background: nameColor1, color: "#fff", fontWeight: "normal", height: 30,
                             width: "80%", borderRadius: 4, padding: 5, flexDirection: "row", display: "flex",
                             justifyContent: "space-between", fontSize: 9, alignItems: "center", paddingLeft: 10, paddingRight: 10
                         }}>
@@ -66,7 +65,7 @@ class BookingsRaw extends Component {
 
                         <a style={{
                             minWidth: 80,
-                            background: nameColor2, color: "#fff", fontWeight: "normal", height: 25,
+                            background: nameColor2, color: "#fff", fontWeight: "normal", height: 30,
                             width: "80%", borderRadius: 4, padding: 5, flexDirection: "row", display: "flex",
                             justifyContent: "space-between", fontSize: 9, alignItems: "center", paddingLeft: 10, paddingRight: 10
                         }}>
@@ -85,7 +84,7 @@ class BookingsRaw extends Component {
                     {name3 &&
                         <a style={{
                             minWidth: 80,
-                            background: nameColor3, color: "#fff", fontWeight: "normal", height: 25,
+                            background: nameColor3, color: "#fff", fontWeight: "normal", height: 30,
                             width: "80%", borderRadius: 4, padding: 5, flexDirection: "row", display: "flex",
                             justifyContent: "space-between", fontSize: 9, alignItems: "center", paddingLeft: 10, paddingRight: 10
                         }}>
@@ -104,7 +103,7 @@ class BookingsRaw extends Component {
                     {name4 &&
                         <a style={{
                             minWidth: 80,
-                            background: nameColor4, color: "#fff", fontWeight: "normal", height: 25,
+                            background: nameColor4, color: "#fff", fontWeight: "normal", height: 30,
                             width: "80%", borderRadius: 4, padding: 5, flexDirection: "row", display: "flex",
                             justifyContent: "space-between", fontSize: 9, alignItems: "center", paddingLeft: 10, paddingRight: 10
                         }}>
