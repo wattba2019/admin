@@ -27,7 +27,7 @@ class BookingsRaw extends Component {
     render() {
         const {
             time, lock, nameColor1, name1, name2, name3, name4,
-            nameColor2, nameColor3, nameColor4,
+            nameColor2, nameColor3, nameColor4, modalOpen
         } = this.props;
         return (
             <tr style={{}}>
@@ -43,12 +43,14 @@ class BookingsRaw extends Component {
                 </th>
                 <td>
                     {name1 &&
-                        <a style={{
-                            minWidth: 80,
-                            background: nameColor1, color: "#fff", fontWeight: "normal", height: 30,
-                            width: "80%", borderRadius: 4, padding: 5, flexDirection: "row", display: "flex",
-                            justifyContent: "space-between", fontSize: 9, alignItems: "center", paddingLeft: 10, paddingRight: 10
-                        }}>
+                        <a
+                            onClick={() => modalOpen()}
+                            style={{
+                                minWidth: 80,
+                                background: nameColor1, color: "#fff", fontWeight: "normal", height: 30,
+                                width: "80%", borderRadius: 4, padding: 5, flexDirection: "row", display: "flex",
+                                justifyContent: "space-between", fontSize: 9, alignItems: "center", paddingLeft: 10, paddingRight: 10
+                            }}>
                             <div>
                                 {name1}
                             </div>
@@ -63,7 +65,7 @@ class BookingsRaw extends Component {
                 <td>
                     {name2 &&
 
-                        <a style={{
+                        <a onClick={() => modalOpen()} style={{
                             minWidth: 80,
                             background: nameColor2, color: "#fff", fontWeight: "normal", height: 30,
                             width: "80%", borderRadius: 4, padding: 5, flexDirection: "row", display: "flex",
@@ -82,7 +84,7 @@ class BookingsRaw extends Component {
                 </td>
                 <td>
                     {name3 &&
-                        <a style={{
+                        <a onClick={() => modalOpen()} style={{
                             minWidth: 80,
                             background: nameColor3, color: "#fff", fontWeight: "normal", height: 30,
                             width: "80%", borderRadius: 4, padding: 5, flexDirection: "row", display: "flex",
@@ -101,7 +103,7 @@ class BookingsRaw extends Component {
                 </td>
                 <td>
                     {name4 &&
-                        <a style={{
+                        <a onClick={() => modalOpen()} style={{
                             minWidth: 80,
                             background: nameColor4, color: "#fff", fontWeight: "normal", height: 30,
                             width: "80%", borderRadius: 4, padding: 5, flexDirection: "row", display: "flex",
