@@ -79,7 +79,7 @@ export function updateService(service, indexToEdit) {
         console.log('inside action', service);
         var options = {
             method: 'PUT',
-            url: `${baseURL.baseURL}/servicesget/${service.serviceID}/`,
+            url: `${baseURL.baseURL}/servicesget/${service._id}/`,
             headers:
             {
                 'cache-control': 'no-cache',
@@ -189,6 +189,50 @@ export function getSpecialPackages(userID) {
             })
     }
 }
+
+
+
+
+
+
+export function updateSpecialOffer(specialOffer, indexToEdit) {
+    return dispatch => {
+        console.log('inside action', specialOffer, indexToEdit);
+        var options = {
+            method: 'PUT',
+            url: `${baseURL.baseURL}/packagesandoffers/${specialOffer._id}/`,
+            headers:
+            {
+                'cache-control': 'no-cache',
+                "Allow-Cross-Origin": '*',
+            },
+            data: specialOffer
+        };
+        axios(options)
+            .then((data) => {
+                console.log(data, "package updated successfully.");
+                specialOffer.indexToEdit = indexToEdit;
+
+                dispatch({ type: ActionTypes.UPDATE_SPECIAL_OFFER, payload: specialOffer })
+
+                swal.fire(
+                    'Success!',
+                    data.data.message,
+                    'success'
+                )
+            }).catch((err) => {
+                console.error(err, "ERROR_ON_SAVING")
+                // alert(err.response.data.message)
+                swal.fire(
+                    'Error!',
+                    'Something went wrong.',
+                    'error'
+                )
+
+            })
+    }
+}
+
 
 
 

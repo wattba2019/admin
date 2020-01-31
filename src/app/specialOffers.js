@@ -1,6 +1,6 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
-import { getSpecialPackages, addSpecialOffer } from "../store/action/action";
+import { getSpecialPackages, addSpecialOffer, updateSpecialOffer } from "../store/action/action";
 import {
     Link
 } from 'react-router-dom';
@@ -28,33 +28,72 @@ class SpecialOffers extends Component {
             offerName: '',
             price: '',
             offerDescription: '',
-            imageFile: {}
+            imageFile: {},
+            modal2VisibleEdit: false,
+            editSpecialPackage: {},
+            indexToEdit: undefined
 
         }
         this.addSpecialOffer = this.addSpecialOffer.bind(this);
+        this.setModal2VisibleEdit = this.setModal2VisibleEdit.bind(this);
+        this.setModal2Visible = this.setModal2Visible.bind(this);
 
         this.props.getSpecialPackages((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254');
     }
     setModal2Visible(modal2Visible) {
         this.setState({ modal2Visible });
     }
+    setModal2VisibleEdit(modal2VisibleEdit, editSpecialPackage, indexToEdit) {
+        console.log('edit calling', editSpecialPackage, indexToEdit);
+        if (modal2VisibleEdit) {
+            let offerName = editSpecialPackage.packageName;
+            let price = editSpecialPackage.price;
+            let offerDescription = editSpecialPackage.packageDescription;
+            let imageFile = { packageImage: editSpecialPackage.packageImage };
+            this.setState({ modal2VisibleEdit, editSpecialPackage, offerName, price, offerDescription, imageFile, indexToEdit });
+        }
+        else {
+            let offerName = '';
+            let price = '';
+            let offerDescription = '';
+            let imageFile = {};
+            let indexToEdit = undefined;
+            let editSpecialPackage = {};
+            this.setState({ modal2VisibleEdit });
+            this.setState({ editSpecialPackage, offerName, price, offerDescription, imageFile, indexToEdit });
+        }
 
+    }
     addSpecialOffer() {
         let specialOffer = {
-            offerName: this.state.offerName,
+            packageName: this.state.offerName,
             price: this.state.price,
-            offerDescription: this.state.offerDescription,
-            imageFile: this.state.imageFile,
+            packageDescription: this.state.offerDescription,
+            packageImage: this.state.imageFile,
             userId: (this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254',
 
         }
-        this.props.addSpecialOffer(specialOffer);
+        
+        if (this.state.modal2Visible) {
+            this.props.addSpecialOffer(specialOffer);
+        }
+        else {
+            specialOffer._id = this.state.editSpecialPackage._id;
+            specialOffer.packageImage = this.state.editSpecialPackage.packageImage;
+
+            this.props.updateSpecialOffer(specialOffer, this.state.indexToEdit);
+        }
+
+
         this.setState({
             offerName: '',
             price: '',
             offerDescription: '',
             imageFile: {},
-            modal2Visible: false
+            modal2Visible: false,
+            modal2VisibleEdit: false,
+            editSpecialPackage: {},
+            indexToEdit: undefined
         })
     }
 
@@ -79,10 +118,10 @@ class SpecialOffers extends Component {
 
                 </div>
 
-                <SpecialOfferCard specialPackages={specialPackages} />
+                <SpecialOfferCard specialPackages={specialPackages} setModal2Visible={this.setModal2Visible} setModal2VisibleEdit={this.setModal2VisibleEdit} />
 
                 <div>
-                    <SpecialOfferModal modalState={this.state} setModal2Visible={this.setModal2Visible} that={this} />
+                    <SpecialOfferModal modalState={this.state} setModal2Visible={this.setModal2Visible} setModal2VisibleEdit={this.setModal2VisibleEdit} that={this} />
                 </div>
             </div >
         )
@@ -104,7 +143,9 @@ function mapDispatchToProp(dispatch) {
         getSpecialPackages: (userId) => {
             dispatch(getSpecialPackages(userId));
         },
-
+        updateSpecialOffer: (specialOffer, indexToEdit) => {
+            dispatch(updateSpecialOffer(specialOffer, indexToEdit));
+        },
     })
 }
 

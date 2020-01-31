@@ -37,7 +37,7 @@ class SpecialOfferCard extends Component {
                                     </div>
 
                                     <div style={{ flex: 1.5, }}>
-                                        <button type="button" class="btn btn-light" style={{ width: "100%", borderWidth: 0.5, borderColor: "grey" }} onClick={() => this.setModal2Visible(true)}>Edit Service</button>
+                                        <button type="button" class="btn btn-light" style={{ width: "100%", borderWidth: 0.5, borderColor: "grey" }} onClick={() => this.props.setModal2VisibleEdit(true, specialPackage, index)}>Edit Service</button>
                                     </div>
                                 </div>
                             )

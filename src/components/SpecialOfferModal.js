@@ -1,6 +1,6 @@
 import React, { Component, } from 'react';
 
-import { Button, DatePicker, version, Modal, Upload, Icon, message } from "antd";
+import { Button, Modal, Upload, Icon, message } from "antd";
 import TextareaAutosize from 'react-textarea-autosize';
 
 
@@ -24,10 +24,6 @@ class SpecialOfferModal extends Component {
         }
         console.log(file, 'filelll')
 
-        // else {
-        //     this.setState({ imageFile: {} })
-        // }
-        // return isJpgOrPng && isLt2M;
         return false;
     }
 
@@ -42,9 +38,15 @@ class SpecialOfferModal extends Component {
                 // title="Vertically centered modal dialog"
                 centered
                 multiple={false}
-                visible={that.state.modal2Visible}
-                onOk={() => that.setModal2Visible(false)}
-                onCancel={() => that.setModal2Visible(false)}
+                visible={that.state.modal2Visible || that.state.modal2VisibleEdit}
+                onOk={() => {
+                    this.props.setModal2Visible(false);
+                    this.props.setModal2VisibleEdit(false);
+                }}
+                onCancel={() => {
+                    this.props.setModal2Visible(false);
+                    this.props.setModal2VisibleEdit(false);
+                }}
             >
                 <div style={{ display: "flex", flex: 1, flexDirection: "column", width: "100%", fontSize: "1.1vw", fontWeight: "bold", }}>
 
@@ -73,8 +75,10 @@ class SpecialOfferModal extends Component {
                     </div>
 
                     <div style={{ fontSize: 18, marginTop: 10 }}>
-                        New Offer
-                           </div>
+                        {
+                            (that.state.modal2VisibleEdit) ? (<span>Edit Offer</span>) : (<span>New Offer</span>)
+                        }
+                    </div>
 
                     <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center" }}>
 
@@ -113,10 +117,10 @@ class SpecialOfferModal extends Component {
                     <div style={{ marginTop: 10, display: "flex", height: 50, flexDirection: "row", alignItems: "center", justifyContent: "center", alignItems: "center", }}>
 
                         <button className="buttonAdd" style={{ minWidth: 80, width: "35%", margin: "1%" }} onClick={() => that.addSpecialOffer()} >
-                            <span className="buttonmatter" style={{ fontSize: 15, }}>Add Special Offer</span>
+                            <span className="buttonmatter" style={{ fontSize: 15, }}>{(that.state.modal2VisibleEdit) ? (<span>Update Special Offer</span>) : (<span>Add Special Offer</span>)}</span>
                         </button>
 
-                        <button type="button" class="btn btn-light" style={{ width: "35%", margin: "1%", minWidth: 80, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => that.setModal2Visible(false)}>Cancel</button>
+                        <button type="button" class="btn btn-light" style={{ width: "35%", margin: "1%", minWidth: 80, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => { this.props.setModal2Visible(false); this.props.setModal2VisibleEdit(false); }}>Cancel</button>
 
                     </div>
                 </div>

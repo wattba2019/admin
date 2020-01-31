@@ -50,6 +50,15 @@ export default (state = INITIAL_STATE, action) => {
                 ...state,
                 specialPackages: action.payload
             };
+        case ActionTypes.UPDATE_SPECIAL_OFFER:
+            let editedSpecialOffer = state.specialPackages.slice(0);
+            let indexToUpdateOffer = action.payload.indexToEdit;
+            editedSpecialOffer.splice(indexToUpdateOffer, 1, action.payload);
+            console.log('inside reducer', action.payload, editedSpecialOffer)
+            return {
+                ...state,
+                specialPackages: editedSpecialOffer
+            };
 
 
 
