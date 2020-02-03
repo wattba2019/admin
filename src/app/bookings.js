@@ -8,6 +8,7 @@ import '../custom.css'
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import BookingRaw from '../components/BookingRaw';
 import BookingDetailsModal from '../components/bookingDetailsModal';
+import ExportBooking from '../components/exportBookingModal';
 import "antd/dist/antd.css";
 import { DatePicker } from 'antd';
 import ReactSwipe from 'react-swipe';
@@ -18,18 +19,22 @@ class Bookings extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            bookingDataWithDate: [1, 1, ],
+            bookingDataWithDate: [1, 1,],
             modal2Visible: false,
+            modalExport: true,
         }
         this.setModal2Visible = this.setModal2Visible.bind(this);
+        this.modalExport = this.modalExport.bind(this);
     }
 
     datePicker = (date, dateString) => {
         console.log(date, dateString);
     }
-
     setModal2Visible(modal2Visible) {
         this.setState({ modal2Visible });
+    }
+    modalExport(modalExport) {
+        this.setState({ modalExport });
     }
 
     render() {
@@ -56,10 +61,13 @@ class Bookings extends Component {
                         <p style={{ margin: "2%", textAlign: "left", fontSize: 18, fontWeight: "bold", }}>Booking Calender</p>
                     </div>
                     <div style={{ flex: 4, justifyContent: "flex-end", display: "flex", flexDirection: "row", }}>
-                        <button class="btn btn-light" style={{ minWidth: 140, width: "60%", margin: "2%" }} className="buttonAdd" onClick={this.signin} >
+                        <button className="btn btn-light" style={{ minWidth: 140, width: "60%", margin: "2%" }} className="buttonAdd" onClick={this.signin} >
                             <span className="buttonmatter" style={{ fontSize: 12, }}>Refresh</span>
                         </button>
-                        <button type="button" class="btn btn-light" style={{ width: "60%", margin: "2%", borderWidth: 0.5, borderColor: "grey", height: 40 }}>Export Bookings</button>
+                        <button type="button" className="btn btn-light" style={{ width: "60%", margin: "2%", borderWidth: 0.5, borderColor: "grey", height: 40 }}
+                            onClick={() => this.modalExport(true)}>
+                            Export Bookings
+                            </button>
                     </div>
                 </div>
 
@@ -123,7 +131,7 @@ class Bookings extends Component {
                                             </div>
 
                                             <div style={{ marginTop: 15, width: "100%" }}>
-                                                <table class="table table-striped table table-sm">
+                                                <table className="table table-striped table table-sm">
                                                     <tbody>
                                                         <BookingRaw
                                                             modalOpen={() => this.setModal2Visible(true)}
@@ -210,6 +218,7 @@ class Bookings extends Component {
                     </ReactSwipe>
                 </div>
 
+                <ExportBooking modalState={this.state} modalExport={this.modalExport} that={this} />
                 <BookingDetailsModal modalState={this.state} setModal2Visible={this.setModal2Visible} that={this} />
             </div >
 

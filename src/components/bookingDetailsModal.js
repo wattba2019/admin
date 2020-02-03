@@ -151,7 +151,7 @@ class BookingDetailsModal extends Component {
                                 <span className="buttonmatter" style={{ fontSize: 15, }}>Update Booking</span>
                             </button>
 
-                            <button type="button" class="btn btn-light" style={{ width: "35%", margin: "1%", minWidth: 140, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => this.setModal2Visible(true)}>Cancle Booking</button>
+                            <button type="button" className="btn btn-light" style={{ width: "35%", margin: "1%", minWidth: 140, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => this.setModal2Visible(true)}>Cancle Booking</button>
 
                         </div>
                     </div>
