@@ -21,7 +21,10 @@ class BookingDetailsModal extends Component {
                     onOk={() => { this.props.setModal2Visible(false) }}
                     onCancel={() => this.setModal2Visible(false)}
                     bodyStyle={{ padding: 0, }}
-                // bodyStyle={{ height: 500 }}
+                    width={"35%"}
+                    minWidth={"35%"}
+
+
                 >
                     <div style={{
                         display: "flex", flex: 1, flexDirection: "column",
@@ -78,17 +81,17 @@ class BookingDetailsModal extends Component {
 
                             <div style={{
                                 display: "flex", flex: 1, flexWrap: "wrap", flexDirection: "row",
-                                background: "red"
+                                // background: "red"
                             }}>
                                 <div style={{
-                                    display: "flex", flex: 1, flexDirection: "row", margin: '2%', width: 50,
-                                    background: "orange"
+                                    display: "flex", flexDirection: "row", margin: '2%', width: 200,
+                                    // background: "orange"
                                 }}>
                                     <div style={{
-                                        display: "flex", flex: 1, justifyContent: "center", alignItems: "center",
-                                        background: "yellow"
+                                        display: "flex", justifyContent: "center", alignItems: "center", width: 56, height: 56, borderRadius: 28,
+                                        background: "#EC5F59"
                                     }}>
-                                        <div style={{ width: 50, height: 50, borderRadius: 25, }}>
+                                        <div style={{ display: "flex", width: 50, height: 50, borderRadius: 25, justifyContent: "center", alignItems: "center", }}>
                                             <img alt="BackGroundImage" src={require('../assets/noPhoto.jpg')}
                                                 style={{ width: 50, height: 50, borderRadius: 25 }}
                                             />
@@ -96,8 +99,8 @@ class BookingDetailsModal extends Component {
                                     </div>
 
                                     <div style={{
-                                        display: "flex", flex: 6, justifyContent: "space-between", alignItems: "center", padding: "5%",
-                                        background: "grey"
+                                        display: "flex", justifyContent: "space-between", alignItems: "center", padding: "5%", width: "70%", marginLeft: 10,
+                                        // background: "grey"
                                     }}>
                                         <div>
                                             John Doe
@@ -105,33 +108,55 @@ class BookingDetailsModal extends Component {
                                         <div style={{ display: "flex", backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
                                             <IoMdCheckmark style={{ color: "white", }} />
                                         </div>
-
                                     </div>
                                 </div>
 
+                                <div style={{
+                                    display: "flex", flexDirection: "row", margin: '2%', width: 200,
+                                    // background: "orange"
+                                }}>
+                                    <div style={{
+                                        display: "flex", justifyContent: "center", alignItems: "center", width: 56, height: 56, borderRadius: 28,
+                                        background: "#EC5F59"
+                                    }}>
+                                        <div style={{ display: "flex", width: 50, height: 50, borderRadius: 25, justifyContent: "center", alignItems: "center", }}>
+                                            <img alt="BackGroundImage" src={require('../assets/noPhoto.jpg')}
+                                                style={{ width: 50, height: 50, borderRadius: 25 }}
+                                            />
+                                        </div>
+                                    </div>
 
-
-
-
+                                    <div style={{
+                                        display: "flex", justifyContent: "space-between", alignItems: "center", padding: "5%", width: "70%", marginLeft: 10,
+                                        // background: "grey"
+                                    }}>
+                                        <div>
+                                            John Doe
+                                        </div>
+                                        <div style={{ display: "flex", backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
+                                            <IoMdCheckmark style={{ color: "white", }} />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         {/* Footer */}
                         <div className="cardshadowWithButton" style={{
-                            display: "flex", flex: 2, flexDirection: "row", alignItems: "center", justifyContent: "center", zIndex: 1, width: "100%", marginTop: 10,
+                            display: "flex", flex: 2, flexDirection: "row", flexWrap: "wrap", alignItems: "center", justifyContent: "center", zIndex: 1, width: "100%", marginTop: 10, minWidth: 200,
                             background: "#F7F8F8",
                         }}>
 
-                            <button className="buttonAdd" style={{ minWidth: 140, width: "20%", margin: "1%" }} onClick={this.signin} >
-                                <span className="buttonmatter" style={{ fontSize: 15, }}>Save</span>
+                            <button className="buttonAdd" style={{ minWidth: 140, width: "35%", margin: "1%" }} onClick={this.signin} >
+                                <span className="buttonmatter" style={{ fontSize: 15, }}>Update Booking</span>
                             </button>
 
-                            <button type="button" class="btn btn-light" style={{ width: "20%", margin: "1%", minWidth: 140, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => this.setModal2Visible(true)}>Edit Service</button>
+                            <button type="button" class="btn btn-light" style={{ width: "35%", margin: "1%", minWidth: 140, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => this.setModal2Visible(true)}>Cancle Booking</button>
 
                         </div>
                     </div>
                 </Modal>
-            </div>
+            </div >
 
         )
     }
