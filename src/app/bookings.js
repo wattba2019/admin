@@ -18,10 +18,8 @@ class Bookings extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loader: false,
-            showerror: false,
-            bookingDataWithDate: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1,],
-            modal2Visible: false,
+            bookingDataWithDate: [1, 1, ],
+            modal2Visible: true,
         }
         this.setModal2Visible = this.setModal2Visible.bind(this);
     }
@@ -75,7 +73,6 @@ class Bookings extends Component {
                 }}>
                     <div style={{ flex: 6, minWidth: 200, alignItems: "center", display: "flex" }}>
                         <DatePicker style={{ margin: "2%", }} onChange={() => this.datePicker()} />
-
                     </div>
                     <div style={{ flex: 4, minWidth: 200, justifyContent: "flex-end", display: "flex", flexDirection: "row", }}>
                     </div>
