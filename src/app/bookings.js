@@ -19,7 +19,7 @@ class Bookings extends Component {
         super(props);
         this.state = {
             bookingDataWithDate: [1, 1, ],
-            modal2Visible: true,
+            modal2Visible: false,
         }
         this.setModal2Visible = this.setModal2Visible.bind(this);
     }

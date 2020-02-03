@@ -18,6 +18,7 @@ import Bookings from './bookings';
 import Services from './services';
 import SpecialOffers from './specialOffers';
 import StyleList from './stylelist';
+import Workinghours from './workingHours';
 
 class Home extends Component {
     constructor(props) {
@@ -25,7 +26,7 @@ class Home extends Component {
         this.state = {
             loader: false,
             showerror: false,
-            route: "Bookings"
+            route: "WorkingHours"
         }
     }
 
@@ -111,7 +112,7 @@ class Home extends Component {
                                     </div>
                                     <div onClick={() => this.routeChanger("WorkingHours")} style={{ flex: 6, color: "white", fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}>
                                         Working Hours
-                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div className="buttonsidebar" style={{ background: this.state.route === "WorkingCalendar" ? 'rgba(199, 174, 176, 0.2)' : null, display: "flex", alignItems: "center", justifyContent: "center", width: "95%", height: 50, }}>
@@ -142,7 +143,7 @@ class Home extends Component {
                                     </div>
                                     <div style={{ flex: 6, color: "white", fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}>
                                         Sign out
-                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </center>
@@ -173,12 +174,12 @@ class Home extends Component {
                                 (this.state.route === "Stylelists") ? (<StyleList />) : null
                             }
                             {
+                                (this.state.route === "WorkingHours") ? (<Workinghours />) : null
+                            }
+                            {
                                 (this.state.route === "SpecialOffers") ? (<SpecialOffers />) : null
                             }
-                            {/* <Bookings /> */}
-                            {/* <Services /> */}
-                            {/* <StyleList /> */}
-                            {/* <SpecialOffers /> */}
+
                         </div>
                     </div>
                 </div>
