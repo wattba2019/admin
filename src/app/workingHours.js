@@ -2,7 +2,6 @@ import React, { Component, } from 'react';
 import { connect } from 'react-redux';
 import '../custom.css'
 import "antd/dist/antd.css";
-import { DatePicker } from 'antd';
 import WorkingHoursCard from '../components/WorkingHoursCard';
 
 class Workinghours extends Component {
