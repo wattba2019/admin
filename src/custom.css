@@ -189,3 +189,13 @@ overflow: visible;
 /* scroll-behavior: auto; */
 /* overflow: -moz-scrollbars-none; */
  }
+
+
+         
+ .shopeName{
+   color:white ;
+}
+
+.shopeName:hover{
+    cursor: pointer;
+}

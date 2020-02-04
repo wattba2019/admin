@@ -14,6 +14,7 @@ import { GiScissors } from 'react-icons/gi';
 import { AiOutlineUser, AiFillGift } from 'react-icons/ai';
 import { FiClock } from 'react-icons/fi';
 import { GoSignOut } from 'react-icons/go';
+import ShopProfile from './profile';
 import Bookings from './bookings';
 import Services from './services';
 import SpecialOffers from './specialOffers';
@@ -26,7 +27,7 @@ class Home extends Component {
         this.state = {
             loader: false,
             showerror: false,
-            route: "Bookings"
+            route: "ShopProfile"
         }
     }
 
@@ -58,6 +59,7 @@ class Home extends Component {
                             <div style={{ width: "50%", }} className="center">
                                 <div>
                                     <center>
+                                        {/* Business image */}
                                         <div className="drawerBackgroundnested" >
                                             <img src={require('../../src/assets/noPhoto.jpg')} className="profileImage" />
                                             <label htmlFor="inputGroupFile01" className="profileImageupload" style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
@@ -72,8 +74,10 @@ class Home extends Component {
                                             id="inputGroupFile01"
                                             className="profileinputnone"
                                         />
-
-                                        <h4>Shop 1</h4>
+                                        {/* Business Name */}
+                                        <div>
+                                            <h4 onClick={() => this.routeChanger("ShopProfile")} className="shopeName" style={{ marginTop: 10, }}>Shop 1</h4>
+                                        </div>
                                     </center>
                                 </div>
                             </div>
@@ -161,11 +165,19 @@ class Home extends Component {
                             // background: "red"
                         }}>
                         <div style={{ width: "100%", height: "8%", float: "right", textAlign: "right", }}>
-                            <img alt="BackGroundImage" src={require('../assets/logo.png')} style={{ marginRight: "4%", marginTop: "0.5%" }}
-                                width="140"
-                                height="80%"
-                            />
 
+                            {
+                                (this.state.route != "ShopProfile") ? (
+                                    <img alt="BackGroundImage" src={require('../assets/logo.png')} style={{ marginRight: "4%", marginTop: "0.5%" }}
+                                        width="140"
+                                        height="80%"
+                                    />
+                                ) : null
+                            }
+
+                            {
+                                (this.state.route === "ShopProfile") ? (<ShopProfile />) : null
+                            }
                             {
                                 (this.state.route === "Bookings") ? (<Bookings />) : null
                             }
