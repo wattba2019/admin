@@ -21,7 +21,7 @@ class Bookings extends Component {
         this.state = {
             bookingDataWithDate: [1, 1,],
             modal2Visible: false,
-            modalExport: true,
+            modalExport: false,
         }
         this.setModal2Visible = this.setModal2Visible.bind(this);
         this.modalExport = this.modalExport.bind(this);

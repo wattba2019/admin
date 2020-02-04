@@ -2,31 +2,41 @@ import React, { Component, } from 'react';
 import '../custom.css'
 import { Modal } from "antd";
 import { Menu, Dropdown, Button, Icon, message } from 'antd';
-
 import "antd/dist/antd.css";
-import { IoMdCheckmark } from 'react-icons/io';
 
 class ExportBooking extends Component {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            duration: "Duration",
+            format: "Format",
+        }
+    }
     modalExport(modalExport) {
         this.props.modalExport(modalExport)
     }
 
-    handleButtonClick = (e) => {
-        message.info('Click on left button.');
-        console.log('click left button', e);
+    handleDurationmenu = (e) => {
+        message.info(e.item.props.children[1]);
+        console.log('click', e.item.props.children[1]);
+        this.setState({
+            duration: e.item.props.children[1]
+        })
     }
-
-    handleMenuClick = (e) => {
-        message.info('Click on menu item.');
-        console.log('click', e);
+    handleFormatMenu = (e) => {
+        message.info(e.item.props.children[1]);
+        console.log('click', e.item.props.children[1]);
+        this.setState({
+            format: e.item.props.children[1]
+        })
     }
 
     render() {
         const { modalExport, } = this.props.modalState;
+        const { format, duration } = this.state;
 
-        const menu = (
-            <Menu onClick={this.handleMenuClick}>
+        const Durationmenu = (
+            <Menu onClick={this.handleDurationmenu}>
                 <Menu.Item key="1">
                     <Icon type="user" />
                     Last Month
@@ -41,6 +51,20 @@ class ExportBooking extends Component {
                 </Menu.Item>
             </Menu>
         );
+
+        const FormatMenu = (
+            <Menu onClick={this.handleFormatMenu}>
+                <Menu.Item key="1">
+                    <Icon type="user" />
+                    PDF
+                </Menu.Item>
+                <Menu.Item key="2">
+                    <Icon type="user" />
+                    XLSX
+                </Menu.Item>
+            </Menu>
+        );
+
         return (
             <div>
                 <Modal
@@ -68,11 +92,11 @@ class ExportBooking extends Component {
                             <div style={{ display: "flex", flexDirection: "row", width: "100%", marginTop: 10, justifyContent: "space-between" }} id="components-dropdown-demo-dropdown-button">
                                 <div style={{ display: "flex", flexDirection: "column", width: "68%", }}>
                                     Duration
-                                    <Dropdown overlay={menu}>
+                                    <Dropdown overlay={Durationmenu}>
                                         <Button style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center", marginTop: 5 }}>
                                             <span>
-                                                Duration
-                                        </span>
+                                                {duration}
+                                            </span>
                                             <Icon type="down" />
                                         </Button>
                                     </Dropdown>
@@ -80,11 +104,11 @@ class ExportBooking extends Component {
 
                                 <div style={{ display: "flex", flexDirection: "column", width: "29%", }}>
                                     Format
-                                    <Dropdown overlay={menu}>
+                                    <Dropdown overlay={FormatMenu}>
                                         <Button style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center", marginTop: 5 }}>
                                             <span>
-                                                PDF
-                                        </span>
+                                                {format}
+                                            </span>
                                             <Icon type="down" />
                                         </Button>
                                     </Dropdown>

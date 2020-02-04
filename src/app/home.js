@@ -72,6 +72,8 @@ class Home extends Component {
                                             id="inputGroupFile01"
                                             className="profileinputnone"
                                         />
+
+                                        <h4>Shop 1</h4>
                                     </center>
                                 </div>
                             </div>
@@ -115,7 +117,7 @@ class Home extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="buttonsidebar" style={{ background: this.state.route === "WorkingCalendar" ? 'rgba(199, 174, 176, 0.2)' : null, display: "flex", alignItems: "center", justifyContent: "center", width: "95%", height: 50, }}>
+                            {/* <div className="buttonsidebar" style={{ background: this.state.route === "WorkingCalendar" ? 'rgba(199, 174, 176, 0.2)' : null, display: "flex", alignItems: "center", justifyContent: "center", width: "95%", height: 50, }}>
                                 <div style={{ display: "flex", width: "90%", }}>
                                     <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
                                         <FaRegCalendarAlt style={{ color: "white", fontSize: 18, marginTop: 5 }} />
@@ -124,7 +126,7 @@ class Home extends Component {
                                         Working Calendar
                                         </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="buttonsidebar" style={{ background: this.state.route === "SpecialOffers" ? 'rgba(199, 174, 176, 0.2)' : null, display: "flex", alignItems: "center", justifyContent: "center", width: "95%", height: 50, background: "white" }}>
                                 <div style={{ display: "flex", width: "90%", }}>
                                     <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
