@@ -53,7 +53,7 @@ class SpecialOfferCard extends Component {
                     display: "flex", height: "14vw", width: "16vw", minWidth: 230, minHeight: 240, margin: "3%",
                     backgroundColor: "white", flexDirection: "column"
                 }}>
-                    <div style={{ display: "flex", flex: 1, color: "black", fontWeight: "bold", flexDirection: "row", justifyContent: "center", alignItems: "center", }} onClick={() => this.setModal2Visible(true)} >
+                    <div style={{ display: "flex", flex: 1, color: "black", fontWeight: "bold", flexDirection: "row", justifyContent: "center", alignItems: "center", }} onClick={() => this.props.setModal2Visible(true)} >
                         <div class="btn btn-light" style={{ display: "flex", width: "35%", height: "35%", backgroundColor: "#E9E9EA", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
                             <AiOutlinePlus style={{ color: "#494949", fontSize: 25 }} />
                         </div>
