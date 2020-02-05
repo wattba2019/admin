@@ -15,7 +15,9 @@ class SpecialOfferModal extends Component {
         multiple: false,
         // required: true
     };
+
     beforeUploadEvent(file) {
+        alert("Work")
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
             message.error('You can only upload JPG/PNG file!');
@@ -25,6 +27,9 @@ class SpecialOfferModal extends Component {
             message.error('Image must smaller than 10MB!');
         }
         console.log(file, 'filelll')
+        this.setState({
+            imageError: false
+        })
 
         return false;
     }
@@ -36,21 +41,23 @@ class SpecialOfferModal extends Component {
         this.props.form.validateFields((err, values) => {
 
             if (!err) {
-                console.log('Received values of form: ', values);
+                console.log('Received values of form: ', values, this.state.imageFile);
+
                 if (Object.keys(this.state.imageFile).length === 0 && this.state.imageFile.constructor === Object) {
-                    // alert("Empty OBJECT")
+                    alert("Empty OBJECT")
                     this.setState({
                         imageError: true
                     })
                 }
 
                 else {
-                    // alert("Not Empty OBJECT")
+                    alert("Not Empty OBJECT")
                     that.addSpecialOffer()
                     this.setState({
                         imageError: false
                     })
                 }
+
             }
         });
     };
@@ -91,10 +98,10 @@ class SpecialOfferModal extends Component {
                                     const { status } = info.file;
                                     console.log(info, 'image');
                                     if (info.fileList.length > 0) {
-                                        that.setState({ imageFile: info.file, imageError: false })
+                                        this.setState({ imageFile: info.file, })
                                     }
                                     else {
-                                        that.setState({ imageFile: {}, imageError: false })
+                                        this.setState({ imageFile: {}, })
                                     }
                                 }}
                                 beforeUpload={this.beforeUploadEvent.bind(this)}>
