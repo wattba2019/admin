@@ -49,15 +49,14 @@ class ServiceModal extends Component {
 
                     <Form onSubmit={this.handleSubmit} className="login-form">
                         <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center" }}>
-
-
                             <Form.Item>
                                 {getFieldDecorator('ServiceName', {
                                     rules: [{ required: true, message: 'Please type service name!' }],
+                                    rules: [{ max: 26, message: 'Description must be maximum 26 characters.' },],
                                 })(
                                     <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
                                         <div style={{ width: "90%", }}>
-                                            <input type="text" className="form-control" placeholder=" Service Name" aria-label=" Service Name" aria-describedby="basic-addon1" value={serviceName} onChange={(e) => { that.setState({ serviceName: e.target.value }) }} />
+                                            <input type="text" className="form-control" placeholder="Service Name" aria-label="Service Name" aria-describedby="basic-addon1" value={serviceName} onChange={(e) => { that.setState({ serviceName: e.target.value }) }} />
                                         </div>
                                     </div>
                                 )}
@@ -66,6 +65,7 @@ class ServiceModal extends Component {
                             <Form.Item>
                                 {getFieldDecorator('price', {
                                     rules: [{ required: true, message: 'Please type price!' }],
+                                    rules: [{ max: 7, message: 'Description must be maximum 7 characters.' },],
                                 })(
                                     <div style={{ display: "flex", flex: 1, margin: "1.5%", }} >
                                         <div style={{ width: "65%", }}>
@@ -91,6 +91,8 @@ class ServiceModal extends Component {
                                         <Form.Item>
                                             {getFieldDecorator('serviceName' + index, {
                                                 rules: [{ required: true, message: 'Please type service name!' }],
+                                                rules: [{ max: 18, message: 'Description must be maximum 18 characters.' },],
+
                                             })(
                                                 <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
                                                     <div style={{ width: "100%", }}>
@@ -103,6 +105,8 @@ class ServiceModal extends Component {
                                         <Form.Item>
                                             {getFieldDecorator('price' + index, {
                                                 rules: [{ required: true, message: 'Please type price!' }],
+                                                rules: [{ max: 7, message: 'Description must be maximum 7 characters.' },],
+
                                             })(
                                                 <div style={{ display: "flex", flex: 1, margin: "1.5%", marginLeft: 20, }} >
                                                     <div style={{ width: "72%", }}>
