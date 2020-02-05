@@ -25,7 +25,7 @@ class SpecialOfferCard extends Component {
                                 // console.log(specialPackage, 'specialPackagespecialPackage')
                                 return (
                                     <div className="cardshadow" key={index} style={{
-                                        display: "flex", height: "14vw", width: "15vw", minWidth: 230, minHeight: 240, margin: "3%",
+                                        display: "flex", height: "16vw", width: "15vw", minWidth: 230, minHeight: 240, margin: "3%",
                                         flexDirection: "column",
                                         backgroundColor: "white",
                                         // backgroundColor: "red",
@@ -74,11 +74,11 @@ class SpecialOfferCard extends Component {
 
                     {/* add button */}
                     <div className="cardshadow" style={{
-                        display: "flex", height: "14vw", width: "15vw", minWidth: 230, minHeight: 240, margin: "3%",
+                        display: "flex", height: "16vw", width: "15vw", minWidth: 230, minHeight: 240, margin: "3%",
                         backgroundColor: "white", flexDirection: "column"
                     }}>
                         <div style={{ display: "flex", flex: 1, color: "black", fontWeight: "bold", flexDirection: "row", justifyContent: "center", alignItems: "center", }} onClick={() => this.props.setModal2Visible(true)} >
-                            <div class="btn btn-light" style={{ display: "flex", width: "35%", height: "35%", backgroundColor: "#E9E9EA", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
+                            <div class="btn btn-light" style={{ display: "flex", width: "35%", height: "32%", backgroundColor: "#E9E9EA", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
                                 <AiOutlinePlus style={{ color: "#494949", fontSize: 25 }} />
                             </div>
                         </div>

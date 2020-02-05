@@ -29,7 +29,7 @@ class ServiceCard extends Component {
                                 }
                                 return (
                                     <div className="cardshadow" key={index} style={{
-                                        display: "flex", height: "20vw", width: "16vw", minWidth: 220, minHeight: 300, margin: "3%",
+                                        display: "flex", height: "20vw", width: "16vw", minWidth: 220, minHeight: 350, margin: "3%",
                                         backgroundColor: "white", flexDirection: "column"
                                     }}>
 
@@ -61,13 +61,13 @@ class ServiceCard extends Component {
                                                     return (
                                                         <div key={esIndex} style={{ display: "flex", flex: 1, width: "100%", margin: 10, justifyContent: "space-between", alignItems: "center", fontWeight: "normal", color: "#535353" }}>
                                                             <div style={{
-                                                                display: "flex", flex: 3,
+                                                                display: "flex", flex: 2.5, fontWeight: "bold", textAlign: "left"
                                                                 // background: "green"
                                                             }}>
                                                                 {extraServices.serviceName}
                                                             </div>
                                                             <div style={{
-                                                                display: "flex", flex: 1.5, color: "#535353",
+                                                                display: "flex", flex: 1.5, color: "#535353", fontWeight: "bold",
                                                                 // background: "orange"
                                                             }}>
                                                                 ${extraServices.price}
@@ -100,7 +100,7 @@ class ServiceCard extends Component {
 
                     {/* add button */}
                     <div className="cardshadow" style={{
-                        display: "flex", height: "20vw", width: "16vw", minWidth: 220, minHeight: 300, margin: "3%",
+                        display: "flex", height: "20vw", width: "16vw", minWidth: 220, minHeight: 350, margin: "3%",
                         backgroundColor: "white", flexDirection: "column"
                     }}>
                         <div style={{ display: "flex", flex: 1, color: "black", fontWeight: "bold", flexDirection: "row", justifyContent: "center", alignItems: "center", }}>
