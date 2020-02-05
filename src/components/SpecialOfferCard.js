@@ -11,7 +11,7 @@ class SpecialOfferCard extends Component {
                 {
                     (this.props.specialPackages.length > 0) ? (
                         this.props.specialPackages.map((specialPackage, index) => {
-                            console.log(specialPackage, 'specialPackagespecialPackage')
+                            // console.log(specialPackage, 'specialPackagespecialPackage')
                             return (
                                 <div className="cardshadow" key={index} style={{
                                     display: "flex", height: "14vw", width: "16vw", minWidth: 230, minHeight: 240, margin: "3%",

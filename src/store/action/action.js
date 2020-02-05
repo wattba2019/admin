@@ -125,10 +125,10 @@ export function addSpecialOffer(specialOffer) {
     return dispatch => {
         console.log('specialOffer', specialOffer);
         var bodyFormData = new FormData();
-        bodyFormData.append('packageName', specialOffer.offerName);
-        bodyFormData.append('packageDescription', specialOffer.offerDescription);
+        bodyFormData.append('packageName', specialOffer.packageName);
+        bodyFormData.append('packageDescription', specialOffer.packageDescription);
         bodyFormData.append('price', specialOffer.price);
-        bodyFormData.append('imgs', specialOffer.imageFile);
+        bodyFormData.append('imgs', specialOffer.packageImage);
         bodyFormData.append('userId', specialOffer.userId);
 
 
@@ -148,11 +148,13 @@ export function addSpecialOffer(specialOffer) {
                 dispatch({ type: ActionTypes.ADD_SPECIAL_OFFER, payload: data.data.result })
                 swal.fire(
                     'Success!',
-                    data.data.message,
+                    "Special offer added successfully.",
                     'success'
                 )
             }).catch((err) => {
-                console.log(err.response.data.message, "ERROR_ON_SAVING")
+                // console.log(err.response.data.message, "ERROR_ON_SAVING")
+                console.log(err, "Error in adding special offers")
+
                 // alert(err.response.data.message)
                 swal.fire(
                     'Error!',

@@ -73,8 +73,9 @@ class SpecialOffers extends Component {
             userId: (this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254',
 
         }
-        
+
         if (this.state.modal2Visible) {
+            console.log(specialOffer, "SPECIAL_OFFERSS")
             this.props.addSpecialOffer(specialOffer);
         }
         else {

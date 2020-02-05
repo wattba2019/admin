@@ -148,7 +148,7 @@ class Home extends Component {
                         <div style={{ width: "100%", height: "8%", float: "right", textAlign: "right", }}>
                             <img alt="BackGroundImage" src={require('../assets/logo.png')} style={{ marginRight: "4%", marginTop: "0.5%" }}
                                 width="140"
-                                height="80%"
+                                height="50"
                             />
                             {/* <Bookings /> */}
                             <Services />

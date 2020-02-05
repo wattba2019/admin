@@ -38,7 +38,8 @@ export default (state = INITIAL_STATE, action) => {
             };
 
         case ActionTypes.ADD_SPECIAL_OFFER:
-            let updatedSpecialPackage = state.specialPackage.slice(0);
+            let updatedSpecialPackage = state.specialPackages.slice(0);
+            console.log(updatedSpecialPackage, "ACTION_CONSOLE")
             updatedSpecialPackage.push(action.payload);
             return {
                 ...state,

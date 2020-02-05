@@ -61,7 +61,7 @@ class Services extends Component {
             let extraService = editService.extraServices;
             let extraServiceqty = editService.extraServices.length;
             let extraServiceqtyArr = Array.apply(null, { length: extraServiceqty });
-            
+
             this.setState({ modal2VisibleEdit, editService, serviceName, price, extraService, extraServiceqty, extraServiceqtyArr, indexToEdit });
         }
         else {
@@ -154,9 +154,13 @@ class Services extends Component {
                     </button>
                 </div>
 
-
-                <ServiceCard services={services} setModal2Visible={this.setModal2Visible} setModal2VisibleEdit={this.setModal2VisibleEdit} />
-
+                <div style={{
+                    display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center",
+                    flexDirection: "column",
+                    background: "#F7F8F8",
+                }}>
+                    <ServiceCard services={services} setModal2Visible={this.setModal2Visible} setModal2VisibleEdit={this.setModal2VisibleEdit} />
+                </div>
                 <div>
                     <ServiceModal modalState={this.state} setModal2Visible={this.setModal2Visible} setModal2VisibleEdit={this.setModal2VisibleEdit} addExtraServiceField={this.addExtraServiceField} delExtraService={this.delExtraService} addExtraService={this.addExtraService} saveService={this.saveService} that={this} />
                 </div>
