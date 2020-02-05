@@ -26,30 +26,43 @@ class SpecialOfferCard extends Component {
                                 return (
                                     <div className="cardshadow" key={index} style={{
                                         display: "flex", height: "14vw", width: "15vw", minWidth: 230, minHeight: 240, margin: "3%",
-                                        backgroundColor: "white", flexDirection: "column"
+                                        flexDirection: "column",
+                                        backgroundColor: "white",
+                                        // backgroundColor: "red",
                                     }}>
 
-                                        <div style={{ display: "flex", flex: 0.5, padding: 5, color: "black", fontWeight: "bold", flexDirection: "row", justifyContent: "space-between", alignItems: "center", }}>
-                                            <div>
-                                                {specialPackage.packageName}
+                                        <div style={{
+                                            display: "flex", flex: 8, flexDirection: "column"
+                                            // background: "orange"
+                                        }}>
+                                            <div style={{ display: "flex", flex: 0.5, padding: 5, color: "black", fontWeight: "bold", flexDirection: "row", justifyContent: "space-between", alignItems: "center", }}>
+                                                <div>
+                                                    {specialPackage.packageName}
+                                                </div>
+                                                <div style={{ display: "flex", backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
+                                                    <IoMdCheckmark style={{ color: "white", }} />
+                                                </div>
                                             </div>
-                                            <div style={{ display: "flex", backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                                <IoMdCheckmark style={{ color: "white", }} />
+
+                                            <div style={{ display: "flex", flex: 0.5, color: "black", fontWeight: "-moz-initial", fontSize: 24 }}>
+                                                $ {specialPackage.price}
+                                            </div>
+
+                                            <div style={{ display: "flex", flex: 0.5, color: "#535353", marginTop: 5, textAlign: "left", marginTop: 10 }}>
+                                                {specialPackage.packageDescription}
                                             </div>
                                         </div>
 
-                                        <div style={{ display: "flex", flex: 0.5, color: "black", fontWeight: "-moz-initial", fontSize: 24 }}>
-                                            $ {specialPackage.price}
-
+                                        <div style={{
+                                            display: "flex", flex: 2,
+                                            // background: "green"
+                                        }}>
+                                            <div style={{ flex: 1.5, marginTop: 10 }}>
+                                                <button type="button" class="btn btn-light" style={{ width: "100%", borderWidth: 0.5, borderColor: "grey" }} onClick={() => this.props.setModal2VisibleEdit(true, specialPackage, index)}>Edit Service</button>
+                                            </div>
                                         </div>
 
-                                        <div style={{ display: "flex", flex: 0.5, color: "#535353", marginTop: 5, textAlign: "left", marginTop: 10 }}>
-                                            {specialPackage.packageDescription}
-                                        </div>
 
-                                        <div style={{ flex: 1.5, }}>
-                                            <button type="button" class="btn btn-light" style={{ width: "100%", borderWidth: 0.5, borderColor: "grey" }} onClick={() => this.props.setModal2VisibleEdit(true, specialPackage, index)}>Edit Service</button>
-                                        </div>
                                     </div>
                                 )
                             })

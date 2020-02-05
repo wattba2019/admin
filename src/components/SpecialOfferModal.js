@@ -7,7 +7,8 @@ import { Form, Input, Checkbox } from 'antd';
 class SpecialOfferModal extends Component {
     state = {
         imageFile: {},
-        imageError: false
+        imageError: false,
+        offerDescription: ""
     }
 
     uploadProps = {
@@ -17,7 +18,7 @@ class SpecialOfferModal extends Component {
     };
 
     beforeUploadEvent(file) {
-        alert("Work")
+        // alert("Work")
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
             message.error('You can only upload JPG/PNG file!');
@@ -44,14 +45,14 @@ class SpecialOfferModal extends Component {
                 console.log('Received values of form: ', values, this.state.imageFile);
 
                 if (Object.keys(this.state.imageFile).length === 0 && this.state.imageFile.constructor === Object) {
-                    alert("Empty OBJECT")
+                    // alert("Empty OBJECT")
                     this.setState({
                         imageError: true
                     })
                 }
 
                 else {
-                    alert("Not Empty OBJECT")
+                    // alert("Not Empty OBJECT")
                     that.addSpecialOffer()
                     this.setState({
                         imageError: false
@@ -106,7 +107,7 @@ class SpecialOfferModal extends Component {
                                 }}
                                 beforeUpload={this.beforeUploadEvent.bind(this)}>
                                 {
-                                    Object.keys(that.state.imageFile).length > 0 ? null : (
+                                    Object.keys(this.state.imageFile).length > 0 ? null : (
                                         <Button>
                                             <Icon type="upload" /> Upload Image
                                         </Button>
@@ -123,6 +124,7 @@ class SpecialOfferModal extends Component {
                             <Form.Item>
                                 {getFieldDecorator('SpecialOfferName', {
                                     rules: [{ required: true, message: 'Please type your offer name!' }],
+                                    rules: [{ max: 26, message: 'Description must be maximum 26 characters.' },],
                                 })(
                                     <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
                                         <div style={{ width: "100%", }}>
@@ -136,6 +138,7 @@ class SpecialOfferModal extends Component {
                             <Form.Item>
                                 {getFieldDecorator('Price', {
                                     rules: [{ required: true, message: 'Please type offer price!' }],
+                                    rules: [{ max: 7, message: 'Description must be maximum 7 characters.' },],
                                 })(
                                     <div style={{ display: "flex", flex: 1, margin: "2.5%", marginLeft: 15 }} >
                                         <div style={{ width: "50%", }}>
@@ -156,10 +159,15 @@ class SpecialOfferModal extends Component {
                         <Form.Item>
                             {getFieldDecorator('Description', {
                                 rules: [{ required: true, message: 'Please type offer description!' }],
+                                rules: [{ max: 120, message: 'Description must be maximum 120 characters.' },],
+
                             })(
                                 <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", }}>
                                     <div style={{ display: "flex", flex: 1, margin: "1.5%", }} >
-                                        <TextareaAutosize style={{ width: "100%" }} maxRows={8} minRows={2} value={that.state.offerDescription} onChange={(e) => { that.setState({ offerDescription: e.target.value }) }} />
+                                        <TextareaAutosize style={{ width: "100%" }} maxRows={8} minRows={2} value={that.state.offerDescription}
+                                            onChange={(e) => { that.setState({ offerDescription: e.target.value }) }}
+                                        // onChange={(e) => that.state.offerDescription.length < 120 ? that.setState({ offerDescription: e.target.value }) : null}
+                                        />
                                     </div>
                                 </div>
                             )}
