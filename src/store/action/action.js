@@ -256,7 +256,7 @@ export function changePassword(email, password, rePassword) {
             }
             var options = {
                 method: 'POST',
-                url: `${this.props.bseUrl}/resetpasswordAdmin/changepassword/`,
+                url: `${baseURL.baseURL}/resetpasswordAdmin/changepassword/`,
                 headers:
                 {
                     'cache-control': 'no-cache',
@@ -276,7 +276,7 @@ export function changePassword(email, password, rePassword) {
                     console.log(err.response.data.message, "ERROR_ON_PASSWORD_CHANGE")
                     swal.fire(
                         'Error!',
-                         err.response.data.message,
+                        err.response.data.message,
                         'error'
                     )
                 })

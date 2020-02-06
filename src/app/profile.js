@@ -46,6 +46,15 @@ class ShopProfile extends Component {
         }
     }
 
+    changePassword = () => {
+        const { email, password, confirmPassword } = this.state
+        this.props.changePassword(email, password, confirmPassword)
+        this.setState({
+            password: '',
+            confirmPassword: '',
+        })
+    }
+
     render() {
         const { email, password, confirmPassword, about, businessName, telephone, websiteUrl, addressline1, addressline2 } = this.state;
 
@@ -145,7 +154,6 @@ class ShopProfile extends Component {
                         // background: "red"
                     }}>
                         <center>
-
                             <div style={{ width: "100%", marginLeft: "40%", marginTop: 20, justifyContent: "center", alignItems: "flex-start" }} className="center">
                                 <h6 className="input-group mb-6 inputCenter" >Change Password</h6>
 
@@ -158,12 +166,11 @@ class ShopProfile extends Component {
                                 </div>
 
                                 <div style={{ display: "flex", flex: 1, marginTop: 15 }} >
-                                    <button className="button" style={{ marginTop: 10, width: "70%" }} onClick={this.signup} >
+                                    <button className="button" style={{ marginTop: 10, width: "70%" }} onClick={this.changePassword} >
                                         <span className="buttonmatter">Change Password</span>
                                     </button>
                                 </div>
                             </div>
-
                         </center>
                     </div>
 
