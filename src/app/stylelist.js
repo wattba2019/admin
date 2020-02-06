@@ -16,7 +16,7 @@ import { Button, DatePicker, version, Modal, Input, TimePicker } from "antd";
 import TextareaAutosize from 'react-textarea-autosize';
 import StylistModal from '../components/StylistModal';
 import StylistCard from '../components/StylistCard';
-import { addStylist, getStylists } from "../store/action/action";
+import { addStylist, getStylists, updateStylist } from "../store/action/action";
 
 import "antd/dist/antd.css";
 
@@ -44,6 +44,8 @@ class StyleList extends Component {
             stylistFullName: '',
             stylistDescription: '',
             modal2Visible: false,
+            modal2VisibleEdit: false,
+
             workingDaysNTime: [
                 {
                     day: 'Monday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
@@ -74,6 +76,8 @@ class StyleList extends Component {
             fileList: [],
             services: [],
             serviceqty: 1,
+            editStylist: {},
+            indexToEdit: undefined
         }
         this.state.serviceqtyArr = Array.apply(null, { length: this.state.serviceqty });
 
@@ -81,6 +85,50 @@ class StyleList extends Component {
 
     }
 
+    setModal2VisibleEdit(modal2VisibleEdit, editStylist, indexToEdit) {
+        if (modal2VisibleEdit) {
+            console.log(editStylist, 'editService');
+            let stylistFullName = editStylist.fullname;
+            let stylistDescription = editStylist.description;
+            let services = editStylist.serviceProvided;
+            let serviceqty = editStylist.serviceProvided.length;
+            let serviceqtyArr = Array.apply(null, { length: serviceqty });
+            let workingDaysNTime = editStylist.workingDays;
+            this.setState({ modal2VisibleEdit, editStylist, stylistFullName, stylistDescription, services, serviceqty, serviceqtyArr, indexToEdit, workingDaysNTime });
+        }
+        else {
+            let stylistFullName = '';
+            let stylistDescription = '';
+            let services = [];
+            let serviceqty = 1;
+            let indexToEdit = undefined;
+            let serviceqtyArr = Array.apply(null, { length: serviceqty });
+            let workingDaysNTime = [
+                {
+                    day: 'Monday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                },
+                {
+                    day: 'Tuesday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                },
+                {
+                    day: 'Wednesday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                },
+                {
+                    day: 'Thursday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                },
+                {
+                    day: 'Friday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                },
+                {
+                    day: 'Saturday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                },
+                {
+                    day: 'Sunday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                },
+            ];
+            this.setState({ modal2VisibleEdit, editStylist, stylistFullName, stylistDescription, services, serviceqty, serviceqtyArr, indexToEdit, workingDaysNTime });
+        }
+    }
 
     handleCancel = () => this.setState({ previewVisible: false });
 
@@ -168,7 +216,8 @@ class StyleList extends Component {
             this.props.addStylist(stylist);
         }
         else {
-
+            stylist._id = this.state.editStylist._id;
+            this.props.updateStylist(stylist, this.state.indexToEdit);
         }
         let serviceqtyArr = Array.apply(null, { length: 1 });
 
@@ -272,7 +321,9 @@ function mapDispatchToProp(dispatch) {
         getStylists: (userId) => {
             dispatch(getStylists(userId));
         },
-
+        updateStylist: (stylist, indexToEdit) => {
+            dispatch(updateStylist(stylist, indexToEdit));
+        },
     })
 }
 

@@ -85,7 +85,7 @@ class StylistCard extends Component {
                                             display: "flex", flex: 1, height: "100%", justifyContent: "center", alignItems: "center", textAlign: "left", fontSize: 10,
                                             background: "#F7F8F8"
                                         }}
-                                        // onClick={() => this.setModal2Visible(true)}
+                                            onClick={() => that.setModal2VisibleEdit(true, stylist, index)}
                                         >
                                             Working Calendar
                                    </div>

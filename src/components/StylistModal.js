@@ -24,9 +24,9 @@ class StylistModal extends Component {
                 footer={null}
                 // title="Vertically centered modal dialog"
                 centered
-                visible={that.state.modal2Visible}
+                visible={that.state.modal2Visible || that.state.modal2VisibleEdit}
                 onOk={() => that.setModal2Visible(false)}
-                onCancel={() => that.setModal2Visible(false)}
+                onCancel={() => { that.setModal2Visible(false); that.setModal2VisibleEdit(false) }}
                 bodyStyle={{ height: 500 }}
                 width={"75%"}
                 minWidth={"60%"}
@@ -90,6 +90,7 @@ class StylistModal extends Component {
                                     </div>
                                     {
                                         that.state.workingDaysNTime.map((dayBrTime, index) => {
+                                            console.log(dayBrTime,'dayBrTimedayBrTime')
                                             return (
                                                 <div key={index} style={{
                                                     display: "flex", flex: 1, color: "black", flexDirection: "row", justifyContent: "space-between", alignItems: "center", height: 30,
@@ -122,7 +123,7 @@ class StylistModal extends Component {
                                                             use12Hours format="h:mm a"
                                                             // placeholder={"Time"}
                                                             // onChange={this.onChange}
-                                                            value={moment(that.state.workingDaysNTime[index].brStart, 'h:mm a')}
+                                                            defaultValue={moment(that.state.workingDaysNTime[index].brStart, 'h:mm a')}
                                                             onChange={(e, f) => {
                                                                 console.log(e, f, index, dayBrTime, 'e, f, index, dayBrTime');
                                                                 e.index = index;
@@ -134,8 +135,7 @@ class StylistModal extends Component {
                                                         />
                                                         <span style={{ margin: "1%", fontWeight: "normal" }}>to</span>
                                                         <TimePicker
-                                                            value={moment(that.state.workingDaysNTime[index].brEnd, 'h:mm a')}
-
+                                                            defaultValue={moment(that.state.workingDaysNTime[index].brEnd, 'h:mm a')}
                                                             style={{ width: 95, margin: "1%" }}
                                                             use12Hours format="h:mm a"
                                                             // placeholder={"Time"}
@@ -265,7 +265,7 @@ class StylistModal extends Component {
                             <span className="buttonmatter" style={{ fontSize: 15, }}>{(that.state.modal2Visible) ? 'Add Stylist' : 'Save Stylist'}</span>
                         </button>
 
-                        <button type="button" class="btn btn-light" style={{ width: "20%", margin: "1%", minWidth: 140, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => that.setModal2Visible(false)}>Cancel</button>
+                        <button type="button" class="btn btn-light" style={{ width: "20%", margin: "1%", minWidth: 140, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => { that.setModal2Visible(false); that.setModal2VisibleEdit(false) }}>Cancel</button>
 
                     </div>
                 </div>

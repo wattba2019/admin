@@ -315,4 +315,45 @@ export function getStylists(userID) {
     }
 }
 
+
+
+
+export function updateStylist(stylist, indexToEdit) {
+    return dispatch => {
+        console.log('inside action', stylist, indexToEdit);
+        var options = {
+            method: 'PUT',
+            url: `${baseURL.baseURL}/stylist/${stylist._id}/`,
+            headers:
+            {
+                'cache-control': 'no-cache',
+                "Allow-Cross-Origin": '*',
+            },
+            data: stylist
+        };
+        axios(options)
+            .then((data) => {
+                console.log(data, "stylist updated successfully.");
+                stylist.indexToEdit = indexToEdit;
+
+                dispatch({ type: ActionTypes.UPDATE_STYLIST, payload: stylist })
+
+                swal.fire(
+                    'Success!',
+                    data.data.message,
+                    'success'
+                )
+            }).catch((err) => {
+                console.error(err, "ERROR_ON_SAVING")
+                // alert(err.response.data.message)
+                swal.fire(
+                    'Error!',
+                    'Something went wrong.',
+                    'error'
+                )
+
+            })
+    }
+}
+
 /* Actions for Stylists */
