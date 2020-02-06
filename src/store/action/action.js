@@ -244,3 +244,75 @@ export function updateSpecialOffer(specialOffer, indexToEdit) {
 
 
 /* Actions for Special Offer */
+
+
+
+
+/* Actions for Stylists */
+
+
+
+
+export function addStylist(stylist) {
+    return dispatch => {
+        console.log('inside action', stylist);
+        var options = {
+            method: 'POST',
+            url: `${baseURL.baseURL}/stylist/${stylist.userId}`,
+            headers:
+            {
+                'cache-control': 'no-cache',
+                "Allow-Cross-Origin": '*',
+            },
+            data: stylist
+        };
+        axios(options)
+            .then((data) => {
+                console.log(data, "Stylist added successfully.");
+                dispatch({ type: ActionTypes.ADD_STYLIST, payload: data.data })
+                swal.fire(
+                    'Success!',
+                    'Stylist Added',
+                    'success'
+                )
+            }).catch((err) => {
+                console.log(err.response.data.message, "ERROR_ON_SAVING")
+                // alert(err.response.data.message)
+                swal.fire(
+                    'Error!',
+                    'Something went wrong.',
+                    'error'
+                )
+
+            })
+    }
+}
+
+
+
+
+
+export function getStylists(userID) {
+    return dispatch => {
+        var options = {
+            method: 'GET',
+            url: `${baseURL.baseURL}/stylist/${userID}`,
+            headers:
+            {
+                'cache-control': 'no-cache',
+                "Allow-Cross-Origin": '*',
+            }
+        };
+        axios(options)
+            .then((savedStylists) => {
+                console.log(savedStylists, 'fetched savedStylists');
+                dispatch({ type: ActionTypes.FETCHED_STYLIST, payload: savedStylists.data.data })
+            })
+            .catch((err) => {
+                console.log(err, "Error in fetching savedStylists")
+                // alert(err.response.data.message)
+            })
+    }
+}
+
+/* Actions for Stylists */

@@ -16,6 +16,7 @@ import { Button, DatePicker, version, Modal, Input, TimePicker } from "antd";
 import TextareaAutosize from 'react-textarea-autosize';
 import StylistModal from '../components/StylistModal';
 import StylistCard from '../components/StylistCard';
+import { addStylist, getStylists } from "../store/action/action";
 
 import "antd/dist/antd.css";
 
@@ -45,25 +46,25 @@ class StyleList extends Component {
             modal2Visible: false,
             workingDaysNTime: [
                 {
-                    day: 'Monday', brStart: '', brEnd: '', working: true,
+                    day: 'Monday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
                 },
                 {
-                    day: 'Tuesday', brStart: '', brEnd: '', working: true,
+                    day: 'Tuesday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
                 },
                 {
-                    day: 'Wednesday', brStart: '', brEnd: '', working: true,
+                    day: 'Wednesday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
                 },
                 {
-                    day: 'Thursday', brStart: '', brEnd: '', working: true,
+                    day: 'Thursday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
                 },
                 {
-                    day: 'Friday', brStart: '', brEnd: '', working: true,
+                    day: 'Friday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
                 },
                 {
-                    day: 'Saturday', brStart: '', brEnd: '', working: true,
+                    day: 'Saturday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
                 },
                 {
-                    day: 'Sunday', brStart: '', brEnd: '', working: true,
+                    day: 'Sunday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
                 },
             ],
             // weekDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
@@ -75,6 +76,9 @@ class StyleList extends Component {
             serviceqty: 1,
         }
         this.state.serviceqtyArr = Array.apply(null, { length: this.state.serviceqty });
+
+        this.props.getStylists((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254');
+
     }
 
 
@@ -151,6 +155,58 @@ class StyleList extends Component {
         this.setState({ serviceqty, serviceqtyArr, services }, () => { console.log(this.state) });
     }
 
+    saveStylist() {
+        console.log('saved service called');
+        let stylist = {
+            fullname: this.state.stylistFullName,
+            description: this.state.stylistDescription,
+            userId: (this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254',
+            workingDays: this.state.workingDaysNTime,
+            serviceProvided: this.state.services,
+        }
+        if (this.state.modal2Visible) {
+            this.props.addStylist(stylist);
+        }
+        else {
+
+        }
+        let serviceqtyArr = Array.apply(null, { length: 1 });
+
+        this.setState({
+            stylistFullName: "",
+            stylistDescription: "",
+            services: [],
+            serviceqty: 1,
+            modal2Visible: false,
+            modal2VisibleEdit: false,
+            serviceqtyArr,
+            editStylist: {},
+            indexToEdit: undefined,
+            workingDaysNTime: [
+                {
+                    day: 'Monday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                },
+                {
+                    day: 'Tuesday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                },
+                {
+                    day: 'Wednesday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                },
+                {
+                    day: 'Thursday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                },
+                {
+                    day: 'Friday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                },
+                {
+                    day: 'Saturday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                },
+                {
+                    day: 'Sunday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                },
+            ]
+        })
+    }
 
     render() {
         const { previewVisible, previewImage, fileList } = this.state;
@@ -166,7 +222,31 @@ class StyleList extends Component {
                 display: "flex", flexDirection: "column", flex: 1, width: "100%", justifyContent: "center", alignItems: "center",
                 // background: "yellow",
             }}>
-                <StylistCard that={this} />
+
+                <div style={{
+                    display: "flex", flex: 1, width: "90%", justifyContent: "space-between",
+                    // backgroundColor: "#49BE56"
+                }}>
+                    <div style={{
+                        minWidth: 350, display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center",
+                        // background: "green"
+                    }}>
+                        <span style={{ fontSize: 18, fontWeight: "bold" }}>Stylists Profiles</span>
+                        <div style={{ marginLeft: 10 }}>
+                            <Search
+                                placeholder="search stylist"
+                                onSearch={value => console.log(value)}
+                                style={{ width: 200 }}
+                            />
+                        </div>
+                    </div>
+
+                    <button style={{ minWidth: 120, width: "20%" }} className="buttonAdd" onClick={() => this.setModal2Visible(true)}  >
+                        <span className="buttonmatter" style={{ fontSize: 12, }}>Add StyList</span>
+                    </button>
+                </div>
+
+                <StylistCard that={this} stylists={this.props.stylists} />
 
                 <div>
                     <StylistModal that={this} />
@@ -179,13 +259,20 @@ class StyleList extends Component {
 function mapStateToProp(state) {
     return ({
         bseUrl: state.root.bseUrl,
+        uid: state.root.userProfile._id,
+        stylists: state.root.stylists
+
     })
 }
 function mapDispatchToProp(dispatch) {
     return ({
-        // setUserCredentials: (user) => {
-        //     dispatch(setUserCredentials(user));
-        // },
+        addStylist: (stylist) => {
+            dispatch(addStylist(stylist));
+        },
+        getStylists: (userId) => {
+            dispatch(getStylists(userId));
+        },
+
     })
 }
 

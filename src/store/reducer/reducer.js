@@ -6,7 +6,8 @@ const INITIAL_STATE = {
     userProfile: {},
     currentLocation: null,
     services: [],
-    specialPackages: []
+    specialPackages: [],
+    stylists: []
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -61,8 +62,18 @@ export default (state = INITIAL_STATE, action) => {
                 specialPackages: editedSpecialOffer
             };
 
-
-
+        case ActionTypes.FETCHED_STYLIST:
+            return {
+                ...state,
+                stylists: action.payload
+            };
+        case ActionTypes.ADD_STYLIST:
+            let updatedStylist = state.stylists.slice(0);
+            updatedStylist.push(action.payload);
+            return {
+                ...state,
+                stylists: updatedStylist
+            };
 
 
         default:

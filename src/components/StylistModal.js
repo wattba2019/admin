@@ -3,6 +3,7 @@ import { MdDeleteForever } from 'react-icons/md';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoMdCheckmark } from 'react-icons/io';
 import { Button, DatePicker, version, Modal, Input, TimePicker, Upload, Icon, } from "antd";
+import moment from 'moment';
 
 import TextareaAutosize from 'react-textarea-autosize';
 
@@ -119,8 +120,9 @@ class StylistModal extends Component {
                                                         <TimePicker
                                                             style={{ width: 95, margin: "1%" }}
                                                             use12Hours format="h:mm a"
-                                                            placeholder={"Time"}
+                                                            // placeholder={"Time"}
                                                             // onChange={this.onChange}
+                                                            value={moment(that.state.workingDaysNTime[index].brStart, 'h:mm a')}
                                                             onChange={(e, f) => {
                                                                 console.log(e, f, index, dayBrTime, 'e, f, index, dayBrTime');
                                                                 e.index = index;
@@ -132,9 +134,11 @@ class StylistModal extends Component {
                                                         />
                                                         <span style={{ margin: "1%", fontWeight: "normal" }}>to</span>
                                                         <TimePicker
+                                                            value={moment(that.state.workingDaysNTime[index].brEnd, 'h:mm a')}
+
                                                             style={{ width: 95, margin: "1%" }}
                                                             use12Hours format="h:mm a"
-                                                            placeholder={"Time"}
+                                                            // placeholder={"Time"}
                                                             onChange={(e, f) => {
                                                                 console.log(e, f, index, dayBrTime, 'e, f, index, dayBrTime');
                                                                 e.index = index;
@@ -257,11 +261,11 @@ class StylistModal extends Component {
                         background: "#F7F8F8",
                     }}>
 
-                        <button className="buttonAdd" style={{ minWidth: 140, width: "20%", margin: "1%" }} onClick={this.signin} >
-                            <span className="buttonmatter" style={{ fontSize: 15, }}>Save</span>
+                        <button className="buttonAdd" style={{ minWidth: 140, width: "20%", margin: "1%" }} onClick={that.saveStylist.bind(that)} >
+                            <span className="buttonmatter" style={{ fontSize: 15, }}>{(that.state.modal2Visible) ? 'Add Stylist' : 'Save Stylist'}</span>
                         </button>
 
-                        <button type="button" class="btn btn-light" style={{ width: "20%", margin: "1%", minWidth: 140, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => this.setModal2Visible(true)}>Edit Service</button>
+                        <button type="button" class="btn btn-light" style={{ width: "20%", margin: "1%", minWidth: 140, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => that.setModal2Visible(false)}>Cancel</button>
 
                     </div>
                 </div>
