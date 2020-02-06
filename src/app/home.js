@@ -1,13 +1,13 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
 import { setUserCredentials } from "../store/action/action";
-import {
-    Link
-} from 'react-router-dom';
+// import {
+//     Link
+// } from 'react-router-dom';
 import '../custom.css'
-import axios from 'axios';
-import Loader from 'react-loader-spinner'
-import swal from 'sweetalert2';
+// import axios from 'axios';
+// import Loader from 'react-loader-spinner'
+// import swal from 'sweetalert2';
 import { MdCameraEnhance } from 'react-icons/md';
 import { FaRegCalendarCheck, FaRegCalendarAlt } from 'react-icons/fa';
 import { GiScissors } from 'react-icons/gi';
@@ -20,6 +20,7 @@ import Services from './services';
 import SpecialOffers from './specialOffers';
 import StyleList from './stylelist';
 import Workinghours from './workingHours';
+import history from '../History';
 
 class Home extends Component {
     constructor(props) {
@@ -27,9 +28,10 @@ class Home extends Component {
         this.state = {
             loader: false,
             showerror: false,
-            // route: "ShopProfile"
+            shopImage: "",
+            route: "ShopProfile"
             // route: "Bookings"
-            route: "Services"
+            // route: "Services"
             // route: "Stylelists"
             // route: "WorkingHours"
             // route: "SpecialOffers"
@@ -53,12 +55,25 @@ class Home extends Component {
         })
     }
 
+    componentDidMount() {
+        let userData = this.props.userProfile
+        // console.log(userData, "USER_DATA_IN_HOME_MENU")
+        if (userData != undefined) {
+            this.setState({
+                shopImage: userData.coverImage,
+                businessName: userData.businessName,
+            })
+        }
+        else {
+            history.push('Signin')
+        }
+    }
+
     render() {
-        const { } = this.state;
+        const { shopImage, businessName } = this.state;
         return (
             <div>
-
-                <div class="sidenav">
+                <div className="sidenav">
                     <div style={{ flexBasis: "100%", marginTop: "10%" }}>
                         <center>
                             <div style={{ width: "50%", }} className="center">
@@ -66,7 +81,11 @@ class Home extends Component {
                                     <center>
                                         {/* Business image */}
                                         <div className="drawerBackgroundnested" >
-                                            <img src={require('../../src/assets/noPhoto.jpg')} className="profileImage" />
+                                            {
+                                                shopImage ?
+                                                    <img src={shopImage} className="profileImage" /> :
+                                                    <img src={require('../../src/assets/noPhoto.jpg')} className="profileImage" />
+                                            }
                                             <label htmlFor="inputGroupFile01" className="profileImageupload" style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
                                                 <MdCameraEnhance style={{ color: "grey", fontSize: 18 }} />
                                             </label>
@@ -81,7 +100,7 @@ class Home extends Component {
                                         />
                                         {/* Business Name */}
                                         <div>
-                                            <h4 onClick={() => this.routeChanger("ShopProfile")} className="shopeName" style={{ marginTop: 10, }}>Shop 1</h4>
+                                            <h4 onClick={() => this.routeChanger("ShopProfile")} className="shopeName" style={{ marginTop: 10, }}>{businessName}</h4>
                                         </div>
                                     </center>
                                 </div>
@@ -161,7 +180,7 @@ class Home extends Component {
                     </div>
                 </div>
 
-                <div class="main">
+                <div className="main">
                     <div
                         style={{
                             display: "flex", flexBasis: "85%",
@@ -210,6 +229,7 @@ class Home extends Component {
 function mapStateToProp(state) {
     return ({
         bseUrl: state.root.bseUrl,
+        userProfile: state.root.userProfile,
     })
 }
 function mapDispatchToProp(dispatch) {

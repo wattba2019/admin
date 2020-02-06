@@ -7,6 +7,7 @@ import { MdEmail, MdDescription, MdLocalPhone, MdLock } from 'react-icons/md';
 import { TiBusinessCard } from 'react-icons/ti';
 import { GiWorld } from 'react-icons/gi';
 import SimpleMap from '../components/googlemap';
+import history from '../History';
 
 class ShopProfile extends Component {
     constructor(props) {
@@ -21,6 +22,26 @@ class ShopProfile extends Component {
             websiteUrl: '',
             addressline1: '',
             addressline2: '',
+        }
+    }
+
+
+    componentDidMount() {
+        let userData = this.props.userProfile
+        // console.log(userData, "USER_DATA_IN_P")
+        if (userData != undefined) {
+            this.setState({
+                email: userData.email,
+                about: userData.about,
+                businessName: userData.businessName,
+                telephone: userData.telePhone,
+                websiteUrl: userData.websiteUrl,
+                addressline1: userData.addressLine1,
+                addressline2: userData.addressLine2,
+            })
+        }
+        else {
+            history.push('Signin')
         }
     }
 
@@ -154,6 +175,7 @@ class ShopProfile extends Component {
 function mapStateToProp(state) {
     return ({
         bseUrl: state.root.bseUrl,
+        userProfile: state.root.userProfile,
     })
 }
 
