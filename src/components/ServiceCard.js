@@ -29,7 +29,7 @@ class ServiceCard extends Component {
                                 }
                                 return (
                                     <div className="cardshadow" key={index} style={{
-                                        display: "flex", height: "20vw", width: "16vw", minWidth: 220, minHeight: 300, margin: "3%",
+                                        display: "flex", height: "20vw", width: "16vw", minWidth: 220, minHeight: 350, margin: "3%",
                                         backgroundColor: "white", flexDirection: "column"
                                     }}>
 
@@ -48,24 +48,39 @@ class ServiceCard extends Component {
 
                                         <div style={{ display: "flex", flex: 0.5, color: "black", fontWeight: "bold", marginTop: 5, }}>
                                             Extra Services
-                                </div>
+                                        </div>
 
-                                        <div style={{ display: "flex", flex: 5, padding: 5, color: "black", fontWeight: "bold", flexDirection: "column", justifyContent: "center", alignItems: "center", }}>
+                                        <div style={{
+                                            display: "flex", flex: 5, padding: 5, color: "black", fontWeight: "bold", flexDirection: "column", justifyContent: "center", alignItems: "center",
+                                            // background: "red"
+                                        }}>
 
                                             {
                                                 indexedExtraServices.map((extraServices, esIndex) => {
                                                     console.log(indexedExtraServices, 'indexedExtraServices')
                                                     return (
-                                                        <div key={esIndex} style={{ display: "flex", width: "100%", margin: 10, justifyContent: "space-between", alignItems: "center", fontWeight: "normal", color: "#535353" }}>
-                                                            <div>
+                                                        <div key={esIndex} style={{ display: "flex", flex: 1, width: "100%", margin: 10, justifyContent: "space-between", alignItems: "center", fontWeight: "normal", color: "#535353" }}>
+                                                            <div style={{
+                                                                display: "flex", flex: 2.5, fontWeight: "bold", textAlign: "left"
+                                                                // background: "green"
+                                                            }}>
                                                                 {extraServices.serviceName}
                                                             </div>
-                                                            <div style={{ marginLeft: "10%", color: "#535353" }}>
-                                                                {extraServices.price}
+                                                            <div style={{
+                                                                display: "flex", flex: 1.5, color: "#535353", fontWeight: "bold",
+                                                                // background: "orange"
+                                                            }}>
+                                                                ${extraServices.price}
                                                             </div>
-                                                            <div style={{ display: "flex", backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                                                <IoMdCheckmark style={{ color: "white", }} />
+                                                            <div style={{
+                                                                display: "flex", flex: 0.5, color: "#535353",
+                                                                // background: "yellow",
+                                                            }}>
+                                                                <div style={{ display: "flex", backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
+                                                                    <IoMdCheckmark style={{ color: "white", }} />
+                                                                </div>
                                                             </div>
+
                                                         </div>
                                                     )
                                                 })
@@ -85,7 +100,7 @@ class ServiceCard extends Component {
 
                     {/* add button */}
                     <div className="cardshadow" style={{
-                        display: "flex", height: "20vw", width: "16vw", minWidth: 220, minHeight: 300, margin: "3%",
+                        display: "flex", height: "20vw", width: "16vw", minWidth: 220, minHeight: 350, margin: "3%",
                         backgroundColor: "white", flexDirection: "column"
                     }}>
                         <div style={{ display: "flex", flex: 1, color: "black", fontWeight: "bold", flexDirection: "row", justifyContent: "center", alignItems: "center", }}>
@@ -97,7 +112,7 @@ class ServiceCard extends Component {
 
                 </div>
 
-            </div>
+            </div >
         )
     }
 }

@@ -27,7 +27,12 @@ class Home extends Component {
         this.state = {
             loader: false,
             showerror: false,
-            route: "Stylelists"
+            // route: "ShopProfile"
+            // route: "Bookings"
+            route: "Services"
+            // route: "Stylelists"
+            // route: "WorkingHours"
+            // route: "SpecialOffers"
         }
     }
 

@@ -14,13 +14,35 @@ class Workinghours extends Component {
     render() {
         const { } = this.state
         return (
+
             <div style={{
-                display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center",
-                flexDirection: "column",
-                background: "#F7F8F8",
+                display: "flex", flexDirection: "column", flex: 1, width: "100%", justifyContent: "center", alignItems: "center",
+                // background: "yellow",
             }}>
-                <WorkingHoursCard />
-            </div >
+                <div style={{
+                    display: "flex", flex: 1, width: "90%", justifyContent: "space-between",
+                    // backgroundColor: "#49BE56"
+                }}>
+                    <div style={{ minWidth: 150 }}>
+                        <span style={{ fontSize: 18, fontWeight: "bold" }}>Working Hours</span>
+                    </div>
+                    <button style={{ minWidth: 80 }} className="buttonAdd"
+                    // onClick={() => this.setModal2Visible(true)}
+                    >
+                        <span className="buttonmatter" style={{ fontSize: 12, }}>Update Timing</span>
+                    </button>
+                </div>
+
+                <div style={{
+                    display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center",
+                    flexDirection: "column",
+                    background: "#F7F8F8",
+                }}>
+                    <WorkingHoursCard />
+                </div >
+
+            </div>
+
         )
     }
 }

@@ -119,9 +119,14 @@ class SpecialOffers extends Component {
                     </button>
 
                 </div>
-
-                <SpecialOfferCard specialPackages={specialPackages} setModal2Visible={this.setModal2Visible} setModal2VisibleEdit={this.setModal2VisibleEdit} />
-
+                
+                <div style={{
+                    display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center",
+                    flexDirection: "column",
+                    background: "#F7F8F8",
+                }}>
+                    <SpecialOfferCard specialPackages={specialPackages} setModal2Visible={this.setModal2Visible} setModal2VisibleEdit={this.setModal2VisibleEdit} />
+                </div>
                 <div>
                     <SpecialOfferModal modalState={this.state} setModal2Visible={this.setModal2Visible} setModal2VisibleEdit={this.setModal2VisibleEdit} that={this} />
                 </div>

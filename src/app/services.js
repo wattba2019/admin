@@ -165,7 +165,7 @@ class Services extends Component {
                     <ServiceModal modalState={this.state} setModal2Visible={this.setModal2Visible} setModal2VisibleEdit={this.setModal2VisibleEdit} addExtraServiceField={this.addExtraServiceField} delExtraService={this.delExtraService} addExtraService={this.addExtraService} saveService={this.saveService} that={this} />
                 </div>
 
-            </div >
+            </div>
         )
     }
 }
