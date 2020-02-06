@@ -8,6 +8,7 @@ import { TiBusinessCard } from 'react-icons/ti';
 import { GiWorld } from 'react-icons/gi';
 import SimpleMap from '../components/googlemap';
 import history from '../History';
+import { changePassword } from "../store/action/action";
 
 class ShopProfile extends Component {
     constructor(props) {
@@ -28,7 +29,7 @@ class ShopProfile extends Component {
 
     componentDidMount() {
         let userData = this.props.userProfile
-        // console.log(userData, "USER_DATA_IN_P")
+        // console.log(userData, "USER_DATA_IN_PROFILE")
         if (userData != undefined) {
             this.setState({
                 email: userData.email,
@@ -181,6 +182,9 @@ function mapStateToProp(state) {
 
 function mapDispatchToProp(dispatch) {
     return ({
+        changePassword: (data1, data2, data3) => {
+            dispatch(changePassword(data1, data2, data3));
+        },
     })
 }
 

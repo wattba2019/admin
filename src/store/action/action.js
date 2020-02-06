@@ -244,3 +244,50 @@ export function updateSpecialOffer(specialOffer, indexToEdit) {
 
 
 /* Actions for Special Offer */
+
+
+
+export function changePassword(email, password, rePassword) {
+    return dispatch => {
+        if (password === rePassword) {
+            let cloneData = {
+                email: email,
+                newPassword: password,
+            }
+            var options = {
+                method: 'POST',
+                url: `${this.props.bseUrl}/resetpasswordAdmin/changepassword/`,
+                headers:
+                {
+                    'cache-control': 'no-cache',
+                    "Allow-Cross-Origin": '*',
+                },
+                data: cloneData
+            };
+            axios(options)
+                .then((data) => {
+                    console.log(data.data, "CHANGE_PASSWORD_SUCCESSFULL")
+                    swal.fire(
+                        'Success!',
+                        data.data.message,
+                        'success'
+                    )
+                }).catch((err) => {
+                    console.log(err.response.data.message, "ERROR_ON_PASSWORD_CHANGE")
+                    swal.fire(
+                        'Error!',
+                         err.response.data.message,
+                        'error'
+                    )
+                })
+        }
+        else {
+            swal.fire(
+                'Error!',
+                'Password does not match',
+                'error'
+            )
+        }
+
+    }
+}
