@@ -40,6 +40,7 @@ class SpecialOffers extends Component {
 
         this.props.getSpecialPackages((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254');
     }
+
     setModal2Visible(modal2Visible) {
         this.setState({ modal2Visible });
     }

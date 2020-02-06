@@ -39,7 +39,7 @@ class StyleList extends Component {
             loader: false,
             showerror: false,
             email: "",
-            modal2Visible: true,
+            modal2Visible: false,
             weekDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
             serviceNameFieldQty: [1],
 
@@ -264,17 +264,18 @@ class StyleList extends Component {
                         visible={this.state.modal2Visible}
                         onOk={() => this.setModal2Visible(false)}
                         onCancel={() => this.setModal2Visible(false)}
-                        bodyStyle={{ height: 600 }}
+                        bodyStyle={{ height: 500 }}
                         width={"75%"}
+                        minWidth={"60%"}
                         bodyStyle={{ padding: 0, }}
                     >
                         <div style={{ display: "flex", flex: 1, width: "100%", flexDirection: "column", fontSize: "1.1vw", fontWeight: "bold", background: "red" }}>
 
                             {/* Body */}
-                            <div style={{ display: "flex", flex: 8, minWidth: 140, background: "yellow" }}>
+                            <div style={{ display: "flex", flex: 8, flexWrap: "wrap", minWidth: 140, background: "yellow" }}>
                                 {/* 1st card */}
 
-                                <div style={{ display: "flex", flexDirection: "column", flex: 2, background: "#F7F8F8", padding: "2.5%" }}>
+                                <div style={{ display: "flex", flexWrap: "wrap", flexDirection: "column", flex: 3, background: "#F7F8F8", padding: "2.5%" }}>
                                     <div style={{ fontSize: 18 }}>
                                         New Stylist
                                      </div>
@@ -282,7 +283,7 @@ class StyleList extends Component {
                                     {/* Full Name */}
                                     <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", marginTop: 10, }}>
                                         <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
-                                            <div style={{ width: "70%", }}>
+                                            <div style={{ width: "70%", minWidth: 200 }}>
                                                 <input type="text" className="form-control" placeholder=" Full Name" aria-label=" Full Name" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
                                             </div>
                                         </div>
@@ -375,8 +376,8 @@ class StyleList extends Component {
 
                                 {/* 2nd card */}
 
-                                <div style={{
-                                    display: "flex", flexDirection: "column", flex: 1.7, padding: "2.5%",
+                                <div className="cardshadowcenter" style={{
+                                    display: "flex", flexDirection: "column", flex: 2, padding: "2.5%", zIndex: 1,
                                     background: "#FFFFFF"
                                 }}>
                                     <div style={{
@@ -396,7 +397,7 @@ class StyleList extends Component {
                                                         // background: "red"
                                                     }}>
                                                         <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
-                                                            <div style={{ width: "95%", }}>
+                                                            <div  style={{ width: "95%", }}>
                                                                 <input type="text" className="form-control" placeholder="Service Name" aria-label="Service Name" aria-describedby="basic-addon1" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
                                                             </div>
                                                         </div>
@@ -432,8 +433,9 @@ class StyleList extends Component {
                                 {/* 3rd card */}
 
                                 <div style={{
-                                    display: "flex", flexDirection: "column", flex: 2, padding: "2.5%",
+                                    display: "flex", flexDirection: "column", flex: 3, padding: "2.5%",
                                     background: "#F7F8F8"
+                                    // background: "red"
                                 }}>
                                     <div style={{
                                         display: "flex", flex: 10, flexDirection: "column",
@@ -464,27 +466,22 @@ class StyleList extends Component {
 
                                     </div>
 
-                                    {/* <div style={{
-                                        display: "flex", flex: 1, flexDirection: "column",
-                                        background: "green"
-                                    }}>
-                                        Footer
-                                    </div> */}
                                 </div>
+
+
                             </div>
 
                             {/* Footer */}
                             <div className="cardshadowWithButton" style={{
-                                display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", flex: 2, zIndex: 1,
+                                display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", flex: 2, zIndex: 1, width: "100%",
                                 background: "#F7F8F8",
                             }}>
 
-                                <button className="buttonAdd" style={{ minWidth: 140, width: "25%", margin: "1%" }} onClick={this.signin} >
+                                <button className="buttonAdd" style={{ minWidth: 140, width: "20%", margin: "1%" }} onClick={this.signin} >
                                     <span className="buttonmatter" style={{ fontSize: 15, }}>Save</span>
                                 </button>
 
-                                <button type="button" class="btn btn-light" style={{ width: "25%", margin: "1%", minWidth: 140, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => this.setModal2Visible(true)}>Edit Service</button>
-
+                                <button type="button" class="btn btn-light" style={{ width: "20%", margin: "1%", minWidth: 140, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => this.setModal2Visible(true)}>Edit Service</button>
 
                             </div>
                         </div>

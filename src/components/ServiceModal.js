@@ -90,7 +90,7 @@ class ServiceModal extends Component {
                                     <div key={index} style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", }}>
                                         <Form.Item>
                                             {getFieldDecorator('serviceName' + index, {
-                                                rules: [{ required: true, max: 2, message: 'Please type service name!' }],
+                                                rules: [{ required: true, message: 'Please type service name!' }],
                                             })(
                                                 <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
                                                     <div style={{ width: "100%", }}>
