@@ -3,6 +3,8 @@ import ActionTypes from '../constant/constant';
 import axios from 'axios';
 import baseURL from '../../config/config';
 import swal from 'sweetalert2';
+import workingHours from '../../app/workingHours';
+import WorkingHoursCard from '../../components/WorkingHoursCard';
 
 export function setUserCredentials(userCredentials) {
     return dispatch => {
@@ -357,3 +359,40 @@ export function updateStylist(stylist, indexToEdit) {
 }
 
 /* Actions for Stylists */
+
+
+
+
+
+/* Actions for Working Hours */
+
+
+export function getWorkingHours(userID) {
+    return dispatch => {
+        var options = {
+            method: 'GET',
+            url: `${baseURL.baseURL}/workinghours/${userID}`,
+            headers:
+            {
+                'cache-control': 'no-cache',
+                "Allow-Cross-Origin": '*',
+            }
+        };
+        axios(options)
+            .then((wokringHours) => {
+                console.log(wokringHours, 'fetched wokringHours');
+                if (Object.keys(wokringHours).length > 0) {
+                    dispatch({ type: ActionTypes.FETCHED_WORKINGHOURS, payload: wokringHours.data.workingHours })
+                }
+            })
+            .catch((err) => {
+                console.log(err, "Error in fetching wokringHours")
+                // alert(err.response.data.message)
+            })
+    }
+}
+
+
+
+
+/* Actions for Working Hours */

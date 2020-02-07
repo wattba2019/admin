@@ -2,6 +2,7 @@ import React, { Component, } from 'react';
 import { connect } from 'react-redux';
 import '../custom.css'
 import "antd/dist/antd.css";
+import { getWorkingHours } from '../store/action/action'
 import WorkingHoursCard from '../components/WorkingHoursCard';
 
 class Workinghours extends Component {
@@ -9,6 +10,7 @@ class Workinghours extends Component {
         super(props);
         this.state = {
         }
+        this.props.getWorkingHours((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254');
     }
 
     render() {
@@ -38,7 +40,7 @@ class Workinghours extends Component {
                     flexDirection: "column",
                     background: "#F7F8F8",
                 }}>
-                    <WorkingHoursCard />
+                    <WorkingHoursCard workingHours={this.props.workingHours} />
                 </div >
 
             </div>
@@ -50,10 +52,18 @@ class Workinghours extends Component {
 function mapStateToProp(state) {
     return ({
         bseUrl: state.root.bseUrl,
+        uid: state.root.userProfile._id,
+        workingHours: state.root.workingHours,
+
+
     })
 }
 function mapDispatchToProp(dispatch) {
     return ({
+        getWorkingHours: (userId) => {
+            dispatch(getWorkingHours(userId));
+        },
+
     })
 }
 

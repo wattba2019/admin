@@ -7,7 +7,8 @@ const INITIAL_STATE = {
     currentLocation: null,
     services: [],
     specialPackages: [],
-    stylists: []
+    stylists: [],
+    workingHours: {}
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -83,6 +84,12 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 stylists: editedStylist
+            };
+
+        case ActionTypes.FETCHED_WORKINGHOURS:
+            return {
+                ...state,
+                workingHours: action.payload
             };
 
 
