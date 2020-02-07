@@ -15,6 +15,7 @@ class ShopProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            showerror: false,
             email: '',
             password: '',
             confirmPassword: '',
@@ -67,21 +68,36 @@ class ShopProfile extends Component {
 
     updateProfileData = () => {
         const { email, about, businessName, telephone, websiteUrl, addressline1, addressline2 } = this.state
-        let cloneUpdatedUser = {
-            email: email,
-            about: about,
-            businessName: businessName,
-            telePhone: telephone,
-            websiteUrl: websiteUrl,
-            addressLine1: addressline1,
-            addressLine2: addressline2,
-            _id: this.props.userProfile._id
+        if (email !== '' && about !== '' && businessName !== '' && telephone !== '' && addressline1 !== '') {
+            let cloneUpdatedUser = {
+                email: email,
+                about: about,
+                businessName: businessName,
+                telePhone: telephone,
+                websiteUrl: websiteUrl,
+                addressLine1: addressline1,
+                addressLine2: addressline2,
+                _id: this.props.userProfile._id
+            }
+            this.props.updateProfile(cloneUpdatedUser)
         }
-        this.props.updateProfile(cloneUpdatedUser)
+        else {
+            this.setState({
+                err: "All fields are required",
+                showerror: true
+            }, () => {
+                setTimeout(() => {
+                    this.setState({
+                        showerror: false
+                    })
+                }, 10000)
+            })
+        }
+
     }
 
     render() {
-        const { email, password, confirmPassword, about, businessName, telephone, websiteUrl, addressline1, addressline2 } = this.state;
+        const { email, password, confirmPassword, about, businessName, telephone, websiteUrl, addressline1, addressline2, showerror, err } = this.state;
         const { getFieldDecorator } = this.props.form;
         return (
             <div style={{
@@ -151,13 +167,20 @@ class ShopProfile extends Component {
                             <input type="text" className="form-control" placeholder="Address Line2" aria-label="Address Line2" aria-describedby="basic-addon1" value={addressline2} onChange={(e) => { this.setState({ addressline2: e.target.value }) }} />
                         </div>
 
-                        {/* addressLine2 */}
+                        {/* update */}
                         <div style={{ display: "flex", flex: 1, marginTop: 15 }} >
                             <button className="button" style={{ marginTop: 10, width: "100%" }} onClick={this.updateProfileData} >
                                 <span className="buttonmatter">Update Profile</span>
                             </button>
                         </div>
 
+                        <div style={{ display: "flex", flex: 1, justifyContent: "center", alignItems: "center", marginTop: 15 }} >
+                            {
+                                (showerror) ? (
+                                    <div style={{ color: "red", marginTop: 12 }}>{err}</div>
+                                ) : null
+                            }
+                        </div>
 
                     </div>
                 </div>
