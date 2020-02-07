@@ -1,4 +1,4 @@
-import React, { Component, } from 'react';
+import React, { Component, ReactDOM, mountNode } from 'react';
 import { connect } from 'react-redux';
 import '../custom.css'
 import "antd/dist/antd.css";
@@ -8,7 +8,8 @@ import { TiBusinessCard } from 'react-icons/ti';
 import { GiWorld } from 'react-icons/gi';
 import SimpleMap from '../components/googlemap';
 import history from '../History';
-import { changePassword } from "../store/action/action";
+import { changePassword, updateProfile } from "../store/action/action";
+import { Form, Input, Checkbox } from 'antd';
 
 class ShopProfile extends Component {
     constructor(props) {
@@ -25,7 +26,6 @@ class ShopProfile extends Component {
             addressline2: '',
         }
     }
-
 
     componentDidMount() {
         let userData = this.props.userProfile
@@ -55,9 +55,34 @@ class ShopProfile extends Component {
         })
     }
 
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                console.log('Received values of form: ', err, values);
+                this.changePassword()
+            }
+        });
+    };
+
+    updateProfileData = () => {
+        const { email, about, businessName, telephone, websiteUrl, addressline1, addressline2 } = this.state
+        let cloneUpdatedUser = {
+            email: email,
+            about: about,
+            businessName: businessName,
+            telePhone: telephone,
+            websiteUrl: websiteUrl,
+            addressLine1: addressline1,
+            addressLine2: addressline2,
+            _id: this.props.userProfile._id
+        }
+        this.props.updateProfile(cloneUpdatedUser)
+    }
+
     render() {
         const { email, password, confirmPassword, about, businessName, telephone, websiteUrl, addressline1, addressline2 } = this.state;
-
+        const { getFieldDecorator } = this.props.form;
         return (
             <div style={{
                 display: "flex", width: "100%", justifyContent: "center", alignItems: "center",
@@ -67,8 +92,6 @@ class ShopProfile extends Component {
                     display: "flex", width: "55%", minWidth: 500, height: window.innerHeight, justifyContent: "center",
                     background: "#F7F8F8"
                 }}>
-
-
                     <div style={{ width: "50%", marginTop: "10%" }} className="center">
                         <h5 className="input-group mb-6 inputCenter"  >Wattba Shop Profile</h5>
 
@@ -130,7 +153,7 @@ class ShopProfile extends Component {
 
                         {/* addressLine2 */}
                         <div style={{ display: "flex", flex: 1, marginTop: 15 }} >
-                            <button className="button" style={{ marginTop: 10, width: "100%" }} onClick={this.signup} >
+                            <button className="button" style={{ marginTop: 10, width: "100%" }} onClick={this.updateProfileData} >
                                 <span className="buttonmatter">Update Profile</span>
                             </button>
                         </div>
@@ -156,20 +179,34 @@ class ShopProfile extends Component {
                         <center>
                             <div style={{ width: "100%", marginLeft: "40%", marginTop: 20, justifyContent: "center", alignItems: "flex-start" }} className="center">
                                 <h6 className="input-group mb-6 inputCenter" >Change Password</h6>
+                                <Form onSubmit={this.handleSubmit} className="login-form">
+                                    <Form.Item>
+                                        {getFieldDecorator('Password', {
+                                            rules: [{ required: true, message: 'Please type password!' }],
+                                            rules: [{ max: 6, message: 'Password must be maximum 6 characters.' },],
+                                        })(
+                                            <div style={{ display: "flex", flex: 1, marginTop: 20, width: 250 }} >
+                                                <input type="password" className="form-control" placeholder="New Password" aria-label="New Password" aria-describedby="basic-addon1" value={password} onChange={(e) => { this.setState({ password: e.target.value }) }} />
+                                            </div>
+                                        )}
+                                    </Form.Item>
+                                    <Form.Item>
+                                        {getFieldDecorator('ConfirmPassword', {
+                                            rules: [{ required: true, message: 'Please type password!' }],
+                                            rules: [{ max: 6, message: 'Password must be maximum 6 characters.' },],
+                                        })(
+                                            <div style={{ display: "flex", flex: 1, marginTop: 0, width: 250 }} >
+                                                <input type="password" className="form-control" placeholder="Confirm Password" aria-label="Confirm Password" aria-describedby="basic-addon1" value={confirmPassword} onChange={(e) => { this.setState({ confirmPassword: e.target.value }) }} />
+                                            </div>
+                                        )}
+                                    </Form.Item>
 
-                                <div style={{ display: "flex", flex: 1, marginTop: 20, width: 250 }} >
-                                    <input type="password" className="form-control" placeholder="New Password" aria-label="New Password" aria-describedby="basic-addon1" value={password} onChange={(e) => { this.setState({ password: e.target.value }) }} />
-                                </div>
-
-                                <div style={{ display: "flex", flex: 1, marginTop: 15, width: 250 }} >
-                                    <input type="password" className="form-control" placeholder="Confirm Password" aria-label="Confirm Password" aria-describedby="basic-addon1" value={confirmPassword} onChange={(e) => { this.setState({ confirmPassword: e.target.value }) }} />
-                                </div>
-
-                                <div style={{ display: "flex", flex: 1, marginTop: 15 }} >
-                                    <button className="button" style={{ marginTop: 10, width: "70%" }} onClick={this.changePassword} >
-                                        <span className="buttonmatter">Change Password</span>
-                                    </button>
-                                </div>
+                                    <div style={{ display: "flex", flex: 1, marginTop: 15 }} >
+                                        <button htmlType="submit" className="button" style={{ marginTop: 10, width: "70%" }} >
+                                            <span className="buttonmatter">Change Password</span>
+                                        </button>
+                                    </div>
+                                </Form>
                             </div>
                         </center>
                     </div>
@@ -192,7 +229,14 @@ function mapDispatchToProp(dispatch) {
         changePassword: (data1, data2, data3) => {
             dispatch(changePassword(data1, data2, data3));
         },
+        updateProfile: (data1) => {
+            dispatch(updateProfile(data1));
+        },
     })
 }
 
-export default connect(mapStateToProp, mapDispatchToProp)(ShopProfile);
+
+const WrappedShopProfile = Form.create({ name: 'profile' })(ShopProfile);
+// ReactDOM.render(<WrappedShopProfile />, mountNode);
+export default connect(mapStateToProp, mapDispatchToProp)(WrappedShopProfile);
+// export default WrappedShopProfile

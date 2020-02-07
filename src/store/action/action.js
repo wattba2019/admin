@@ -6,6 +6,7 @@ import swal from 'sweetalert2';
 
 export function setUserCredentials(userCredentials) {
     return dispatch => {
+        console.log(userCredentials, "USER_IN_ACTION")
         dispatch({ type: ActionTypes.SAVE_USER, payload: userCredentials })
     }
 }
@@ -289,5 +290,42 @@ export function changePassword(email, password, rePassword) {
             )
         }
 
+    }
+}
+
+
+export function updateProfile(updatedUserData) {
+    return dispatch => {
+        console.log(updatedUserData, "DATA_INSIDE_ACTION")
+        var options = {
+            // method: 'post',
+            // url: `${baseURL.baseURL}/signupadmin/editProfile/${updatedUserData._id}/`,
+            method: 'put',
+            url: `${baseURL.baseURL}/signupadmin/editProfile/${updatedUserData._id}`,
+            headers:
+            {
+                'cache-control': 'no-cache',
+                "Allow-Cross-Origin": '*',
+            },
+            data: updatedUserData
+        };
+        axios(options)
+            .then((data) => {
+                console.log(data.data.user, "profile updated successfully.");
+                dispatch({ type: ActionTypes.SAVE_USER, payload: data.data.user })
+                swal.fire(
+                    'Success!',
+                    data.data.message,
+                    'success'
+                )
+            }).catch((err) => {
+                console.error(err, "ERROR_ON_SAVING")
+                // alert(err.response.data.message)
+                swal.fire(
+                    'Error!',
+                    'Something went wrong.',
+                    'error'
+                )
+            })
     }
 }

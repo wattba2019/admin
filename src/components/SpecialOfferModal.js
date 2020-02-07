@@ -67,7 +67,6 @@ class SpecialOfferModal extends Component {
         const { email } = this.props.modalState;
         const { that } = this.props;
         const { getFieldDecorator } = this.props.form;
-        console.log(this.state.imageError, this.state.imageFile, "INPUT_INSIDE_DATA")
         return (
             <Modal
                 footer={null}
