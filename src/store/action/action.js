@@ -394,5 +394,42 @@ export function getWorkingHours(userID) {
 
 
 
+export function updateWorkingHours(workingHours) {
+    return dispatch => {
+        console.log('inside workingHours action', workingHours);
+        var options = {
+            method: 'POST',
+            url: `${baseURL.baseURL}/workinghours/${workingHours.userID}`,
+            headers:
+            {
+                'cache-control': 'no-cache',
+                "Allow-Cross-Origin": '*',
+            },
+            data: workingHours
+        };
+        axios(options)
+            .then((data) => {
+                console.log(data, "stylist updated successfully.");
+                // stylist.indexToEdit = indexToEdit;
+
+                dispatch({ type: ActionTypes.FETCHED_WORKINGHOURS, payload: workingHours })
+
+                swal.fire(
+                    'Success!',
+                    data.data.message,
+                    'success'
+                )
+            }).catch((err) => {
+                console.error(err, "ERROR_ON_SAVING")
+                // alert(err.response.data.message)
+                swal.fire(
+                    'Error!',
+                    'Something went wrong.',
+                    'error'
+                )
+
+            })
+    }
+}
 
 /* Actions for Working Hours */
