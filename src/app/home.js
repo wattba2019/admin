@@ -21,6 +21,7 @@ import SpecialOffers from './specialOffers';
 import StyleList from './stylelist';
 import Workinghours from './workingHours';
 import history from '../History';
+import { updateProfileImg } from "../store/action/action";
 
 class Home extends Component {
     constructor(props) {
@@ -39,12 +40,9 @@ class Home extends Component {
     }
 
     imagePick(file) {
-        console.log(file[0], "555")
+        const { _id } = this.state
         if (file) {
-            console.log(file, "9999")
-            this.setState({
-                shopImage: file
-            })
+            this.props.updateProfileImg(file, _id)
         }
     }
 
@@ -62,10 +60,19 @@ class Home extends Component {
             this.setState({
                 shopImage: userData.coverImage,
                 businessName: userData.businessName,
+                _id: userData._id,
             })
         }
         else {
             history.push('Signin')
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.userProfile && nextProps.userProfile.coverImage) {
+            this.setState({
+                shopImage: nextProps.userProfile.coverImage
+            })
         }
     }
 
@@ -236,6 +243,9 @@ function mapDispatchToProp(dispatch) {
     return ({
         setUserCredentials: (user) => {
             dispatch(setUserCredentials(user));
+        },
+        updateProfileImg: (data1, id) => {
+            dispatch(updateProfileImg(data1, id));
         },
     })
 }

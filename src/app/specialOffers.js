@@ -13,8 +13,6 @@ import { IoMdCheckmark } from 'react-icons/io';
 import { Button, DatePicker, version, Modal, Upload, Icon, message } from "antd";
 import SpecialOfferModal from '../components/SpecialOfferModal';
 import SpecialOfferCard from '../components/SpecialOfferCard';
-
-
 import "antd/dist/antd.css";
 
 class SpecialOffers extends Component {

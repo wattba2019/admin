@@ -298,8 +298,6 @@ export function updateProfile(updatedUserData) {
     return dispatch => {
         console.log(updatedUserData, "DATA_INSIDE_ACTION")
         var options = {
-            // method: 'post',
-            // url: `${baseURL.baseURL}/signupadmin/editProfile/${updatedUserData._id}/`,
             method: 'put',
             url: `${baseURL.baseURL}/signupadmin/editProfile/${updatedUserData._id}`,
             headers:
@@ -308,6 +306,47 @@ export function updateProfile(updatedUserData) {
                 "Allow-Cross-Origin": '*',
             },
             data: updatedUserData
+        };
+        axios(options)
+            .then((data) => {
+                console.log(data.data.user, "profile updated successfully.");
+                dispatch({ type: ActionTypes.SAVE_USER, payload: data.data.user })
+                swal.fire(
+                    'Success!',
+                    data.data.message,
+                    'success'
+                )
+            }).catch((err) => {
+                console.error(err, "ERROR_ON_SAVING")
+                // alert(err.response.data.message)
+                swal.fire(
+                    'Error!',
+                    'Something went wrong.',
+                    'error'
+                )
+            })
+    }
+}
+
+
+
+export function updateProfileImg(imgFile, _id) {
+    return dispatch => {
+        console.log(imgFile, _id, "DATA_INSIDE_ACTION")
+        var bodyFormData = new FormData();
+        bodyFormData.append('img', imgFile);
+        bodyFormData.append('_id', _id);
+
+        var options = {
+            method: 'post',
+            url: `${baseURL.baseURL}/signupadmin/addshopimg/`,
+            headers:
+            {
+                'cache-control': 'no-cache',
+                "Allow-Cross-Origin": '*',
+                contentType: 'application/json',
+            },
+            data: bodyFormData
         };
         axios(options)
             .then((data) => {

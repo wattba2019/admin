@@ -8,7 +8,7 @@ import { TiBusinessCard } from 'react-icons/ti';
 import { GiWorld } from 'react-icons/gi';
 import SimpleMap from '../components/googlemap';
 import history from '../History';
-import { changePassword, updateProfile } from "../store/action/action";
+import { changePassword, updateProfile,  } from "../store/action/action";
 import { Form, Input, Checkbox } from 'antd';
 
 class ShopProfile extends Component {
@@ -16,6 +16,7 @@ class ShopProfile extends Component {
         super(props);
         this.state = {
             showerror: false,
+            showerrorpassword: false,
             email: '',
             password: '',
             confirmPassword: '',
@@ -49,11 +50,26 @@ class ShopProfile extends Component {
 
     changePassword = () => {
         const { email, password, confirmPassword } = this.state
-        this.props.changePassword(email, password, confirmPassword)
-        this.setState({
-            password: '',
-            confirmPassword: '',
-        })
+        if (email !== '' && password !== '' && confirmPassword) {
+            this.props.changePassword(email, password, confirmPassword)
+            this.setState({
+                password: '',
+                confirmPassword: '',
+            })
+        }
+        else {
+            this.setState({
+                err: "Please type password",
+                showerrorpassword: true
+            }, () => {
+                setTimeout(() => {
+                    this.setState({
+                        showerrorpassword: false
+                    })
+                }, 10000)
+            })
+        }
+
     }
 
     handleSubmit = (e) => {
@@ -97,7 +113,7 @@ class ShopProfile extends Component {
     }
 
     render() {
-        const { email, password, confirmPassword, about, businessName, telephone, websiteUrl, addressline1, addressline2, showerror, err } = this.state;
+        const { email, password, confirmPassword, about, businessName, telephone, websiteUrl, addressline1, addressline2, showerror, err, showerrorpassword } = this.state;
         const { getFieldDecorator } = this.props.form;
         return (
             <div style={{
@@ -229,6 +245,17 @@ class ShopProfile extends Component {
                                             <span className="buttonmatter">Change Password</span>
                                         </button>
                                     </div>
+
+                                    <div style={{ display: "flex", flex: 1, marginTop: 0 }} >
+                                        <span style={{ marginTop: 0, width: "70%" }} >
+                                            {
+                                                (showerrorpassword) ? (
+                                                    <div style={{ color: "red", marginTop: 12 }}>{err}</div>
+                                                ) : null
+                                            }
+                                        </span>
+                                    </div>
+
                                 </Form>
                             </div>
                         </center>
@@ -255,6 +282,7 @@ function mapDispatchToProp(dispatch) {
         updateProfile: (data1) => {
             dispatch(updateProfile(data1));
         },
+      
     })
 }
 
