@@ -1,6 +1,6 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
-import { setUserCredentials } from "../store/action/action";
+import { setUserCredentials, updateProfileImg } from "../store/action/action";
 // import {
 //     Link
 // } from 'react-router-dom';
@@ -9,7 +9,7 @@ import '../custom.css'
 // import Loader from 'react-loader-spinner'
 // import swal from 'sweetalert2';
 import { MdCameraEnhance } from 'react-icons/md';
-import { FaRegCalendarCheck, FaRegCalendarAlt } from 'react-icons/fa';
+import { FaRegCalendarCheck,  } from 'react-icons/fa';
 import { GiScissors } from 'react-icons/gi';
 import { AiOutlineUser, AiFillGift } from 'react-icons/ai';
 import { FiClock } from 'react-icons/fi';
@@ -21,7 +21,6 @@ import SpecialOffers from './specialOffers';
 import StyleList from './stylelist';
 import Workinghours from './workingHours';
 import history from '../History';
-import { updateProfileImg } from "../store/action/action";
 
 class Home extends Component {
     constructor(props) {
@@ -53,6 +52,11 @@ class Home extends Component {
         })
     }
 
+    // componentWillMount() {
+    //     let user = localStorage.getItem('userProfile')
+    //     this.props.setUserCredentials(JSON.parse(user))
+    // }
+
     componentDidMount() {
         let userData = this.props.userProfile
         // console.log(userData, "USER_DATA_IN_HOME_MENU")
@@ -69,11 +73,19 @@ class Home extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.userProfile && nextProps.userProfile.coverImage) {
+        if (nextProps.userProfile) {
             this.setState({
-                shopImage: nextProps.userProfile.coverImage
+                shopImage: nextProps.userProfile.coverImage,
+                businessName: nextProps.userProfile.businessName,
+                _id: nextProps.userProfile._id,
             })
         }
+    }
+
+    logout() {
+        // localStorage.removeItem("userProfiles");
+        localStorage.clear();
+        history.push('Signin')
     }
 
     render() {
@@ -178,7 +190,8 @@ class Home extends Component {
                                     <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
                                         <GoSignOut style={{ color: "white", fontSize: 18, marginTop: 5 }} />
                                     </div>
-                                    <div style={{ flex: 6, color: "white", fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}>
+                                    <div style={{ flex: 6, color: "white", fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}
+                                        onClick={() => this.logout()}>
                                         Sign out
                                     </div>
                                 </div>

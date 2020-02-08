@@ -8,7 +8,7 @@ import { TiBusinessCard } from 'react-icons/ti';
 import { GiWorld } from 'react-icons/gi';
 import SimpleMap from '../components/googlemap';
 import history from '../History';
-import { changePassword, updateProfile,  } from "../store/action/action";
+import { changePassword, updateProfile, } from "../store/action/action";
 import { Form, Input, Checkbox } from 'antd';
 
 class ShopProfile extends Component {
@@ -43,8 +43,22 @@ class ShopProfile extends Component {
                 addressline2: userData.addressLine2,
             })
         }
-        else {
-            history.push('Signin')
+        // else {
+        //     history.push('Signin')
+        // }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.userProfile) {
+            this.setState({
+                email: nextProps.userProfile.email,
+                about: nextProps.userProfile.about,
+                businessName: nextProps.userProfile.businessName,
+                telephone: nextProps.userProfile.telePhone,
+                websiteUrl: nextProps.userProfile.websiteUrl,
+                addressline1: nextProps.userProfile.addressLine1,
+                addressline2: nextProps.userProfile.addressLine2,
+            })
         }
     }
 
@@ -69,7 +83,6 @@ class ShopProfile extends Component {
                 }, 10000)
             })
         }
-
     }
 
     handleSubmit = (e) => {
@@ -282,7 +295,7 @@ function mapDispatchToProp(dispatch) {
         updateProfile: (data1) => {
             dispatch(updateProfile(data1));
         },
-      
+
     })
 }
 

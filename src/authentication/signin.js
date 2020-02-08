@@ -55,6 +55,8 @@ class Signin extends Component {
                     'USER LOGIN SUCCESSFULLY',
                     'success'
                 )
+                // localStorage.setItem('userProfile', JSON.stringify(data.data));
+                localStorage.setItem('userProfile', JSON.stringify(data.data));
                 this.props.setUserCredentials(data.data)
                 history.push('Home')
             }).catch((err) => {

@@ -6,7 +6,7 @@ import swal from 'sweetalert2';
 
 export function setUserCredentials(userCredentials) {
     return dispatch => {
-        console.log(userCredentials, "USER_IN_ACTION")
+        // console.log(userCredentials, "USER_IN_ACTION")
         dispatch({ type: ActionTypes.SAVE_USER, payload: userCredentials })
     }
 }
