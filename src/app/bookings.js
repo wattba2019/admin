@@ -1,6 +1,6 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
-import { setUserCredentials } from "../store/action/action";
+import { setUserCredentials, getBookings } from "../store/action/action";
 import {
     Link
 } from 'react-router-dom';
@@ -25,6 +25,8 @@ class Bookings extends Component {
         }
         this.setModal2Visible = this.setModal2Visible.bind(this);
         this.modalExport = this.modalExport.bind(this);
+        let bookingDate = new Date();
+        this.props.getBookings((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254', bookingDate);
     }
 
     datePicker = (date, dateString) => {
@@ -230,11 +232,16 @@ class Bookings extends Component {
 function mapStateToProp(state) {
     return ({
         bseUrl: state.root.bseUrl,
+        uid: state.root.userProfile._id,
     })
 }
 function mapDispatchToProp(dispatch) {
     return ({
+        getBookings: (shopId, bookingDate) => {
+            dispatch(getBookings(shopId, bookingDate));
+        },
     })
+
 }
 
 export default connect(mapStateToProp, mapDispatchToProp)(Bookings);

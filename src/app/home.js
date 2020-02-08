@@ -28,10 +28,10 @@ class Home extends Component {
             loader: false,
             showerror: false,
             // route: "ShopProfile"
-            // route: "Bookings"
+            route: "Bookings"
             // route: "Services"
             // route: "Stylelists"
-            route: "WorkingHours"
+            // route: "WorkingHours"
             // route: "SpecialOffers"
         }
     }

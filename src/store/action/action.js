@@ -433,3 +433,49 @@ export function updateWorkingHours(workingHours) {
 }
 
 /* Actions for Working Hours */
+
+
+
+
+
+
+
+
+
+
+
+/* Actions for Bookings */
+
+
+
+export function getBookings(shopId, bookingDate) {
+    return dispatch => {
+        var options = {
+            method: 'GET',
+            url: `${baseURL.baseURL}/bookings/${shopId}/${bookingDate}`,
+            headers:
+            {
+                'cache-control': 'no-cache',
+                "Allow-Cross-Origin": '*',
+            }
+        };
+        axios(options)
+            .then((bookings) => {
+
+                console.log(bookings, 'fetched bookings');
+
+                // if (Object.keys(wokringHours).length > 0) {
+                dispatch({ type: ActionTypes.FETCHED_BOOKINGS, payload: bookings.data })
+                // }
+            })
+            .catch((err) => {
+                console.log(err, "Error in fetching bookings")
+                // alert(err.response.data.message)
+            })
+    }
+}
+
+
+
+
+/* Actions for Bookings */

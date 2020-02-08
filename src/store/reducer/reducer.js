@@ -8,7 +8,8 @@ const INITIAL_STATE = {
     services: [],
     specialPackages: [],
     stylists: [],
-    workingHours: {}
+    workingHours: {},
+    bookings: []
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -92,7 +93,11 @@ export default (state = INITIAL_STATE, action) => {
                 workingHours: action.payload
             };
 
-
+        case ActionTypes.FETCHED_BOOKINGS:
+            return {
+                ...state,
+                bookings: action.payload
+            };
 
 
         default:
