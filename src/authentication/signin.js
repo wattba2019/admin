@@ -9,6 +9,7 @@ import { MdEmail, MdLock } from 'react-icons/md';
 import axios from 'axios';
 import Loader from 'react-loader-spinner'
 import swal from 'sweetalert2';
+import history from '../History';
 
 class Signin extends Component {
     constructor(props) {
@@ -51,10 +52,13 @@ class Signin extends Component {
                 })
                 swal.fire(
                     'Success!',
-                     "USER LOGIN SUCCESSFULLY",
+                    'USER LOGIN SUCCESSFULLY',
                     'success'
                 )
+                // localStorage.setItem('userProfile', JSON.stringify(data.data));
+                localStorage.setItem('userProfile', JSON.stringify(data.data));
                 this.props.setUserCredentials(data.data)
+                history.push('Home')
             }).catch((err) => {
                 console.log(err.response.data.message, "ERROR_ON_SIGN_IN")
                 // alert(err.response.data.message)

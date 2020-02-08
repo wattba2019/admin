@@ -1,15 +1,15 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
-import { setUserCredentials } from "../store/action/action";
-import {
-    Link
-} from 'react-router-dom';
+import { setUserCredentials, updateProfileImg } from "../store/action/action";
+// import {
+//     Link
+// } from 'react-router-dom';
 import '../custom.css'
-import axios from 'axios';
-import Loader from 'react-loader-spinner'
-import swal from 'sweetalert2';
+// import axios from 'axios';
+// import Loader from 'react-loader-spinner'
+// import swal from 'sweetalert2';
 import { MdCameraEnhance } from 'react-icons/md';
-import { FaRegCalendarCheck, FaRegCalendarAlt } from 'react-icons/fa';
+import { FaRegCalendarCheck,  } from 'react-icons/fa';
 import { GiScissors } from 'react-icons/gi';
 import { AiOutlineUser, AiFillGift } from 'react-icons/ai';
 import { FiClock } from 'react-icons/fi';
@@ -20,6 +20,7 @@ import Services from './services';
 import SpecialOffers from './specialOffers';
 import StyleList from './stylelist';
 import Workinghours from './workingHours';
+import history from '../History';
 
 class Home extends Component {
     constructor(props) {
@@ -27,8 +28,9 @@ class Home extends Component {
         this.state = {
             loader: false,
             showerror: false,
-            // route: "ShopProfile"
-            route: "Bookings"
+            shopImage: "",
+            route: "ShopProfile"
+            // route: "Bookings"
             // route: "Services"
             // route: "Stylelists"
             // route: "WorkingHours"
@@ -37,12 +39,9 @@ class Home extends Component {
     }
 
     imagePick(file) {
-        console.log(file[0], "555")
+        const { _id } = this.state
         if (file) {
-            console.log(file, "9999")
-            this.setState({
-                shopImage: file
-            })
+            this.props.updateProfileImg(file, _id)
         }
     }
 
@@ -53,12 +52,47 @@ class Home extends Component {
         })
     }
 
+    // componentWillMount() {
+    //     let user = localStorage.getItem('userProfile')
+    //     this.props.setUserCredentials(JSON.parse(user))
+    // }
+
+    componentDidMount() {
+        let userData = this.props.userProfile
+        // console.log(userData, "USER_DATA_IN_HOME_MENU")
+        if (userData != undefined) {
+            this.setState({
+                shopImage: userData.coverImage,
+                businessName: userData.businessName,
+                _id: userData._id,
+            })
+        }
+        else {
+            history.push('Signin')
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.userProfile) {
+            this.setState({
+                shopImage: nextProps.userProfile.coverImage,
+                businessName: nextProps.userProfile.businessName,
+                _id: nextProps.userProfile._id,
+            })
+        }
+    }
+
+    logout() {
+        // localStorage.removeItem("userProfiles");
+        localStorage.clear();
+        history.push('Signin')
+    }
+
     render() {
-        const { } = this.state;
+        const { shopImage, businessName } = this.state;
         return (
             <div>
-
-                <div class="sidenav">
+                <div className="sidenav">
                     <div style={{ flexBasis: "100%", marginTop: "10%" }}>
                         <center>
                             <div style={{ width: "50%", }} className="center">
@@ -66,7 +100,11 @@ class Home extends Component {
                                     <center>
                                         {/* Business image */}
                                         <div className="drawerBackgroundnested" >
-                                            <img src={require('../../src/assets/noPhoto.jpg')} className="profileImage" />
+                                            {
+                                                shopImage ?
+                                                    <img src={shopImage} className="profileImage" /> :
+                                                    <img src={require('../../src/assets/noPhoto.jpg')} className="profileImage" />
+                                            }
                                             <label htmlFor="inputGroupFile01" className="profileImageupload" style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
                                                 <MdCameraEnhance style={{ color: "grey", fontSize: 18 }} />
                                             </label>
@@ -81,7 +119,7 @@ class Home extends Component {
                                         />
                                         {/* Business Name */}
                                         <div>
-                                            <h4 onClick={() => this.routeChanger("ShopProfile")} className="shopeName" style={{ marginTop: 10, }}>Shop 1</h4>
+                                            <h4 onClick={() => this.routeChanger("ShopProfile")} className="shopeName" style={{ marginTop: 10, }}>{businessName}</h4>
                                         </div>
                                     </center>
                                 </div>
@@ -152,7 +190,8 @@ class Home extends Component {
                                     <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
                                         <GoSignOut style={{ color: "white", fontSize: 18, marginTop: 5 }} />
                                     </div>
-                                    <div style={{ flex: 6, color: "white", fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}>
+                                    <div style={{ flex: 6, color: "white", fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}
+                                        onClick={() => this.logout()}>
                                         Sign out
                                     </div>
                                 </div>
@@ -161,7 +200,7 @@ class Home extends Component {
                     </div>
                 </div>
 
-                <div class="main">
+                <div className="main">
                     <div
                         style={{
                             display: "flex", flexBasis: "85%",
@@ -210,12 +249,16 @@ class Home extends Component {
 function mapStateToProp(state) {
     return ({
         bseUrl: state.root.bseUrl,
+        userProfile: state.root.userProfile,
     })
 }
 function mapDispatchToProp(dispatch) {
     return ({
         setUserCredentials: (user) => {
             dispatch(setUserCredentials(user));
+        },
+        updateProfileImg: (data1, id) => {
+            dispatch(updateProfileImg(data1, id));
         },
     })
 }
