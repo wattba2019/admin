@@ -9,7 +9,7 @@ const INITIAL_STATE = {
     specialPackages: [],
     stylists: [],
     workingHours: {},
-    bookings: []
+    bookings: null
 }
 
 export default (state = INITIAL_STATE, action) => {

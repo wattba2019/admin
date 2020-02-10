@@ -461,12 +461,8 @@ export function getBookings(shopId, bookingDate) {
         };
         axios(options)
             .then((bookings) => {
-
-                console.log(bookings, 'fetched bookings');
-
-                // if (Object.keys(wokringHours).length > 0) {
+                // console.log(bookings, 'fetched bookings');
                 dispatch({ type: ActionTypes.FETCHED_BOOKINGS, payload: bookings.data })
-                // }
             })
             .catch((err) => {
                 console.log(err, "Error in fetching bookings")
@@ -550,6 +546,7 @@ export function updateProfile(updatedUserData) {
         axios(options)
             .then((data) => {
                 console.log(data.data.user, "profile updated successfully.");
+                localStorage.setItem('userProfile', JSON.stringify(data.data.user));
                 dispatch({ type: ActionTypes.SAVE_USER, payload: data.data.user })
                 swal.fire(
                     'Success!',

@@ -29,8 +29,8 @@ class Home extends Component {
             loader: false,
             showerror: false,
             shopImage: "",
-            route: "ShopProfile"
-            // route: "Bookings"
+            // route: "ShopProfile"
+            route: "Bookings"
             // route: "Services"
             // route: "Stylelists"
             // route: "WorkingHours"
