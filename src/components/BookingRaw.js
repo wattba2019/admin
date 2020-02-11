@@ -26,12 +26,11 @@ class BookingsRaw extends Component {
     }
     render() {
         const {
-            time, lock, nameColor1, name1, name2, name3, name4,
-            nameColor2, nameColor3, nameColor4, modalOpen
+            time, lock, data, modalOpen
         } = this.props;
         return (
-            <tr style={{}}>
-                <th scope="row">
+            <tr>
+                <td scope="row">
                     <a style={{
                         fontWeight: "normal", height: 35,
                         width: 80, padding: 5, flexDirection: "row", display: "flex", color: "#4A4A4A",
@@ -40,86 +39,37 @@ class BookingsRaw extends Component {
                         <FaLock style={{ fontSize: 14, color: lock }} />
                         {time}
                     </a>
-                </th>
-                <td>
-                    {name1 &&
-                        <a
-                            onClick={() => modalOpen()}
-                            style={{
-                                minWidth: 80,
-                                background: nameColor1, color: "#fff", fontWeight: "normal", height: 30,
-                                width: "80%", borderRadius: 4, padding: 5, flexDirection: "row", display: "flex",
-                                justifyContent: "space-between", fontSize: 9, alignItems: "center", paddingLeft: 10, paddingRight: 10
-                            }}>
-                            <div>
-                                {name1}
-                            </div>
-                            <div style={{ width: 20, height: 20, borderRadius: 10 }}>
-                                <img alt="BackGroundImage" src={require('../assets/noPhoto.jpg')}
-                                    style={{ width: 20, height: 20, borderRadius: 10 }}
-                                />
-                            </div>
-                        </a>
-                    }
                 </td>
-                <td>
-                    {name2 &&
 
-                        <a onClick={() => modalOpen()} style={{
-                            minWidth: 80,
-                            background: nameColor2, color: "#fff", fontWeight: "normal", height: 30,
-                            width: "80%", borderRadius: 4, padding: 5, flexDirection: "row", display: "flex",
-                            justifyContent: "space-between", fontSize: 9, alignItems: "center", paddingLeft: 10, paddingRight: 10
-                        }}>
-                            <div>
-                                {name2}
-                            </div>
-                            <div style={{ width: 20, height: 20, borderRadius: 10 }}>
-                                <img alt="BackGroundImage" src={require('../assets/noPhoto.jpg')}
-                                    style={{ width: 20, height: 20, borderRadius: 10 }}
-                                />
-                            </div>
-                        </a>
-                    }
-                </td>
-                <td>
-                    {name3 &&
-                        <a onClick={() => modalOpen()} style={{
-                            minWidth: 80,
-                            background: nameColor3, color: "#fff", fontWeight: "normal", height: 30,
-                            width: "80%", borderRadius: 4, padding: 5, flexDirection: "row", display: "flex",
-                            justifyContent: "space-between", fontSize: 9, alignItems: "center", paddingLeft: 10, paddingRight: 10
-                        }}>
-                            <div>
-                                {name3}
-                            </div>
-                            <div style={{ width: 20, height: 20, borderRadius: 10 }}>
-                                <img alt="BackGroundImage" src={require('../assets/noPhoto.jpg')}
-                                    style={{ width: 20, height: 20, borderRadius: 10 }}
-                                />
-                            </div>
-                        </a>
-                    }
-                </td>
-                <td>
-                    {name4 &&
-                        <a onClick={() => modalOpen()} style={{
-                            minWidth: 80,
-                            background: nameColor4, color: "#fff", fontWeight: "normal", height: 30,
-                            width: "80%", borderRadius: 4, padding: 5, flexDirection: "row", display: "flex",
-                            justifyContent: "space-between", fontSize: 9, alignItems: "center", paddingLeft: 10, paddingRight: 10
-                        }}>
-                            <div>
-                                {name4}
-                            </div>
-                            <div style={{ width: 20, height: 20, borderRadius: 10 }}>
-                                <img alt="BackGroundImage" src={require('../assets/noPhoto.jpg')}
-                                    style={{ width: 20, height: 20, borderRadius: 10 }}
-                                />
-                            </div>
-                        </a>
-                    }
-                </td>
+                {
+                    data != undefined ? (
+                        data.map((key, index) => {
+                            return (
+                                <td scope="row" key={index} >
+                                    <a
+                                        onClick={() => modalOpen(data[index])}
+                                        style={{
+                                            minWidth: 80,
+                                            background: "#49BE56", color: "#fff", fontWeight: "normal", height: 30,
+                                            width: "80%", borderRadius: 4, padding: 5, flexDirection: "row", display: "flex",
+                                            justifyContent: "space-between", fontSize: 9, alignItems: "center", paddingLeft: 10, paddingRight: 10
+                                        }}>
+                                        <div>
+                                            {key.bookerDetails ? key.bookerDetails.fullName : "N/a"}
+                                        </div>
+                                        <div style={{ width: 20, height: 20, borderRadius: 10 }}>
+                                            <img alt="BackGroundImage" src={require('../assets/noPhoto.jpg')}
+                                                style={{ width: 20, height: 20, borderRadius: 10 }}
+                                            />
+                                        </div>
+                                    </a>
+                                </td>
+                            )
+                        })
+                    ) : <td scope="row" colspan="5">
+                        </td>
+                }
+
             </tr>
         )
     }

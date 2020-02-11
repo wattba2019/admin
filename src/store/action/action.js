@@ -449,6 +449,7 @@ export function updateWorkingHours(workingHours) {
 
 
 export function getBookings(shopId, bookingDate) {
+    console.log(shopId, bookingDate, "DATA_IN_ACTION")
     return dispatch => {
         var options = {
             method: 'GET',
@@ -461,7 +462,7 @@ export function getBookings(shopId, bookingDate) {
         };
         axios(options)
             .then((bookings) => {
-                // console.log(bookings, 'fetched bookings');
+                console.log(bookings, 'fetched bookings');
                 dispatch({ type: ActionTypes.FETCHED_BOOKINGS, payload: bookings.data })
             })
             .catch((err) => {

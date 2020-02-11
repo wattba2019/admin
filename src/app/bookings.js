@@ -19,41 +19,44 @@ class Bookings extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            bookingDataWithDate: [1, 1, 1],
+            bookingData: [],
+            bookingDetails: [],
             modal2Visible: false,
             modalExport: false,
         }
         this.setModal2Visible = this.setModal2Visible.bind(this);
         this.modalExport = this.modalExport.bind(this);
-        let bookingDate = new Date();
+        let bookingDate = new Date("2-8-2020");
         this.props.getBookings((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254', bookingDate);
     }
 
     datePicker = (date, dateString) => {
         console.log(date, dateString);
     }
-    setModal2Visible(modal2Visible) {
-        this.setState({ modal2Visible });
+    setModal2Visible(modal2Visible, data) {
+        // console.log(data, "DATA")
+        this.setState({
+            modal2Visible,
+            bookingDetails: data
+        });
     }
     modalExport(modalExport) {
         this.setState({ modalExport });
     }
-
-
-    // componentWillReceiveProps(nextProps) {
-    //     console.log(nextProps.bookings.allBookingsWithDetails, "BOOKINGS")
-    //     if (nextProps.bookings) {
-    //         this.setState({
-    //             bookingDataWithDate: nextProps.bookings.allBookingsWithDetails
-    //         })
-    //     }
-    // }
+    componentWillReceiveProps(nextProps) {
+        // console.log(nextProps.bookings.bookingSort, "TEST")
+        if (nextProps.bookings) {
+            this.setState({
+                bookingData: nextProps.bookings.bookingSort
+            })
+        }
+    }
 
     render() {
-        const { bookingDataWithDate } = this.state
-        console.log(this.props.bookings, "BOOKINGDATA")
+        const { bookingData } = this.state
+        const { userProfile } = this.props
         let reactSwipeEl;
-
+        // console.log(bookingData["17"], "USERPROFILE")
         return (
             <div style={{
                 display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center",
@@ -119,128 +122,152 @@ class Bookings extends Component {
                         </a>
                     </div>
 
-                    {
-                        (this.props.bookings) ? (
-                            <ReactSwipe
-                                className="carousel"
-                                swipeOptions={{ continuous: false }}
-                                ref={el => (reactSwipeEl = el)}
-                            >
-                                {/* Booking Table */}
-                                {
-                                    (this.props.bookings) ? (
-                                        this.props.bookings.allBookingsWithDetails.map((key, index) => {
-                                            console.log(key, index, "MAP")
-                                            return (
-                                                <div key={index} style={{
-                                                    display: "flex", flex: 1, marginTop: 15, marginBottom: 25
-                                                }}>
-                                                    <div style={{ flex: 8, background: "#fff", justifyContent: "flex-start", alignItems: "flex-start", display: "flex", padding: 15, flexDirection: "column" }}>
+                    <ReactSwipe
+                        className="carousel"
+                        swipeOptions={{ continuous: false }}
+                        ref={el => (reactSwipeEl = el)}
+                    >
+                        {/* Booking Table */}
 
-                                                        <div style={{ fontWeight: "bold" }}>
-                                                            Friday, Nov 1 , 2019
-                                                </div>
+                        <div style={{
+                            display: "flex", flex: 1, marginTop: 15, marginBottom: 25
+                        }}>
+                            <div style={{ flex: 8, background: "#fff", justifyContent: "flex-start", alignItems: "flex-start", display: "flex", padding: 15, flexDirection: "column" }}>
 
-                                                        <div style={{ fontSize: 11 }}>
-                                                            Bookings
-                                                </div>
+                                <div style={{ fontWeight: "bold" }}>
+                                    Friday, Nov 1 , 2019
+                                </div>
 
-                                                        <div style={{ marginTop: 15, width: "100%" }}>
-                                                            <table className="table table-striped table table-sm">
-                                                                <tbody>
-                                                                    <BookingRaw
-                                                                        modalOpen={() => this.setModal2Visible(true)}
-                                                                        time="8:00 am" lock="#F45671"
-                                                                        name1="David ukwa" nameColor1="#49BE56"
-                                                                        name2="David ukwa" nameColor2="#49BE56"
-                                                                        name3="Simon ejilogo" nameColor3="#F45671"
-                                                                        name4="Simon ejilogo" nameColor4="#F45671"
-                                                                    />
+                                <div style={{ fontSize: 11 }}>
+                                    Bookings
+                                </div>
 
-                                                                    <BookingRaw
-                                                                        modalOpen={() => this.setModal2Visible(true)}
-                                                                        time="9:00 am" lock="#49BE56" nameColor1="#49BE56" name1="David ukwa"
-                                                                        name2="David ukwa" nameColor2="#D9B70B"
-                                                                    />
-                                                                    <BookingRaw
-                                                                        modalOpen={() => this.setModal2Visible(true)}
-                                                                        time="10:00 am" lock="#49BE56"
-                                                                    />
-                                                                    <BookingRaw
-                                                                        modalOpen={() => this.setModal2Visible(true)}
-                                                                        time="11:00 am" lock="#49BE56"
-                                                                        name1="Simon ejilogo" nameColor1="#F45671"
-                                                                    />
-                                                                    <BookingRaw
-                                                                        modalOpen={() => this.setModal2Visible(true)}
-                                                                        time="12:00 am" lock="#49BE56"
-                                                                        name1="Simon ejilogo" nameColor1="#F45671"
-                                                                    />
-                                                                    <BookingRaw
-                                                                        modalOpen={() => this.setModal2Visible(true)}
-                                                                        time="1:00 pm" lock="#F45671"
-                                                                    />
-                                                                    <BookingRaw
-                                                                        modalOpen={() => this.setModal2Visible(true)}
-                                                                        time="2:00 pm" lock="#F45671"
-                                                                    />
-                                                                    <BookingRaw
-                                                                        modalOpen={() => this.setModal2Visible(true)}
-                                                                        time="3:00 pm" lock="#49BE56"
-                                                                    />
-                                                                    <BookingRaw
-                                                                        modalOpen={() => this.setModal2Visible(true)}
-                                                                        time="4:00 pm" lock="#49BE56" nameColor1="#F45671" name1="David ukwa"
-                                                                        name2="David ukwa" nameColor2="#F45671"
-                                                                        name3="Simon ejilogo" nameColor3="#F45671"
-                                                                    />
-                                                                    <BookingRaw
-                                                                        modalOpen={() => this.setModal2Visible(true)}
-                                                                        time="5:00 pm" lock="#49BE56" nameColor1="#F45671" name1="David ukwa"
+                                <div style={{
+                                    marginTop: 15,
+                                    width: "100%"
+                                }}>
+                                    <table className="table table-striped table table-sm">
+                                        <tbody >
 
-                                                                    />
-                                                                    <BookingRaw
-                                                                        modalOpen={() => this.setModal2Visible(true)}
-                                                                        time="6:00 pm" lock="#49BE56" nameColor1="#F45671" name1="David ukwa"
-                                                                    />
-                                                                    <BookingRaw
-                                                                        modalOpen={() => this.setModal2Visible(true)}
-                                                                        time="7:00 pm" lock="#49BE56"
-                                                                    />
-                                                                    <BookingRaw
-                                                                        modalOpen={() => this.setModal2Visible(true)}
-                                                                        time="8:00 pm" lock="#F45671" nameColor1="#F45671" name1="David ukwa"
-                                                                        nameColor2="#F45671" name2="David ukwa"
-                                                                    />
-                                                                    <BookingRaw
-                                                                        modalOpen={() => this.setModal2Visible(true)}
-                                                                        time="9:00 pm" lock="#F45671"
-                                                                    />
-                                                                    <BookingRaw
-                                                                        modalOpen={() => this.setModal2Visible(true)}
-                                                                        time="10:00 pm" lock="#F45671"
-                                                                    />
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            )
-                                        })
-                                    ) : null
+                                            <BookingRaw
+                                                modalOpen={() => this.setModal2Visible(true)}
+                                                time="7:00 am" lock="#F45671"
+                                            />
 
+                                            <BookingRaw
+                                                modalOpen={() => this.setModal2Visible(true)}
+                                                time="8:00 am" lock="#F45671"
+                                                name1="David ukwa" nameColor1="#49BE56"
+                                                name2="David ukwa" nameColor2="#49BE56"
+                                                name3="Simon ejilogo" nameColor3="#F45671"
+                                                name4="Simon ejilogo" nameColor4="#F45671"
+                                            />
 
-                                }
+                                            <BookingRaw
+                                                modalOpen={() => this.setModal2Visible(true)}
+                                                time="9:00 am" lock="#49BE56"
+                                                name1="David ukwa" nameColor1="#49BE56"
+                                                name2="David ukwa" nameColor2="#D9B70B"
+                                            />
+                                            <BookingRaw
+                                                modalOpen={() => this.setModal2Visible(true)}
+                                                time="10:00 am" lock="#49BE56"
+                                            />
+                                            <BookingRaw
+                                                modalOpen={() => this.setModal2Visible(true)}
+                                                time="11:00 am" lock="#49BE56"
+                                                name1="Simon ejilogo" nameColor1="#F45671"
+                                            />
+                                            <BookingRaw
+                                                modalOpen={() => this.setModal2Visible(true)}
+                                                time="12:00 am" lock="#49BE56"
+                                                name1="Simon ejilogo" nameColor1="#F45671"
+                                            />
+                                            <BookingRaw
+                                                modalOpen={() => this.setModal2Visible(true)}
+                                                time="1:00 pm" lock="#F45671"
+                                            />
+                                            <BookingRaw
+                                                modalOpen={() => this.setModal2Visible(true)}
+                                                time="2:00 pm" lock="#F45671"
+                                            />
+                                            <BookingRaw
+                                                modalOpen={() => this.setModal2Visible(true)}
+                                                time="3:00 pm" lock="#49BE56"
+                                            />
+                                            <BookingRaw
+                                                modalOpen={() => this.setModal2Visible(true)}
+                                                time="4:00 pm" lock="#49BE56" nameColor1="#F45671" name1="David ukwa"
+                                                name2="David ukwa" nameColor2="#F45671"
+                                                name3="Simon ejilogo" nameColor3="#F45671"
+                                            />
 
+                                            {
+                                                (bookingData["17"]) ? (
+                                                    <BookingRaw
+                                                        modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                        time="5:00 pm" lock="#49BE56"
+                                                        data={bookingData["17"]}
+                                                    />
+                                                ) :
+                                                    <BookingRaw
+                                                        modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                        time="5:00 pm" lock="#49BE56"
+                                                    />
+                                            }
 
-                            </ReactSwipe>
-                        ) : null
-                    }
+                                            <BookingRaw
+                                                modalOpen={() => this.setModal2Visible(true)}
+                                                time="6:00 pm" lock="#49BE56" nameColor1="#F45671" name1="David ukwa"
+                                            />
+                                            <BookingRaw
+                                                modalOpen={() => this.setModal2Visible(true)}
+                                                time="7:00 pm" lock="#49BE56"
+                                            />
+                                            <BookingRaw
+                                                modalOpen={() => this.setModal2Visible(true)}
+                                                time="8:00 pm" lock="#F45671" nameColor1="#F45671" name1="David ukwa"
+                                                nameColor2="#F45671" name2="David ukwa"
+                                            />
+                                            <BookingRaw
+                                                modalOpen={() => this.setModal2Visible(true)}
+                                                time="9:00 pm" lock="#F45671"
+                                            />
+
+                                            {
+                                                (bookingData["22"]) ? (
+                                                    <BookingRaw
+                                                        modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                        time="10:00 pm" lock="#49BE56"
+                                                        data={bookingData["22"]}
+                                                    />
+                                                ) :
+                                                    <BookingRaw
+                                                        modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                        time="10:00 pm" lock="#49BE56"
+                                                    />
+                                            }
+
+                                            <BookingRaw
+                                                modalOpen={() => this.setModal2Visible(true)}
+                                                time="11:00 pm" lock="#F45671"
+                                            />
+                                            <BookingRaw
+                                                modalOpen={() => this.setModal2Visible(true)}
+                                                time="12:00 am" lock="#F45671"
+                                            />
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </ReactSwipe>
 
                 </div>
 
                 <ExportBooking modalState={this.state} modalExport={this.modalExport} that={this} />
-                <BookingDetailsModal modalState={this.state} setModal2Visible={this.setModal2Visible} that={this} />
+                <BookingDetailsModal modalState={this.state} setModal2Visible={this.setModal2Visible} bookingDetails={this.state.bookingDetails} that={this} />
             </div >
 
 
@@ -251,6 +278,7 @@ class Bookings extends Component {
 function mapStateToProp(state) {
     return ({
         bseUrl: state.root.bseUrl,
+        userProfile: state.root.userProfile,
         uid: state.root.userProfile._id,
         bookings: state.root.bookings,
     })
