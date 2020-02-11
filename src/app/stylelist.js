@@ -43,7 +43,7 @@ class StyleList extends Component {
             showerror: false,
             stylistFullName: '',
             stylistDescription: '',
-            modal2Visible: false,
+            modal2Visible: true,
             modal2VisibleEdit: false,
 
             workingDaysNTime: [

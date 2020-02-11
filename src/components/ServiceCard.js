@@ -51,7 +51,7 @@ class ServiceCard extends Component {
                                         </div>
 
                                         <div style={{
-                                            display: "flex", flex: 5, padding: 5, color: "black", fontWeight: "bold", flexDirection: "column", justifyContent: "center", alignItems: "center",
+                                            display: "flex", flex: 5, marginTop: 10, padding: 5, color: "black", fontWeight: "bold", flexDirection: "column", alignItems: "center",
                                             // background: "red"
                                         }}>
 
@@ -59,9 +59,12 @@ class ServiceCard extends Component {
                                                 indexedExtraServices.map((extraServices, esIndex) => {
                                                     console.log(indexedExtraServices, 'indexedExtraServices')
                                                     return (
-                                                        <div key={esIndex} style={{ display: "flex", flex: 1, width: "100%", margin: 10, justifyContent: "space-between", alignItems: "center", fontWeight: "normal", color: "#535353" }}>
+                                                        <div key={esIndex} style={{
+                                                            display: "flex", width: "100%", fontWeight: "normal", color: "#535353", margin: 5,
+                                                            // background: "orange"
+                                                        }}>
                                                             <div style={{
-                                                                display: "flex", flex: 2.5, fontWeight: "bold", textAlign: "left"
+                                                                display: "flex", flex: 2.5, fontWeight: "bold", textAlign: "left",
                                                                 // background: "green"
                                                             }}>
                                                                 {extraServices.serviceName}

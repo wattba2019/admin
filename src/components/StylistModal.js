@@ -131,7 +131,6 @@ class StylistModal extends Component {
                                                                 e.brType = 'start'
                                                                 that.onChange(e, f);
                                                             }}
-
                                                         />
                                                         <span style={{ margin: "1%", fontWeight: "normal" }}>to</span>
                                                         <TimePicker
@@ -146,8 +145,6 @@ class StylistModal extends Component {
                                                                 e.brType = 'end'
                                                                 that.onChange(e, f);
                                                             }}
-
-
                                                         />
                                                     </div>
                                                 </div>

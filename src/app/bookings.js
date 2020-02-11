@@ -197,58 +197,144 @@ class Bookings extends Component {
                                                 <table className="table table-striped table table-sm">
                                                     <tbody >
 
-                                                        <BookingRaw
-                                                            modalOpen={() => this.setModal2Visible(true)}
-                                                            time="7:00 am" lock="#F45671"
-                                                        />
+                                                        {
+                                                            (bookingData["7"]) ? (
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="7:00 am" lock="#49BE56"
+                                                                    data={bookingData["7"]}
+                                                                />
+                                                            ) :
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="7:00 am" lock="#49BE56"
+                                                                />
+                                                        }
 
-                                                        <BookingRaw
-                                                            modalOpen={() => this.setModal2Visible(true)}
-                                                            time="8:00 am" lock="#F45671"
-                                                            name1="David ukwa" nameColor1="#49BE56"
-                                                            name2="David ukwa" nameColor2="#49BE56"
-                                                            name3="Simon ejilogo" nameColor3="#F45671"
-                                                            name4="Simon ejilogo" nameColor4="#F45671"
-                                                        />
+                                                        {
+                                                            (bookingData["8"]) ? (
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="8:00 am" lock="#49BE56"
+                                                                    data={bookingData["8"]}
+                                                                />
+                                                            ) :
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="8:00 am" lock="#49BE56"
+                                                                />
+                                                        }
 
-                                                        <BookingRaw
-                                                            modalOpen={() => this.setModal2Visible(true)}
-                                                            time="9:00 am" lock="#49BE56"
-                                                            name1="David ukwa" nameColor1="#49BE56"
-                                                            name2="David ukwa" nameColor2="#D9B70B"
-                                                        />
-                                                        <BookingRaw
-                                                            modalOpen={() => this.setModal2Visible(true)}
-                                                            time="10:00 am" lock="#49BE56"
-                                                        />
-                                                        <BookingRaw
-                                                            modalOpen={() => this.setModal2Visible(true)}
-                                                            time="11:00 am" lock="#49BE56"
-                                                            name1="Simon ejilogo" nameColor1="#F45671"
-                                                        />
-                                                        <BookingRaw
-                                                            modalOpen={() => this.setModal2Visible(true)}
-                                                            time="12:00 am" lock="#49BE56"
-                                                            name1="Simon ejilogo" nameColor1="#F45671"
-                                                        />
-                                                        <BookingRaw
-                                                            modalOpen={() => this.setModal2Visible(true)}
-                                                            time="1:00 pm" lock="#F45671"
-                                                        />
-                                                        <BookingRaw
-                                                            modalOpen={() => this.setModal2Visible(true)}
-                                                            time="2:00 pm" lock="#F45671"
-                                                        />
-                                                        <BookingRaw
-                                                            modalOpen={() => this.setModal2Visible(true)}
-                                                            time="3:00 pm" lock="#49BE56"
-                                                        />
-                                                        <BookingRaw
-                                                            modalOpen={() => this.setModal2Visible(true)}
-                                                            time="4:00 pm" lock="#49BE56" nameColor1="#F45671" name1="David ukwa"
-                                                            name2="David ukwa" nameColor2="#F45671"
-                                                            name3="Simon ejilogo" nameColor3="#F45671"
-                                                        />
+                                                        {
+                                                            (bookingData["9"]) ? (
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="9:00 am" lock="#49BE56"
+                                                                    data={bookingData["9"]}
+                                                                />
+                                                            ) :
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="9:00 am" lock="#49BE56"
+                                                                />
+                                                        }
+
+                                                        {
+                                                            (bookingData["10"]) ? (
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="10:00 am" lock="#49BE56"
+                                                                    data={bookingData["10"]}
+                                                                />
+                                                            ) :
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="10:00 am" lock="#49BE56"
+                                                                />
+                                                        }
+
+                                                        {
+                                                            (bookingData["11"]) ? (
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="11:00 am" lock="#49BE56"
+                                                                    data={bookingData["11"]}
+                                                                />
+                                                            ) :
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="11:00 am" lock="#49BE56"
+                                                                />
+                                                        }
+
+                                                        {
+                                                            (bookingData["12"]) ? (
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="12:00 pm" lock="#F45671"
+                                                                    data={bookingData["12"]}
+                                                                />
+                                                            ) :
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="12:00 pm" lock="#F45671"
+                                                                />
+                                                        }
+
+                                                        {
+                                                            (bookingData["13"]) ? (
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="1:00 pm" lock="#F45671"
+                                                                    data={bookingData["13"]}
+                                                                />
+                                                            ) :
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="1:00 pm" lock="#F45671"
+                                                                />
+                                                        }
+
+                                                        {
+                                                            (bookingData["14"]) ? (
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="2:00 pm" lock="#F45671"
+                                                                    data={bookingData["14"]}
+                                                                />
+                                                            ) :
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="2:00 pm" lock="#F45671"
+                                                                />
+                                                        }
+
+                                                        {
+                                                            (bookingData["15"]) ? (
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="3:00 pm" lock="#F45671"
+                                                                    data={bookingData["15"]}
+                                                                />
+                                                            ) :
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="3:00 pm" lock="#F45671"
+                                                                />
+                                                        }
+                                                        {
+                                                            (bookingData["16"]) ? (
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="4:00 pm" lock="#F45671"
+                                                                    data={bookingData["16"]}
+                                                                />
+                                                            ) :
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="4:00 pm" lock="#F45671"
+                                                                />
+                                                        }
 
                                                         {
                                                             (bookingData["17"]) ? (
@@ -264,23 +350,61 @@ class Bookings extends Component {
                                                                 />
                                                         }
 
-                                                        <BookingRaw
-                                                            modalOpen={() => this.setModal2Visible(true)}
-                                                            time="6:00 pm" lock="#49BE56" nameColor1="#F45671" name1="David ukwa"
-                                                        />
-                                                        <BookingRaw
-                                                            modalOpen={() => this.setModal2Visible(true)}
-                                                            time="7:00 pm" lock="#49BE56"
-                                                        />
-                                                        <BookingRaw
-                                                            modalOpen={() => this.setModal2Visible(true)}
-                                                            time="8:00 pm" lock="#F45671" nameColor1="#F45671" name1="David ukwa"
-                                                            nameColor2="#F45671" name2="David ukwa"
-                                                        />
-                                                        <BookingRaw
-                                                            modalOpen={() => this.setModal2Visible(true)}
-                                                            time="9:00 pm" lock="#F45671"
-                                                        />
+                                                        {
+                                                            (bookingData["18"]) ? (
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="6:00 pm" lock="#49BE56"
+                                                                    data={bookingData["18"]}
+                                                                />
+                                                            ) :
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="6:00 pm" lock="#49BE56"
+                                                                />
+                                                        }
+
+                                                        {
+                                                            (bookingData["19"]) ? (
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="7:00 pm" lock="#49BE56"
+                                                                    data={bookingData["19"]}
+                                                                />
+                                                            ) :
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="7:00 pm" lock="#49BE56"
+                                                                />
+                                                        }
+
+                                                        {
+                                                            (bookingData["20"]) ? (
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="8:00 pm" lock="#49BE56"
+                                                                    data={bookingData["20"]}
+                                                                />
+                                                            ) :
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="8:00 pm" lock="#49BE56"
+                                                                />
+                                                        }
+
+                                                        {
+                                                            (bookingData["21"]) ? (
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="9:00 pm" lock="#49BE56"
+                                                                    data={bookingData["21"]}
+                                                                />
+                                                            ) :
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="9:00 pm" lock="#49BE56"
+                                                                />
+                                                        }
 
                                                         {
                                                             (bookingData["22"]) ? (
@@ -296,14 +420,34 @@ class Bookings extends Component {
                                                                 />
                                                         }
 
-                                                        <BookingRaw
-                                                            modalOpen={() => this.setModal2Visible(true)}
-                                                            time="11:00 pm" lock="#F45671"
-                                                        />
-                                                        <BookingRaw
-                                                            modalOpen={() => this.setModal2Visible(true)}
-                                                            time="12:00 am" lock="#F45671"
-                                                        />
+                                                        {
+                                                            (bookingData["23"]) ? (
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="11:00 pm" lock="#49BE56"
+                                                                    data={bookingData["23"]}
+                                                                />
+                                                            ) :
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="11:00 pm" lock="#49BE56"
+                                                                />
+                                                        }
+
+                                                        {
+                                                            (bookingData["24"]) ? (
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="12:00 am" lock="#49BE56"
+                                                                    data={bookingData["24"]}
+                                                                />
+                                                            ) :
+                                                                <BookingRaw
+                                                                    modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                    time="12:00 am" lock="#49BE56"
+                                                                />
+                                                        }
+
                                                     </tbody>
                                                 </table>
                                             </div>
