@@ -28,22 +28,18 @@ class Bookings extends Component {
         }
         this.setModal2Visible = this.setModal2Visible.bind(this);
         this.modalExport = this.modalExport.bind(this);
-        // let bookingDate = new Date("2-8-2020");
         let bookingDate = new Date();
         this.props.getBookings((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254', bookingDate);
     }
 
     datePicker = (date, dateString) => {
-        console.log(date, dateString, "DATE");
         if (dateString != "") {
-            alert("WORK_DATA")
             this.setState({
                 currentDate: dateString
             })
             this.props.getBookings((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254', dateString);
         }
         else {
-            alert("WORK")
             this.setState({
                 currentDate: new Date(),
             })
@@ -53,17 +49,17 @@ class Bookings extends Component {
     }
 
     setModal2Visible(modal2Visible, data) {
-        // console.log(data, "DATA")
         this.setState({
             modal2Visible,
             bookingDetails: data
         });
     }
+
     modalExport(modalExport) {
         this.setState({ modalExport });
     }
+
     componentWillReceiveProps(nextProps) {
-        // console.log(nextProps.bookings.bookingSort, "TEST")
         if (nextProps.bookings) {
             this.setState({
                 bookingData: nextProps.bookings.bookingSort
@@ -71,16 +67,37 @@ class Bookings extends Component {
         }
     }
 
-
     refreshPage(bolean) {
         window.location.reload(bolean)
     }
 
+    nextDate(reactSwipeEl) {
+        reactSwipeEl.next()
+        const { currentDate } = this.state
+        var date = new Date(currentDate)
+        date.setDate(date.getDate() + 1);
+        this.setState({
+            currentDate: date,
+        })
+        this.props.getBookings((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254', date);
+
+    }
+
+    previousDate(reactSwipeEl) {
+        reactSwipeEl.prev()
+        const { currentDate } = this.state
+        var date = new Date(currentDate)
+        date.setDate(date.getDate() - 1);
+        this.setState({
+            currentDate: date,
+        })
+        this.props.getBookings((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254', date);
+    }
+
+
     render() {
         const { bookingData, currentDate } = this.state
-        const { userProfile } = this.props
         let reactSwipeEl;
-        console.log(currentDate, "USERPROFILE")
         return (
             <div style={{
                 display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center",
@@ -103,13 +120,13 @@ class Bookings extends Component {
                     </div>
                     <div style={{ flex: 4, justifyContent: "flex-end", display: "flex", flexDirection: "row", }}>
                         <button className="btn btn-light" style={{ minWidth: 140, width: "60%", margin: "2%" }} className="buttonAdd"
-                            // onClick={this.signin}
                             onClick={() => this.refreshPage(false)}
                         >
                             <span className="buttonmatter" style={{ fontSize: 12, }}>Refresh</span>
                         </button>
                         <button type="button" className="btn btn-light" style={{ width: "60%", margin: "2%", borderWidth: 0.5, borderColor: "grey", height: 40 }}
-                            onClick={() => this.modalExport(true)}>
+                            onClick={() => this.modalExport(true)}
+                        >
                             Export Bookings
                             </button>
                     </div>
@@ -141,10 +158,16 @@ class Bookings extends Component {
                     <div style={{
                         display: "flex", justifyContent: "space-between", width: "15%", minWidth: 150, color: "#4A4A4A", paddingBottom: 5, fontSize: 11
                     }}>
-                        <a onClick={() => reactSwipeEl.prev()} style={{ alignItems: "center", display: "flex", justifyContent: "center" }}>
+                        <a
+                            // onClick={() => reactSwipeEl.prev()}
+                            onClick={() => this.previousDate(reactSwipeEl)}
+                            style={{ alignItems: "center", display: "flex", justifyContent: "center" }}>
                             <FaAngleLeft style={{ fontSize: 14, color: "#F45671" }} />
                             Previous Day</a>
-                        <a onClick={() => reactSwipeEl.next()} style={{ alignItems: "center", display: "flex", justifyContent: "center" }}>
+                        <a
+                            // onClick={() => reactSwipeEl.next()}
+                            onClick={() => this.nextDate(reactSwipeEl)}
+                            style={{ alignItems: "center", display: "flex", justifyContent: "center" }}>
                             Next Day
                             <FaAngleRight style={{ fontSize: 14, color: "#F45671" }} />
                         </a>
