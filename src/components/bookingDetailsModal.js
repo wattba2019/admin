@@ -3,6 +3,7 @@ import '../custom.css'
 import { Modal } from "antd";
 import "antd/dist/antd.css";
 import { IoMdCheckmark } from 'react-icons/io';
+import moment from 'moment';
 
 class BookingDetailsModal extends Component {
 
@@ -47,7 +48,8 @@ class BookingDetailsModal extends Component {
 
                                 <div style={{ display: "flex", flex: 1, fontWeight: "bold" }}>
                                     {/* <p>{bookingDetails.bookingDateTime}</p> */}
-                                    <p>{new Date(bookingDetails.bookingDateTime).toDateString()}</p>
+                                    {/* <p>{new Date(bookingDetails.bookingDateTime).toDateString()}</p> */}
+                                    <p> {moment(bookingDetails.bookingDateTime).format("dddd, MMMM Do YYYY")}</p>
                                 </div>
 
                             </div>

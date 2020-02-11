@@ -12,6 +12,7 @@ import ExportBooking from '../components/exportBookingModal';
 import "antd/dist/antd.css";
 import { DatePicker } from 'antd';
 import ReactSwipe from 'react-swipe';
+import moment from 'moment';
 
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
@@ -19,6 +20,7 @@ class Bookings extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            currentDate: new Date(),
             bookingData: [],
             bookingDetails: [],
             modal2Visible: false,
@@ -26,13 +28,30 @@ class Bookings extends Component {
         }
         this.setModal2Visible = this.setModal2Visible.bind(this);
         this.modalExport = this.modalExport.bind(this);
-        let bookingDate = new Date("2-8-2020");
+        // let bookingDate = new Date("2-8-2020");
+        let bookingDate = new Date();
         this.props.getBookings((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254', bookingDate);
     }
 
     datePicker = (date, dateString) => {
-        console.log(date, dateString);
+        console.log(date, dateString, "DATE");
+        if (dateString != "") {
+            alert("WORK_DATA")
+            this.setState({
+                currentDate: dateString
+            })
+            this.props.getBookings((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254', dateString);
+        }
+        else {
+            alert("WORK")
+            this.setState({
+                currentDate: new Date(),
+            })
+            let bookingDate = new Date();
+            this.props.getBookings((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254', bookingDate);
+        }
     }
+
     setModal2Visible(modal2Visible, data) {
         // console.log(data, "DATA")
         this.setState({
@@ -52,11 +71,16 @@ class Bookings extends Component {
         }
     }
 
+
+    refreshPage(bolean) {
+        window.location.reload(bolean)
+    }
+
     render() {
-        const { bookingData } = this.state
+        const { bookingData, currentDate } = this.state
         const { userProfile } = this.props
         let reactSwipeEl;
-        // console.log(bookingData["17"], "USERPROFILE")
+        console.log(currentDate, "USERPROFILE")
         return (
             <div style={{
                 display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center",
@@ -70,14 +94,18 @@ class Bookings extends Component {
                     padding: 5,
                     //   backgroundColor: "green", 
                 }}>
-                    <div style={{
-                        flex: 6, minWidth: 200, alignItems: "center", display: "flex"
-                        // background: "blue",
-                    }}>
+                    <div
+                        style={{
+                            flex: 6, minWidth: 200, alignItems: "center", display: "flex"
+                            // background: "blue",
+                        }}>
                         <p style={{ margin: "2%", textAlign: "left", fontSize: 18, fontWeight: "bold", }}>Booking Calender</p>
                     </div>
                     <div style={{ flex: 4, justifyContent: "flex-end", display: "flex", flexDirection: "row", }}>
-                        <button className="btn btn-light" style={{ minWidth: 140, width: "60%", margin: "2%" }} className="buttonAdd" onClick={this.signin} >
+                        <button className="btn btn-light" style={{ minWidth: 140, width: "60%", margin: "2%" }} className="buttonAdd"
+                            // onClick={this.signin}
+                            onClick={() => this.refreshPage(false)}
+                        >
                             <span className="buttonmatter" style={{ fontSize: 12, }}>Refresh</span>
                         </button>
                         <button type="button" className="btn btn-light" style={{ width: "60%", margin: "2%", borderWidth: 0.5, borderColor: "grey", height: 40 }}
@@ -96,7 +124,7 @@ class Bookings extends Component {
                     padding: 5,
                 }}>
                     <div style={{ flex: 6, minWidth: 200, alignItems: "center", display: "flex" }}>
-                        <DatePicker style={{ margin: "2%", }} onChange={() => this.datePicker()} />
+                        <DatePicker style={{ margin: "2%", }} onChange={(data, data1) => this.datePicker(data, data1)} />
                     </div>
                     <div style={{ flex: 4, minWidth: 200, justifyContent: "flex-end", display: "flex", flexDirection: "row", }}>
                     </div>
@@ -135,8 +163,12 @@ class Bookings extends Component {
                             <div style={{ flex: 8, background: "#fff", justifyContent: "flex-start", alignItems: "flex-start", display: "flex", padding: 15, flexDirection: "column" }}>
 
                                 <div style={{ fontWeight: "bold" }}>
-                                    Friday, Nov 1 , 2019
+                                    {moment(currentDate).format("dddd, MMMM Do YYYY")}
                                 </div>
+
+                                {/* <div style={{ fontWeight: "bold" }}>
+                                    Friday, Nov 1 , 2019
+                                </div> */}
 
                                 <div style={{ fontSize: 11 }}>
                                     Bookings

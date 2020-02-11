@@ -66,7 +66,7 @@ class BookingsRaw extends Component {
                                 </td>
                             )
                         })
-                    ) : <td scope="row" colspan="5">
+                    ) : <td scope="row" colSpan="5">
                         </td>
                 }
 
