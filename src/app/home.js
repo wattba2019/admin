@@ -30,9 +30,9 @@ class Home extends Component {
             showerror: false,
             shopImage: "",
             // route: "ShopProfile"
-            route: "Bookings"
+            // route: "Bookings"
             // route: "Services"
-            // route: "Stylelists"
+            route: "Stylelists"
             // route: "WorkingHours"
             // route: "SpecialOffers"
         }
