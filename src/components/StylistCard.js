@@ -20,8 +20,10 @@ class StylistCard extends Component {
                         stylists.map((stylist, index) => {
                             return (
                                 <div key={index} className="cardshadowWithButton" style={{
+
                                     display: "flex", height: "25vw", width: "16vw", minWidth: 220, minHeight: 400, margin: "3%",
-                                    flexDirection: "column", backgroundColor: "white"
+                                    flexDirection: "column",
+                                    backgroundColor: "white"
                                 }}>
                                     <div style={{
                                         padding: 10,
@@ -29,20 +31,36 @@ class StylistCard extends Component {
                                         // background: "orange"
                                     }}>
                                         <div style={{
-                                            display: "flex", flex: 8, flexDirection: "column",
+                                            display: "flex", flex: 8, flexDirection: "column", width: "100%",
                                             // background: "green"
                                         }}>
-
                                             <div style={{
-                                                display: "flex", flex: 2, height: 100, padding: 5, color: "black", fontWeight: "bold", flexDirection: "column", justifyContent: "center", alignItems: "center",
+                                                display: "flex", flex: 2, justifyContent: "flex-end", color: "black", fontWeight: "bold", flexDirection: "row", position: "relative",
                                                 // background: "red"
                                             }}>
-                                                <div>
-                                                    <img src={require('../../src/assets/noPhoto.jpg')} className="profileImage" style={{ width: 70, height: 70 }} />
+                                                <div style={{
+                                                    position: "absolute",
+                                                    marginTop: 0,
+                                                    width: "100%",
+                                                    justifyContent: "center", alignItems: "center", textAlign: "center",
+                                                    // background: "grey"
+                                                }}>
+                                                    <div>
+                                                        <img src={require('../../src/assets/noPhoto.jpg')} className="profileImage" style={{ width: 70, height: 70 }} />
+                                                    </div>
+                                                    <div>{stylist.fullname}</div>
                                                 </div>
-                                                <div>{stylist.fullname}</div>
-                                            </div>
 
+                                                <div style={{
+                                                    position: "relative",
+                                                    zIndex: 1, justifyContent: "center", alignItems: "center", textAlign: "center",
+                                                    // background: "red"
+                                                }}>
+                                                    <img src={require('../../src/assets/3dotmenu.png')} style={{ width: 10, height: 20 }} />
+                                                </div>
+
+
+                                            </div>
 
                                             <div style={{
                                                 display: "flex", flex: 3, padding: 5, color: "#535353", fontWeight: "normal", fontSize: 10, flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "left",
@@ -56,7 +74,7 @@ class StylistCard extends Component {
                                                 // background: "red"
                                             }}>
                                                 Services
-                                        </div>
+                                            </div>
 
                                             <div style={{
                                                 display: "flex", flex: 5, flexDirection: "column", padding: 5, color: "#535353", fontWeight: "bold", alignItems: "center",
@@ -81,9 +99,10 @@ class StylistCard extends Component {
                                                 }
                                             </div>
                                         </div>
+
                                         <div style={{
-                                            display: "flex", flex: 1, flexDirection: "column", background: "#F7F8F8"
-                                            // background: "green"
+                                            display: "flex", flex: 1, flexDirection: "column", background: "#F7F8F8",
+                                            background: "green"
                                         }}>
                                             <div className="cardButtonBorder" style={{
                                                 display: "flex", flex: 1, width: "100%", padding: 5, color: "black", fontWeight: "bold", flexDirection: "row", justifyContent: "center", alignItems: "center",
