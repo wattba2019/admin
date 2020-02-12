@@ -70,9 +70,7 @@ class SpecialOffers extends Component {
             packageDescription: this.state.offerDescription,
             packageImage: this.state.imageFile,
             userId: (this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254',
-
         }
-
         if (this.state.modal2Visible) {
             console.log(specialOffer, "SPECIAL_OFFERSS")
             this.props.addSpecialOffer(specialOffer);
@@ -80,11 +78,8 @@ class SpecialOffers extends Component {
         else {
             specialOffer._id = this.state.editSpecialPackage._id;
             specialOffer.packageImage = this.state.editSpecialPackage.packageImage;
-
             this.props.updateSpecialOffer(specialOffer, this.state.indexToEdit);
         }
-
-
         this.setState({
             offerName: '',
             price: '',

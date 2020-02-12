@@ -58,7 +58,7 @@ class SpecialOfferCard extends Component {
                                             // background: "green"
                                         }}>
                                             <div style={{ flex: 1.5, marginTop: 10 }}>
-                                                <button type="button" class="btn btn-light" style={{ width: "100%", borderWidth: 0.5, borderColor: "grey" }} onClick={() => this.props.setModal2VisibleEdit(true, specialPackage, index)}>Edit Service</button>
+                                                <button type="button" className="btn btn-light" style={{ width: "100%", borderWidth: 0.5, borderColor: "grey" }} onClick={() => this.props.setModal2VisibleEdit(true, specialPackage, index)}>Edit Service</button>
                                             </div>
                                         </div>
 
@@ -78,7 +78,7 @@ class SpecialOfferCard extends Component {
                         backgroundColor: "white", flexDirection: "column"
                     }}>
                         <div style={{ display: "flex", flex: 1, color: "black", fontWeight: "bold", flexDirection: "row", justifyContent: "center", alignItems: "center", }} onClick={() => this.props.setModal2Visible(true)} >
-                            <div class="btn btn-light" style={{ display: "flex", width: "35%", height: "32%", backgroundColor: "#E9E9EA", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
+                            <div className="btn btn-light" style={{ display: "flex", width: "35%", height: "32%", backgroundColor: "#E9E9EA", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
                                 <AiOutlinePlus style={{ color: "#494949", fontSize: 25 }} />
                             </div>
                         </div>

@@ -6,7 +6,7 @@ import { Form, Input, Checkbox } from 'antd';
 
 class SpecialOfferModal extends Component {
     state = {
-        imageFile: {},
+        // imageFile: {},
         imageError: false,
         offerDescription: ""
     }
@@ -31,20 +31,25 @@ class SpecialOfferModal extends Component {
         this.setState({
             imageError: false
         })
-
         return false;
     }
 
 
     handleSubmit = e => {
         const { that } = this.props;
+        if (Object.keys(that.state.imageFile).length === 0 && that.state.imageFile.constructor === Object) {
+            this.setState({
+                imageError: true
+            })
+        }
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
 
             if (!err) {
-                console.log('Received values of form: ', values, this.state.imageFile);
+                console.log('Received values of form: ', values);
+                // that.addSpecialOffer()
 
-                if (Object.keys(this.state.imageFile).length === 0 && this.state.imageFile.constructor === Object) {
+                if (Object.keys(that.state.imageFile).length === 0 && that.state.imageFile.constructor === Object) {
                     // alert("Empty OBJECT")
                     this.setState({
                         imageError: true
@@ -98,15 +103,15 @@ class SpecialOfferModal extends Component {
                                     const { status } = info.file;
                                     console.log(info, 'image');
                                     if (info.fileList.length > 0) {
-                                        this.setState({ imageFile: info.file, })
+                                        that.setState({ imageFile: info.file, })
                                     }
                                     else {
-                                        this.setState({ imageFile: {}, })
+                                        that.setState({ imageFile: {}, })
                                     }
                                 }}
                                 beforeUpload={this.beforeUploadEvent.bind(this)}>
                                 {
-                                    Object.keys(this.state.imageFile).length > 0 ? null : (
+                                    Object.keys(that.state.imageFile).length > 0 ? null : (
                                         <Button>
                                             <Icon type="upload" /> Upload Image
                                         </Button>
@@ -122,8 +127,11 @@ class SpecialOfferModal extends Component {
                         <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", marginTop: 10 }}>
                             <Form.Item>
                                 {getFieldDecorator('SpecialOfferName', {
-                                    rules: [{ required: true, message: 'Please type your offer name!' }],
-                                    rules: [{ max: 26, message: 'Description must be maximum 26 characters.' },],
+                                    rules: [
+                                        { required: true, message: 'Please type your offer name!' },
+                                        { max: 26, message: 'Offer must be max 26 characters.' },
+                                    ],
+                                    // rules: [{ max: 26, message: 'Offer must be max 26 characters.' },],
                                 })(
                                     <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
                                         <div style={{ width: "100%", }}>
@@ -136,8 +144,11 @@ class SpecialOfferModal extends Component {
 
                             <Form.Item>
                                 {getFieldDecorator('Price', {
-                                    rules: [{ required: true, message: 'Please type offer price!' }],
-                                    rules: [{ max: 7, message: 'Description must be maximum 7 characters.' },],
+                                    rules: [
+                                        { required: true, message: 'Please type offer price!' },
+                                        { max: 7, message: 'Price must be max 7 characters.' },
+                                    ],
+                                    // rules: [{ max: 7, message: 'Price must be max 7 characters.' },],
                                 })(
                                     <div style={{ display: "flex", flex: 1, margin: "2.5%", marginLeft: 15 }} >
                                         <div style={{ width: "50%", }}>
@@ -157,15 +168,16 @@ class SpecialOfferModal extends Component {
 
                         <Form.Item>
                             {getFieldDecorator('Description', {
-                                rules: [{ required: true, message: 'Please type offer description!' }],
-                                rules: [{ max: 120, message: 'Description must be maximum 120 characters.' },],
-
+                                rules: [
+                                    { required: true, message: 'Please type offer description!' },
+                                    { max: 120, message: 'Description must be max 120 characters.' }
+                                ]
+                                // rules: [{ max: 120, message: 'Description must be max 120 characters.' },],
                             })(
                                 <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", }}>
                                     <div style={{ display: "flex", flex: 1, margin: "1.5%", }} >
                                         <TextareaAutosize style={{ width: "100%" }} maxRows={8} minRows={2} value={that.state.offerDescription}
                                             onChange={(e) => { that.setState({ offerDescription: e.target.value }) }}
-                                        // onChange={(e) => that.state.offerDescription.length < 120 ? that.setState({ offerDescription: e.target.value }) : null}
                                         />
                                     </div>
                                 </div>
@@ -181,8 +193,10 @@ class SpecialOfferModal extends Component {
 
                             <button type="button" className="btn btn-light" style={{ width: "35%", margin: "1%", minWidth: 80, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => { this.props.setModal2Visible(false); this.props.setModal2VisibleEdit(false); }}>Cancel</button>
                         </div>
-
                     </Form>
+
+
+
                     {/* <div style={{ margin: "1.5%" }}>
                         <Upload {...this.uploadProps}
                             onChange={(info) => {
@@ -253,7 +267,7 @@ class SpecialOfferModal extends Component {
                             <span className="buttonmatter" style={{ fontSize: 15, }}>{(that.state.modal2VisibleEdit) ? (<span>Update Special Offer</span>) : (<span>Add Special Offer</span>)}</span>
                         </button>
 
-                        <button type="button" class="btn btn-light" style={{ width: "35%", margin: "1%", minWidth: 80, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => { this.props.setModal2Visible(false); this.props.setModal2VisibleEdit(false); }}>Cancel</button>
+                        <button type="button" className="btn btn-light" style={{ width: "35%", margin: "1%", minWidth: 80, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => { this.props.setModal2Visible(false); this.props.setModal2VisibleEdit(false); }}>Cancel</button>
 
                     </div> */}
                 </div>
