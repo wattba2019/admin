@@ -13,15 +13,17 @@ class StylistCard extends Component {
         const { that, stylists } = this.props
 
         return (
-            <div style={{ display: "flex", flex: 8, marginTop: "3%" }}>
+            <div style={{
+                display: "flex", flex: 8, marginTop: "3%", flexWrap: "wrap", width: "80%",
+                // backgroundColor: "white"
+            }}>
                 {/* card start */}
                 {
                     (stylists.length > 0) ? (
                         stylists.map((stylist, index) => {
                             return (
                                 <div key={index} className="cardshadowWithButton" style={{
-
-                                    display: "flex", height: "25vw", width: "16vw", minWidth: 220, minHeight: 400, margin: "3%",
+                                    display: "flex", height: "25vw", width: "16vw", minWidth: 220, minHeight: 400, maxWidth: 230, margin: "3%",
                                     flexDirection: "column",
                                     backgroundColor: "white"
                                 }}>
@@ -138,7 +140,7 @@ class StylistCard extends Component {
 
                 {/* add button */}
                 <div className="cardshadow" style={{
-                    display: "flex", height: "25vw", width: "16vw", minWidth: 220, minHeight: 400, margin: "3%",
+                    display: "flex", height: "25vw", width: "16vw", minWidth: 220, minHeight: 400, maxWidth: 230, margin: "3%",
                     backgroundColor: "white", flexDirection: "column"
                 }}>
                     <div style={{ display: "flex", flex: 1, color: "black", fontWeight: "bold", flexDirection: "row", justifyContent: "center", alignItems: "center", }}>

@@ -269,7 +269,7 @@ class StyleList extends Component {
         return (
             <div style={{
                 display: "flex", flexDirection: "column", flex: 1, width: "100%", justifyContent: "center", alignItems: "center",
-                // background: "yellow",
+                background: "#F7F8F8",
             }}>
 
                 <div style={{
