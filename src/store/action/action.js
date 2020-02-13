@@ -169,8 +169,6 @@ export function addSpecialOffer(specialOffer) {
 }
 
 
-
-
 export function getSpecialPackages(userID) {
     return dispatch => {
         var options = {
@@ -194,14 +192,24 @@ export function getSpecialPackages(userID) {
     }
 }
 
-
-
-
-
-
-export function updateSpecialOffer(specialOffer, indexToEdit) {
+export function updateSpecialOffer(specialOffer, indexToEdit, base64) {
     return dispatch => {
-        console.log('inside action', specialOffer, indexToEdit);
+        console.log('insideaction', specialOffer, indexToEdit);
+        // console.log('insideaction', specialOffer.packageImage.packageImage);
+
+        var bodyFormData = new FormData();
+        bodyFormData.append('packageName', specialOffer.packageName);
+        bodyFormData.append('packageDescription', specialOffer.packageDescription);
+        bodyFormData.append('price', specialOffer.price);
+        bodyFormData.append('userId', specialOffer.userId);
+
+        if (specialOffer.packageImage.packageImage) {
+            bodyFormData.append('packageImage', specialOffer.packageImage.packageImage);
+        }
+        else {
+            bodyFormData.append('imgs', specialOffer.packageImage);
+        }
+
         var options = {
             method: 'PUT',
             url: `${baseURL.baseURL}/packagesandoffers/${specialOffer._id}/`,
@@ -210,13 +218,13 @@ export function updateSpecialOffer(specialOffer, indexToEdit) {
                 'cache-control': 'no-cache',
                 "Allow-Cross-Origin": '*',
             },
-            data: specialOffer
+            data: bodyFormData
         };
         axios(options)
             .then((data) => {
                 console.log(data, "package updated successfully.");
                 specialOffer.indexToEdit = indexToEdit;
-
+                specialOffer.base64 = base64;
                 dispatch({ type: ActionTypes.UPDATE_SPECIAL_OFFER, payload: specialOffer })
 
                 swal.fire(

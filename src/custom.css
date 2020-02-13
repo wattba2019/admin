@@ -199,3 +199,13 @@ overflow: visible;
 .shopeName:hover{
     cursor: pointer;
 }
+
+.specialPackImgCard{
+    /* padding: 10; */
+    border-right:0.5px solid #CED4DA;
+    border-left:0.5px solid #CED4DA;
+    border-top:0.5px solid #CED4DA;
+    border-bottom:0.5px solid #CED4DA;
+    /* border-radius: 5; */
+
+}

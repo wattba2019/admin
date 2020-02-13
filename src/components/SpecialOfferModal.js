@@ -3,21 +3,26 @@ import React, { Component, } from 'react';
 import { Button, Modal, Upload, Icon, message } from "antd";
 import TextareaAutosize from 'react-textarea-autosize';
 import { Form, Input, Checkbox } from 'antd';
+import { AiOutlineDelete } from 'react-icons/ai';
+
+
 
 class SpecialOfferModal extends Component {
     state = {
         // imageFile: {},
         imageError: false,
-        offerDescription: ""
+        offerDescription: "",
+        base64: ""
     }
 
     uploadProps = {
         listType: 'picture',
+        // listType: null,
         multiple: false,
         // required: true
     };
 
-    beforeUploadEvent(file) {
+    beforeUploadEvent(file, fileList) {
         // alert("Work")
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
@@ -29,11 +34,31 @@ class SpecialOfferModal extends Component {
         }
         console.log(file, 'filelll')
         this.setState({
-            imageError: false
+            imageError: false,
         })
+        this.getBase64(file)
         return false;
     }
 
+    getBase64 = (file) => {
+        const { that } = this.props;
+        // alert("work")
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(
+                // reader.result
+                // console.log(reader.result)
+                that.setState({
+                    base64: reader.result
+                })
+            );
+            reader.onerror = error => reject(
+                // error
+                console.log(error)
+            );
+        });
+    }
 
     handleSubmit = e => {
         const { that } = this.props;
@@ -47,20 +72,18 @@ class SpecialOfferModal extends Component {
 
             if (!err) {
                 console.log('Received values of form: ', values);
-                // that.addSpecialOffer()
-
                 if (Object.keys(that.state.imageFile).length === 0 && that.state.imageFile.constructor === Object) {
                     // alert("Empty OBJECT")
                     this.setState({
                         imageError: true
                     })
                 }
-
                 else {
                     // alert("Not Empty OBJECT")
                     that.addSpecialOffer()
                     this.setState({
-                        imageError: false
+                        imageError: false,
+                        // base64: ""
                     })
                 }
 
@@ -68,10 +91,18 @@ class SpecialOfferModal extends Component {
         });
     };
 
+    handleChange = ({ }) => {
+        alert("Estate Empty Base64")
+        const { that } = this.props;
+        that.setState({ base64: "", imageFile: {}, })
+    }
+
+
     render() {
         const { email } = this.props.modalState;
         const { that } = this.props;
         const { getFieldDecorator } = this.props.form;
+        console.log(that.state.imageFile, that.state.base64, "IMAGESSSS")
         return (
             <Modal
                 footer={null}
@@ -82,10 +113,12 @@ class SpecialOfferModal extends Component {
                 onOk={() => {
                     this.props.setModal2Visible(false);
                     this.props.setModal2VisibleEdit(false);
+                    // this.handleChange(false);
                 }}
                 onCancel={() => {
                     this.props.setModal2Visible(false);
                     this.props.setModal2VisibleEdit(false);
+                    // this.handleChange(false);
                 }}
             >
                 <div style={{ display: "flex", flex: 1, flexDirection: "column", width: "100%", fontSize: "1.1vw", fontWeight: "bold", }}>
@@ -96,29 +129,94 @@ class SpecialOfferModal extends Component {
                         }
                     </div>
 
+                    <div style={{ marginTop: 10 }}>
+                        {
+                            (that.state.modal2VisibleEdit && (that.state.imageFile.packageImage || that.state.base64 != "")) ? (
+                                <div className="specialPackImgCard" style={{
+                                    display: "flex", flex: 1, flexDirection: "row", padding: 10, borderRadius: 5,
+                                    // background: "red"
+                                }}>
+                                    <div style={{
+                                        display: "flex", flex: 8,
+                                        // background: "orange"
+                                    }}>
+                                        {
+                                            (that.state.base64) ? (
+                                                <img src={that.state.base64} className="img-thumbnail" alt="Pack Image" width="80" height="80" />
+                                            ) : <img src={that.state.imageFile.packageImage} className="img-thumbnail" alt="Pack Image" width="80" height="80" />
+                                        }
+                                        {/* <img src={that.state.imageFile.packageImage} className="img-thumbnail" alt="Pack Image" width="80" height="80" /> */}
+                                    </div>
+                                    <div onClick={() => {
+                                        that.setState({ imageFile: {}, })
+                                        that.setState({ base64: "" })
+                                    }} style={{
+                                        display: "flex", flex: 0.1, justifyContent: "flex-end", alignItems: "center", cursor: "pointer"
+                                        // background: "grey"
+                                    }}>
+                                        <AiOutlineDelete style={{ color: "red", fontSize: 16 }} />
+                                    </div>
+                                </div>
+                            ) : null
+                        }
+                    </div>
+
                     <Form onSubmit={this.handleSubmit} className="login-form">
                         <div style={{ margin: "1%", marginTop: 10 }}>
-                            <Upload {...this.uploadProps}
+                            <Upload
+                                showUploadList={false}
+                                directory={false}
+                                {...this.uploadProps}
                                 onChange={(info) => {
                                     const { status } = info.file;
-                                    console.log(info, 'image');
+                                    console.log(info, 'image---**');
                                     if (info.fileList.length > 0) {
-                                        that.setState({ imageFile: info.file, })
+                                        that.setState({ imageFile: info.file, info })
                                     }
                                     else {
                                         that.setState({ imageFile: {}, })
+                                        that.setState({ base64: "" })
                                     }
                                 }}
                                 beforeUpload={this.beforeUploadEvent.bind(this)}>
                                 {
-                                    Object.keys(that.state.imageFile).length > 0 ? null : (
-                                        <Button>
-                                            <Icon type="upload" /> Upload Image
-                                        </Button>
-                                    )
+                                    Object.keys(that.state.imageFile).length > 0 ? null
+                                        : (
+                                            <Button>
+                                                <Icon type="upload" /> Upload Image
+                                            </Button>
+                                        )
                                 }
                             </Upload>
                         </div>
+
+                        {
+                            (that.state.modal2Visible && that.state.base64 != "") ? (
+                                <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", marginTop: 10 }}>
+                                    <div className="specialPackImgCard" style={{
+                                        display: "flex", flex: 1, width: "100%", flexDirection: "row", padding: 10, borderRadius: 5,
+                                        // background: "red"
+                                    }}>
+                                        <div style={{
+                                            display: "flex", flex: 8,
+                                            // background: "orange"
+                                        }}>
+                                            <img src={that.state.base64} className="img-thumbnail" alt="Pack Image" width="80" height="80" />
+                                        </div>
+                                        <div onClick={() => {
+                                            that.setState({ imageFile: {} })
+                                            that.setState({ base64: "" })
+                                        }} style={{
+                                            display: "flex", flex: 0.1, justifyContent: "flex-end", alignItems: "center", cursor: "pointer"
+                                            // background: "grey"
+                                        }}>
+                                            <AiOutlineDelete style={{ color: "red", fontSize: 16 }} />
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : null
+                        }
+
 
                         {
                             (this.state.imageError === true) ? (<span style={{ color: "#F6222D", fontSize: 14, margin: "0.5%", }}>Please attach offer image!</span>) : (null)

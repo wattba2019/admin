@@ -27,6 +27,7 @@ class SpecialOffers extends Component {
             price: '',
             offerDescription: '',
             imageFile: {},
+            base64: "",
             modal2VisibleEdit: false,
             editSpecialPackage: {},
             indexToEdit: undefined
@@ -35,7 +36,6 @@ class SpecialOffers extends Component {
         this.addSpecialOffer = this.addSpecialOffer.bind(this);
         this.setModal2VisibleEdit = this.setModal2VisibleEdit.bind(this);
         this.setModal2Visible = this.setModal2Visible.bind(this);
-
         this.props.getSpecialPackages((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254');
     }
 
@@ -48,22 +48,26 @@ class SpecialOffers extends Component {
             let offerName = editSpecialPackage.packageName;
             let price = editSpecialPackage.price;
             let offerDescription = editSpecialPackage.packageDescription;
+            let base64 = (editSpecialPackage.base64) ? editSpecialPackage.base64 : ''
             let imageFile = { packageImage: editSpecialPackage.packageImage };
-            this.setState({ modal2VisibleEdit, editSpecialPackage, offerName, price, offerDescription, imageFile, indexToEdit });
+            this.setState({ modal2VisibleEdit, editSpecialPackage, offerName, price, offerDescription, imageFile, indexToEdit, base64 });
         }
         else {
             let offerName = '';
             let price = '';
             let offerDescription = '';
+            let base64 = '';
             let imageFile = {};
             let indexToEdit = undefined;
             let editSpecialPackage = {};
+
             this.setState({ modal2VisibleEdit });
-            this.setState({ editSpecialPackage, offerName, price, offerDescription, imageFile, indexToEdit });
+            this.setState({ editSpecialPackage, offerName, price, offerDescription, imageFile, indexToEdit, base64 });
         }
 
     }
     addSpecialOffer() {
+        // alert("work")
         let specialOffer = {
             packageName: this.state.offerName,
             price: this.state.price,
@@ -71,20 +75,23 @@ class SpecialOffers extends Component {
             packageImage: this.state.imageFile,
             userId: (this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254',
         }
+        // console.log('packageimage', specialOffer,this.state.imageFile)
         if (this.state.modal2Visible) {
-            console.log(specialOffer, "SPECIAL_OFFERSS")
+            // console.log(specialOffer, "SPECIAL_OFFERSS")
             this.props.addSpecialOffer(specialOffer);
         }
         else {
             specialOffer._id = this.state.editSpecialPackage._id;
-            specialOffer.packageImage = this.state.editSpecialPackage.packageImage;
-            this.props.updateSpecialOffer(specialOffer, this.state.indexToEdit);
+            // specialOffer.packageImage = this.state.editSpecialPackage.packageImage;
+            console.log(specialOffer, "SPECIAL_OFFESRSS_EDIT")
+            this.props.updateSpecialOffer(specialOffer, this.state.indexToEdit, this.state.base64);
         }
         this.setState({
             offerName: '',
             price: '',
             offerDescription: '',
             imageFile: {},
+            base64: "",
             modal2Visible: false,
             modal2VisibleEdit: false,
             editSpecialPackage: {},
@@ -112,7 +119,7 @@ class SpecialOffers extends Component {
                     </button>
 
                 </div>
-                
+
                 <div style={{
                     display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center",
                     flexDirection: "column",
@@ -143,8 +150,8 @@ function mapDispatchToProp(dispatch) {
         getSpecialPackages: (userId) => {
             dispatch(getSpecialPackages(userId));
         },
-        updateSpecialOffer: (specialOffer, indexToEdit) => {
-            dispatch(updateSpecialOffer(specialOffer, indexToEdit));
+        updateSpecialOffer: (specialOffer, indexToEdit, base64) => {
+            dispatch(updateSpecialOffer(specialOffer, indexToEdit, base64));
         },
     })
 }

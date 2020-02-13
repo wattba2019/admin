@@ -22,7 +22,7 @@ class SpecialOfferCard extends Component {
                     {
                         (this.props.specialPackages.length > 0) ? (
                             this.props.specialPackages.map((specialPackage, index) => {
-                                // console.log(specialPackage, 'specialPackagespecialPackage')
+                                console.log(specialPackage, 'specialPackagespecialPackage')
                                 return (
                                     <div className="cardshadow" key={index} style={{
                                         display: "flex", height: "16vw", width: "15vw", minWidth: 230, minHeight: 240, margin: "3%",
@@ -30,7 +30,6 @@ class SpecialOfferCard extends Component {
                                         backgroundColor: "white",
                                         // backgroundColor: "red",
                                     }}>
-
                                         <div style={{
                                             display: "flex", flex: 8, flexDirection: "column"
                                             // background: "orange"
@@ -61,12 +60,9 @@ class SpecialOfferCard extends Component {
                                                 <button type="button" className="btn btn-light" style={{ width: "100%", borderWidth: 0.5, borderColor: "grey" }} onClick={() => this.props.setModal2VisibleEdit(true, specialPackage, index)}>Edit Service</button>
                                             </div>
                                         </div>
-
-
                                     </div>
                                 )
                             })
-
                         ) : null
                     }
 
