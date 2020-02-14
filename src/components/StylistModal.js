@@ -2,33 +2,58 @@ import React, { Component, } from 'react';
 import { MdDeleteForever } from 'react-icons/md';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoMdCheckmark } from 'react-icons/io';
-import { Button, DatePicker, version, Modal, Input, TimePicker, Upload, Icon, } from "antd";
+import { Button, DatePicker, version, Modal, Input, TimePicker, Upload, Icon, message } from "antd";
 import moment from 'moment';
-
 import TextareaAutosize from 'react-textarea-autosize';
 
-
 class StylistModal extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            fileList: [],
+            errUploadImgLimit: false
+        }
+    }
+
+    beforeUploadEvent(file, fileList) {
+        console.log(file, fileList, "BEFOREUPLOAD")
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+        if (!isJpgOrPng) {
+            message.error('You can only upload JPG/PNG file!');
+        }
+        const isLt2M = file.size / 1024 / 1024 < 10;
+        if (!isLt2M) {
+            message.error('Image must smaller than 10MB!');
+        }
+        return false;
+    }
+
+    componentWillMount() {
+        alert("work")
+    }
+
 
     render() {
         const { that } = this.props
+        const { fileList, errUploadImgLimit } = this.state;
+        console.log(fileList, "INSIDE_RENDER")
         const uploadButton = (
             <div>
                 <Icon type="plus" />
                 <div className="ant-upload-text">Upload</div>
             </div>
         );
-
         return (
-            <Modal
+            < Modal
                 footer={null}
                 // title="Vertically centered modal dialog"
                 centered
                 visible={that.state.modal2Visible || that.state.modal2VisibleEdit}
-                onOk={() => that.setModal2Visible(false)}
+                onOk={() => that.setModal2Visible(false)
+                }
                 onCancel={() => { that.setModal2Visible(false); that.setModal2VisibleEdit(false) }}
                 bodyStyle={{ height: 500 }}
-                width={"75%"}
+                width={"80%"}
                 minWidth={"60%"}
                 bodyStyle={{ padding: 0, }}
             >
@@ -90,7 +115,7 @@ class StylistModal extends Component {
                                     </div>
                                     {
                                         that.state.workingDaysNTime.map((dayBrTime, index) => {
-                                            console.log(dayBrTime,'dayBrTimedayBrTime')
+                                            // console.log(dayBrTime,'dayBrTimedayBrTime')
                                             return (
                                                 <div key={index} style={{
                                                     display: "flex", flex: 1, color: "black", flexDirection: "row", justifyContent: "space-between", alignItems: "center", height: 30,
@@ -98,7 +123,7 @@ class StylistModal extends Component {
                                                 }}>
                                                     {/* Day */}
                                                     <div style={{
-                                                        display: "flex", flex: 2, fontSize: 14, fontWeight: "normal",
+                                                        display: "flex", flex: 1, fontSize: 14, fontWeight: "normal",
                                                         // background: "orange"
                                                     }}>
                                                         {dayBrTime.day}
@@ -225,21 +250,47 @@ class StylistModal extends Component {
 
                                 <div style={{ fontSize: 18 }}>
                                     Gallery
-                            </div>
+                                </div>
 
+                                {
+                                    (errUploadImgLimit != false) ? (
+                                        <div style={{ fontSize: 10, color: "red" }}>
+                                            You can not upload more then 12 picture.
+                                        </div>
+                                    ) : <div style={{ fontSize: 10, color: "grey" }}>
+                                            You can add 12 picture in Gallery.
+                                        </div>
+                                }
                                 <div className="clearfix" style={{ marginTop: 10, }}>
                                     <Upload
-                                        multiple={true}
-                                        showUploadList={{ showDownloadIcon: false }}
+                                        defaultFileList={fileList}
+                                        fileList={fileList}
                                         action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                        listType="picture-card"
-                                        fileList={that.state.fileList}
-                                        onPreview={this.handlePreview}
-                                        onChange={this.handleChange}
+                                        listType={'picture-card'}
+                                        multiple={true}
+                                        onChange={(info) => {
+                                            const isJpgOrPng = info.file.type === 'image/jpeg' || info.file.type === 'image/png';
+                                            if (!isJpgOrPng) {
+                                                this.setState({ fileList: [] })
+
+                                            } else {
+                                                console.log(info, 'On_change_Function');
+                                                if (info.fileList.length <= 12 && fileList.length <= 12) {
+                                                    this.setState({
+                                                        fileList: info.fileList,
+                                                        errUploadImgLimit: false
+                                                    })
+                                                }
+                                                else {
+                                                    this.setState({ fileList: [], errUploadImgLimit: true })
+                                                }
+                                            }
+                                        }}
+                                        beforeUpload={this.beforeUploadEvent.bind(this)}
                                     >
-                                        {that.state.fileList.length >= 12 ? null : uploadButton}
+                                        {fileList.length >= 12 ? null : uploadButton}
                                     </Upload>
-                                    <Modal visible={that.state.previewVisible} footer={null} onCancel={this.handleCancel}>
+                                    <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
                                         <img alt="example" style={{ width: '100%' }} src={that.state.previewImage} />
                                     </Modal>
                                 </div>
@@ -262,11 +313,11 @@ class StylistModal extends Component {
                             <span className="buttonmatter" style={{ fontSize: 15, }}>{(that.state.modal2Visible) ? 'Add Stylist' : 'Save Stylist'}</span>
                         </button>
 
-                        <button type="button" class="btn btn-light" style={{ width: "20%", margin: "1%", minWidth: 140, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => { that.setModal2Visible(false); that.setModal2VisibleEdit(false) }}>Cancel</button>
+                        <button type="button" className="btn btn-light" style={{ width: "20%", margin: "1%", minWidth: 140, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => { that.setModal2Visible(false); that.setModal2VisibleEdit(false) }}>Cancel</button>
 
                     </div>
                 </div>
-            </Modal>
+            </Modal >
 
 
         );

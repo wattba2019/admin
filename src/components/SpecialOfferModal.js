@@ -9,7 +9,6 @@ import { AiOutlineDelete } from 'react-icons/ai';
 
 class SpecialOfferModal extends Component {
     state = {
-        // imageFile: {},
         imageError: false,
         offerDescription: "",
         base64: ""
@@ -17,9 +16,7 @@ class SpecialOfferModal extends Component {
 
     uploadProps = {
         listType: 'picture',
-        // listType: null,
         multiple: false,
-        // required: true
     };
 
     beforeUploadEvent(file, fileList) {
@@ -69,7 +66,6 @@ class SpecialOfferModal extends Component {
         }
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-
             if (!err) {
                 console.log('Received values of form: ', values);
                 if (Object.keys(that.state.imageFile).length === 0 && that.state.imageFile.constructor === Object) {
@@ -86,7 +82,6 @@ class SpecialOfferModal extends Component {
                         // base64: ""
                     })
                 }
-
             }
         });
     };
@@ -96,7 +91,6 @@ class SpecialOfferModal extends Component {
         const { that } = this.props;
         that.setState({ base64: "", imageFile: {}, })
     }
-
 
     render() {
         const { email } = this.props.modalState;
