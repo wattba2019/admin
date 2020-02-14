@@ -1,10 +1,12 @@
 import React, { Component, } from 'react';
+import { connect } from 'react-redux';
 import { MdDeleteForever } from 'react-icons/md';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoMdCheckmark } from 'react-icons/io';
-import { Button, DatePicker, version, Modal, Input, TimePicker, Upload, Icon, message } from "antd";
+import { Modal, TimePicker, Upload, Icon, message } from "antd";
 import moment from 'moment';
 import TextareaAutosize from 'react-textarea-autosize';
+import axios from 'axios';
 
 class StylistModal extends Component {
     constructor(props) {
@@ -16,7 +18,6 @@ class StylistModal extends Component {
     }
 
     beforeUploadEvent(file, fileList) {
-        console.log(file, fileList, "BEFOREUPLOAD")
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
             message.error('You can only upload JPG/PNG file!');
@@ -28,8 +29,40 @@ class StylistModal extends Component {
         return false;
     }
 
+    uploadGallery = () => {
+
+        let fileList = this.state.fileList
+        var bodyFormData = new FormData();
+        // for (var i = 0; i < fileList.length; i++) {
+        //     console.log(fileList[i], "INSIDE_LOOP")
+        //     bodyFormData.append("imgs", fileList[i]);
+        // }
+        bodyFormData.append("imgs", fileList[0]);
+        bodyFormData.append("property_id", fileList[0]);
+        console.log(bodyFormData, fileList, "BODY_FORM_DATA")
+        // bodyFormData.append('packageName', "123");
+        // var options = {
+        //     method: 'POST',
+        //     url: `${this.props.bseUrl}/signin/signinAdmin/`,
+        //     headers:
+        //     {
+        //         'cache-control': 'no-cache',
+        //         "Allow-Cross-Origin": '*',
+        //     },
+        //     data: bodyFormData
+        // };
+        // axios(options)
+        //     .then((data) => {
+        //         console.log(data.data, "USER_LOGIN_SUCCESSFULLY")
+        //     }).catch((err) => {
+        //         console.log(err.response.data.message, "ERROR_ON_SIGN_IN")
+        //     })
+
+
+    }
+
     componentWillMount() {
-        alert("work")
+        // alert("work")
     }
 
 
@@ -40,7 +73,7 @@ class StylistModal extends Component {
         const uploadButton = (
             <div>
                 <Icon type="plus" />
-                <div className="ant-upload-text">Upload</div>
+                {/* <div style={{ fontSize: 12 }} className="ant-upload-text">Add Image</div> */}
             </div>
         );
         return (
@@ -190,10 +223,9 @@ class StylistModal extends Component {
                                 display: "flex", flex: 10, flexDirection: "column",
                                 // background: "red"
                             }}>
-
                                 <div style={{ fontSize: 18 }}>
                                     Services provided
-                            </div>
+                                </div>
 
                                 {
                                     that.state.serviceqtyArr.map((service, index) => {
@@ -217,8 +249,6 @@ class StylistModal extends Component {
                                         )
                                     })
                                 }
-
-
                             </div>
 
                             <div style={{
@@ -247,11 +277,9 @@ class StylistModal extends Component {
                                 display: "flex", flex: 10, flexDirection: "column",
                                 // background: "red"
                             }}>
-
                                 <div style={{ fontSize: 18 }}>
                                     Gallery
                                 </div>
-
                                 {
                                     (errUploadImgLimit != false) ? (
                                         <div style={{ fontSize: 10, color: "red" }}>
@@ -263,9 +291,11 @@ class StylistModal extends Component {
                                 }
                                 <div className="clearfix" style={{ marginTop: 10, }}>
                                     <Upload
+                                        showUploadList={{ showPreviewIcon: false }}
                                         defaultFileList={fileList}
                                         fileList={fileList}
-                                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                        action=""
+                                        // action={() => this.uploadGallery()}
                                         listType={'picture-card'}
                                         multiple={true}
                                         onChange={(info) => {
@@ -274,7 +304,7 @@ class StylistModal extends Component {
                                                 this.setState({ fileList: [] })
 
                                             } else {
-                                                console.log(info, 'On_change_Function');
+                                                // console.log(info, 'On_change_Function');
                                                 if (info.fileList.length <= 12 && fileList.length <= 12) {
                                                     this.setState({
                                                         fileList: info.fileList,
@@ -294,13 +324,18 @@ class StylistModal extends Component {
                                         <img alt="example" style={{ width: '100%' }} src={that.state.previewImage} />
                                     </Modal>
                                 </div>
-
-
                             </div>
-
+                            <div style={{
+                                display: "flex", flex: 1, flexDirection: "column", justifyContent: "center", alignItems: "center",
+                                // background: "green"
+                            }}>
+                                <button className="buttonAdd" style={{ minWidth: 140, width: "30%", height: 35, margin: "1%", }}
+                                    onClick={() => this.uploadGallery()}
+                                >
+                                    <span className="buttonmatter" style={{ fontSize: 15, }}>{'Upload Image'}</span>
+                                </button>
+                            </div>
                         </div>
-
-
                     </div>
 
                     {/* Footer */}
@@ -325,4 +360,17 @@ class StylistModal extends Component {
 }
 
 
-export default StylistModal;
+// export default StylistModal;
+
+function mapStateToProp(state) {
+    return ({
+        bseUrl: state.root.bseUrl,
+    })
+}
+
+function mapDispatchToProp(dispatch) {
+    return ({
+    })
+}
+
+export default connect(mapStateToProp, mapDispatchToProp)(StylistModal);

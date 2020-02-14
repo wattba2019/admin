@@ -1,19 +1,17 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
-import { setUserCredentials } from "../store/action/action";
-import {
-    Link
-} from 'react-router-dom';
+// import { setUserCredentials } from "../store/action/action";
+// import { Link } from 'react-router-dom';
 import '../custom.css'
-import axios from 'axios';
-import Loader from 'react-loader-spinner'
-import swal from 'sweetalert2';
-import { AiOutlinePlus } from 'react-icons/ai';
-import { IoMdCheckmark } from 'react-icons/io';
-import { MdDeleteForever } from 'react-icons/md';
+// import axios from 'axios';
+// import Loader from 'react-loader-spinner'
+// import swal from 'sweetalert2';
+// import { AiOutlinePlus } from 'react-icons/ai';
+// import { IoMdCheckmark } from 'react-icons/io';
+// import { MdDeleteForever } from 'react-icons/md';
 // import Modal from 'react-responsive-modal';
-import { Button, DatePicker, version, Modal, Input, TimePicker } from "antd";
-import TextareaAutosize from 'react-textarea-autosize';
+import { Input, } from "antd";
+// import TextareaAutosize from 'react-textarea-autosize';
 import StylistModal from '../components/StylistModal';
 import StylistCard from '../components/StylistCard';
 import { addStylist, getStylists, updateStylist } from "../store/action/action";

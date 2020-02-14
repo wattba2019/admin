@@ -132,8 +132,6 @@ export function addSpecialOffer(specialOffer) {
         bodyFormData.append('price', specialOffer.price);
         bodyFormData.append('imgs', specialOffer.packageImage);
         bodyFormData.append('userId', specialOffer.userId);
-
-
         var options = {
             method: 'POST',
             url: `${baseURL.baseURL}/packagesandoffers/add/`,
