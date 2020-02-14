@@ -4,14 +4,11 @@ import { IoMdCheckmark } from 'react-icons/io';
 import { Input } from "antd";
 import stylelist from '../app/stylelist';
 
-
 const { Search } = Input;
 
 class StylistCard extends Component {
-
     render() {
         const { that, stylists } = this.props
-
         return (
             <div style={{
                 display: "flex", flex: 8, marginTop: "3%", flexWrap: "wrap", width: "80%",
@@ -53,11 +50,13 @@ class StylistCard extends Component {
                                                     <div>{stylist.fullname}</div>
                                                 </div>
 
-                                                <div style={{
-                                                    position: "relative",
-                                                    zIndex: 1, justifyContent: "center", alignItems: "center", textAlign: "center",
-                                                    // background: "red"
-                                                }}>
+                                                <div
+                                                    onClick={() => that.setModal2VisibleEdit(true, stylist, index)}
+                                                    style={{
+                                                        position: "relative", cursor: "pointer",
+                                                        zIndex: 1, justifyContent: "center", alignItems: "center", textAlign: "center",
+                                                        // background: "red"
+                                                    }}>
                                                     <img src={require('../../src/assets/3dotmenu.png')} style={{ width: 10, height: 20 }} />
                                                 </div>
 
@@ -115,7 +114,7 @@ class StylistCard extends Component {
                                                     display: "flex", flex: 1, height: "100%", justifyContent: "center", alignItems: "center", textAlign: "left", fontSize: 10,
                                                     background: "#F7F8F8"
                                                 }}
-                                                    onClick={() => that.setModal2VisibleEdit(true, stylist, index)}
+                                                // onClick={() => that.setModal2VisibleEdit(true, stylist, index)}
                                                 >
                                                     Working Calendar
                                                 </div>
@@ -144,7 +143,7 @@ class StylistCard extends Component {
                     backgroundColor: "white", flexDirection: "column"
                 }}>
                     <div style={{ display: "flex", flex: 1, color: "black", fontWeight: "bold", flexDirection: "row", justifyContent: "center", alignItems: "center", }}>
-                        <div onClick={() => that.setModal2Visible(true)} class="btn btn-light" style={{ display: "flex", width: "35%", height: "19%", backgroundColor: "#E9E9EA", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
+                        <div onClick={() => that.setModal2Visible(true)} className="btn btn-light" style={{ display: "flex", width: "35%", height: "19%", backgroundColor: "#E9E9EA", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
                             <AiOutlinePlus style={{ color: "#494949", fontSize: 25 }} />
                         </div>
                     </div>

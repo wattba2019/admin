@@ -20,7 +20,6 @@ import { addStylist, getStylists, updateStylist } from "../store/action/action";
 
 import "antd/dist/antd.css";
 
-
 import { Upload, Icon, } from 'antd';
 
 function getBase64(file) {
@@ -43,7 +42,7 @@ class StyleList extends Component {
             showerror: false,
             stylistFullName: '',
             stylistDescription: '',
-            modal2Visible: false,
+            modal2Visible: true,
             modal2VisibleEdit: false,
 
             workingDaysNTime: [
@@ -87,7 +86,7 @@ class StyleList extends Component {
 
     setModal2VisibleEdit(modal2VisibleEdit, editStylist, indexToEdit) {
         if (modal2VisibleEdit) {
-            console.log(editStylist, 'editService');
+            // console.log(editStylist, 'editService');
             let stylistFullName = editStylist.fullname;
             let stylistDescription = editStylist.description;
             let services = editStylist.serviceProvided;

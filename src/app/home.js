@@ -32,9 +32,9 @@ class Home extends Component {
             // route: "ShopProfile"
             // route: "Bookings"
             // route: "Services"
-            // route: "Stylelists"
+            route: "Stylelists"
             // route: "WorkingHours"
-            route: "SpecialOffers"
+            // route: "SpecialOffers"
         }
     }
 
