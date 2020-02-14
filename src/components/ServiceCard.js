@@ -23,7 +23,7 @@ class ServiceCard extends Component {
                         (this.props.services.length > 0) ?
                             (this.props.services.map((service, index) => {
                                 console.log(service, 'mapruning')
-                                let indexedExtraServices = service.extraServices;
+                                let indexedExtraServices = service.extraServices.slice(0);
                                 if (indexedExtraServices.length > 3) {
                                     indexedExtraServices.splice(3);
                                 }
