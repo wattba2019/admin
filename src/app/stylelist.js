@@ -42,8 +42,9 @@ class StyleList extends Component {
             showerror: false,
             stylistFullName: '',
             stylistDescription: '',
-            modal2Visible: true,
+            modal2Visible: false,
             modal2VisibleEdit: false,
+            search: [],
 
             workingDaysNTime: [
                 {
@@ -256,7 +257,27 @@ class StyleList extends Component {
         })
     }
 
+
     render() {
+        //this.props.stylists
+
+        let stylists = [];
+        if (this.props.stylists.length > 0) {
+            if (this.state.search.length) {
+                const searchPattern = new RegExp(this.state.search.map(term => `(?=.*${term})`).join(''), 'i');
+                console.log(searchPattern, 'searchPattern', this.state.search)
+
+                stylists = this.props.stylists.filter(stylist => {
+                    // console.log(stylist, 'stylist')
+                    return stylist.fullname.match(searchPattern)
+                });
+            } else {
+                stylists = this.props.stylists;
+            }
+        }
+        console.log(stylists, 'stylistsstylists')
+
+
         const { previewVisible, previewImage, fileList } = this.state;
         const { open, email, weekDays, serviceNameFieldQty } = this.state;
         const uploadButton = (
@@ -283,7 +304,7 @@ class StyleList extends Component {
                         <div style={{ marginLeft: 10 }}>
                             <Search
                                 placeholder="search stylist"
-                                onSearch={value => console.log(value)}
+                                onChange={(e) => this.setState({ search: e.target.value.split(' ') })}
                                 style={{ width: 200 }}
                             />
                         </div>
@@ -294,7 +315,7 @@ class StyleList extends Component {
                     </button>
                 </div>
 
-                <StylistCard that={this} stylists={this.props.stylists} />
+                <StylistCard that={this} stylists={stylists} />
 
                 <div>
                     <StylistModal that={this} />
