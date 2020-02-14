@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.8.3",
+    "@react-pdf/renderer": "^1.6.8",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -12,6 +13,7 @@
     "google-map-react": "^1.1.5",
     "moment": "^2.24.0",
     "react": "^16.12.0",
+    "react-csv": "^1.1.2",
     "react-dom": "^16.12.0",
     "react-icons": "^3.8.0",
     "react-loader-spinner": "^3.1.5",

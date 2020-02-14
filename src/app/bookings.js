@@ -13,6 +13,7 @@ import "antd/dist/antd.css";
 import { DatePicker } from 'antd';
 import ReactSwipe from 'react-swipe';
 import moment from 'moment';
+import { CSVLink, CSVDownload } from "react-csv";
 
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
@@ -21,6 +22,7 @@ class Bookings extends Component {
         super(props);
         this.state = {
             currentDate: new Date(),
+            filteredUnsortBookings: [],
             bookingData: [],
             bookingDetails: [],
             modal2Visible: false,
@@ -36,7 +38,8 @@ class Bookings extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.bookings) {
             this.setState({
-                bookingData: nextProps.bookings.bookingSort
+                bookingData: nextProps.bookings.bookingSort,
+                filteredUnsortBookings: nextProps.bookings.filteredBookings
             })
         }
     }
@@ -94,10 +97,35 @@ class Bookings extends Component {
         this.props.getBookings((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254', date);
     }
 
+    prepareCSVData() {
+        console.log(this.state.bookingData);
+        if (this.state.filteredUnsortBookings && this.state.filteredUnsortBookings.length > 0) {
+            let unPrepCSVData = this.state.filteredUnsortBookings;
+            let preparedCSVData = [];
+
+            unPrepCSVData.map((booking, index) => {
+                let bookingObj = {
+                    ["Hours"]: booking.bookingHour,
+                    ["Required Services"]: booking.requiredServices.toString(),
+                    ["Booker Name"]: booking.bookerId.fullName,
+                    ["Booker Email"]: booking.bookerId.email,
+                    ["Booker Phone"]: booking.bookerId.phoneNumber,
+                    ["Stylist Name"]: booking.stylistId.fullname
+
+                }
+                preparedCSVData.push(bookingObj);
+            });
+
+            return preparedCSVData;
+        }
+
+    }
 
     render() {
-        const { slider, bookingData, currentDate } = this.state
+        const { slider, bookingData, currentDate, filteredUnsortBookings } = this.state
         let reactSwipeEl;
+        console.log('filteredUnsortBookings.length > 0', filteredUnsortBookings, filteredUnsortBookings.length > 0)
+
         return (
             <div style={{
                 display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center",
@@ -123,11 +151,26 @@ class Bookings extends Component {
                         >
                             <span className="buttonmatter" style={{ fontSize: 12, }}>Refresh</span>
                         </button>
-                        <button type="button" className="btn btn-light" style={{ width: "60%", margin: "2%", borderWidth: 0.5, borderColor: "grey", height: 40 }}
+                        {/* {
+                            (filteredUnsortBookings.length > 0) ? ( */}
+                                <CSVLink
+                                    className="btn btn-light"
+                                    style={{ width: "60%", margin: "2%", borderWidth: 0.5, borderColor: "grey", height: 40 }}
+
+                                    filename={new Date().toLocaleDateString() + '.csv'}
+
+                                    data={(filteredUnsortBookings.length > 0) ? this.prepareCSVData() : []}
+                                >
+                                    Export Bookings
+                                </CSVLink>
+                            {/* ) : null
+                        } */}
+
+                        {/* <button type="button" className="btn btn-light" style={{ width: "60%", margin: "2%", borderWidth: 0.5, borderColor: "grey", height: 40 }}
                             onClick={() => this.modalExport(true)}
                         >
                             Export Bookings
-                            </button>
+                            </button> */}
                     </div>
                 </div>
 
