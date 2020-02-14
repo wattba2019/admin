@@ -72,7 +72,8 @@ class Bookings extends Component {
     }
 
     refreshPage(bolean) {
-        window.location.reload(bolean)
+        // window.location.reload(bolean);
+        this.props.getBookings((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254', this.state.currentDate);
     }
 
     nextDate(reactSwipeEl) {
