@@ -7,6 +7,7 @@ import { Modal, TimePicker, Upload, Icon, message } from "antd";
 import moment from 'moment';
 import TextareaAutosize from 'react-textarea-autosize';
 import axios from 'axios';
+import { uploadGallery } from "../store/action/action";
 
 class StylistModal extends Component {
     constructor(props) {
@@ -30,41 +31,9 @@ class StylistModal extends Component {
     }
 
     uploadGallery = () => {
-
         let fileList = this.state.fileList
-        var bodyFormData = new FormData();
-        // for (var i = 0; i < fileList.length; i++) {
-        //     console.log(fileList[i], "INSIDE_LOOP")
-        //     bodyFormData.append("imgs", fileList[i]);
-        // }
-        bodyFormData.append("imgs", fileList[0]);
-        bodyFormData.append("property_id", fileList[0]);
-        console.log(bodyFormData, fileList, "BODY_FORM_DATA")
-        // bodyFormData.append('packageName', "123");
-        // var options = {
-        //     method: 'POST',
-        //     url: `${this.props.bseUrl}/signin/signinAdmin/`,
-        //     headers:
-        //     {
-        //         'cache-control': 'no-cache',
-        //         "Allow-Cross-Origin": '*',
-        //     },
-        //     data: bodyFormData
-        // };
-        // axios(options)
-        //     .then((data) => {
-        //         console.log(data.data, "USER_LOGIN_SUCCESSFULLY")
-        //     }).catch((err) => {
-        //         console.log(err.response.data.message, "ERROR_ON_SIGN_IN")
-        //     })
-
-
+        this.props.uploadGallery(fileList, this.props.userProfile._id)
     }
-
-    componentWillMount() {
-        // alert("work")
-    }
-
 
     render() {
         const { that } = this.props
@@ -365,11 +334,15 @@ class StylistModal extends Component {
 function mapStateToProp(state) {
     return ({
         bseUrl: state.root.bseUrl,
+        userProfile: state.root.userProfile,
     })
 }
 
 function mapDispatchToProp(dispatch) {
     return ({
+        uploadGallery: (data, id) => {
+            dispatch(uploadGallery(data, id));
+        },
     })
 }
 
