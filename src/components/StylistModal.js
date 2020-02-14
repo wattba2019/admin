@@ -35,6 +35,11 @@ class StylistModal extends Component {
         this.props.uploadGallery(fileList, this.props.userProfile._id)
     }
 
+    componentWillMount() {
+        alert("work")
+    }
+
+
     render() {
         const { that } = this.props
         const { fileList, errUploadImgLimit } = this.state;
@@ -329,21 +334,21 @@ class StylistModal extends Component {
 }
 
 
-// export default StylistModal;
 
-function mapStateToProp(state) {
-    return ({
-        bseUrl: state.root.bseUrl,
-        userProfile: state.root.userProfile,
-    })
-}
+// function mapStateToProp(state) {
+//     return ({
+//         bseUrl: state.root.bseUrl,
+//         userProfile: state.root.userProfile,
+//     })
+// }
+// function mapDispatchToProp(dispatch) {
+//     return ({
+//         uploadGallery: (data, id) => {
+//             dispatch(uploadGallery(data, id));
+//         },
+//     })
+// }
+// export default connect(mapStateToProp, mapDispatchToProp)(StylistModal);
 
-function mapDispatchToProp(dispatch) {
-    return ({
-        uploadGallery: (data, id) => {
-            dispatch(uploadGallery(data, id));
-        },
-    })
-}
+export default StylistModal;
 
-export default connect(mapStateToProp, mapDispatchToProp)(StylistModal);
