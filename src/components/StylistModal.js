@@ -28,9 +28,6 @@ class StylistModal extends Component {
         return false;
     }
 
-    componentWillMount() {
-        alert("work")
-    }
 
 
     render() {
