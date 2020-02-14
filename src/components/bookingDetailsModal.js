@@ -34,7 +34,7 @@ class BookingDetailsModal extends Component {
                             display: "flex", flex: 8, flexWrap: "wrap", minWidth: 140, flexDirection: "column", padding: "4%"
                             // background: "green"
                         }}>
-                            <div style={{ fontWeight: "bold" }}>{bookingDetails.bookerDetails ? bookingDetails.bookerDetails.fullName : "N/a"}</div>
+                            <div style={{ fontWeight: "bold" }}>{bookingDetails.bookerId ? bookingDetails.bookerId.fullName : "N/a"}</div>
 
                             <div style={{
                                 display: "flex", flex: 1, flexDirection: "row", justifyContent: "flex-start", alignItems: "center",
@@ -108,7 +108,7 @@ class BookingDetailsModal extends Component {
                                         // background: "grey"
                                     }}>
                                         <div>
-                                            {bookingDetails.stylistDetails ? bookingDetails.stylistDetails.fullname : "N/a"}
+                                            {bookingDetails.stylistId ? bookingDetails.stylistId.fullname : "N/a"}
                                         </div>
                                         <div style={{ display: "flex", backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
                                             <IoMdCheckmark style={{ color: "white", }} />

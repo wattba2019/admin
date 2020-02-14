@@ -55,7 +55,7 @@ class BookingsRaw extends Component {
                                             justifyContent: "space-between", fontSize: 9, alignItems: "center", paddingLeft: 10, paddingRight: 10
                                         }}>
                                         <div>
-                                            {key.bookerDetails ? key.bookerDetails.fullName : "N/a"}
+                                            {key.bookerId ? key.bookerId.fullName : "N/a"}
                                         </div>
                                         <div style={{ width: 20, height: 20, borderRadius: 10 }}>
                                             <img alt="BackGroundImage" src={require('../assets/noPhoto.jpg')}
