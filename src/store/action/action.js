@@ -132,8 +132,6 @@ export function addSpecialOffer(specialOffer) {
         bodyFormData.append('price', specialOffer.price);
         bodyFormData.append('imgs', specialOffer.packageImage);
         bodyFormData.append('userId', specialOffer.userId);
-
-
         var options = {
             method: 'POST',
             url: `${baseURL.baseURL}/packagesandoffers/add/`,
@@ -578,11 +576,10 @@ export function updateProfile(updatedUserData) {
 
 export function updateProfileImg(imgFile, _id) {
     return dispatch => {
-        console.log(imgFile, _id, "DATA_INSIDE_ACTION")
+        // console.log(imgFile, _id, "DATA_INSIDE_ACTION")
         var bodyFormData = new FormData();
         bodyFormData.append('img', imgFile);
         bodyFormData.append('_id', _id);
-
         var options = {
             method: 'post',
             url: `${baseURL.baseURL}/signupadmin/addshopimg/`,
@@ -597,6 +594,7 @@ export function updateProfileImg(imgFile, _id) {
         axios(options)
             .then((data) => {
                 console.log(data.data.user, "profile updated successfully.");
+                localStorage.setItem('userProfile', JSON.stringify(data.data.user));
                 dispatch({ type: ActionTypes.SAVE_USER, payload: data.data.user })
                 swal.fire(
                     'Success!',
@@ -611,6 +609,38 @@ export function updateProfileImg(imgFile, _id) {
                     'Something went wrong.',
                     'error'
                 )
+            })
+    }
+}
+
+
+
+export function uploadGallery(imgFile, _id) {
+    return dispatch => {
+        // console.log(imgFile[0], imgFile, _id, "DATA_INSIDE_ACTION")
+        var bodyFormData = new FormData();
+        bodyFormData.append('userId', _id);
+        for (var i = 0; i < imgFile.length; i++) {
+            bodyFormData.append("imgs", imgFile[i].originFileObj);
+        }
+        var options = {
+            method: 'post',
+            url: `${baseURL.baseURL}/servicesandgallery/addGalleryImages/`,
+            headers:
+            {
+                'cache-control': 'no-cache',
+                "Allow-Cross-Origin": '*',
+                contentType: 'application/json',
+            },
+            data: bodyFormData
+        };
+        axios(options)
+            .then((data) => {
+                console.log(data, "profile updated successfully.");
+
+            }).catch((err) => {
+                console.error(err, "ERROR_ON_SAVING")
+
             })
     }
 }

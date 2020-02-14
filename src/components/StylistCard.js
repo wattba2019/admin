@@ -59,8 +59,6 @@ class StylistCard extends Component {
                                                     }}>
                                                     <img src={require('../../src/assets/3dotmenu.png')} style={{ width: 10, height: 20 }} />
                                                 </div>
-
-
                                             </div>
 
                                             <div style={{
