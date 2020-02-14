@@ -67,7 +67,7 @@ class Services extends Component {
         else {
             let serviceName = '';
             let price = '';
-            let extraService = '';
+            let extraService = {};
             let extraServiceqty = 1;
             let extraServiceqtyArr = Array.apply(null, { length: extraServiceqty });
             let editService = {};
