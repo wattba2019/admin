@@ -7,7 +7,8 @@ import { Modal, TimePicker, Upload, Icon, message } from "antd";
 import moment from 'moment';
 import TextareaAutosize from 'react-textarea-autosize';
 import axios from 'axios';
-import { uploadGallery } from "../store/action/action";
+import { uploadGallery, updateGallery } from "../store/action/action";
+import { Form, } from 'antd';
 
 class StylistModal extends Component {
     constructor(props) {
@@ -30,11 +31,35 @@ class StylistModal extends Component {
         return false;
     }
 
-  uploadGallery = () => {
+    uploadGallery = () => {
         let fileList = this.state.fileList
-        this.props.uploadGallery(fileList, this.props.userProfile._id)
+        if (fileList.length == 0) {
+            this.props.uploadGallery(fileList, this.props.userProfile._id)
+        }
+        else {
+            this.props.updateGallery(fileList, this.props.userProfile._id)
+        }
     }
 
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        // console.log(nextProps.gallery, "RECEIVING_PROPS")
+        let arr = []
+        for (var i = 0; i < nextProps.gallery.length; i++) {
+            const element = nextProps.gallery[i];
+            // console.log(element, "ELEMENT")
+            const obj = {
+                uid: i,
+                // name: 'xxx.png',
+                // status: 'done',
+                url: element,
+            }
+            arr.push(obj)
+        }
+        // console.log(arr, "ARR")
+        this.setState({
+            fileList: arr,
+        })
+    }
 
     render() {
         const { that } = this.props
@@ -47,7 +72,7 @@ class StylistModal extends Component {
             </div>
         );
         return (
-            < Modal
+            <Modal
                 footer={null}
                 // title="Vertically centered modal dialog"
                 centered
@@ -159,6 +184,7 @@ class StylistModal extends Component {
                                                                 e.brType = 'start'
                                                                 that.onChange(e, f);
                                                             }}
+
                                                         />
                                                         <span style={{ margin: "1%", fontWeight: "normal" }}>to</span>
                                                         <TimePicker
@@ -261,9 +287,12 @@ class StylistModal extends Component {
                                 }
                                 <div className="clearfix" style={{ marginTop: 10, }}>
                                     <Upload
-                                        showUploadList={{ showPreviewIcon: false }}
+                                        showUploadList={{
+                                            showPreviewIcon: false,
+                                            // showRemoveIcon: false
+                                        }}
                                         defaultFileList={fileList}
-                                        fileList={fileList}
+                                        // fileList={fileList}
                                         action=""
                                         // action={() => this.uploadGallery()}
                                         listType={'picture-card'}
@@ -286,6 +315,11 @@ class StylistModal extends Component {
                                                 }
                                             }
                                         }}
+                                        onRemove={(data) => {
+                                            console.log(data.uid, "DATA")
+                                        }}
+
+
                                         beforeUpload={this.beforeUploadEvent.bind(this)}
                                     >
                                         {fileList.length >= 12 ? null : uploadButton}
@@ -330,21 +364,24 @@ class StylistModal extends Component {
 }
 
 
-
-// function mapStateToProp(state) {
-//     return ({
-//         bseUrl: state.root.bseUrl,
-//         userProfile: state.root.userProfile,
-//     })
-// }
-// function mapDispatchToProp(dispatch) {
-//     return ({
-//         uploadGallery: (data, id) => {
-//             dispatch(uploadGallery(data, id));
-//         },
-//     })
-// }
+function mapStateToProp(state) {
+    return ({
+        bseUrl: state.root.bseUrl,
+        userProfile: state.root.userProfile,
+        gallery: state.root.gallery,
+    })
+}
+function mapDispatchToProp(dispatch) {
+    return ({
+        uploadGallery: (data, id) => {
+            dispatch(uploadGallery(data, id));
+        },
+        updateGallery: (data, id) => {
+            dispatch(updateGallery(data, id));
+        },
+    })
+}
 // export default connect(mapStateToProp, mapDispatchToProp)(StylistModal);
-
-export default StylistModal;
-
+// export default StylistModal;
+const WrappedSpecialOfferModal = Form.create({ name: 'normal_login' })(connect(mapStateToProp, mapDispatchToProp)(StylistModal));
+export default WrappedSpecialOfferModal;

@@ -16,7 +16,7 @@ import { Button, DatePicker, version, Modal, Input, TimePicker } from "antd";
 import TextareaAutosize from 'react-textarea-autosize';
 import StylistModal from '../components/StylistModal';
 import StylistCard from '../components/StylistCard';
-import { addStylist, getStylists, updateStylist } from "../store/action/action";
+import { addStylist, getStylists, updateStylist, getGallery } from "../store/action/action";
 
 import "antd/dist/antd.css";
 
@@ -82,6 +82,7 @@ class StyleList extends Component {
         this.state.serviceqtyArr = Array.apply(null, { length: this.state.serviceqty });
 
         this.props.getStylists((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254');
+        this.props.getGallery((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254');
 
     }
 
@@ -340,6 +341,9 @@ function mapDispatchToProp(dispatch) {
         },
         getStylists: (userId) => {
             dispatch(getStylists(userId));
+        },
+        getGallery: (userId) => {
+            dispatch(getGallery(userId));
         },
         updateStylist: (stylist, indexToEdit) => {
             dispatch(updateStylist(stylist, indexToEdit));

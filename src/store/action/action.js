@@ -615,9 +615,31 @@ export function updateProfileImg(imgFile, _id) {
 
 
 
+export function getGallery(userID) {
+    return dispatch => {
+        var options = {
+            method: 'GET',
+            url: `${baseURL.baseURL}/galleryget/${userID}`,
+            headers:
+            {
+                'cache-control': 'no-cache',
+                "Allow-Cross-Origin": '*',
+            }
+        };
+        axios(options)
+            .then((data) => {
+                console.log(data.data.data[0].galleryImages, 'Fetched_gallery');
+                dispatch({ type: ActionTypes.FETCHED_GALLERY, payload: data.data.data[0].galleryImages })
+            })
+            .catch((err) => {
+                console.log(err, "Error in fetching savedStylists")
+            })
+    }
+}
+
 export function uploadGallery(imgFile, _id) {
     return dispatch => {
-        // console.log(imgFile[0], imgFile, _id, "DATA_INSIDE_ACTION")
+        console.log(imgFile[0], imgFile, _id, "DATA_INSIDE_ACTION")
         var bodyFormData = new FormData();
         bodyFormData.append('userId', _id);
         for (var i = 0; i < imgFile.length; i++) {
@@ -637,10 +659,16 @@ export function uploadGallery(imgFile, _id) {
         axios(options)
             .then((data) => {
                 console.log(data, "profile updated successfully.");
-
             }).catch((err) => {
                 console.error(err, "ERROR_ON_SAVING")
-
             })
     }
 }
+
+
+export function updateGallery(oldImages, _id) {
+    return dispatch => {
+        console.log(oldImages, _id, "DATA_INSIDE_ACTION")
+    }
+}
+

@@ -9,7 +9,8 @@ const INITIAL_STATE = {
     specialPackages: [],
     stylists: [],
     workingHours: {},
-    bookings: null
+    bookings: null,
+    gallery: []
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -97,6 +98,11 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 bookings: action.payload
+            };
+        case ActionTypes.FETCHED_GALLERY:
+            return {
+                ...state,
+                gallery: action.payload
             };
 
 
