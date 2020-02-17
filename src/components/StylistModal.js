@@ -33,13 +33,21 @@ class StylistModal extends Component {
     }
 
     uploadGallery = () => {
+        const { gArr } = this.state
         let fileList = this.state.fileList
-        if (fileList.length == 0) {
+
+        console.log(fileList, gArr, "UP===========>")
+
+        if (gArr.length === 0) {
             this.props.uploadGallery(fileList, this.props.userProfile._id)
         }
         else {
             this.props.updateGallery(fileList, this.props.userProfile._id)
         }
+        this.setState({
+            fileList: [],
+            gArr: []
+        })
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -61,6 +69,7 @@ class StylistModal extends Component {
             fileList: arr,
             gArr: arr
         })
+
     }
 
     // removeImg(data) {
@@ -70,6 +79,16 @@ class StylistModal extends Component {
     //         fileList: cloneData,
     //     })
     // }
+
+
+
+    // handleRemove = (file, UploadFile) => {
+    //     const { onRemove } = this.props;
+    //     const { fileList } = this.state;
+    //     console.log(file, UploadFile, onRemove, fileList, "ABCD")
+    // };
+
+
 
     render() {
         const { that } = this.props
@@ -305,7 +324,8 @@ class StylistModal extends Component {
                                         defaultFileList={fileList}
                                         action=""
                                         listType={'picture-card'}
-                                        multiple={true}
+                                        multiple={false}
+                                        // onRemove={this.handleRemove}
                                         onChange={(info) => {
                                             // console.log(info, 'On_change_Function');
                                             const isJpgOrPng = info.file.type === 'image/jpeg' || info.file.type === 'image/png' || (info.file.url);
@@ -324,13 +344,17 @@ class StylistModal extends Component {
                                                     })
                                                 }
                                                 else {
-                                                    this.setState({ fileList: [], errUploadImgLimit: true })
+                                                    this.setState({
+                                                        fileList: [],
+                                                        errUploadImgLimit: true
+                                                    })
                                                 }
                                             }
                                         }}
                                         // onRemove={(data) => this.removeImg(data)}
                                         beforeUpload={this.beforeUploadEvent.bind(this)}
                                     >
+                                        {/* {fileList.length >= 12 ? null : uploadButton} */}
                                         {fileList.length >= 12 ? null : uploadButton}
                                     </Upload>
                                     <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
@@ -345,7 +369,7 @@ class StylistModal extends Component {
                                 <button className="buttonAdd" style={{ minWidth: 140, width: "30%", height: 35, margin: "1%", }}
                                     onClick={() => this.uploadGallery()}
                                 >
-                                    <span className="buttonmatter" style={{ fontSize: 15, }}>{'Upload Image'}</span>
+                                    <span className="buttonmatter" style={{ fontSize: 15, }}>{'Save'}</span>
                                 </button>
                             </div>
                         </div>

@@ -668,7 +668,8 @@ export function uploadGallery(imgFile, _id) {
 
 export function updateGallery(oldImages, _id) {
     return dispatch => {
-        // console.log(oldImages, _id, "DATA_INSIDE_ACTION_UPDATE_IMG")
+        console.log(oldImages, _id, "DATA_INSIDE_ACTION_UPDATE_IMG")
+
         let fileData = []
         let urlData = []
         for (let index = 0; index < oldImages.length; index++) {
@@ -679,11 +680,40 @@ export function updateGallery(oldImages, _id) {
             }
             else {
                 // console.log(element, "URL")
-                urlData.push(element)
+                urlData.push(element.url)
             }
         }
 
-        console.log(fileData, urlData, "DATA_INSIDE_ACTION_UPDATE_IMG")
+        var bodyFormData = new FormData();
+        // add user id
+        bodyFormData.append('userId', _id);
+        // add img files
+        for (var i = 0; i < fileData.length; i++) {
+            bodyFormData.append("imgs", fileData[i].originFileObj);
+        }
+        // add img url old imgs
+        for (var i = 0; i < urlData.length; i++) {
+            bodyFormData.append("oldImages", urlData[i]);
+        }
+
+        var options = {
+            method: 'post',
+            url: `${baseURL.baseURL}/servicesandgallery/updateGalleryImages/`,
+            headers:
+            {
+                'cache-control': 'no-cache',
+                "Allow-Cross-Origin": '*',
+                contentType: 'application/json',
+            },
+            data: bodyFormData
+        };
+        axios(options)
+            .then((data) => {
+                console.log(data, "profile updated successfully.");
+            }).catch((err) => {
+                console.error(err, "ERROR_ON_SAVING")
+            })
+
 
     }
 }
