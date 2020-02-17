@@ -659,6 +659,11 @@ export function uploadGallery(imgFile, _id) {
         axios(options)
             .then((data) => {
                 console.log(data, "profile updated successfully.");
+                swal.fire(
+                    'Success!',
+                    data.data.message,
+                    'success'
+                )
             }).catch((err) => {
                 console.error(err, "ERROR_ON_SAVING")
             })
@@ -709,7 +714,12 @@ export function updateGallery(oldImages, _id) {
         };
         axios(options)
             .then((data) => {
-                console.log(data, "profile updated successfully.");
+                console.log(data, "Gallery updated successfully.");
+                swal.fire(
+                    'Success!',
+                    data.data.message,
+                    'success'
+                )
             }).catch((err) => {
                 console.error(err, "ERROR_ON_SAVING")
             })
