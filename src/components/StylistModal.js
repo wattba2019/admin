@@ -14,6 +14,7 @@ class StylistModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            gArr: [],
             fileList: [],
             errUploadImgLimit: false
         }
@@ -49,8 +50,8 @@ class StylistModal extends Component {
             // console.log(element, "ELEMENT")
             const obj = {
                 uid: i,
-                // name: 'xxx.png',
-                // status: 'done',
+                name: 'xxx.png',
+                status: 'done',
                 url: element,
             }
             arr.push(obj)
@@ -58,12 +59,21 @@ class StylistModal extends Component {
         // console.log(arr, "ARR")
         this.setState({
             fileList: arr,
+            gArr: arr
         })
     }
 
+    // removeImg(data) {
+    //     let cloneData = this.state.gArr
+    //     let updatedData = cloneData.splice(data.uid, 1)
+    //     this.setState({s
+    //         fileList: cloneData,
+    //     })
+    // }
+
     render() {
         const { that } = this.props
-        const { fileList, errUploadImgLimit } = this.state;
+        const { fileList, gArr, errUploadImgLimit } = this.state;
         console.log(fileList, "INSIDE_RENDER")
         const uploadButton = (
             <div>
@@ -77,8 +87,7 @@ class StylistModal extends Component {
                 // title="Vertically centered modal dialog"
                 centered
                 visible={that.state.modal2Visible || that.state.modal2VisibleEdit}
-                onOk={() => that.setModal2Visible(false)
-                }
+                onOk={() => that.setModal2Visible(false)}
                 onCancel={() => { that.setModal2Visible(false); that.setModal2VisibleEdit(false) }}
                 bodyStyle={{ height: 500 }}
                 width={"80%"}
@@ -287,23 +296,27 @@ class StylistModal extends Component {
                                 }
                                 <div className="clearfix" style={{ marginTop: 10, }}>
                                     <Upload
+                                        // fileList={fileList}
+                                        // action={() => this.uploadGallery()}
                                         showUploadList={{
                                             showPreviewIcon: false,
                                             // showRemoveIcon: false
                                         }}
                                         defaultFileList={fileList}
-                                        // fileList={fileList}
                                         action=""
-                                        // action={() => this.uploadGallery()}
                                         listType={'picture-card'}
                                         multiple={true}
                                         onChange={(info) => {
-                                            const isJpgOrPng = info.file.type === 'image/jpeg' || info.file.type === 'image/png';
+                                            // console.log(info, 'On_change_Function');
+                                            const isJpgOrPng = info.file.type === 'image/jpeg' || info.file.type === 'image/png' || (info.file.url);
                                             if (!isJpgOrPng) {
+                                                // alert("NOT_JPEG")
                                                 this.setState({ fileList: [] })
+                                                that.setModal2Visible(false)
+                                                that.setModal2VisibleEdit(false)
 
                                             } else {
-                                                // console.log(info, 'On_change_Function');
+                                                // alert("JPEG_and_url")
                                                 if (info.fileList.length <= 12 && fileList.length <= 12) {
                                                     this.setState({
                                                         fileList: info.fileList,
@@ -315,11 +328,7 @@ class StylistModal extends Component {
                                                 }
                                             }
                                         }}
-                                        onRemove={(data) => {
-                                            console.log(data.uid, "DATA")
-                                        }}
-
-
+                                        // onRemove={(data) => this.removeImg(data)}
                                         beforeUpload={this.beforeUploadEvent.bind(this)}
                                     >
                                         {fileList.length >= 12 ? null : uploadButton}

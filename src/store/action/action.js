@@ -639,7 +639,7 @@ export function getGallery(userID) {
 
 export function uploadGallery(imgFile, _id) {
     return dispatch => {
-        console.log(imgFile[0], imgFile, _id, "DATA_INSIDE_ACTION")
+        console.log(imgFile[0], imgFile, _id, "DATA_INSIDE_ACTION_ADD_IMG")
         var bodyFormData = new FormData();
         bodyFormData.append('userId', _id);
         for (var i = 0; i < imgFile.length; i++) {
@@ -668,7 +668,23 @@ export function uploadGallery(imgFile, _id) {
 
 export function updateGallery(oldImages, _id) {
     return dispatch => {
-        console.log(oldImages, _id, "DATA_INSIDE_ACTION")
+        // console.log(oldImages, _id, "DATA_INSIDE_ACTION_UPDATE_IMG")
+        let fileData = []
+        let urlData = []
+        for (let index = 0; index < oldImages.length; index++) {
+            const element = oldImages[index];
+            if (element.originFileObj) {
+                // console.log(element, "FILE")
+                fileData.push(element)
+            }
+            else {
+                // console.log(element, "URL")
+                urlData.push(element)
+            }
+        }
+
+        console.log(fileData, urlData, "DATA_INSIDE_ACTION_UPDATE_IMG")
+
     }
 }
 
