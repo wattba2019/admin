@@ -538,6 +538,7 @@ export function changePassword(email, password, rePassword) {
 
 
 export function updateProfile(updatedUserData) {
+    alert("working_ACTION")
     return dispatch => {
         console.log(updatedUserData, "DATA_INSIDE_ACTION")
         var options = {
@@ -553,13 +554,13 @@ export function updateProfile(updatedUserData) {
         axios(options)
             .then((data) => {
                 console.log(data.data.user, "profile updated successfully.");
-                localStorage.setItem('userProfile', JSON.stringify(data.data.user));
-                dispatch({ type: ActionTypes.SAVE_USER, payload: data.data.user })
-                swal.fire(
-                    'Success!',
-                    data.data.message,
-                    'success'
-                )
+                // localStorage.setItem('userProfile', JSON.stringify(data.data.user));
+                // dispatch({ type: ActionTypes.SAVE_USER, payload: data.data.user })
+                // swal.fire(
+                //     'Success!',
+                //     data.data.message,
+                //     'success'
+                // )
             }).catch((err) => {
                 console.error(err, "ERROR_ON_SAVING")
                 // alert(err.response.data.message)
