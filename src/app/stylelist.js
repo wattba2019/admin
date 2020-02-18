@@ -38,6 +38,8 @@ class StyleList extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            errDesc: '',
+            errFullName: '',
             loader: false,
             showerror: false,
             stylistFullName: '',
@@ -214,7 +216,23 @@ class StyleList extends Component {
             serviceProvided: this.state.services,
         }
         if (this.state.modal2Visible) {
-            this.props.addStylist(stylist);
+            if (this.state.fullname === '') {
+                this.setState({
+                    errFullName: "Please Type Full Name"
+                })
+            }
+            else if (this.state.stylistDescription === '') {
+                this.setState({
+                    errDesc: "Please Type Description"
+                })
+            }
+            else {
+                this.props.addStylist(stylist);
+                this.setState({
+                    errDesc: '',
+                    errFullName: ''
+                })
+            }
         }
         else {
             stylist._id = this.state.editStylist._id;
