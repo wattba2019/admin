@@ -123,16 +123,28 @@ class StylistModal extends Component {
                             <div style={{ fontSize: 18 }}>
                                 New Stylist
                             </div>
-
+                         
                             {/* Full Name */}
                             <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", marginTop: 10, }}>
                                 <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
                                     <div style={{ width: "70%", minWidth: 200 }}>
-                                        <input type="text" className="form-control" placeholder=" Full Name" aria-label=" Full Name" aria-describedby="basic-addon1" value={that.state.stylistFullName} onChange={(e) => { that.setState({ stylistFullName: e.target.value }) }} />
+                                        <input required type="text" className="form-control" placeholder="Full Name" aria-label="Full Name" aria-describedby="basic-addon1" value={that.state.stylistFullName} onChange={(e) => { that.setState({ stylistFullName: e.target.value }) }} />
                                     </div>
                                 </div>
                             </div>
-
+                            
+                            {/* {
+                                (that.state.errFullName != '') ? (
+                                    <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", }}>
+                                        <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
+                                            <div style={{ width: "70%", minWidth: 200, fontSize: 12, color: "red", marginLeft: 10 }}>
+                                                <span>{that.state.errFullName}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ) : null
+                            } */}
+                          
                             {/* description */}
                             <div style={{ display: "flex", flex: 1, flexDirection: "column", width: "100%", fontSize: "1.1vw", fontWeight: "bold", }}>
                                 <div style={{ marginTop: 10, fontSize: 18 }}>
@@ -146,6 +158,18 @@ class StylistModal extends Component {
                                 </div>
                             </div>
 
+                            {/* {
+                                (that.state.errDesc != '') ? (
+                                    <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", }}>
+                                        <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
+                                            <div style={{ width: "70%", minWidth: 200, fontSize: 12, color: "red", marginLeft: 10 }}>
+                                                <span>{that.state.errDesc}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ) : null
+                            } */}
+                          
                             {/* working days */}
                             <div style={{
                                 display: "flex", flex: 1, flexDirection: "row", height: 500,

@@ -31,8 +31,8 @@ class Home extends Component {
             shopImage: "",
             // route: "ShopProfile"
             // route: "Bookings"
-            route: "Services"
-            // route: "Stylelists"
+            // route: "Services"
+            route: "Stylelists"
             // route: "WorkingHours"
             // route: "SpecialOffers"
         }
