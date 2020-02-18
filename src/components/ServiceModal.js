@@ -125,14 +125,13 @@ class ServiceModal extends Component {
                                             )}
                                         </Form.Item>
 
-                                        <Form.Item>
-                                            <button className="buttonAdd buttonmatter" style={{ minWidth: 80, width: "100%", justifyContent: "center", alignItems: "center", marginRight: 10 }}
+                                        {/* <Form.Item> */}
+                                            <span className="buttonAdd buttonmatter" style={{ minWidth: '40px', width: "20%", justifyContent: "center", alignItems: "center", marginRight: 10, position: 'relative', top: '-12px' }}
                                                 onClick={() => this.props.delExtraService(index)}
                                             >
                                                 <MdDeleteForever className="buttonmatter" style={{ color: "white", fontSize: 20, marginTop: 7 }} />
-                                            </button>
-
-                                        </Form.Item>
+                                            </span>
+                                        {/* </Form.Item> */}
                                     </div>
                                 )
                             })
