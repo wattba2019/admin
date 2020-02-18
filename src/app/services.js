@@ -95,7 +95,7 @@ class Services extends Component {
     }
 
     delExtraService = (index) => {
-        let extraService = this.state.extraService
+        let extraService = this.state.extraService.slice(0)
         extraService.splice(index, 1)
         let extraServiceqty = this.state.extraServiceqty
         extraServiceqty = --extraServiceqty;

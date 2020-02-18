@@ -97,11 +97,11 @@ export function updateService(service, indexToEdit) {
 
                 swal.fire(
                     'Success!',
-                    data.data.message,
+                    'Service updated successfully.',
                     'success'
                 )
             }).catch((err) => {
-                console.log(err.response.data.message, "ERROR_ON_SAVING")
+                // console.log(err.response.data.message, "ERROR_ON_SAVING")
                 // alert(err.response.data.message)
                 swal.fire(
                     'Error!',
