@@ -10,7 +10,6 @@ import SimpleMap from '../components/googlemap';
 import history from '../History';
 import { changePassword, updateProfile, } from "../store/action/action";
 import { Form, Input, Checkbox } from 'antd';
-// import { Form, Modal } from "antd";
 
 class ShopProfile extends Component {
     constructor(props) {
@@ -97,7 +96,6 @@ class ShopProfile extends Component {
     };
 
     updateProfileData = () => {
-        alert("working")
         const { email, about, businessName, telephone, websiteUrl, addressline1, addressline2 } = this.state
         if (email !== '' && about !== '' && businessName !== '' && telephone !== '' && addressline1 !== '') {
             let cloneUpdatedUser = {
@@ -112,18 +110,18 @@ class ShopProfile extends Component {
             }
             this.props.updateProfile(cloneUpdatedUser)
         }
-        // else {
-        //     this.setState({
-        //         err: "All fields are required",
-        //         showerror: true
-        //     }, () => {
-        //         setTimeout(() => {
-        //             this.setState({
-        //                 showerror: false
-        //             })
-        //         }, 10000)
-        //     })
-        // }
+        else {
+            this.setState({
+                err: "All fields are required",
+                showerror: true
+            }, () => {
+                setTimeout(() => {
+                    this.setState({
+                        showerror: false
+                    })
+                }, 10000)
+            })
+        }
 
     }
 
@@ -140,8 +138,8 @@ class ShopProfile extends Component {
                     background: "#F7F8F8"
                 }}>
                     <div style={{ width: "50%", marginTop: "10%" }} className="center">
-                        <h5 className="input-group mb-6 inputCenter">Wattba Shop Profile</h5>
-                        <Form onSubmit={this.updateProfileData} className="login-form">
+                        <h5 className="input-group mb-6 inputCenter"  >Wattba Shop Profile</h5>
+
                             {/* Email */}
                             <div className="input-group mb-3" style={{ marginTop: 20 }}>
                                 <div className="input-group-prepend">
@@ -201,8 +199,7 @@ class ShopProfile extends Component {
                             {/* update */}
                             <div style={{ display: "flex", flex: 1, marginTop: 15 }} >
                                 <button htmlType="submit" className="button" style={{ marginTop: 10, width: "100%" }}
-                                // onClick={this.updateProfileData}
-                                >
+                                    onClick={this.updateProfileData} >
                                     <span className="buttonmatter">Update Profile</span>
                                 </button>
                             </div>
@@ -214,7 +211,7 @@ class ShopProfile extends Component {
                                     ) : null
                                 }
                             </div>
-                        </Form>
+                        
                     </div>
                 </div>
 
