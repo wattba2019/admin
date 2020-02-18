@@ -55,7 +55,7 @@ class WorkingHoursCard extends Component {
                                                 display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", height: 40,
                                             }}>
                                                 <TimePicker
-                                                    defaultValue={moment(day.openTimings, 'h:mm a')}
+                                                    value={moment(day.openTimings, 'h:mm a')}
                                                     style={{ width: 100, margin: "1%" }}
                                                     use12Hours format="h:mm a"
                                                     // placeholder={"Time"}
@@ -81,7 +81,7 @@ class WorkingHoursCard extends Component {
                                                 display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", height: 40,
                                             }}>
                                                 <TimePicker
-                                                    defaultValue={moment(day.closingTime, 'h:mm a')}
+                                                    value={moment(day.closingTime, 'h:mm a')}
 
                                                     style={{ width: 100, margin: "1%" }}
                                                     use12Hours format="h:mm a"
