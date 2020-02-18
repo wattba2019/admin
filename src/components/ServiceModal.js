@@ -18,12 +18,12 @@ class ServiceModal extends Component {
     };
 
     render() {
-        console.log(this.props, '****')
-        const { email, serviceName, price, extraService, extraServiceqtyArr, modal2Visible, modal2VisibleEdit } = this.props.modalState;
+        // console.log(this.props, '****')
+        const { serviceName, price, extraService, extraServiceqtyArr, modal2Visible, modal2VisibleEdit } = this.props.modalState;
         const { that } = this.props;
-        console.log(this.props, '****')
         const { getFieldDecorator } = this.props.form;
 
+        console.log(that.state, 'that.state')
         return (
             <Modal
                 footer={null}
@@ -51,12 +51,14 @@ class ServiceModal extends Component {
                         <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center" }}>
                             <Form.Item>
                                 {getFieldDecorator('ServiceName', {
-                                    rules: [{ required: true, message: 'Please type service name!' }],
-                                    rules: [{ max: 26, message: 'Description must be maximum 26 characters.' },],
+                                    rules: [
+                                        { required: false, message: 'Please type service name!' },
+                                        { max: 26, message: 'Service Name must be maximum 26 characters.' }
+                                    ],
                                 })(
                                     <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
-                                        <div style={{ width: "90%", }}>
-                                            <input type="text" className="form-control" placeholder="Service Name" aria-label="Service Name" aria-describedby="basic-addon1" value={serviceName} onChange={(e) => { that.setState({ serviceName: e.target.value }) }} />
+                                        <div style={{ width: "82%", }}>
+                                            <input required type="text" className="form-control" placeholder="Service Name" aria-label="Service Name" aria-describedby="basic-addon1" value={serviceName} onChange={(e) => { that.setState({ serviceName: e.target.value }) }} />
                                         </div>
                                     </div>
                                 )}
@@ -64,12 +66,14 @@ class ServiceModal extends Component {
 
                             <Form.Item>
                                 {getFieldDecorator('price', {
-                                    rules: [{ required: true, message: 'Please type price!' }],
-                                    rules: [{ max: 7, message: 'Description must be maximum 7 characters.' },],
+                                    rules: [
+                                        { required: false, message: 'Please type price!' },
+                                        { max: 7, message: 'Price must be max 7 characters.' }
+                                    ],
                                 })(
                                     <div style={{ display: "flex", flex: 1, margin: "1.5%", }} >
                                         <div style={{ width: "65%", }}>
-                                            <input type="Number" className="form-control" placeholder="Price $" aria-label="Price $" aria-describedby="basic-addon1" value={price} onChange={(e) => { that.setState({ price: e.target.value }) }} />
+                                            <input required type="Number" className="form-control" placeholder="Price $" aria-label="Price $" aria-describedby="basic-addon1" value={price} onChange={(e) => { that.setState({ price: e.target.value }) }} />
                                         </div>
                                     </div>
                                 )}
@@ -85,18 +89,21 @@ class ServiceModal extends Component {
 
                         {
                             extraServiceqtyArr.map((key, index) => {
-                                console.log(index, 'indexindex', extraService)
+                                // console.log(index, 'indexindex', extraService)
                                 return (
                                     <div key={index} style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", }}>
                                         <Form.Item>
                                             {getFieldDecorator('serviceName' + index, {
-                                                rules: [{ required: true, message: 'Please type service name!' }],
-                                                rules: [{ max: 18, message: 'Description must be maximum 18 characters.' },],
-
+                                                rules: [
+                                                    { required: false, message: 'Please type service name!' },
+                                                    { max: 26, message: 'Service Name must be maximum 26 characters.' }
+                                                ],
                                             })(
                                                 <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
-                                                    <div style={{ width: "100%", }}>
-                                                        <input type="text" className="form-control" placeholder=" Service Name" aria-label=" Service Name" aria-describedby="basic-addon1" value={(extraService && extraService[index] && extraService[index].serviceName) ? extraService[index].serviceName : ''} onChange={(e) => { this.props.addExtraService(e.target.value, "serviceName", index) }} />
+                                                    <div style={{
+                                                        width: "100%",
+                                                    }}>
+                                                        <input required type="text" className="form-control" placeholder=" Service Name" aria-label=" Service Name" aria-describedby="basic-addon1" value={(extraService && extraService[index] && extraService[index].serviceName) ? extraService[index].serviceName : ''} onChange={(e) => { this.props.addExtraService(e.target.value, "serviceName", index) }} />
                                                     </div>
                                                 </div>
                                             )}
@@ -104,18 +111,19 @@ class ServiceModal extends Component {
 
                                         <Form.Item>
                                             {getFieldDecorator('price' + index, {
-                                                rules: [{ required: true, message: 'Please type price!' }],
-                                                rules: [{ max: 7, message: 'Description must be maximum 7 characters.' },],
+                                                rules: [
+                                                    { required: false, message: 'Please type price!' },
+                                                    { max: 7, message: 'Price must be max 7 characters.' }
+                                                ],
 
                                             })(
-                                                <div style={{ display: "flex", flex: 1, margin: "1.5%", marginLeft: 20, }} >
-                                                    <div style={{ width: "72%", }}>
-                                                        <input type="Number" className="form-control" placeholder="Price $" aria-label="Price $" aria-describedby="basic-addon1" value={(extraService && extraService[index] && extraService[index].price) ? extraService[index].price : ''} onChange={(e) => { this.props.addExtraService(e.target.value, "price", index) }} />
+                                                <div style={{ display: "flex", flex: 1, margin: "1.5%", marginLeft: 40, }} >
+                                                    <div style={{ width: "80%", }}>
+                                                        <input required type="Number" className="form-control" placeholder="Price $" aria-label="Price $" aria-describedby="basic-addon1" value={(extraService && extraService[index] && extraService[index].price) ? extraService[index].price : ''} onChange={(e) => { this.props.addExtraService(e.target.value, "price", index) }} />
                                                     </div>
                                                 </div>
                                             )}
                                         </Form.Item>
-
 
                                         <Form.Item>
                                             <button className="buttonAdd buttonmatter" style={{ minWidth: 80, width: "100%", justifyContent: "center", alignItems: "center", marginRight: 10 }}

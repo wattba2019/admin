@@ -122,7 +122,7 @@ class StylistModal extends Component {
                         <div style={{ display: "flex", flexWrap: "wrap", flexDirection: "column", flex: 3, background: "#F7F8F8", padding: "2.5%" }}>
                             <div style={{ fontSize: 18 }}>
                                 New Stylist
-                         </div>
+                            </div>
 
                             {/* Full Name */}
                             <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", marginTop: 10, }}>
@@ -137,7 +137,7 @@ class StylistModal extends Component {
                             <div style={{ display: "flex", flex: 1, flexDirection: "column", width: "100%", fontSize: "1.1vw", fontWeight: "bold", }}>
                                 <div style={{ marginTop: 10, fontSize: 18 }}>
                                     Desciption
-                            </div>
+                                </div>
 
                                 <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", }}>
                                     <div style={{ display: "flex", flex: 1, margin: "1.5%", borderRadius: 25 }} >

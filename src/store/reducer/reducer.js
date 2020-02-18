@@ -3,6 +3,7 @@ import baseURL from '../../config/config';
 
 const INITIAL_STATE = {
     bseUrl: baseURL.baseURL,
+    
     userProfile: undefined,
     currentLocation: null,
     services: [],

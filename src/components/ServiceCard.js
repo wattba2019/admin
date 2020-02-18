@@ -22,7 +22,7 @@ class ServiceCard extends Component {
                     {
                         (this.props.services.length > 0) ?
                             (this.props.services.map((service, index) => {
-                                console.log(service, 'mapruning')
+                                // console.log(service, 'mapruning')
                                 let indexedExtraServices = service.extraServices.slice(0);
                                 if (indexedExtraServices.length > 3) {
                                     indexedExtraServices.splice(3);
@@ -57,7 +57,7 @@ class ServiceCard extends Component {
 
                                             {
                                                 indexedExtraServices.map((extraServices, esIndex) => {
-                                                    console.log(indexedExtraServices, 'indexedExtraServices')
+                                                    // console.log(indexedExtraServices, 'indexedExtraServices')
                                                     return (
                                                         <div key={esIndex} style={{
                                                             display: "flex", width: "100%", fontWeight: "normal", color: "#535353", margin: 5,
