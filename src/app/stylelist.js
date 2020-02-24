@@ -44,7 +44,7 @@ class StyleList extends Component {
             showerror: false,
             stylistFullName: '',
             designation: '',
-            gender: '',
+            gender: 'Male',
             stylistDescription: '',
             modal2Visible: false,
             modal2VisibleEdit: false,
@@ -106,7 +106,7 @@ class StyleList extends Component {
         else {
             let stylistFullName = '';
             let designation = '';
-            let gender = '';
+            let gender = 'Male';
             let stylistDescription = '';
             let services = [];
             let serviceqty = 1;
@@ -250,7 +250,7 @@ class StyleList extends Component {
 
         this.setState({
             stylistFullName: "",
-            gender: "",
+            gender: "Male",
             designation: "",
             stylistDescription: "",
             services: [],
