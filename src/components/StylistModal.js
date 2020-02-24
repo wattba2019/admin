@@ -8,7 +8,7 @@ import moment from 'moment';
 import TextareaAutosize from 'react-textarea-autosize';
 import axios from 'axios';
 import { uploadGallery, updateGallery } from "../store/action/action";
-import { Form, } from 'antd';
+import { Form, Radio } from 'antd';
 
 class StylistModal extends Component {
     constructor(props) {
@@ -16,9 +16,21 @@ class StylistModal extends Component {
         this.state = {
             gArr: [],
             fileList: [],
-            errUploadImgLimit: false
+            errUploadImgLimit: false,
+            value: "Male",
         }
     }
+
+    onChangeRadio = e => {
+        const { that } = this.props
+        console.log('radio checked', e.target.value);
+        this.setState({
+            value: e.target.value,
+        });
+        that.setState({
+            gender: e.target.value
+        })
+    };
 
     beforeUploadEvent(file, fileList) {
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -108,7 +120,7 @@ class StylistModal extends Component {
                 visible={that.state.modal2Visible || that.state.modal2VisibleEdit}
                 onOk={() => that.setModal2Visible(false)}
                 onCancel={() => { that.setModal2Visible(false); that.setModal2VisibleEdit(false) }}
-                bodyStyle={{ height: 500 }}
+                bodyStyle={{ height: 500, }}
                 width={"80%"}
                 minWidth={"60%"}
                 bodyStyle={{ padding: 0, }}
@@ -116,14 +128,14 @@ class StylistModal extends Component {
                 <div style={{ display: "flex", flex: 1, width: "100%", flexDirection: "column", fontSize: "1.1vw", fontWeight: "bold", background: "red" }}>
 
                     {/* Body */}
-                    <div style={{ display: "flex", flex: 8, flexWrap: "wrap", minWidth: 140, background: "yellow" }}>
+                    <div style={{ display: "flex", flex: 8, flexWrap: "wrap", minWidth: 140, }}>
                         {/* 1st card */}
 
-                        <div style={{ display: "flex", flexWrap: "wrap", flexDirection: "column", flex: 3, background: "#F7F8F8", padding: "2.5%" }}>
+                        <div style={{ display: "flex", flexWrap: "wrap", flexDirection: "column", flex: 3, background: "#F7F8F8", padding: "2.5%", }}>
                             <div style={{ fontSize: 18 }}>
                                 New Stylist
                             </div>
-                         
+
                             {/* Full Name */}
                             <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", marginTop: 10, }}>
                                 <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
@@ -132,19 +144,23 @@ class StylistModal extends Component {
                                     </div>
                                 </div>
                             </div>
-                            
-                            {/* {
-                                (that.state.errFullName != '') ? (
-                                    <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", }}>
-                                        <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
-                                            <div style={{ width: "70%", minWidth: 200, fontSize: 12, color: "red", marginLeft: 10 }}>
-                                                <span>{that.state.errFullName}</span>
-                                            </div>
-                                        </div>
+
+                            {/* Designation */}
+                            <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", marginTop: 10, }}>
+                                <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
+                                    <div style={{ width: "70%", minWidth: 200 }}>
+                                        <input required type="text" className="form-control" placeholder="Designation" aria-label="Designation" aria-describedby="basic-addon1" value={that.state.designation} onChange={(e) => { that.setState({ designation: e.target.value }) }} />
                                     </div>
-                                ) : null
-                            } */}
-                          
+                                </div>
+                            </div>
+
+                            <div style={{ display: "flex", flex: 1, width: "100%", marginTop: 10, marginLeft: 10 }}>
+                                <Radio.Group onChange={this.onChangeRadio} value={this.state.value}>
+                                    <Radio value={"Male"}>Male</Radio>
+                                    <Radio value={"Female"}>Female</Radio>
+                                </Radio.Group>
+                            </div>
+
                             {/* description */}
                             <div style={{ display: "flex", flex: 1, flexDirection: "column", width: "100%", fontSize: "1.1vw", fontWeight: "bold", }}>
                                 <div style={{ marginTop: 10, fontSize: 18 }}>
@@ -169,7 +185,7 @@ class StylistModal extends Component {
                                     </div>
                                 ) : null
                             } */}
-                          
+
                             {/* working days */}
                             <div style={{
                                 display: "flex", flex: 1, flexDirection: "row", height: 500,

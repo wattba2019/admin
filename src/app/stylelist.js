@@ -43,6 +43,8 @@ class StyleList extends Component {
             loader: false,
             showerror: false,
             stylistFullName: '',
+            designation: '',
+            gender: '',
             stylistDescription: '',
             modal2Visible: false,
             modal2VisibleEdit: false,
@@ -50,25 +52,25 @@ class StyleList extends Component {
 
             workingDaysNTime: [
                 {
-                    day: 'Monday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                    day: 'Monday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
                 },
                 {
-                    day: 'Tuesday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                    day: 'Tuesday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
                 },
                 {
-                    day: 'Wednesday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                    day: 'Wednesday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
                 },
                 {
-                    day: 'Thursday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                    day: 'Thursday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
                 },
                 {
-                    day: 'Friday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                    day: 'Friday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
                 },
                 {
-                    day: 'Saturday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                    day: 'Saturday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
                 },
                 {
-                    day: 'Sunday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                    day: 'Sunday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
                 },
             ],
             // weekDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
@@ -92,15 +94,19 @@ class StyleList extends Component {
         if (modal2VisibleEdit) {
             // console.log(editStylist, 'editService');
             let stylistFullName = editStylist.fullname;
+            let designation = editStylist.designation;
+            let gender = editStylist.gender;
             let stylistDescription = editStylist.description;
             let services = editStylist.serviceProvided;
             let serviceqty = editStylist.serviceProvided.length;
             let serviceqtyArr = Array.apply(null, { length: serviceqty });
             let workingDaysNTime = editStylist.workingDays;
-            this.setState({ modal2VisibleEdit, editStylist, stylistFullName, stylistDescription, services, serviceqty, serviceqtyArr, indexToEdit, workingDaysNTime });
+            this.setState({ modal2VisibleEdit, editStylist, stylistFullName, designation, gender, stylistDescription, services, serviceqty, serviceqtyArr, indexToEdit, workingDaysNTime });
         }
         else {
             let stylistFullName = '';
+            let designation = '';
+            let gender = '';
             let stylistDescription = '';
             let services = [];
             let serviceqty = 1;
@@ -108,28 +114,28 @@ class StyleList extends Component {
             let serviceqtyArr = Array.apply(null, { length: serviceqty });
             let workingDaysNTime = [
                 {
-                    day: 'Monday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                    day: 'Monday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
                 },
                 {
-                    day: 'Tuesday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                    day: 'Tuesday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
                 },
                 {
-                    day: 'Wednesday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                    day: 'Wednesday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
                 },
                 {
-                    day: 'Thursday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                    day: 'Thursday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
                 },
                 {
-                    day: 'Friday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                    day: 'Friday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
                 },
                 {
-                    day: 'Saturday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                    day: 'Saturday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
                 },
                 {
-                    day: 'Sunday', brStart: '12:00 PM', brEnd: '01:00 PM', working: true,
+                    day: 'Sunday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
                 },
             ];
-            this.setState({ modal2VisibleEdit, editStylist, stylistFullName, stylistDescription, services, serviceqty, serviceqtyArr, indexToEdit, workingDaysNTime });
+            this.setState({ modal2VisibleEdit, editStylist, stylistFullName, designation, gender, stylistDescription, services, serviceqty, serviceqtyArr, indexToEdit, workingDaysNTime });
         }
     }
 
@@ -210,6 +216,8 @@ class StyleList extends Component {
         console.log('saved service called');
         let stylist = {
             fullname: this.state.stylistFullName,
+            gender: this.state.gender,
+            designation: this.state.designation,
             description: this.state.stylistDescription,
             userId: (this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254',
             workingDays: this.state.workingDaysNTime,
@@ -242,6 +250,8 @@ class StyleList extends Component {
 
         this.setState({
             stylistFullName: "",
+            gender: "",
+            designation: "",
             stylistDescription: "",
             services: [],
             serviceqty: 1,
