@@ -40,6 +40,7 @@ class StylistCard extends Component {
                                                 <div style={{
                                                     position: "absolute",
                                                     marginTop: 0,
+                                                    marginBottom: 20,
                                                     width: "100%",
                                                     justifyContent: "center", alignItems: "center", textAlign: "center",
                                                     // background: "grey"
@@ -62,10 +63,11 @@ class StylistCard extends Component {
                                             </div>
 
                                             <div style={{
-                                                display: "flex", flex: 3, padding: 5, color: "#535353", fontWeight: "normal", fontSize: 10, flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "left",
-                                                // background: "green"
+                                                display: "flex", flex: 3, padding: 5, marginTop: "25%", color: "#535353", fontWeight: "normal", fontSize: 10, flexDirection: "column", alignItems: "center", textAlign: "center",
+                                                // background: "orange"
                                             }}>
                                                 {stylist.description}
+                                                Crazy stylist that uses fire to bend the air Crazy stylist that uses fire to bend the air
                                             </div>
 
                                             <div style={{
