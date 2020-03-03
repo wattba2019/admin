@@ -67,7 +67,7 @@ class StylistCard extends Component {
                                                 // background: "orange"
                                             }}>
                                                 {stylist.description}
-                                                Crazy stylist that uses fire to bend the air Crazy stylist that uses fire to bend the air
+                                                {/* Crazy stylist that uses fire to bend the air Crazy stylist that uses fire to bend the air */}
                                             </div>
 
                                             <div style={{

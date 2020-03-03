@@ -68,8 +68,16 @@ class Signup extends Component {
                 websiteUrl: websiteUrl,
                 addressLine1: addressline1,
                 addressLine2: addressline2,
-                latitude: "24.5",
-                longitude: "63.4",
+                // latitude: "24.5",
+                // longitude: "63.4",
+
+                geometry: {
+                    type: "Point",
+                    coordinates: [24.8825, 67.0694] //bahadrabad lat long
+                    // coordinates: [24.8960, 67.0814] //national statium lat long
+
+                },
+
                 createdAt: new Date().getTime()
 
             }
