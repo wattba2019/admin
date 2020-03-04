@@ -301,6 +301,7 @@ export function addStylist(stylist) {
 
 
 export function getStylists(userID) {
+    console.log(userID, "USERID")
     return dispatch => {
         var options = {
             method: 'GET',
@@ -728,3 +729,42 @@ export function updateGallery(oldImages, _id) {
     }
 }
 
+
+export function updateStylistImg(imgFile, _id, userId) {
+    return dispatch => {
+        // console.log(imgFile, _id, userId, "DATA_INSIDE_ACTION")
+        var bodyFormData = new FormData();
+        bodyFormData.append('img', imgFile);
+        bodyFormData.append('_id', _id);
+        var options = {
+            method: 'post',
+            url: `${baseURL.baseURL}/signupadmin/addstylistimg/`,
+            headers:
+            {
+                'cache-control': 'no-cache',
+                "Allow-Cross-Origin": '*',
+                contentType: 'application/json',
+            },
+            data: bodyFormData
+        };
+        axios(options)
+            .then((data) => {
+                console.log(data.data, "stylist updated successfully.");
+                let msg = data.data.message;
+                dispatch(getStylists(userId))
+                swal.fire(
+                    'Success!',
+                    msg,
+                    'success'
+                )
+            }).catch((err) => {
+                console.error(err, "ERROR_ON_SAVING")
+                // alert(err.response.data.message)
+                swal.fire(
+                    'Error!',
+                    'Something went wrong.',
+                    'error'
+                )
+            })
+    }
+}

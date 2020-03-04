@@ -4,13 +4,30 @@ import { IoMdCheckmark } from 'react-icons/io';
 import { Input } from "antd";
 import stylelist from '../app/stylelist';
 import { MdCameraEnhance } from 'react-icons/md';
+import { updateStylistImg } from "../store/action/action";
+import { connect } from 'react-redux';
 import '../custom.css'
-
 const { Search } = Input;
 
 class StylistCard extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            stylistImage: "",
+        }
+    }
+
+    imagePick(file, _id) {
+        const { userProfile } = this.props
+        // console.log(userProfile._id, _id, "USERPROFILE")
+        if (file) {
+            this.props.updateStylistImg(file, _id, userProfile._id)
+        }
+    }
+
     render() {
-        const { that, stylists, shopImage } = this.props
+        const { stylistImage } = this.state
+        const { that, stylists, } = this.props
         return (
             <div style={{
                 display: "flex", flex: 8, marginTop: "3%", flexWrap: "wrap", width: "80%",
@@ -20,6 +37,7 @@ class StylistCard extends Component {
                 {
                     (stylists.length > 0) ? (
                         stylists.map((stylist, index) => {
+                            console.log(stylist._id, index, "INSIDE_MAP")
                             return (
                                 <div key={index} className="cardshadowWithButton" style={{
                                     display: "flex", height: "25vw", width: "16vw", minWidth: 220, minHeight: 400, maxWidth: 230, margin: "3%",
@@ -48,18 +66,23 @@ class StylistCard extends Component {
                                                     // background: "grey"
                                                 }}>
                                                     <div>
-                                                        <img src={require('../../src/assets/noPhoto.jpg')} className="profileImage" style={{ width: 70, height: 70 }} />
-                                                        <label htmlFor="inputGroupFile01" className="stylistImageupload" style={{ display: "flex", justifyContent: "center", alignItems: "center" ,cursor:"pointer"}} >
+                                                        {
+                                                            stylist.coverImage ?
+                                                                <img src={stylist.coverImage} className="profileImage" style={{ width: 70, height: 70 }} /> :
+                                                                <img src={require('../../src/assets/noPhoto.jpg')} className="profileImage" style={{ width: 70, height: 70 }} />
+                                                        }
+
+                                                        <label htmlFor={"inputGroupFile02" + index} className="stylistImageupload" style={{ display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }} >
                                                             <MdCameraEnhance style={{ color: "grey", fontSize: 10 }} />
                                                         </label>
                                                     </div>
 
                                                     <input
                                                         onChange={(e) =>
-                                                            this.imagePick(e.target.files[0])
+                                                            this.imagePick(e.target.files[0], stylist._id)
                                                         }
                                                         type="file"
-                                                        id="inputGroupFile01"
+                                                        id={"inputGroupFile02" + index}
                                                         className="profileinputnone"
                                                     />
                                                     <div style={{
@@ -171,4 +194,19 @@ class StylistCard extends Component {
     }
 }
 
-export default StylistCard;
+
+function mapStateToProp(state) {
+    return ({
+        // bseUrl: state.root.bseUrl,
+        userProfile: state.root.userProfile,
+    })
+}
+function mapDispatchToProp(dispatch) {
+    return ({
+        updateStylistImg: (data1, id, userId) => {
+            dispatch(updateStylistImg(data1, id, userId));
+        },
+    })
+}
+
+export default connect(mapStateToProp, mapDispatchToProp)(StylistCard);

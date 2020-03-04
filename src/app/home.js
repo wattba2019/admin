@@ -9,7 +9,7 @@ import '../custom.css'
 // import Loader from 'react-loader-spinner'
 // import swal from 'sweetalert2';
 import { MdCameraEnhance } from 'react-icons/md';
-import { FaRegCalendarCheck,  } from 'react-icons/fa';
+import { FaRegCalendarCheck, } from 'react-icons/fa';
 import { GiScissors } from 'react-icons/gi';
 import { AiOutlineUser, AiFillGift } from 'react-icons/ai';
 import { FiClock } from 'react-icons/fi';
@@ -30,15 +30,17 @@ class Home extends Component {
             showerror: false,
             shopImage: "",
             // route: "ShopProfile"
-            // route: "Bookings"
+            route: "Bookings"
             // route: "Services"
-            route: "Stylelists"
+            // route: "Stylelists"
             // route: "WorkingHours"
             // route: "SpecialOffers"
         }
     }
 
     imagePick(file) {
+        alert("INSIDE_Parrent")
+
         const { _id } = this.state
         if (file) {
             this.props.updateProfileImg(file, _id)
