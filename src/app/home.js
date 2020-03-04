@@ -98,7 +98,7 @@ class Home extends Component {
                             <div style={{ width: "50%", }} className="center">
                                 <div>
                                     <center>
-                                        {/* Business image */}
+                                        {/* Profile image */}
                                         <div className="drawerBackgroundnested" >
                                             {
                                                 shopImage ?

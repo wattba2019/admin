@@ -3,12 +3,14 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { IoMdCheckmark } from 'react-icons/io';
 import { Input } from "antd";
 import stylelist from '../app/stylelist';
+import { MdCameraEnhance } from 'react-icons/md';
+import '../custom.css'
 
 const { Search } = Input;
 
 class StylistCard extends Component {
     render() {
-        const { that, stylists } = this.props
+        const { that, stylists, shopImage } = this.props
         return (
             <div style={{
                 display: "flex", flex: 8, marginTop: "3%", flexWrap: "wrap", width: "80%",
@@ -47,8 +49,24 @@ class StylistCard extends Component {
                                                 }}>
                                                     <div>
                                                         <img src={require('../../src/assets/noPhoto.jpg')} className="profileImage" style={{ width: 70, height: 70 }} />
+                                                        <label htmlFor="inputGroupFile01" className="stylistImageupload" style={{ display: "flex", justifyContent: "center", alignItems: "center" ,cursor:"pointer"}} >
+                                                            <MdCameraEnhance style={{ color: "grey", fontSize: 10 }} />
+                                                        </label>
                                                     </div>
-                                                    <div>{stylist.fullname}</div>
+
+                                                    <input
+                                                        onChange={(e) =>
+                                                            this.imagePick(e.target.files[0])
+                                                        }
+                                                        type="file"
+                                                        id="inputGroupFile01"
+                                                        className="profileinputnone"
+                                                    />
+                                                    <div style={{
+                                                        // background: "yellow",
+                                                        position: "relative",
+                                                        top: -28
+                                                    }} >{stylist.fullname}</div>
                                                 </div>
 
                                                 <div

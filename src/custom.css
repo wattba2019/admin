@@ -139,6 +139,20 @@ text-decoration: underline;
      align-items: center;
     }
 
+    .stylistImageupload {
+        /* position: absolute; */
+        background-color: whitesmoke;
+        /* background-color: red; */
+        height:20px;
+        width: 10%;
+        position: relative;
+        top: -28px;
+        left: 60%;
+        border-radius: 80px;
+        justify-content: center;
+        align-items: center;
+       }
+
 
     .cardshadow{
         padding: 10px;
@@ -209,3 +223,4 @@ overflow: visible;
     /* border-radius: 5; */
 
 }
+

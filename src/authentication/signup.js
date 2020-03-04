@@ -71,10 +71,11 @@ class Signup extends Component {
                 // latitude: "24.5",
                 // longitude: "63.4",
 
-                geometry: {
+                location: {
                     type: "Point",
                     coordinates: [24.8825, 67.0694] //bahadrabad lat long
                     // coordinates: [24.8960, 67.0814] //national statium lat long
+                    // coordinates: [24.9814 67.0543] //national statium lat long
 
                 },
 
