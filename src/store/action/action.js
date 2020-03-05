@@ -52,6 +52,7 @@ export function addService(service) {
 
 
 export function getServices(userID) {
+    console.log("ITS_WORKING", userID)
     return dispatch => {
         var options = {
             method: 'GET',

@@ -16,7 +16,7 @@ import { Button, DatePicker, version, Modal, Input, TimePicker } from "antd";
 import TextareaAutosize from 'react-textarea-autosize';
 import StylistModal from '../components/StylistModal';
 import StylistCard from '../components/StylistCard';
-import { addStylist, getStylists, updateStylist, getGallery } from "../store/action/action";
+import { addStylist, getStylists, updateStylist, getGallery, getServices } from "../store/action/action";
 
 import "antd/dist/antd.css";
 
@@ -38,6 +38,11 @@ class StyleList extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            plainOptions: ['Loading',],
+            checkedList: [],
+            indeterminate: true,
+            checkAll: false,
+
             errDesc: '',
             errFullName: '',
             loader: false,
@@ -87,21 +92,23 @@ class StyleList extends Component {
 
         this.props.getStylists((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254');
         this.props.getGallery((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254');
+        this.props.getServices((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254');
 
     }
 
     setModal2VisibleEdit(modal2VisibleEdit, editStylist, indexToEdit) {
         if (modal2VisibleEdit) {
-            // console.log(editStylist, 'editService');
+            console.log(editStylist, 'editService');
             let stylistFullName = editStylist.fullname;
             let designation = editStylist.designation;
             let gender = editStylist.gender;
             let stylistDescription = editStylist.description;
             let services = editStylist.serviceProvided;
+            let servicesSelected = editStylist.serviceProvided;
             let serviceqty = editStylist.serviceProvided.length;
             let serviceqtyArr = Array.apply(null, { length: serviceqty });
             let workingDaysNTime = editStylist.workingDays;
-            this.setState({ modal2VisibleEdit, editStylist, stylistFullName, designation, gender, stylistDescription, services, serviceqty, serviceqtyArr, indexToEdit, workingDaysNTime });
+            this.setState({ modal2VisibleEdit, editStylist, stylistFullName, designation, gender, stylistDescription, checkedList: servicesSelected, services, serviceqty, serviceqtyArr, indexToEdit, workingDaysNTime });
         }
         else {
             let stylistFullName = '';
@@ -139,6 +146,30 @@ class StyleList extends Component {
         }
     }
 
+    onCheckAllChange = e => {
+        const { plainOptions } = this.state
+        this.setState({
+            checkedList: e.target.checked ? plainOptions : [],
+            indeterminate: false,
+            checkAll: e.target.checked,
+        }, () => {
+            this.addService(this.state.checkedList)
+        }
+        );
+    };
+
+    onChangeCheckBox = checkedList => {
+        const { plainOptions } = this.state
+        this.setState({
+            checkedList,
+            indeterminate: !!checkedList.length && checkedList.length < plainOptions.length,
+            checkAll: checkedList.length === plainOptions.length,
+        }, () => {
+            this.addService(this.state.checkedList)
+        });
+
+    };
+
     handleCancel = () => this.setState({ previewVisible: false });
 
     handlePreview = async file => {
@@ -160,12 +191,19 @@ class StyleList extends Component {
     }
 
     addService(serviceName, dataType, index) {
-        console.log(serviceName, dataType, index, "DATA");
-        let services = this.state.services;
-        services[index] = serviceName;
-        // extraService[index][type] = input;
-        console.log(services, 'extraservice add');
-        this.setState({ services });
+        // console.log(serviceName, dataType, index, "DATA");
+        // let services = this.state.services;
+        // services[index] = serviceName;
+        // // extraService[index][type] = input;
+        // console.log(services, 'extraservice add');
+        // this.setState({ services });
+
+
+        console.log(serviceName, "DATA");
+        // let services = this.state.services;
+        // services[index] = serviceName;
+        console.log(serviceName, 'extraservice add');
+        this.setState({ services: serviceName });
     }
 
     onChange = (time, timeString) => {
@@ -286,6 +324,27 @@ class StyleList extends Component {
         })
     }
 
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        console.log(nextProps.services, "RECEIVING_PROPS_PARRENTCOMP")
+
+        let cloneService = nextProps.services;
+        let serviceOptionsArr = [];
+        if (cloneService && cloneService.length != 0) {
+            for (let index = 0; index < cloneService.length; index++) {
+                const element = cloneService[index].serviceName;
+                serviceOptionsArr.push(element)
+                console.log(element, "ELEMENT")
+
+            }
+        }
+
+        console.log(serviceOptionsArr, "CLONE")
+        this.setState({
+            plainOptions: serviceOptionsArr
+        })
+
+    }
+
 
     render() {
         //this.props.stylists
@@ -358,7 +417,8 @@ function mapStateToProp(state) {
     return ({
         bseUrl: state.root.bseUrl,
         uid: state.root.userProfile._id,
-        stylists: state.root.stylists
+        stylists: state.root.stylists,
+        services: state.root.services
 
     })
 }
@@ -375,6 +435,9 @@ function mapDispatchToProp(dispatch) {
         },
         updateStylist: (stylist, indexToEdit) => {
             dispatch(updateStylist(stylist, indexToEdit));
+        },
+        getServices: (uid) => {
+            dispatch(getServices(uid));
         },
     })
 }

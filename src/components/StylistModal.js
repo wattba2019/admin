@@ -1,16 +1,19 @@
+import "../index.css";
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
 import { MdDeleteForever } from 'react-icons/md';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoMdCheckmark } from 'react-icons/io';
-import { Modal, TimePicker, Upload, Icon, message } from "antd";
+import { Modal, TimePicker, Upload, Icon, message, Checkbox } from "antd";
 import moment from 'moment';
 import TextareaAutosize from 'react-textarea-autosize';
 import axios from 'axios';
-import { uploadGallery, updateGallery } from "../store/action/action";
+import { uploadGallery, updateGallery, } from "../store/action/action";
 import { Form, Radio } from 'antd';
+const CheckboxGroup = Checkbox.Group;
 
 class StylistModal extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -18,6 +21,7 @@ class StylistModal extends Component {
             fileList: [],
             errUploadImgLimit: false,
             value: "Male",
+
         }
     }
 
@@ -58,16 +62,16 @@ class StylistModal extends Component {
         }
         this.setState({
             fileList: [],
-            gArr: []
+            gArr: [],
         })
     }
 
+
+
     UNSAFE_componentWillReceiveProps(nextProps) {
-        // console.log(nextProps.gallery, "RECEIVING_PROPS")
         let arr = []
         for (var i = 0; i < nextProps.gallery.length; i++) {
             const element = nextProps.gallery[i];
-            // console.log(element, "ELEMENT")
             const obj = {
                 uid: i,
                 name: 'xxx.png',
@@ -76,36 +80,22 @@ class StylistModal extends Component {
             }
             arr.push(obj)
         }
-        // console.log(arr, "ARR")
+
         this.setState({
             fileList: arr,
-            gArr: arr
+            gArr: arr,
         })
 
     }
 
-    // removeImg(data) {
-    //     let cloneData = this.state.gArr
-    //     let updatedData = cloneData.splice(data.uid, 1)
-    //     this.setState({s
-    //         fileList: cloneData,
-    //     })
-    // }
 
-
-
-    // handleRemove = (file, UploadFile) => {
-    //     const { onRemove } = this.props;
-    //     const { fileList } = this.state;
-    //     console.log(file, UploadFile, onRemove, fileList, "ABCD")
-    // };
 
 
 
     render() {
-        const { that } = this.props
-        const { fileList, gArr, errUploadImgLimit } = this.state;
-        console.log(fileList, "INSIDE_RENDER")
+        const { that, services, } = this.props
+        const { fileList, gArr, errUploadImgLimit, plainOptions } = this.state;
+
         const uploadButton = (
             <div>
                 <Icon type="plus" />
@@ -291,7 +281,7 @@ class StylistModal extends Component {
                                     Services provided
                                 </div>
 
-                                {
+                                {/* {
                                     that.state.serviceqtyArr.map((service, index) => {
                                         return (
                                             <div key={index} style={{
@@ -311,11 +301,40 @@ class StylistModal extends Component {
                                                 </div>
                                             </div>
                                         )
-                                    })
-                                }
+                                    })s
+                                } */}
+
+                                <div>
+                                    <div
+                                        className="site-checkbox-all-wrapper"
+                                    >
+                                        <Checkbox
+                                            indeterminate={that.state.indeterminate}
+                                            onChange={that.onCheckAllChange}
+                                            checked={that.state.checkAll}
+                                        >
+                                            Check all
+                                        </Checkbox>
+                                    </div>
+                                    <hr />
+
+                                    <div>
+                                        <CheckboxGroup
+                                            style={{
+                                                display: "flex", flex: 1, flexDirection: "column",
+                                                padding: 10,
+                                                // background: "red",
+                                            }}
+                                            options={that.state.plainOptions}
+                                            value={that.state.checkedList}
+                                            onChange={that.onChangeCheckBox}
+                                        />
+                                    </div>
+                                </div>
+
                             </div>
 
-                            <div style={{
+                            {/* <div style={{
                                 display: "flex", flex: 1, flexDirection: "column",
                                 // background: "green"
                             }}>
@@ -327,7 +346,7 @@ class StylistModal extends Component {
                                         Add Extra Service
                                 </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
 
                         {/* 3rd card */}
@@ -440,8 +459,10 @@ class StylistModal extends Component {
 function mapStateToProp(state) {
     return ({
         bseUrl: state.root.bseUrl,
+        uid: state.root.userProfile._id,
         userProfile: state.root.userProfile,
         gallery: state.root.gallery,
+        services: state.root.services
     })
 }
 function mapDispatchToProp(dispatch) {
@@ -452,6 +473,7 @@ function mapDispatchToProp(dispatch) {
         updateGallery: (data, id) => {
             dispatch(updateGallery(data, id));
         },
+
     })
 }
 // export default connect(mapStateToProp, mapDispatchToProp)(StylistModal);
