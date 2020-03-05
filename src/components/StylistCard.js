@@ -124,19 +124,21 @@ class StylistCard extends Component {
                                             }}>
                                                 {
                                                     stylist.serviceProvided.map((stylistService, serIndex) => {
-                                                        return (
-                                                            <div key={serIndex} style={{
-                                                                display: "flex", width: "100%", flexDirection: "row", padding: 5, color: "#535353", fontWeight: "bold", justifyContent: "space-between", alignItems: "center", fontSize: 12, marginTop: 5,
-                                                                // background: "red"
-                                                            }}>
-                                                                <div>
-                                                                    {stylistService}
+                                                        if (serIndex < 3) {
+                                                            return (
+                                                                <div key={serIndex} style={{
+                                                                    display: "flex", width: "100%", flexDirection: "row", padding: 5, color: "#535353", fontWeight: "bold", justifyContent: "space-between", alignItems: "center", fontSize: 12, marginTop: 5,
+                                                                    // background: "red"
+                                                                }}>
+                                                                    <div>
+                                                                        {stylistService}
+                                                                    </div>
+                                                                    <div style={{ display: "flex", height: 20, width: 20, backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5, fontSize: 12, }}>
+                                                                        <IoMdCheckmark style={{ color: "white", fontSize: 12, }} />
+                                                                    </div>
                                                                 </div>
-                                                                <div style={{ display: "flex", height: 20, width: 20, backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5, fontSize: 12, }}>
-                                                                    <IoMdCheckmark style={{ color: "white", fontSize: 12, }} />
-                                                                </div>
-                                                            </div>
-                                                        )
+                                                            )
+                                                        }
                                                     })
                                                 }
                                             </div>
