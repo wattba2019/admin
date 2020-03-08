@@ -146,29 +146,56 @@ class StyleList extends Component {
         }
     }
 
-    onCheckAllChange = e => {
-        const { plainOptions } = this.state
-        this.setState({
-            checkedList: e.target.checked ? plainOptions : [],
-            indeterminate: false,
-            checkAll: e.target.checked,
-        }, () => {
-            this.addService(this.state.checkedList)
+
+
+    onChangeCheckBox = (checkedList, index) => {
+        const { services } = this.state
+        var n = services.includes(checkedList);
+
+        let cloneSelectedService = services
+        console.log(checkedList, index, services, cloneSelectedService, n, "ONCHANGECHECKBOXZ")
+
+        if (n === false) {
+            cloneSelectedService.push(checkedList);
+
         }
-        );
+
+        else {
+            for (var i = 0; i < cloneSelectedService.length; i++) {
+                if (cloneSelectedService[i] === checkedList) { cloneSelectedService.splice(i, 1); }
+            }
+            this.setState({
+                services: cloneSelectedService
+            })
+        }
+        console.log(cloneSelectedService, "AFTERPUSHDATA")
     };
 
-    onChangeCheckBox = checkedList => {
-        const { plainOptions } = this.state
-        this.setState({
-            checkedList,
-            indeterminate: !!checkedList.length && checkedList.length < plainOptions.length,
-            checkAll: checkedList.length === plainOptions.length,
-        }, () => {
-            this.addService(this.state.checkedList)
-        });
 
-    };
+
+    // onCheckAllChange = e => {
+    //     const { plainOptions } = this.state
+    //     this.setState({
+    //         checkedList: e.target.checked ? plainOptions : [],
+    //         indeterminate: false,
+    //         checkAll: e.target.checked,
+    //     }, () => {
+    //         this.addService(this.state.checkedList)
+    //     }
+    //     );
+    // };
+
+    // onChangeCheckBox = checkedList => {
+    //     const { plainOptions } = this.state
+    //     this.setState({
+    //         checkedList,
+    //         indeterminate: !!checkedList.length && checkedList.length < plainOptions.length,
+    //         checkAll: checkedList.length === plainOptions.length,
+    //     }, () => {
+    //         this.addService(this.state.checkedList)
+    //     });
+
+    // };
 
     handleCancel = () => this.setState({ previewVisible: false });
 
@@ -326,7 +353,6 @@ class StyleList extends Component {
 
     UNSAFE_componentWillReceiveProps(nextProps) {
         console.log(nextProps.services, "RECEIVING_PROPS_PARRENTCOMP")
-
         let cloneService = nextProps.services;
         let serviceOptionsArr = [];
         if (cloneService && cloneService.length != 0) {
@@ -337,7 +363,6 @@ class StyleList extends Component {
 
             }
         }
-
         console.log(serviceOptionsArr, "CLONE")
         this.setState({
             plainOptions: serviceOptionsArr
@@ -347,6 +372,8 @@ class StyleList extends Component {
 
 
     render() {
+
+        console.log(this.state.services, "RENDER")
         //this.props.stylists
 
         let stylists = [];
@@ -363,7 +390,7 @@ class StyleList extends Component {
                 stylists = this.props.stylists;
             }
         }
-        console.log(stylists, 'stylistsstylists')
+        // console.log(stylists, 'stylistsstylists')
 
 
         const { previewVisible, previewImage, fileList } = this.state;

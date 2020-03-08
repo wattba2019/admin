@@ -94,7 +94,7 @@ class StylistModal extends Component {
 
     render() {
         const { that, services, } = this.props
-        const { fileList, gArr, errUploadImgLimit, plainOptions } = this.state;
+        const { fileList, gArr, errUploadImgLimit, } = this.state;
 
         const uploadButton = (
             <div>
@@ -301,10 +301,52 @@ class StylistModal extends Component {
                                                 </div>
                                             </div>
                                         )
-                                    })s
+                                    })
                                 } */}
 
-                                <div>
+
+                                {
+                                    that.state.plainOptions.map((service, index) => {
+                                        console.log(service, index, that.state.services, "INSIDE_MAP")
+                                        return (
+                                            <div key={index} style={{
+                                                display: "flex", width: "100%", justifyContent: "center", alignItems: "center", marginTop: 10, minWidth: "80%",
+                                                // background: "red"
+                                            }}>
+                                                <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
+                                                    <div style={{ width: "95%", }}>
+                                                        <input disabled type="text" className="form-control" placeholder="Service Name" aria-label="Service Name" aria-describedby="basic-addon1" value={service} />
+                                                    </div>
+                                                </div>
+                                                <div style={{
+                                                    cursor: "pointer",
+                                                    display: "flex", height: 28, width: 28,
+                                                    borderRadius: 25,
+                                                    justifyContent: "center", alignItems: "center",
+                                                    padding: 5,
+                                                    backgroundColor: that.state.services.includes(service) ? "#49BE56" : "grey",
+                                                }}
+                                                    onClick={() => {
+                                                        that.onChangeCheckBox(service, index)
+                                                        this.setState({
+                                                            flagRender: true
+                                                        })
+                                                    }}
+                                                >
+                                                    <IoMdCheckmark style={{ color: "white", }} />
+                                                </div>
+                                                {/* <div onClick={() => that.delserviceField(index)} style={{ display: "flex", height: 28, width: 28, backgroundColor: "#EC5F59", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5, marginLeft: "5%" }}>
+                                                    <MdDeleteForever className="buttonmatter" style={{ color: "white", fontSize: 20, }} />
+                                                </div> */}
+                                            </div>
+                                        )
+                                    })
+                                }
+
+
+
+
+                                {/* <div>
                                     <div
                                         className="site-checkbox-all-wrapper"
                                     >
@@ -330,9 +372,20 @@ class StylistModal extends Component {
                                             onChange={that.onChangeCheckBox}
                                         />
                                     </div>
-                                </div>
+                                </div> */}
+
+
+
+
+
+
 
                             </div>
+
+
+
+
+
 
                             {/* <div style={{
                                 display: "flex", flex: 1, flexDirection: "column",
@@ -347,7 +400,14 @@ class StylistModal extends Component {
                                 </div>
                                 </div>
                             </div> */}
+
+
+
+
                         </div>
+
+
+
 
                         {/* 3rd card */}
 
