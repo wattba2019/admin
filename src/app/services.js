@@ -95,12 +95,17 @@ class Services extends Component {
     }
 
     delExtraService = (index) => {
-        let extraService = this.state.extraService.slice(0)
-        extraService.splice(index, 1)
-        let extraServiceqty = this.state.extraServiceqty
-        extraServiceqty = --extraServiceqty;
-        let extraServiceqtyArr = Array.apply(null, { length: extraServiceqty });
-        this.setState({ extraServiceqty, extraServiceqtyArr, extraService }, () => { console.log(this.state) });
+        
+        if (index) {
+            let extraService = this.state.extraService.slice(0)
+            console.log(index, extraService, "delExtraService")
+            extraService.splice(index, 1)
+            let extraServiceqty = this.state.extraServiceqty
+            extraServiceqty = --extraServiceqty;
+            let extraServiceqtyArr = Array.apply(null, { length: extraServiceqty });
+            this.setState({ extraServiceqty, extraServiceqtyArr, extraService }, () => { console.log(this.state) });    
+        }
+
     }
 
     saveService() {

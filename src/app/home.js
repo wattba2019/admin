@@ -30,17 +30,16 @@ class Home extends Component {
             showerror: false,
             shopImage: "",
             // route: "ShopProfile"
-            // route: "Bookings"
+            route: "Bookings"
             // route: "Services"
-            route: "Stylelists"
+            // route: "Stylelists"
             // route: "WorkingHours"
             // route: "SpecialOffers"
         }
     }
 
     imagePick(file) {
-        alert("INSIDE_Parrent")
-
+        // alert("INSIDE_Parrent")
         const { _id } = this.state
         if (file) {
             this.props.updateProfileImg(file, _id)
