@@ -12,8 +12,13 @@ class BookingDetailsModal extends Component {
     }
 
     render() {
-        const { modal2Visible, bookingDetails } = this.props.modalState;
-        console.log(bookingDetails, "INSIDEMODAL")
+        const { modal2Visible, bookingDetails, bookedService } = this.props.modalState;
+        // console.log(bookingDetails, bookedService, "INSIDEMODAL")
+
+        if (bookingDetails && bookingDetails.stylistId) {
+            console.log(bookingDetails.stylistId.coverImage, "INSIDEMODAL")
+        }
+
         return (
             <div>
                 <Modal
@@ -57,10 +62,10 @@ class BookingDetailsModal extends Component {
                         </div>
 
                         <div style={{
-                            display: "flex", flex: 2, flexDirection: "column", padding: "4%",
+                            display: "flex", flex: 2, flexDirection: "row", padding: "4%",
                             // background: "orange"
                         }}>
-                            <div style={{ fontWeight: "bold" }}>Service Type</div>
+                            {/* <div style={{ fontWeight: "bold" }}>Service Type</div>
                             {
                                 (bookingDetails.requiredServices) ? (
                                     bookingDetails.requiredServices.map((key, index) => {
@@ -71,12 +76,58 @@ class BookingDetailsModal extends Component {
                                             }}>
                                                 <div>{key}</div>
                                             </div>
-
                                         )
                                     })
                                 ) : null
                             }
+                            </div> */}
+
+                            <div style={{ display: "flex", flex: 1, flexDirection: "column", }}>
+                                <div style={{ fontWeight: "bold" }}>Service Type</div>
+                                {
+                                    (bookedService.length != 0) ? (
+                                        bookedService.map((key, index) => {
+                                            return (
+                                                <div key={index} style={{
+                                                    display: "flex", flex: 1, flexDirection: "row", justifyContent: "flex-start", padding: 5
+                                                    // background: "grey"
+                                                }}>
+                                                    <div style={{ fontSize: 15 }}>{key.serviceName}</div>
+                                                    {/* <div>{key.price}</div> */}
+                                                </div>
+
+                                            )
+                                        })
+                                    ) : <div style={{ fontSize: 15 }}>There is no data</div>
+                                }
+
+                            </div>
+
+                            <div style={{ display: "flex", flex: 1, flexDirection: "column", }}>
+                                <div style={{ fontWeight: "bold" }}>Extra Service</div>
+                                {
+                                    (bookingDetails.requiredExtraServices) ? (
+                                        bookingDetails.requiredExtraServices.map((key, index) => {
+                                            return (
+                                                <div key={index} style={{
+                                                    display: "flex", flex: 1, flexDirection: "column", justifyContent: "flex-start", padding: 5
+                                                    // background: "green"
+                                                }}>
+                                                    <div>{key.serviceName}</div>
+                                                </div>
+                                            )
+                                        })
+                                    ) : <div style={{ fontSize: 15 }}>There is no data</div>
+                                }
+
+                            </div>
                         </div>
+
+
+
+
+
+
 
                         <div style={{
                             display: "flex", flex: 6, flexDirection: "column", padding: "4%",
@@ -97,9 +148,15 @@ class BookingDetailsModal extends Component {
                                         background: "#EC5F59"
                                     }}>
                                         <div style={{ display: "flex", width: 50, height: 50, borderRadius: 25, justifyContent: "center", alignItems: "center", }}>
-                                            <img alt="BackGroundImage" src={require('../assets/noPhoto.jpg')}
-                                                style={{ width: 50, height: 50, borderRadius: 25 }}
-                                            />
+                                            {
+                                                (bookingDetails && bookingDetails.stylistId && bookingDetails.stylistId.coverImage) ? (
+                                                    <img src={bookingDetails.stylistId.coverImage}
+                                                        style={{ width: 50, height: 50, borderRadius: 25 }}
+                                                    />
+                                                ) : <img alt="BackGroundImage" src={require('../assets/noPhoto.jpg')}
+                                                    style={{ width: 50, height: 50, borderRadius: 25 }}
+                                                    />
+                                            }
                                         </div>
                                     </div>
 

@@ -419,9 +419,7 @@ export function updateWorkingHours(workingHours) {
             .then((data) => {
                 console.log(data, "stylist updated successfully.");
                 // stylist.indexToEdit = indexToEdit;
-
                 dispatch({ type: ActionTypes.FETCHED_WORKINGHOURS, payload: workingHours })
-
                 swal.fire(
                     'Success!',
                     data.data.message,
@@ -472,6 +470,20 @@ export function getBookings(shopId, bookingDate) {
             .then((bookings) => {
                 console.log(bookings, 'fetched bookings');
                 dispatch({ type: ActionTypes.FETCHED_BOOKINGS, payload: bookings.data })
+
+                let booking = bookings.data.bookingSort
+                const keys = Object.keys(booking)
+
+                let serviceId;
+                for (const key of keys) {
+                    let arr = booking[key]
+                    for (let index = 0; index < arr.length; index++) {
+                        serviceId = arr[index].requiredServiceId;
+                    }
+                }
+
+                dispatch(getBookedService(serviceId));
+
             })
             .catch((err) => {
                 console.log(err, "Error in fetching bookings")
@@ -486,6 +498,38 @@ export function getBookings(shopId, bookingDate) {
 /* Actions for Bookings */
 
 
+export function getBookedService(serviceId) {
+    return dispatch => {
+        console.log(serviceId, "serviceId")
+        if (serviceId != undefined) {
+            let idsCloneData = { serviceId: serviceId }
+            var options = {
+                method: 'POST',
+                url: `${baseURL.baseURL}/getNearbyShopServices/NearbyAllShopServicesGetWithId/`,
+                headers:
+                {
+                    'cache-control': 'no-cache',
+                    "Allow-Cross-Origin": '*',
+                },
+                data: idsCloneData
+            }
+            axios(options)
+                .then(result => {
+                    let bookedService = result.data.data
+                    console.log(bookedService, "Fetch_Booked_Services")
+                    dispatch({ type: ActionTypes.FETCHED_BOOKED_SERVICE, payload: bookedService })
+                })
+                .catch(err => {
+                    let error = JSON.parse(JSON.stringify(err))
+                    console.log(error, 'ERRROR', err)
+                })
+        }
+        else {
+            dispatch({ type: ActionTypes.FETCHED_BOOKED_SERVICE, payload: [] })
+
+        }
+    }
+}
 
 
 

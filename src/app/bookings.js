@@ -28,18 +28,27 @@ class Bookings extends Component {
             modal2Visible: false,
             modalExport: false,
             slider: [1,],
+            bookedService: [],
         }
         this.setModal2Visible = this.setModal2Visible.bind(this);
         this.modalExport = this.modalExport.bind(this);
-        let bookingDate = new Date();
+        let bookingDate = new Date(1581033600000);
         this.props.getBookings((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254', bookingDate);
+    }
+
+
+    UNSAFE_componentWillMount() {
+        this.setState({
+            bookedService: this.props.bookedService
+        })
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.bookings) {
             this.setState({
                 bookingData: nextProps.bookings.bookingSort,
-                filteredUnsortBookings: nextProps.bookings.filteredBookings
+                filteredUnsortBookings: nextProps.bookings.filteredBookings,
+                bookedService: nextProps.bookedService,
             })
         }
     }
@@ -123,9 +132,9 @@ class Bookings extends Component {
     }
 
     render() {
-        const { slider, bookingData, currentDate, filteredUnsortBookings } = this.state
+        const { slider, bookingData, currentDate, filteredUnsortBookings, bookedService } = this.state
         let reactSwipeEl;
-        console.log('filteredUnsortBookings.length > 0', filteredUnsortBookings, filteredUnsortBookings.length > 0)
+        console.log('filteredUnsortBookings', bookedService)
 
         return (
             <div style={{
@@ -154,17 +163,17 @@ class Bookings extends Component {
                         </button>
                         {/* {
                             (filteredUnsortBookings.length > 0) ? ( */}
-                                <CSVLink
-                                    className="btn btn-light"
-                                    style={{ width: "60%", margin: "2%", borderWidth: 0.5, borderColor: "grey", height: 40 }}
+                        <CSVLink
+                            className="btn btn-light"
+                            style={{ width: "60%", margin: "2%", borderWidth: 0.5, borderColor: "grey", height: 40 }}
 
-                                    filename={new Date().toLocaleDateString() + '.csv'}
+                            filename={new Date().toLocaleDateString() + '.csv'}
 
-                                    data={(filteredUnsortBookings.length > 0) ? this.prepareCSVData() : []}
-                                >
-                                    Export Bookings
+                            data={(filteredUnsortBookings.length > 0) ? this.prepareCSVData() : []}
+                        >
+                            Export Bookings
                                 </CSVLink>
-                            {/* ) : null
+                        {/* ) : null
                         } */}
 
                         {/* <button type="button" className="btn btn-light" style={{ width: "60%", margin: "2%", borderWidth: 0.5, borderColor: "grey", height: 40 }}
@@ -506,7 +515,7 @@ class Bookings extends Component {
                 </div>
 
                 <ExportBooking modalState={this.state} modalExport={this.modalExport} that={this} />
-                <BookingDetailsModal modalState={this.state} setModal2Visible={this.setModal2Visible} bookingDetails={this.state.bookingDetails} that={this} />
+                <BookingDetailsModal modalState={this.state} setModal2Visible={this.setModal2Visible} bookingDetails={this.state.bookingDetails} that={this} bookedService={bookedService} />
             </div >
 
 
@@ -520,6 +529,7 @@ function mapStateToProp(state) {
         userProfile: state.root.userProfile,
         uid: state.root.userProfile._id,
         bookings: state.root.bookings,
+        bookedService: state.root.bookedService,
     })
 }
 function mapDispatchToProp(dispatch) {

@@ -3,7 +3,7 @@ import baseURL from '../../config/config';
 
 const INITIAL_STATE = {
     bseUrl: baseURL.baseURL,
-    
+
     userProfile: undefined,
     currentLocation: null,
     services: [],
@@ -11,7 +11,8 @@ const INITIAL_STATE = {
     stylists: [],
     workingHours: {},
     bookings: null,
-    gallery: []
+    gallery: [],
+    bookedService: []
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -105,8 +106,11 @@ export default (state = INITIAL_STATE, action) => {
                 ...state,
                 gallery: action.payload
             };
-
-
+        case ActionTypes.FETCHED_BOOKED_SERVICE:
+            return {
+                ...state,
+                bookedService: action.payload
+            };
         default:
             return state;
     }
