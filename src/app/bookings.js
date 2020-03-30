@@ -1,6 +1,6 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
-import { setUserCredentials, getBookings } from "../store/action/action";
+import { setUserCredentials, getBookings, cancledAndApproveBooking } from "../store/action/action";
 import {
     Link
 } from 'react-router-dom';
@@ -29,17 +29,19 @@ class Bookings extends Component {
             modalExport: false,
             slider: [1,],
             bookedService: [],
+            bookedPackage: [],
         }
         this.setModal2Visible = this.setModal2Visible.bind(this);
         this.modalExport = this.modalExport.bind(this);
-        let bookingDate = new Date(1581033600000);
+        let bookingDate = new Date();
         this.props.getBookings((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254', bookingDate);
     }
 
 
     UNSAFE_componentWillMount() {
         this.setState({
-            bookedService: this.props.bookedService
+            bookedService: this.props.bookedService,
+            bookedPackage: this.props.bookedPackage,
         })
     }
 
@@ -49,6 +51,7 @@ class Bookings extends Component {
                 bookingData: nextProps.bookings.bookingSort,
                 filteredUnsortBookings: nextProps.bookings.filteredBookings,
                 bookedService: nextProps.bookedService,
+                bookedPackage: nextProps.bookedPackage,
             })
         }
     }
@@ -74,6 +77,16 @@ class Bookings extends Component {
             modal2Visible,
             bookingDetails: data
         });
+    }
+
+    cancledAndApproveBooking = (bookingStatus, _id, modalBolean) => {
+        let { bookingDetails } = this.state
+        let cloneBookingDetails = bookingDetails
+        cloneBookingDetails.bookingStatus = bookingStatus
+        this.props.cancledAndApproveBooking(bookingStatus, _id)
+        this.setState({
+            modal2Visible: modalBolean
+        })
     }
 
     modalExport(modalExport) {
@@ -108,7 +121,7 @@ class Bookings extends Component {
     }
 
     prepareCSVData() {
-        console.log(this.state.bookingData);
+        console.log(this.state.bookedService, "bookedService");
         if (this.state.filteredUnsortBookings && this.state.filteredUnsortBookings.length > 0) {
             let unPrepCSVData = this.state.filteredUnsortBookings;
             let preparedCSVData = [];
@@ -116,7 +129,8 @@ class Bookings extends Component {
             unPrepCSVData.map((booking, index) => {
                 let bookingObj = {
                     ["Hours"]: booking.bookingHour,
-                    ["Required Services"]: booking.requiredServices.toString(),
+                    // ["Required Services"]: booking.requiredServices.toString(),
+                    // ["Required Services"]: booking.requiredServices.toString(),
                     ["Booker Name"]: booking.bookerId.fullName,
                     ["Booker Email"]: booking.bookerId.email,
                     ["Booker Phone"]: booking.bookerId.phoneNumber,
@@ -132,9 +146,9 @@ class Bookings extends Component {
     }
 
     render() {
-        const { slider, bookingData, currentDate, filteredUnsortBookings, bookedService } = this.state
+        const { slider, bookingData, currentDate, filteredUnsortBookings, bookedService, bookedPackage } = this.state
         let reactSwipeEl;
-        console.log('filteredUnsortBookings', bookedService)
+        // console.log('filteredUnsortBookings', bookedService)
 
         return (
             <div style={{
@@ -163,6 +177,7 @@ class Bookings extends Component {
                         </button>
                         {/* {
                             (filteredUnsortBookings.length > 0) ? ( */}
+
                         <CSVLink
                             className="btn btn-light"
                             style={{ width: "60%", margin: "2%", borderWidth: 0.5, borderColor: "grey", height: 40 }}
@@ -172,7 +187,9 @@ class Bookings extends Component {
                             data={(filteredUnsortBookings.length > 0) ? this.prepareCSVData() : []}
                         >
                             Export Bookings
-                                </CSVLink>
+                         </CSVLink>
+
+
                         {/* ) : null
                         } */}
 
@@ -228,7 +245,7 @@ class Bookings extends Component {
 
                         {
                             slider.map((key, index) => {
-                                console.log(key, "DATA")
+                                // console.log(key, "DATA")
                                 return (
                                     <div key={index} style={{
                                         display: "flex", flex: 1, marginTop: 15, marginBottom: 25
@@ -515,7 +532,7 @@ class Bookings extends Component {
                 </div>
 
                 <ExportBooking modalState={this.state} modalExport={this.modalExport} that={this} />
-                <BookingDetailsModal modalState={this.state} setModal2Visible={this.setModal2Visible} bookingDetails={this.state.bookingDetails} that={this} bookedService={bookedService} />
+                <BookingDetailsModal modalState={this.state} setModal2Visible={this.setModal2Visible} bookingDetails={this.state.bookingDetails} that={this} bookedService={bookedService} bookedPackage={bookedPackage} bookingStatus={this.cancledAndApproveBooking} />
             </div >
 
 
@@ -527,15 +544,19 @@ function mapStateToProp(state) {
     return ({
         bseUrl: state.root.bseUrl,
         userProfile: state.root.userProfile,
-        uid: state.root.userProfile._id,
+        uid: state.root.userProfile && state.root.userProfile._id,
         bookings: state.root.bookings,
         bookedService: state.root.bookedService,
+        bookedPackage: state.root.bookedPackage,
     })
 }
 function mapDispatchToProp(dispatch) {
     return ({
         getBookings: (shopId, bookingDate) => {
             dispatch(getBookings(shopId, bookingDate));
+        },
+        cancledAndApproveBooking: (bookingStatus, _id) => {
+            dispatch(cancledAndApproveBooking(bookingStatus, _id));
         },
     })
 

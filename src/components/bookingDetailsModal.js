@@ -11,13 +11,49 @@ class BookingDetailsModal extends Component {
         this.props.setModal2Visible(modal2Visible, bookingDetails)
     }
 
-    render() {
-        const { modal2Visible, bookingDetails, bookedService } = this.props.modalState;
-        // console.log(bookingDetails, bookedService, "INSIDEMODAL")
+    cancledAndApproveBooking(bookingStatus, _id, modalBolean) {
+        this.props.bookingStatus(bookingStatus, _id, modalBolean)
+    }
 
-        if (bookingDetails && bookingDetails.stylistId) {
-            console.log(bookingDetails.stylistId.coverImage, "INSIDEMODAL")
+    render() {
+        const { modal2Visible, bookingDetails, bookedService, bookedPackage } = this.props.modalState;
+        // console.log(bookingDetails, bookedService, bookedPackage, "INSIDEMODAL")
+
+        let selectedbookedService = []
+        let selectedbookedPackage = []
+
+        if (bookedService.length && bookingDetails.requiredServiceId) {
+            for (let index = 0; index < bookedService.length; index++) {
+                const element = bookedService[index]._id;
+                const selectedService = bookedService[index];
+                // console.log(element, "ELEMENT")
+                for (let k = 0; k < bookingDetails.requiredServiceId.length; k++) {
+                    const element1 = bookingDetails.requiredServiceId[k];
+                    if (element === element1) {
+                        // console.log(element, element1, selectedService, "ELEMENT")
+                        selectedbookedService.push(selectedService)
+                    }
+                }
+            }
         }
+
+        if (bookedPackage.length && bookingDetails.requiredServiceId) {
+            for (let index = 0; index < bookedPackage.length; index++) {
+                const element = bookedPackage[index]._id;
+                const selectedPack = bookedPackage[index];
+                // console.log(element, "ELEMENT")
+                for (let k = 0; k < bookingDetails.requiredServiceId.length; k++) {
+                    const element1 = bookingDetails.requiredServiceId[k];
+                    if (element === element1) {
+                        // console.log(element, element1, selectedService, "ELEMENT")
+                        selectedbookedPackage.push(selectedPack)
+                    }
+                }
+            }
+        }
+
+        console.log(selectedbookedPackage, selectedbookedService, "PACK_AND_SERVICE")
+
 
         return (
             <div>
@@ -36,25 +72,34 @@ class BookingDetailsModal extends Component {
                         // background: "red"
                     }}>
                         <div style={{
-                            display: "flex", flex: 8, flexWrap: "wrap", minWidth: 140, flexDirection: "column", padding: "4%"
-                            // background: "green"
+                            display: "flex", flex: 6, flexWrap: "wrap", minWidth: 140, flexDirection: "column", padding: "4%",
+                            // background: "orange"
                         }}>
                             <div style={{ fontWeight: "bold" }}>{bookingDetails.bookerId ? bookingDetails.bookerId.fullName : "N/a"}</div>
 
                             <div style={{
-                                display: "flex", flex: 1, flexDirection: "row", justifyContent: "flex-start", alignItems: "center",
+                                display: "flex", flex: 1, flexDirection: "row",
+                                justifyContent: "flex-start", alignItems: "center",
                                 // background: "green"
                             }}>
 
-                                <div style={{ display: "flex", flex: 1, }}>
-                                    {/* <p>Friday, Nov 1 2019</p> */}
+                                <div style={{ display: "flex", flexDirection: "column", flex: 2, }}>
                                     <p>Booking Date</p>
+                                    <p>Booking Status</p>
                                 </div>
 
-                                <div style={{ display: "flex", flex: 1, fontWeight: "bold" }}>
-                                    {/* <p>{bookingDetails.bookingDateTime}</p> */}
-                                    {/* <p>{new Date(bookingDetails.bookingDateTime).toDateString()}</p> */}
+                                <div style={{ display: "flex", flexDirection: "column", flex: 2, fontWeight: "bold" }}>
                                     <p> {moment(bookingDetails.bookingDateTime).format("dddd, MMMM Do YYYY")}</p>
+
+                                    {
+                                        (bookingDetails.bookingStatus === "Pending") ? (
+                                            <p style={{ color: "orange" }}>{bookingDetails.bookingStatus}</p>
+                                        ) :
+                                            (bookingDetails.bookingStatus === "Cancled") ? (
+                                                <p style={{ color: "red" }}>{bookingDetails.bookingStatus}</p>
+                                            ) : <p style={{ color: "green" }}>{bookingDetails.bookingStatus}</p>
+
+                                    }
                                 </div>
 
                             </div>
@@ -85,8 +130,8 @@ class BookingDetailsModal extends Component {
                             <div style={{ display: "flex", flex: 1, flexDirection: "column", }}>
                                 <div style={{ fontWeight: "bold" }}>Service Type</div>
                                 {
-                                    (bookedService.length != 0) ? (
-                                        bookedService.map((key, index) => {
+                                    (selectedbookedService.length != 0) ? (
+                                        selectedbookedService.map((key, index) => {
                                             return (
                                                 <div key={index} style={{
                                                     display: "flex", flex: 1, flexDirection: "row", justifyContent: "flex-start", padding: 5
@@ -98,29 +143,52 @@ class BookingDetailsModal extends Component {
 
                                             )
                                         })
-                                    ) : <div style={{ fontSize: 15 }}>There is no data</div>
+                                    ) :
+                                        // <div style={{ fontSize: 15 }}>There is no data</div>
+                                        (selectedbookedPackage.length != 0) ? (
+                                            selectedbookedPackage.map((key, index) => {
+                                                return (
+                                                    <div key={index} style={{
+                                                        display: "flex", flex: 1, flexDirection: "column", justifyContent: "flex-start", padding: 5
+                                                        // background: "grey"
+                                                    }}>
+                                                        <div style={{ fontSize: 15, fontWeight: "bold" }}>{key.packageName}</div>
+                                                        <div>{key.packageDescription}</div>
+                                                    </div>
+
+                                                )
+                                            })
+                                        ) : <div style={{ fontSize: 15 }}>There is no data</div>
+
                                 }
 
                             </div>
 
-                            <div style={{ display: "flex", flex: 1, flexDirection: "column", }}>
-                                <div style={{ fontWeight: "bold" }}>Extra Service</div>
-                                {
-                                    (bookingDetails.requiredExtraServices) ? (
-                                        bookingDetails.requiredExtraServices.map((key, index) => {
-                                            return (
-                                                <div key={index} style={{
-                                                    display: "flex", flex: 1, flexDirection: "column", justifyContent: "flex-start", padding: 5
-                                                    // background: "green"
-                                                }}>
-                                                    <div>{key.serviceName}</div>
-                                                </div>
-                                            )
-                                        })
-                                    ) : <div style={{ fontSize: 15 }}>There is no data</div>
-                                }
+                            {
+                                (selectedbookedService.length != 0) ? (
 
-                            </div>
+                                    <div style={{ display: "flex", flex: 1, flexDirection: "column", }}>
+                                        <div style={{ fontWeight: "bold" }}>Extra Service</div>
+                                        {
+                                            (bookingDetails.requiredExtraServices) ? (
+                                                bookingDetails.requiredExtraServices.map((key, index) => {
+                                                    return (
+                                                        <div key={index} style={{
+                                                            display: "flex", flex: 1, flexDirection: "column", justifyContent: "flex-start", padding: 5
+                                                            // background: "green"
+                                                        }}>
+                                                            <div>{key.serviceName}</div>
+                                                        </div>
+                                                    )
+                                                })
+                                            ) : <div style={{ fontSize: 15 }}>There is no data</div>
+                                        }
+
+                                    </div>
+                                ) : null
+
+                            }
+
                         </div>
 
 
@@ -209,16 +277,23 @@ class BookingDetailsModal extends Component {
                             background: "#F7F8F8",
                         }}>
 
-                            <button className="buttonAdd" style={{ minWidth: 140, width: "35%", margin: "1%" }} onClick={() => this.setModal2Visible(false, bookingDetails)} >
+                            <button className="buttonAdd" style={{ minWidth: 140, width: "35%", margin: "1%" }}
+                                // onClick={() => this.setModal2Visible(false, bookingDetails)}
+                                onClick={() => this.cancledAndApproveBooking("Approved", bookingDetails._id, false)}
+                            >
                                 {/* <span className="buttonmatter" style={{ fontSize: 15, }}>Update Booking</span> */}
-                                <span className="buttonmatter" style={{ fontSize: 15, }}>OK</span>
+                                <span className="buttonmatter" style={{ fontSize: 15, }}>Approve Booking</span>
                             </button>
 
-                            <button type="button" className="btn btn-light" style={{ width: "35%", margin: "1%", minWidth: 140, borderWidth: 0.5, borderColor: "grey", height: 40 }}
-                            // onClick={() => this.setModal2Visible(true)}
-                            >
-                                Cancle Booking
-                            </button>
+                            {
+                                (bookingDetails.bookingStatus != "Cancled") ? (
+                                    <button type="button" className="btn btn-light" style={{ width: "35%", margin: "1%", minWidth: 140, borderWidth: 0.5, borderColor: "grey", height: 40 }}
+                                        onClick={() => this.cancledAndApproveBooking("Cancled", bookingDetails._id, false)}
+                                    >
+                                        Cancle Booking
+                                    </button>
+                                ) : null
+                            }
 
                         </div>
                     </div>

@@ -18,10 +18,10 @@ class Signin extends Component {
             loader: false,
             showerror: false,
             //objID 
-            email: 'abddullahshah@gmail.com',
-            password: '123456',
-            // email: '',
-            // password: '',
+            // email: 'abddullahshah@gmail.com',
+            // password: '123456',
+            email: '',
+            password: '',
         }
         this.signin = this.signin.bind(this);
     }

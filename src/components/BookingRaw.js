@@ -44,6 +44,7 @@ class BookingsRaw extends Component {
                 {
                     data != undefined ? (
                         data.map((key, index) => {
+                            // console.log(key, index, "BOOKINGROW")
                             return (
                                 <td scope="row" key={index} >
                                     <a
@@ -58,9 +59,21 @@ class BookingsRaw extends Component {
                                             {key.bookerId ? key.bookerId.fullName : "N/a"}
                                         </div>
                                         <div style={{ width: 20, height: 20, borderRadius: 10 }}>
-                                            <img alt="BackGroundImage" src={require('../assets/noPhoto.jpg')}
+
+
+                                            {
+                                                (key.coverImage) ? (
+                                                    <img src={key.coverImage}
+                                                        style={{ width: 20, height: 20, borderRadius: 10 }}
+                                                    />
+                                                ) : <img alt="BackGroundImage" src={require('../assets/noPhoto.jpg')}
+                                                    style={{ width: 20, height: 20, borderRadius: 10 }}
+                                                    />
+                                            }
+
+                                            {/* <img alt="BackGroundImage" src={require('../assets/noPhoto.jpg')}
                                                 style={{ width: 20, height: 20, borderRadius: 10 }}
-                                            />
+                                            /> */}
                                         </div>
                                     </a>
                                 </td>

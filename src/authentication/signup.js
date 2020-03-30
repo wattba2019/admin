@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {
     Link
 } from 'react-router-dom';
-import Modal from 'react-responsive-modal';
+// import Modal1 from 'react-responsive-modal';
 import '../custom.css'
 import axios from 'axios';
 import Loader from 'react-loader-spinner'
@@ -12,9 +12,13 @@ import { FaMapMarkerAlt } from 'react-icons/fa';
 import { MdEmail, MdDescription, MdLocalPhone, MdLock } from 'react-icons/md';
 import { TiBusinessCard } from 'react-icons/ti';
 import { GiWorld } from 'react-icons/gi';
-import SimpleMap from '../components/googlemap';
+// import SimpleMap from '../components/googlemap';
 import history from '../History';
 import swal from 'sweetalert2';
+// import NewGooeleMap from '../components/newGooleMap';
+import { Modal } from "antd";
+import "antd/dist/antd.css";
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 
 class Signup extends Component {
     constructor(props) {
@@ -22,15 +26,20 @@ class Signup extends Component {
         this.state = {
             loader: false,
             showerror: false,
-            open: false,
-            // email: 'abddullahshah123@gmail.com',
-            // password: '123456',
-            // about: 'Best developer in karachi',
-            // businessName: 'Dot n Dot Graphics',
-            // telephone: '+923452153709',
-            // websiteUrl: 'nothing',
-            // addressline1: 'R592-sector 8',
-            // addressline2: '',
+            modalVisible: false,
+            markers: [
+                {
+                    name: "Current position",
+                    position: {
+                        //karachi
+                        lat: 24.9372,
+                        lng: 67.0423,
+                        //UK
+                        // lat: 54.992218402853496,
+                        // lng: -2.7072125843446315
+                    }
+                }
+            ],
             email: '',
             password: '',
             about: '',
@@ -44,13 +53,22 @@ class Signup extends Component {
         this.signup = this.signup.bind(this);
     }
 
-    onOpenModal = () => {
-        this.setState({ open: true });
+    setModalVisible = (modalVisible) => {
+        this.setState({ modalVisible: modalVisible });
+    }
+
+    onMarkerDragEnd = (coord, index) => {
+        const { latLng } = coord;
+        const lat = latLng.lat();
+        const lng = latLng.lng();
+        console.log(lat, lng, latLng, "onMarkerDragEnd")
+        this.setState(prevState => {
+            const markers = [...this.state.markers];
+            markers[index] = { ...markers[index], position: { lat, lng } };
+            return { markers };
+        });
     };
 
-    onCloseModal = () => {
-        this.setState({ open: false });
-    };
 
 
     signup() {
@@ -68,9 +86,6 @@ class Signup extends Component {
                 websiteUrl: websiteUrl,
                 addressLine1: addressline1,
                 addressLine2: addressline2,
-                // latitude: "24.5",
-                // longitude: "63.4",
-
                 location: {
                     type: "Point",
                     coordinates: [24.8825, 67.0694] //bahadrabad lat long
@@ -78,9 +93,7 @@ class Signup extends Component {
                     // coordinates: [24.9814 67.0543] //national statium lat long
 
                 },
-
                 createdAt: new Date().getTime()
-
             }
             var options = {
                 method: 'POST',
@@ -216,8 +229,13 @@ class Signup extends Component {
                                         <input type="text" className="form-control" placeholder="Address Line2" aria-label="Address Line2" aria-describedby="basic-addon1" value={addressline2} onChange={(e) => { this.setState({ addressline2: e.target.value }) }} />
                                     </div>
 
-                                    <center>
+                                    {/* <center>
                                         <div className="textLink" onClick={this.onOpenModal}>Shop Location
+                                        </div>
+                                    </center> */}
+
+                                    <center>
+                                        <div className="textLink" onClick={() => this.setModalVisible(true)}>Shop Location
                                         </div>
                                     </center>
 
@@ -255,16 +273,57 @@ class Signup extends Component {
                         />
                     </div>
 
-                    {/* modal */}
-                    <div >
-                        <Modal open={open} onClose={this.onCloseModal}>
+                    {/* <div>
+                        <Modal1 open={open} onClose={this.onCloseModal}>
                             <div style={{ marginTop: 20, }}>
                                 Please Select your shop location
                                 <span style={{ color: "white" }} >aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</span>
                                 <SimpleMap />
                             </div>
+                        </Modal1>
+                    </div> */}
+
+                    {/* modal */}
+                    <div>
+                        <Modal
+                            footer={null}
+                            // centered
+                            visible={this.state.modalVisible}
+                            onOk={() => { this.setModalVisible(false) }}
+                            onCancel={() => this.setModalVisible(false)}
+                            bodyStyle={{ padding: 0, }}
+                            width={"60%"}
+                            minWidth={"60%"}
+                        >
+                            <div>
+                                Please Select your shop location
+                                <Map
+                                    initialCenter={{
+                                        lat: 24.9372,
+                                        lng: 67.0423,
+                                        // lat: 54.992218402853496,
+                                        // lng: -2.7072125843446315
+                                    }}
+                                    google={this.props.google}
+                                    style={{ width: '100%', height: 500, position: 'relative', margin: "0px auto" }}
+                                    zoom={7}
+                                >
+                                    {this.state.markers.map((marker, index) => (
+                                        <Marker key={index}
+                                            position={marker.position}
+                                            draggable={true}
+                                            onDragend={(t, map, coord) => this.onMarkerDragEnd(coord, index)}
+                                            name={marker.name}
+                                        />
+                                    ))}
+                                </Map>
+
+                            </div>
                         </Modal>
                     </div>
+
+
+
                 </div>
             </div >
         )
@@ -281,4 +340,8 @@ function mapDispatchToProp(dispatch) {
     })
 }
 
-export default connect(mapStateToProp, mapDispatchToProp)(Signup);
+// export default connect(mapStateToProp, mapDispatchToProp)(Signup);
+
+export default GoogleApiWrapper({
+    apiKey: ("AIzaSyBQHKZTwhPJX_9IevM5jKC8kmz0NzqAaBk")
+})(Signup)

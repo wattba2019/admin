@@ -19,7 +19,7 @@ class StylistCard extends Component {
 
     imagePick(file, _id) {
         const { userProfile } = this.props
-        // console.log(userProfile._id, _id, "USERPROFILE")
+        console.log(userProfile._id, _id, file, "USERPROFILE")
         if (file) {
             this.props.updateStylistImg(file, _id, userProfile._id)
         }

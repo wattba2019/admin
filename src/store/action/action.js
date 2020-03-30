@@ -468,22 +468,44 @@ export function getBookings(shopId, bookingDate) {
         };
         axios(options)
             .then((bookings) => {
-                console.log(bookings, 'fetched bookings');
+                console.log(bookings, 'fetched_bookings');
                 dispatch({ type: ActionTypes.FETCHED_BOOKINGS, payload: bookings.data })
-
                 let booking = bookings.data.bookingSort
                 const keys = Object.keys(booking)
-
-                let serviceId;
+                let serviceId = [];
+                let packageId = [];
                 for (const key of keys) {
                     let arr = booking[key]
                     for (let index = 0; index < arr.length; index++) {
-                        serviceId = arr[index].requiredServiceId;
+                        let idArr = arr[index].requiredServiceId
+                        console.log(arr[index], "INSIDE_LOOP")
+
+                        if (arr[index].package === false || arr[index].package === "false") {
+                            for (let k = 0; k < idArr.length; k++) {
+                                const element = idArr[k];
+                                console.log(element, "THIS_IS_SERVICE")
+                                // Check if a value exists in the fruits array
+                                if (serviceId.indexOf(element) === -1) {
+                                    serviceId.push(element)
+                                }
+                            }
+                        }
+                        else {
+                            for (let k = 0; k < idArr.length; k++) {
+                                const element = idArr[k];
+                                console.log(element, "THIS_IS_PACKAGE")
+                                // Check if a value exists in the fruits array
+                                if (packageId.indexOf(element) === -1) {
+                                    packageId.push(element)
+                                }
+                            }
+                        }
                     }
                 }
 
+                console.log(serviceId, packageId, "PACKID")
                 dispatch(getBookedService(serviceId));
-
+                dispatch(getBookedPackage(packageId));
             })
             .catch((err) => {
                 console.log(err, "Error in fetching bookings")
@@ -526,12 +548,78 @@ export function getBookedService(serviceId) {
         }
         else {
             dispatch({ type: ActionTypes.FETCHED_BOOKED_SERVICE, payload: [] })
-
         }
     }
 }
 
 
+
+export function getBookedPackage(packageId) {
+    return dispatch => {
+        console.log(packageId, "packageId")
+        if (packageId != undefined) {
+            let idsCloneData = { packageId: packageId }
+            var options = {
+                method: 'POST',
+                url: `${baseURL.baseURL}/getNearbyShopServices/PackageFindWithId/`,
+                headers:
+                {
+                    'cache-control': 'no-cache',
+                    "Allow-Cross-Origin": '*',
+                },
+                data: idsCloneData
+            }
+            axios(options)
+                .then(result => {
+                    let bookedPackage = result.data.data
+                    console.log(bookedPackage, "Fetch_Booked_Package")
+                    dispatch({ type: ActionTypes.FETCHED_BOOKED_PACKAGE, payload: bookedPackage })
+                })
+                .catch(err => {
+                    let error = JSON.parse(JSON.stringify(err))
+                    console.log(error, 'ERRROR', err)
+                })
+        }
+        else {
+            dispatch({ type: ActionTypes.FETCHED_BOOKED_PACKAGE, payload: [] })
+        }
+    }
+}
+
+
+export function cancledAndApproveBooking(bookingStatus, _id) {
+    return dispatch => {
+        console.log(bookingStatus, _id, "packageId")
+        let statusClone = {
+            bookingStatus: bookingStatus,
+            _id: _id
+        }
+        var options = {
+            method: 'POST',
+            url: `${baseURL.baseURL}/bookings/cancleAndApproveBooking/`,
+            headers:
+            {
+                'cache-control': 'no-cache',
+                "Allow-Cross-Origin": '*',
+            },
+            data: statusClone
+        }
+        axios(options)
+            .then(result => {
+                let response = result.data.message
+                console.log(response, "Update_booking_status")
+                swal.fire(
+                    'Success!',
+                    response,
+                    'success'
+                )
+            })
+            .catch(err => {
+                let error = JSON.parse(JSON.stringify(err))
+                console.log(error, 'ERRROR', err)
+            })
+    }
+}
 
 
 
@@ -777,7 +865,7 @@ export function updateGallery(oldImages, _id) {
 
 export function updateStylistImg(imgFile, _id, userId) {
     return dispatch => {
-        // console.log(imgFile, _id, userId, "DATA_INSIDE_ACTION")
+        console.log(imgFile, _id, userId, "DATA_INSIDE_ACTION")
         var bodyFormData = new FormData();
         bodyFormData.append('img', imgFile);
         bodyFormData.append('_id', _id);

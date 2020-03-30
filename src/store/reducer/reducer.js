@@ -12,7 +12,8 @@ const INITIAL_STATE = {
     workingHours: {},
     bookings: null,
     gallery: [],
-    bookedService: []
+    bookedService: [],
+    bookedPackage: []
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -110,6 +111,11 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 bookedService: action.payload
+            };
+        case ActionTypes.FETCHED_BOOKED_PACKAGE:
+            return {
+                ...state,
+                bookedPackage: action.payload
             };
         default:
             return state;
