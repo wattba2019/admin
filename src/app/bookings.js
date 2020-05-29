@@ -148,7 +148,7 @@ class Bookings extends Component {
     render() {
         const { slider, bookingData, currentDate, filteredUnsortBookings, bookedService, bookedPackage } = this.state
         let reactSwipeEl;
-        // console.log('filteredUnsortBookings', bookedService)
+        console.log('filteredUnsortBookings', bookingData)
 
         return (
             <div style={{
@@ -245,12 +245,16 @@ class Bookings extends Component {
 
                         {
                             slider.map((key, index) => {
-                                // console.log(key, "DATA")
+                                console.log(key, "DATA")
                                 return (
                                     <div key={index} style={{
-                                        display: "flex", flex: 1, marginTop: 15, marginBottom: 25
+                                        display: "flex", flex: 1, marginTop: 15, marginBottom: 25,
+                                        // background: "red"
                                     }}>
-                                        <div style={{ flex: 8, background: "#fff", justifyContent: "flex-start", alignItems: "flex-start", display: "flex", padding: 15, flexDirection: "column" }}>
+                                        <div style={{
+                                            flex: 8, justifyContent: "flex-start", alignItems: "flex-start", display: "flex", padding: 15, flexDirection: "column",
+                                            // background: "red",
+                                        }}>
 
                                             <div style={{ fontWeight: "bold" }}>
                                                 {moment(currentDate).format("dddd, MMMM Do YYYY")}
@@ -262,10 +266,13 @@ class Bookings extends Component {
 
                                             <div style={{
                                                 marginTop: 15,
-                                                width: "100%"
+                                                width: "100%",
+                                                // background: "yellow"
                                             }}>
                                                 <table className="table table-striped table table-sm">
-                                                    <tbody >
+                                                    <tbody
+                                                    // style={{ background: "orange", }}
+                                                    >
 
                                                         {
                                                             (bookingData["7"]) ? (

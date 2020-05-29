@@ -686,7 +686,8 @@ export function updateProfile(updatedUserData) {
         };
         axios(options)
             .then((data) => {
-                console.log(data.data.user, "profile updated successfully.");
+                // console.log(data.data.user, "profile updated successfully.");
+                console.log(data.data.currentCityandCountryName, "profile updated successfully.");
                 localStorage.setItem('userProfile', JSON.stringify(data.data.user));
                 dispatch({ type: ActionTypes.SAVE_USER, payload: data.data.user })
                 swal.fire(

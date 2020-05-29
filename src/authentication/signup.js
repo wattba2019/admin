@@ -72,7 +72,7 @@ class Signup extends Component {
 
 
     signup() {
-        const { email, password, about, businessName, telephone, websiteUrl, addressline1, addressline2 } = this.state;
+        const { email, password, about, businessName, telephone, websiteUrl, addressline1, addressline2, markers } = this.state;
         if (email !== '' && password !== '' && about !== '' && businessName !== '' && telephone !== '' && addressline1 !== '') {
             this.setState({
                 loader: !this.state.loader
@@ -88,10 +88,10 @@ class Signup extends Component {
                 addressLine2: addressline2,
                 location: {
                     type: "Point",
-                    coordinates: [24.8825, 67.0694] //bahadrabad lat long
+                    coordinates: [markers[0].position.lat, markers[0].position.lng] //current location
+                    // coordinates: [24.8825, 67.0694] //bahadrabad lat long
                     // coordinates: [24.8960, 67.0814] //national statium lat long
                     // coordinates: [24.9814 67.0543] //national statium lat long
-
                 },
                 createdAt: new Date().getTime()
             }
@@ -154,8 +154,13 @@ class Signup extends Component {
             about, businessName,
             telephone, websiteUrl,
             addressline1, addressline2,
-            err, showerror, loader
+            err, showerror, loader, markers
         } = this.state;
+
+        console.log(this.props.bseUrl, "bseUrl")
+
+
+        // console.log(markers[0].position.lat, markers[0].position.lng, "markers")
         return (
             <div>
                 <div style={{ display: "flex", flexBasis: "100%", backgroundColor: "#F7F8F8" }}>
@@ -229,11 +234,6 @@ class Signup extends Component {
                                         <input type="text" className="form-control" placeholder="Address Line2" aria-label="Address Line2" aria-describedby="basic-addon1" value={addressline2} onChange={(e) => { this.setState({ addressline2: e.target.value }) }} />
                                     </div>
 
-                                    {/* <center>
-                                        <div className="textLink" onClick={this.onOpenModal}>Shop Location
-                                        </div>
-                                    </center> */}
-
                                     <center>
                                         <div className="textLink" onClick={() => this.setModalVisible(true)}>Shop Location
                                         </div>
@@ -273,16 +273,6 @@ class Signup extends Component {
                         />
                     </div>
 
-                    {/* <div>
-                        <Modal1 open={open} onClose={this.onCloseModal}>
-                            <div style={{ marginTop: 20, }}>
-                                Please Select your shop location
-                                <span style={{ color: "white" }} >aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</span>
-                                <SimpleMap />
-                            </div>
-                        </Modal1>
-                    </div> */}
-
                     {/* modal */}
                     <div>
                         <Modal
@@ -299,8 +289,10 @@ class Signup extends Component {
                                 Please Select your shop location
                                 <Map
                                     initialCenter={{
+                                        //karachi
                                         lat: 24.9372,
                                         lng: 67.0423,
+                                        //uk
                                         // lat: 54.992218402853496,
                                         // lng: -2.7072125843446315
                                     }}
@@ -344,4 +336,4 @@ function mapDispatchToProp(dispatch) {
 
 export default GoogleApiWrapper({
     apiKey: ("AIzaSyBQHKZTwhPJX_9IevM5jKC8kmz0NzqAaBk")
-})(Signup)
+})(connect(mapStateToProp, mapDispatchToProp)(Signup))

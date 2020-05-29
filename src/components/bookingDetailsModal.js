@@ -277,13 +277,24 @@ class BookingDetailsModal extends Component {
                             background: "#F7F8F8",
                         }}>
 
-                            <button className="buttonAdd" style={{ minWidth: 140, width: "35%", margin: "1%" }}
-                                // onClick={() => this.setModal2Visible(false, bookingDetails)}
-                                onClick={() => this.cancledAndApproveBooking("Approved", bookingDetails._id, false)}
-                            >
-                                {/* <span className="buttonmatter" style={{ fontSize: 15, }}>Update Booking</span> */}
-                                <span className="buttonmatter" style={{ fontSize: 15, }}>Approve Booking</span>
-                            </button>
+
+                            {
+                                (bookingDetails.bookingStatus != "Approved") ? (
+                                    <button className="buttonAdd" style={{ minWidth: 140, width: "35%", margin: "1%" }}
+                                        // onClick={() => this.setModal2Visible(false, bookingDetails)}
+                                        onClick={() => this.cancledAndApproveBooking("Approved", bookingDetails._id, false)}
+                                    >
+                                        {/* <span className="buttonmatter" style={{ fontSize: 15, }}>Update Booking</span> */}
+                                        <span className="buttonmatter" style={{ fontSize: 15, }}>Approve Booking</span>
+                                    </button>
+                                ) : <button className="buttonAdd" style={{ minWidth: 140, width: "35%", margin: "1%" }}
+                                    onClick={() => this.setModal2Visible(false, bookingDetails)}
+                                >
+                                        {/* <span className="buttonmatter" style={{ fontSize: 15, }}>Update Booking</span> */}
+                                        <span className="buttonmatter" style={{ fontSize: 15, }}>OK</span>
+                                    </button>
+                            }
+
 
                             {
                                 (bookingDetails.bookingStatus != "Cancled") ? (

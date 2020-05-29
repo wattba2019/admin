@@ -96,6 +96,8 @@ class StylistModal extends Component {
         const { that, services, } = this.props
         const { fileList, gArr, errUploadImgLimit, } = this.state;
 
+        console.log(that.state.previewImage, "previewImage")
+
         const uploadButton = (
             <div>
                 <Icon type="plus" />
@@ -145,7 +147,8 @@ class StylistModal extends Component {
                             </div>
 
                             <div style={{ display: "flex", flex: 1, width: "100%", marginTop: 10, marginLeft: 10 }}>
-                                <Radio.Group onChange={this.onChangeRadio} value={this.state.value}>
+                                {/* <Radio.Group onChange={this.onChangeRadio} value={this.state.value}> */}
+                                <Radio.Group onChange={this.onChangeRadio} value={that.state.gender}>
                                     <Radio value={"Male"}>Male</Radio>
                                     <Radio value={"Female"}>Female</Radio>
                                 </Radio.Group>
