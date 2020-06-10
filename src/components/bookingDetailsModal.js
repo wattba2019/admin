@@ -17,7 +17,7 @@ class BookingDetailsModal extends Component {
 
     render() {
         const { modal2Visible, bookingDetails, bookedService, bookedPackage } = this.props.modalState;
-        // console.log(bookingDetails, bookedService, bookedPackage, "INSIDEMODAL")
+        console.log(bookingDetails, bookedService, bookedPackage, "INSIDEMODAL")
 
         let selectedbookedService = []
         let selectedbookedPackage = []
@@ -75,7 +75,24 @@ class BookingDetailsModal extends Component {
                             display: "flex", flex: 6, flexWrap: "wrap", minWidth: 140, flexDirection: "column", padding: "4%",
                             // background: "orange"
                         }}>
-                            <div style={{ fontWeight: "bold" }}>{bookingDetails.bookerId ? bookingDetails.bookerId.fullName : "N/a"}</div>
+
+                            <div style={{
+                                display: "flex", flex: 1, flexDirection: "row",
+                                justifyContent: "flex-start", alignItems: "center",
+                                // background: "green"
+                            }}>
+                                <div style={{ display: "flex", flexDirection: "column", flex: 2, }}>
+                                    {
+                                        bookingDetails.bookerId && bookingDetails.bookerName ?
+                                            <div style={{ fontWeight: "bold" }}>{bookingDetails.bookerId ? bookingDetails.bookerName : "N/a"}</div>
+                                            :
+                                            <div style={{ fontWeight: "bold" }}>{bookingDetails.bookerId ? bookingDetails.bookerId.fullName : "N/a"}</div>
+                                    }
+                                </div>
+                                <div style={{ display: "flex", flexDirection: "column", flex: 2, fontWeight: "bold" }}>
+                                    <div style={{ fontWeight: "bold", }}>{bookingDetails.bookerId ? bookingDetails.userPhoneNumber : "N/a"}</div>
+                                </div>
+                            </div>
 
                             <div style={{
                                 display: "flex", flex: 1, flexDirection: "row",
@@ -90,7 +107,6 @@ class BookingDetailsModal extends Component {
 
                                 <div style={{ display: "flex", flexDirection: "column", flex: 2, fontWeight: "bold" }}>
                                     <p> {moment(bookingDetails.bookingDateTime).format("dddd, MMMM Do YYYY")}</p>
-
                                     {
                                         (bookingDetails.bookingStatus === "Pending") ? (
                                             <p style={{ color: "orange" }}>{bookingDetails.bookingStatus}</p>
@@ -98,12 +114,9 @@ class BookingDetailsModal extends Component {
                                             (bookingDetails.bookingStatus === "Cancled") ? (
                                                 <p style={{ color: "red" }}>{bookingDetails.bookingStatus}</p>
                                             ) : <p style={{ color: "green" }}>{bookingDetails.bookingStatus}</p>
-
                                     }
                                 </div>
-
                             </div>
-
                         </div>
 
                         <div style={{
@@ -191,25 +204,84 @@ class BookingDetailsModal extends Component {
 
                         </div>
 
-
-
-
-
-
-
                         <div style={{
-                            display: "flex", flex: 6, flexDirection: "column", padding: "4%",
-                            // background: "grey"
+                            display: "flex", flex: 6, flexWrap: "wrap", minWidth: 140, flexDirection: "column", padding: "4%",
+                            // background: "orange"
                         }}>
+
+                            <div style={{
+                                display: "flex", flex: 1, flexDirection: "row",
+                                justifyContent: "flex-start", alignItems: "center",
+                                // background: "green"
+                            }}>
+                                <div style={{ display: "flex", flexDirection: "column", flex: 2, }}>
+                                    <div style={{ fontWeight: "bold", marginTop: 10 }}>Worker Assigned</div>
+
+                                    <div style={{
+                                        display: "flex", flexDirection: "row", margin: '2%', width: "95%",
+                                        // background: "orange"
+                                    }}>
+                                        <div style={{
+                                            display: "flex", justifyContent: "center", alignItems: "center", width: 56, height: 56, borderRadius: 28,
+                                            background: "#EC5F59"
+                                        }}>
+                                            <div style={{ display: "flex", width: 50, height: 50, borderRadius: 25, justifyContent: "center", alignItems: "center", }}>
+                                                {
+                                                    (bookingDetails && bookingDetails.stylistId && bookingDetails.stylistId.coverImage) ? (
+                                                        <img src={bookingDetails.stylistId.coverImage}
+                                                            style={{ width: 50, height: 50, borderRadius: 25 }}
+                                                        />
+                                                    ) : <img alt="BackGroundImage" src={require('../assets/noPhoto.jpg')}
+                                                        style={{ width: 50, height: 50, borderRadius: 25 }}
+                                                        />
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div style={{
+                                            display: "flex", justifyContent: "space-between", alignItems: "center", padding: "5%", width: "70%", marginLeft: 10,
+                                            // background: "grey"
+                                        }}>
+                                            <div>
+                                                {bookingDetails.stylistId ? bookingDetails.stylistId.fullname : "N/a"}
+                                            </div>
+                                            <div style={{ display: "flex", backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
+                                                <IoMdCheckmark style={{ color: "white", }} />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div style={{ display: "flex", flexDirection: "column", flex: 2, fontWeight: "bold" }}>
+                                    <div style={{ fontWeight: "bold", marginTop: 10 }}>Special instructions</div>
+                                    <div style={{
+                                        display: "flex", alignItems: "center", height: 56,
+                                    }}>
+                                        <div style={{ fontWeight: "bold" }}>{bookingDetails.bookerId ? bookingDetails.instruction != "" ? bookingDetails.instruction : "N/a" : "N/a"}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                        {/* <div style={{
+                            display: "flex", flex: 6, flexDirection: "column", padding: "4%",
+                            background: "grey"
+                        }}>
+                            
                             <div style={{ fontWeight: "bold", marginTop: 10 }}>Worker Assigned</div>
 
                             <div style={{
                                 display: "flex", flex: 1, flexWrap: "wrap", flexDirection: "row",
-                                // background: "red"
+                                background: "red"
                             }}>
                                 <div style={{
-                                    display: "flex", flexDirection: "row", margin: '2%', width: 200,
-                                    // background: "orange"
+                                    display: "flex", flexDirection: "row", margin: '2%', width: "45%",
+                                    background: "orange"
                                 }}>
                                     <div style={{
                                         display: "flex", justifyContent: "center", alignItems: "center", width: 56, height: 56, borderRadius: 28,
@@ -240,36 +312,8 @@ class BookingDetailsModal extends Component {
                                         </div>
                                     </div>
                                 </div>
-
-                                {/* <div style={{
-                                    display: "flex", flexDirection: "row", margin: '2%', width: 200,
-                                    // background: "orange"
-                                }}>
-                                    <div style={{
-                                        display: "flex", justifyContent: "center", alignItems: "center", width: 56, height: 56, borderRadius: 28,
-                                        background: "#EC5F59"
-                                    }}>
-                                        <div style={{ display: "flex", width: 50, height: 50, borderRadius: 25, justifyContent: "center", alignItems: "center", }}>
-                                            <img alt="BackGroundImage" src={require('../assets/noPhoto.jpg')}
-                                                style={{ width: 50, height: 50, borderRadius: 25 }}
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div style={{
-                                        display: "flex", justifyContent: "space-between", alignItems: "center", padding: "5%", width: "70%", marginLeft: 10,
-                                        // background: "grey"
-                                    }}>
-                                        <div>
-                                            John Doe
-                                        </div>
-                                        <div style={{ display: "flex", backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                            <IoMdCheckmark style={{ color: "white", }} />
-                                        </div>
-                                    </div>
-                                </div> */}
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* Footer */}
                         <div className="cardshadowWithButton" style={{

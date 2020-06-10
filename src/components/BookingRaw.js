@@ -84,7 +84,12 @@ class BookingsRaw extends Component {
                                                 justifyContent: "space-between", fontSize: 9, alignItems: "center", paddingLeft: 10, paddingRight: 10
                                             }}>
                                             <div>
-                                                {data[0].bookerId ? data[0].bookerId.fullName : "N/a"}
+                                                {
+                                                    data[0].bookerId && data[0].bookerName ?
+                                                        data[0].bookerId ? data[0].bookerName : "N/a"
+                                                        :
+                                                        data[0].bookerId ? data[0].bookerId.fullName : "N/a"
+                                                }
                                             </div>
                                             <div style={{ width: 20, height: 20, borderRadius: 10 }}>
                                                 {
