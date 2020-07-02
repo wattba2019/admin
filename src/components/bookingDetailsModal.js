@@ -4,6 +4,8 @@ import { Modal } from "antd";
 import "antd/dist/antd.css";
 import { IoMdCheckmark } from 'react-icons/io';
 import moment from 'moment';
+import { assignStylist } from "../store/action/action";
+import { connect } from 'react-redux';
 
 class BookingDetailsModal extends Component {
 
@@ -15,9 +17,17 @@ class BookingDetailsModal extends Component {
         this.props.bookingStatus(bookingStatus, _id, modalBolean)
     }
 
+    assignStylist(key, index, bookerId, bookingDetails) {
+
+        let updatedStylist = bookingDetails.stylistId = key
+        console.log(updatedStylist, "SelectedBarber")
+        this.props.assignStylist(key._id, bookerId)
+        this.setModal2Visible(false, bookingDetails)
+    }
+
     render() {
         const { modal2Visible, bookingDetails, bookedService, bookedPackage } = this.props.modalState;
-        console.log(bookingDetails, bookedService, bookedPackage, "INSIDEMODAL")
+        console.log(bookingDetails.stylistId, "INSIDEMODAL")
 
         let selectedbookedService = []
         let selectedbookedPackage = []
@@ -52,8 +62,7 @@ class BookingDetailsModal extends Component {
             }
         }
 
-        console.log(selectedbookedPackage, selectedbookedService, "PACK_AND_SERVICE")
-
+        let stylistDetails = bookingDetails.stylistId
 
         return (
             <div>
@@ -65,6 +74,7 @@ class BookingDetailsModal extends Component {
                     onCancel={() => this.setModal2Visible(false, bookingDetails)}
                     bodyStyle={{ padding: 0, }}
                     width={"35%"}
+                    // height={600}
                     minWidth={"35%"}
                 >
                     <div style={{
@@ -168,13 +178,10 @@ class BookingDetailsModal extends Component {
                                                         <div style={{ fontSize: 15, fontWeight: "bold" }}>{key.packageName}</div>
                                                         <div>{key.packageDescription}</div>
                                                     </div>
-
                                                 )
                                             })
                                         ) : <div style={{ fontSize: 15 }}>There is no data</div>
-
                                 }
-
                             </div>
 
                             {
@@ -199,9 +206,7 @@ class BookingDetailsModal extends Component {
 
                                     </div>
                                 ) : null
-
                             }
-
                         </div>
 
                         <div style={{
@@ -214,44 +219,46 @@ class BookingDetailsModal extends Component {
                                 justifyContent: "flex-start", alignItems: "center",
                                 // background: "green"
                             }}>
-                                <div style={{ display: "flex", flexDirection: "column", flex: 2, }}>
-                                    <div style={{ fontWeight: "bold", marginTop: 10 }}>Worker Assigned</div>
 
-                                    <div style={{
-                                        display: "flex", flexDirection: "row", margin: '2%', width: "95%",
-                                        // background: "orange"
-                                    }}>
-                                        <div style={{
-                                            display: "flex", justifyContent: "center", alignItems: "center", width: 56, height: 56, borderRadius: 28,
-                                            background: "#EC5F59"
-                                        }}>
-                                            <div style={{ display: "flex", width: 50, height: 50, borderRadius: 25, justifyContent: "center", alignItems: "center", }}>
-                                                {
-                                                    (bookingDetails && bookingDetails.stylistId && bookingDetails.stylistId.coverImage) ? (
-                                                        <img src={bookingDetails.stylistId.coverImage}
-                                                            style={{ width: 50, height: 50, borderRadius: 25 }}
-                                                        />
-                                                    ) : <img alt="BackGroundImage" src={require('../assets/noPhoto.jpg')}
-                                                        style={{ width: 50, height: 50, borderRadius: 25 }}
-                                                        />
-                                                }
+                                {
+                                    (stylistDetails != null) ? (
+                                        <div style={{ display: "flex", flexDirection: "column", flex: 2, }}>
+                                            <div style={{ fontWeight: "bold", marginTop: 10 }}>Worker Assigned</div>
+                                            <div style={{
+                                                display: "flex", flexDirection: "row", margin: '2%', width: "95%",
+                                                // background: "orange"
+                                            }}>
+                                                <div style={{
+                                                    display: "flex", justifyContent: "center", alignItems: "center", width: 56, height: 56, borderRadius: 28,
+                                                    background: "#EC5F59"
+                                                }}>
+                                                    <div style={{ display: "flex", width: 50, height: 50, borderRadius: 25, justifyContent: "center", alignItems: "center", }}>
+                                                        {
+                                                            (bookingDetails && bookingDetails.stylistId && bookingDetails.stylistId.coverImage) ? (
+                                                                <img src={bookingDetails.stylistId.coverImage}
+                                                                    style={{ width: 50, height: 50, borderRadius: 25 }}
+                                                                />
+                                                            ) : <img alt="BackGroundImage" src={require('../assets/noPhoto.jpg')}
+                                                                style={{ width: 50, height: 50, borderRadius: 25 }}
+                                                                />
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div style={{
+                                                    display: "flex", justifyContent: "space-between", alignItems: "center", padding: "5%", width: "70%", marginLeft: 10,
+                                                    // background: "grey"
+                                                }}>
+                                                    <div>
+                                                        {bookingDetails.stylistId ? bookingDetails.stylistId.fullname : "N/a"}
+                                                    </div>
+                                                    <div style={{ display: "flex", backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
+                                                        <IoMdCheckmark style={{ color: "white", }} />
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-
-                                        <div style={{
-                                            display: "flex", justifyContent: "space-between", alignItems: "center", padding: "5%", width: "70%", marginLeft: 10,
-                                            // background: "grey"
-                                        }}>
-                                            <div>
-                                                {bookingDetails.stylistId ? bookingDetails.stylistId.fullname : "N/a"}
-                                            </div>
-                                            <div style={{ display: "flex", backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                                <IoMdCheckmark style={{ color: "white", }} />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
+                                    ) : null
+                                }
 
                                 <div style={{ display: "flex", flexDirection: "column", flex: 2, fontWeight: "bold" }}>
                                     <div style={{ fontWeight: "bold", marginTop: 10 }}>Special instructions</div>
@@ -264,8 +271,63 @@ class BookingDetailsModal extends Component {
                             </div>
                         </div>
 
-
-
+                        {
+                            (stylistDetails === null) ? (
+                                <>
+                                    <div style={{ fontWeight: "bold", marginTop: 10, marginLeft: "2%" }}>Worker Assigned</div>
+                                    <div style={{
+                                        display: "flex", flex: 1,
+                                        flexDirection: "row",
+                                        flexWrap: "wrap",
+                                        padding: "2%"
+                                        // background: "green"
+                                    }}>
+                                        {
+                                            this.props.stylists && this.props.stylists.map((key, index) => {
+                                                return (
+                                                    <div style={{ display: "flex", flexDirection: "column", width: "50%", }}>
+                                                        <div style={{
+                                                            display: "flex", flexDirection: "row", margin: '2%', width: "95%",
+                                                            // background: "orange"
+                                                        }}>
+                                                            <div style={{
+                                                                display: "flex", justifyContent: "center", alignItems: "center", width: 56, height: 56, borderRadius: 28,
+                                                                background: "#EC5F59"
+                                                            }}>
+                                                                <div style={{ display: "flex", width: 50, height: 50, borderRadius: 25, justifyContent: "center", alignItems: "center", }}>
+                                                                    {
+                                                                        (key && key.coverImage && key.coverImage) ? (
+                                                                            <img src={key.coverImage}
+                                                                                style={{ width: 50, height: 50, borderRadius: 25 }}
+                                                                            />
+                                                                        ) : <img alt="BackGroundImage" src={require('../assets/noPhoto.jpg')}
+                                                                            style={{ width: 50, height: 50, borderRadius: 25 }}
+                                                                            />
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                            <div style={{
+                                                                display: "flex", justifyContent: "space-between", alignItems: "center", padding: "5%", width: "70%", marginLeft: 10,
+                                                                // background: "grey"
+                                                            }}>
+                                                                <div>
+                                                                    {key.fullname ? key.fullname : "N/a"}
+                                                                </div>
+                                                                <div
+                                                                    onClick={() => this.assignStylist(key, index, bookingDetails._id, bookingDetails)}
+                                                                    style={{ display: "flex", backgroundColor: "#d3d3d3", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5, }}>
+                                                                    <IoMdCheckmark style={{ color: "white", }} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </>
+                            ) : null
+                        }
 
 
                         {/* <div style={{
@@ -323,7 +385,7 @@ class BookingDetailsModal extends Component {
 
 
                             {
-                                (bookingDetails.bookingStatus != "Approved") ? (
+                                (bookingDetails.bookingStatus != "Approved" && bookingDetails.bookingStatus != "Complete") ? (
                                     <button className="buttonAdd" style={{ minWidth: 140, width: "35%", margin: "1%" }}
                                         // onClick={() => this.setModal2Visible(false, bookingDetails)}
                                         onClick={() => this.cancledAndApproveBooking("Approved", bookingDetails._id, false)}
@@ -331,17 +393,22 @@ class BookingDetailsModal extends Component {
                                         {/* <span className="buttonmatter" style={{ fontSize: 15, }}>Update Booking</span> */}
                                         <span className="buttonmatter" style={{ fontSize: 15, }}>Approve Booking</span>
                                     </button>
-                                ) : <button className="buttonAdd" style={{ minWidth: 140, width: "35%", margin: "1%" }}
-                                    onClick={() => this.setModal2Visible(false, bookingDetails)}
-                                >
-                                        {/* <span className="buttonmatter" style={{ fontSize: 15, }}>Update Booking</span> */}
-                                        <span className="buttonmatter" style={{ fontSize: 15, }}>OK</span>
-                                    </button>
+                                ) :
+                                    (bookingDetails.bookingStatus != "Complete") ? (
+                                        <button className="buttonAdd" style={{ minWidth: 140, width: "35%", margin: "1%" }}
+                                            // onClick={() => this.setModal2Visible(false, bookingDetails)}
+                                            onClick={() => this.cancledAndApproveBooking("Complete", bookingDetails._id, false)}
+                                        >
+                                            {/* <span className="buttonmatter" style={{ fontSize: 15, }}>Update Booking</span> */}
+                                            <span className="buttonmatter" style={{ fontSize: 15, }}>Complete</span>
+                                        </button>
+                                    ) : null
+
                             }
 
 
                             {
-                                (bookingDetails.bookingStatus != "Cancled") ? (
+                                (bookingDetails.bookingStatus != "Cancled" && bookingDetails.bookingStatus != "Complete") ? (
                                     <button type="button" className="btn btn-light" style={{ width: "35%", margin: "1%", minWidth: 140, borderWidth: 0.5, borderColor: "grey", height: 40 }}
                                         onClick={() => this.cancledAndApproveBooking("Cancled", bookingDetails._id, false)}
                                     >
@@ -359,4 +426,21 @@ class BookingDetailsModal extends Component {
     }
 }
 
-export default BookingDetailsModal;
+// export default BookingDetailsModal;
+
+function mapStateToProp(state) {
+    return ({
+        // bseUrl: state.root.bseUrl,
+        // uid: state.root.userProfile._id,
+        stylists: state.root.stylists,
+    })
+}
+function mapDispatchToProp(dispatch) {
+    return ({
+        assignStylist: (stylistId, bookerId) => {
+            dispatch(assignStylist(stylistId, bookerId));
+        },
+    })
+}
+
+export default connect(mapStateToProp, mapDispatchToProp)(BookingDetailsModal);

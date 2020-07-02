@@ -9,6 +9,7 @@ import Sendverificationmail from './authentication/sendverificationmail';
 import VerifyCode from './authentication/verifycode';
 import ChangePassword from './authentication/changepassword';
 import Home from './app/home';
+import AutoComplete from './components/autoComplete';
 import { setUserCredentials, } from "./store/action/action";
 
 class Routers extends Component {
@@ -51,6 +52,7 @@ class Routers extends Component {
                         </div>
 
                     ) : <div>
+                            {/* <Route exact path="/" component={AutoComplete} /> */}
                             <Route exact path="/" component={Signin} />
                             <Route path="/Signin" component={Signin} />
                             <Route path="/Signup" component={Signup} />

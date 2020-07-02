@@ -16,27 +16,33 @@ import { GiWorld } from 'react-icons/gi';
 import history from '../History';
 import swal from 'sweetalert2';
 // import NewGooeleMap from '../components/newGooleMap';
-import { Modal } from "antd";
+import { Modal, AutoComplete } from "antd";
 import "antd/dist/antd.css";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
+// import AutoComplete from './components/autoComplete';
+
+import PlacesAutocomplete, { geocodeByAddress, getLatLng, } from 'react-places-autocomplete';
 
 class Signup extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            zoom: 7,
+            address: '',
             loader: false,
             showerror: false,
             modalVisible: false,
+            initialCenter: [54.992218402853496, -2.7072125843446315],
             markers: [
                 {
                     name: "Current position",
                     position: {
                         //karachi
-                        lat: 24.9372,
-                        lng: 67.0423,
+                        // lat: 24.9372,
+                        // lng: 67.0423,
                         //UK
-                        // lat: 54.992218402853496,
-                        // lng: -2.7072125843446315
+                        lat: 54.992218402853496,
+                        lng: -2.7072125843446315
                     }
                 }
             ],
@@ -73,7 +79,7 @@ class Signup extends Component {
 
     signup() {
         const { email, password, about, businessName, telephone, websiteUrl, addressline1, addressline2, markers } = this.state;
-        if (email !== '' && password !== '' && about !== '' && businessName !== '' && telephone !== '' && addressline1 !== '') {
+        if (email !== '' && password !== '' && about !== '' && businessName !== '' && telephone !== '' && addressline1 !== '' && addressline2 !== '') {
             this.setState({
                 loader: !this.state.loader
             })
@@ -148,6 +154,45 @@ class Signup extends Component {
 
     }
 
+    handleChange = address => {
+        this.setState({ address });
+    };
+
+    handleSelect = address => {
+        geocodeByAddress(address)
+            .then(results => getLatLng(results[0]))
+            // .then(latLng => console.log('Success', latLng));
+            .then(latLng => {
+
+                var points = [
+                    { lat: latLng.lat, lng: latLng.lng },
+                ]
+                var bounds = new this.props.google.maps.LatLngBounds();
+                for (var i = 0; i < points.length; i++) {
+                    bounds.extend(points[i]);
+                }
+
+                console.log(bounds, "bounds")
+
+                let markers = [
+                    {
+                        name: "Current position",
+                        position: {
+                            lat: latLng.lat,
+                            lng: latLng.lng
+                        }
+                    }
+                ]
+                this.setState({
+                    address: address,
+                    markers: markers,
+                    initialCenter: [latLng.lat, latLng.lng],
+                    bounds: bounds
+                })
+            })
+            .catch(error => console.error('Error', error));
+    };
+
     render() {
         const {
             open, email, password,
@@ -157,15 +202,19 @@ class Signup extends Component {
             err, showerror, loader, markers
         } = this.state;
 
-        console.log(this.props.bseUrl, "bseUrl")
+        // console.log(markers[0]., "bseUrl")
 
+        // var bounds = new this.props.google.maps.LatLngBounds();
+        // for (var i = 0; i < points.length; i++) {
+        //     bounds.extend(points[i]);
+        // }
 
         // console.log(markers[0].position.lat, markers[0].position.lng, "markers")
         return (
             <div>
                 <div style={{ display: "flex", flexBasis: "100%", backgroundColor: "#F7F8F8" }}>
                     <div style={{ display: "flex", flexBasis: "50%", }}>
-                        <div style={{ flexBasis: "100%", marginTop: "10%" }}>
+                        <div style={{ flexBasis: "100%", marginTop: "5%" }}>
                             <center>
                                 <div style={{ width: "50%", }} className="center">
                                     <h2 className="input-group mb-6 inputCenter" >Signup</h2>
@@ -226,18 +275,40 @@ class Signup extends Component {
                                         <input type="text" className="form-control" placeholder="Address Line1" aria-label="Address Line1" aria-describedby="basic-addon1" value={addressline1} onChange={(e) => { this.setState({ addressline1: e.target.value }) }} />
                                     </div>
 
-                                    {/* addressLine2 */}
+                                    {/* post code */}
                                     <div className="input-group mb-3" style={{ marginTop: 10 }}>
                                         <div className="input-group-prepend">
                                             <span className="input-group-text" id="basic-addon1" style={{ backgroundColor: "#EC5F59" }}><FaMapMarkerAlt style={{ color: "white", }} /></span>
                                         </div>
-                                        <input type="text" className="form-control" placeholder="Address Line2" aria-label="Address Line2" aria-describedby="basic-addon1" value={addressline2} onChange={(e) => { this.setState({ addressline2: e.target.value }) }} />
+                                        <input type="text" className="form-control" placeholder="Post code" aria-label="Post code" aria-describedby="basic-addon1" value={addressline2} onChange={(e) => { this.setState({ addressline2: e.target.value }) }} />
                                     </div>
 
-                                    <center>
+                                    {/* <center>
                                         <div className="textLink" onClick={() => this.setModalVisible(true)}>Shop Location
                                         </div>
-                                    </center>
+                                        <div style={{ display: "flex", }}>
+                                            <img style={{ borderRadius: 15 }} alt="googleMap" src={require('../assets/londonmap.png')}
+                                                width="100%"
+                                                height={80}
+                                            />
+                                        </div>
+                                    </center> */}
+
+                                    {/* google map */}
+                                    <div className="input-group mb-3" style={{ marginTop: 10 }}>
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text" id="basic-addon1" style={{ backgroundColor: "#EC5F59" }}>
+                                                <img alt="googleMap" src={require('../assets/googlemapicon.png')}
+                                                    width={20}
+                                                    height={20}
+                                                />
+                                            </span>
+                                        </div>
+                                        <div className="form-control" >
+                                            <div className="textLink" style={{ textAlign: "left", color: "grey" }} onClick={() => this.setModalVisible(true)}>Shop Location
+                                        </div>
+                                        </div>
+                                    </div>
 
                                     {
                                         (loader) ?
@@ -285,20 +356,60 @@ class Signup extends Component {
                             width={"60%"}
                             minWidth={"60%"}
                         >
-                            <div>
-                                Please Select your shop location
+                            <div
+                            // style={{ background: "red", }}
+                            >
+                                <PlacesAutocomplete
+                                    value={this.state.address}
+                                    onChange={this.handleChange}
+                                    onSelect={this.handleSelect}
+                                >
+                                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                        <div style={{ padding: "1%", }}>
+                                            Please Select your shop location
+                                            <input style={{ marginLeft: "3%", width: "40%", borderWidth: 0.1 }}
+                                                {...getInputProps({
+                                                    placeholder: 'Search Places Please type location name...',
+                                                    className: 'location-search-input',
+                                                })}
+                                            />
+                                            <div className="autocomplete-dropdown-container" >
+                                                {loading && <div>Loading...</div>}
+                                                {suggestions.map(suggestion => {
+                                                    const className = suggestion.active
+                                                        ? 'suggestion-item--active'
+                                                        : 'suggestion-item';
+                                                    // inline style for demonstration purpose
+                                                    const style = suggestion.active
+                                                        ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                                    return (
+                                                        <div {...getSuggestionItemProps(suggestion, { className, style, })}>
+                                                            <span>{suggestion.description}</span>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    )}
+                                </PlacesAutocomplete>
+
                                 <Map
                                     initialCenter={{
                                         //karachi
-                                        lat: 24.9372,
-                                        lng: 67.0423,
+                                        // lat: 24.9372,
+                                        // lng: 67.0423,
                                         //uk
                                         // lat: 54.992218402853496,
-                                        // lng: -2.7072125843446315
+                                        // lng: -2.7072125843446315,
+
+                                        lat: this.state.initialCenter[0],
+                                        lng: this.state.initialCenter[1]
                                     }}
                                     google={this.props.google}
+                                    bounds={this.state.bounds}
                                     style={{ width: '100%', height: 500, position: 'relative', margin: "0px auto" }}
-                                    zoom={7}
+                                    zoom={this.state.zoom}
                                 >
                                     {this.state.markers.map((marker, index) => (
                                         <Marker key={index}

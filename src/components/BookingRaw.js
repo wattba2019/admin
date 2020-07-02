@@ -25,9 +25,8 @@ class BookingsRaw extends Component {
         }
     }
     render() {
-        const {
-            time, lock, data, modalOpen
-        } = this.props;
+        const {time, lock, data, modalOpen} = this.props;
+        console.log(data,"BookingDataTest")
         return (
             <tr>
                 <td scope="row">

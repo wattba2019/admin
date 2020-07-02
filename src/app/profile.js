@@ -11,6 +11,7 @@ import history from '../History';
 import { changePassword, updateProfile, } from "../store/action/action";
 import { Form, Input, Checkbox, Modal } from 'antd';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng, } from 'react-places-autocomplete';
 
 class ShopProfile extends Component {
     constructor(props) {
@@ -143,7 +144,7 @@ class ShopProfile extends Component {
 
     updateProfileData = () => {
         const { email, about, businessName, telephone, websiteUrl, addressline1, addressline2, markers } = this.state
-        if (email !== '' && about !== '' && businessName !== '' && telephone !== '' && addressline1 !== '') {
+        if (email !== '' && about !== '' && businessName !== '' && telephone !== '' && addressline1 !== '' && addressline2 !== "") {
             let cloneUpdatedUser = {
                 email: email,
                 about: about,
@@ -172,8 +173,45 @@ class ShopProfile extends Component {
                 }, 10000)
             })
         }
-
     }
+
+
+    handleChange = address => {
+        this.setState({ address });
+    };
+
+    handleSelect = address => {
+        geocodeByAddress(address)
+            .then(results => getLatLng(results[0]))
+            // .then(latLng => console.log('Success', latLng));
+            .then(latLng => {
+                var points = [
+                    { lat: latLng.lat, lng: latLng.lng },
+                ]
+                var bounds = new this.props.google.maps.LatLngBounds();
+                for (var i = 0; i < points.length; i++) {
+                    bounds.extend(points[i]);
+                }
+                console.log(bounds, "bounds")
+                let markers = [
+                    {
+                        name: "Current position",
+                        position: {
+                            lat: latLng.lat,
+                            lng: latLng.lng
+                        }
+                    }
+                ]
+                this.setState({
+                    address: address,
+                    markers: markers,
+                    // initialCenter: [latLng.lat, latLng.lng],
+                    bounds: bounds
+                })
+            })
+            .catch(error => console.error('Error', error));
+    };
+
 
     render() {
         const { email, password, confirmPassword, about, businessName, telephone, websiteUrl, addressline1, addressline2, showerror, err, showerrorpassword, markers } = this.state;
@@ -187,7 +225,7 @@ class ShopProfile extends Component {
                     display: "flex", width: "55%", minWidth: 500, height: window.innerHeight, justifyContent: "center",
                     background: "#F7F8F8"
                 }}>
-                    <div style={{ width: "50%", marginTop: "10%" }} className="center">
+                    <div style={{ width: "50%", marginTop: "5%" }} className="center">
                         <h5 className="input-group mb-6 inputCenter"  >Wattba Shop Profile</h5>
 
                         {/* Email */}
@@ -238,18 +276,36 @@ class ShopProfile extends Component {
                             <input required type="text" className="form-control" placeholder="Address Line1" aria-label="Address Line1" aria-describedby="basic-addon1" value={addressline1} onChange={(e) => { this.setState({ addressline1: e.target.value }) }} />
                         </div>
 
-                        {/* addressLine2 */}
+                        {/* Post code */}
                         <div className="input-group mb-3" style={{ marginTop: 10 }}>
                             <div className="input-group-prepend">
                                 <span className="input-group-text" id="basic-addon1" style={{ backgroundColor: "#EC5F59" }}><FaMapMarkerAlt style={{ color: "white", }} /></span>
                             </div>
-                            <input type="text" className="form-control" placeholder="Address Line2" aria-label="Address Line2" aria-describedby="basic-addon1" value={addressline2} onChange={(e) => { this.setState({ addressline2: e.target.value }) }} />
+                            <input type="text" className="form-control" placeholder="Post code" aria-label="Post code" aria-describedby="basic-addon1" value={addressline2} onChange={(e) => { this.setState({ addressline2: e.target.value }) }} />
                         </div>
 
-                        <center>
+                        {/*                         
+                         <center>
                             <div className="textLink" onClick={() => this.setModalVisible(true)}>Shop Location
-                                        </div>
+                            </div>
                         </center>
+                         */}
+
+                        {/* google map */}
+                        <div className="input-group mb-3" style={{ marginTop: 10 }}>
+                            <div className="input-group-prepend">
+                                <span className="input-group-text" id="basic-addon1" style={{ backgroundColor: "#EC5F59" }}>
+                                    <img alt="googleMap" src={require('../assets/googlemapicon.png')}
+                                        width={20}
+                                        height={20}
+                                    />
+                                </span>
+                            </div>
+                            <div className="form-control" >
+                                <div className="textLink" style={{ textAlign: "left", color: "grey" }} onClick={() => this.setModalVisible(true)}>Shop Location
+                                        </div>
+                            </div>
+                        </div>
 
 
                         {/* update */}
@@ -344,7 +400,43 @@ class ShopProfile extends Component {
                             minWidth={"60%"}
                         >
                             <div>
-                                Please Select your shop location
+
+                                <PlacesAutocomplete
+                                    value={this.state.address}
+                                    onChange={this.handleChange}
+                                    onSelect={this.handleSelect}
+                                >
+                                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                        <div style={{ padding: "1%", }}>
+                                            Please Select your shop location
+                                            <input style={{ marginLeft: "3%", width: "40%", borderWidth: 0.1 }}
+                                                {...getInputProps({
+                                                    placeholder: 'Search Places Please type location name...',
+                                                    className: 'location-search-input',
+                                                })}
+                                            />
+                                            <div className="autocomplete-dropdown-container" >
+                                                {loading && <div>Loading...</div>}
+                                                {suggestions.map(suggestion => {
+                                                    const className = suggestion.active
+                                                        ? 'suggestion-item--active'
+                                                        : 'suggestion-item';
+                                                    // inline style for demonstration purpose
+                                                    const style = suggestion.active
+                                                        ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                                    return (
+                                                        <div {...getSuggestionItemProps(suggestion, { className, style, })}>
+                                                            <span>{suggestion.description}</span>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    )}
+                                </PlacesAutocomplete>
+
+                                {/* Please Select your shop location */}
                                 <Map
                                     initialCenter={{
                                         lat: markers[0].position.lat,
@@ -352,6 +444,7 @@ class ShopProfile extends Component {
                                     }}
                                     apiKey={("AIzaSyBQHKZTwhPJX_9IevM5jKC8kmz0NzqAaBk")}
                                     google={this.props.google}
+                                    bounds={this.state.bounds}
                                     style={{ width: '100%', height: 500, position: 'relative', margin: "0px auto" }}
                                     zoom={7}
                                 >

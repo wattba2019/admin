@@ -28,7 +28,7 @@ class WorkingHoursCard extends Component {
                     {
                         Object.keys(that.state).map((dayKey, index) => {
                             let day = that.state[dayKey];
-                            console.log(day,'day', moment(day.openTimings, 'h:mm a'))
+                            // console.log(day,'day', moment(day.openTimings, 'h:mm a'))
                             return (
                                 (day.day) ? (
                                     <div key={index} className="cardshadow" style={{
@@ -50,7 +50,7 @@ class WorkingHoursCard extends Component {
                                                 display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", height: 40, textAlign: "left", color: "#888888"
                                             }}>
                                                 Opening Hour:
-                                    </div>
+                                        </div>
                                             <div style={{
                                                 display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", height: 40,
                                             }}>
@@ -76,7 +76,7 @@ class WorkingHoursCard extends Component {
                                                 display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", height: 40, textAlign: "left", color: "#888888"
                                             }}>
                                                 Closing Hour:
-                                    </div>
+                                            </div>
                                             <div style={{
                                                 display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", height: 40,
                                             }}>
@@ -97,13 +97,11 @@ class WorkingHoursCard extends Component {
                                             </div>
                                         </div>
                                     </div>
-
                                 ) : null)
                         })
                     }
                 </div>
                 {/* card End */}
-
             </div >
         )
     }

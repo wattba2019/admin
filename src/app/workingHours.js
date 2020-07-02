@@ -10,15 +10,13 @@ class Workinghours extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            monday: (this.props.workingHours.monday) ? this.props.workingHours.monday : { day: 'Monday', open: false, openTimings: moment("9:00 AM", 'h:mm a'), closingTime: moment("9:00 PM", 'h:mm a') },
+            monday: (this.props.workingHours.monday) ? this.props.workingHours.monday : { day: 'Monday', open: true, openTimings: moment("9:00 AM", 'h:mm a'), closingTime: moment("9:00 PM", 'h:mm a') },
             tuesday: (this.props.workingHours.tuesday) ? this.props.workingHours.tuesday : { day: 'Tuesday', open: true, openTimings: moment("9:00 AM", 'h:mm a'), closingTime: moment("9:00 PM", 'h:mm a') },
             wednesday: (this.props.workingHours.wednesDay) ? this.props.workingHours.wednesDay : { day: 'Wednesday', open: true, openTimings: moment("9:00 AM", 'h:mm a'), closingTime: moment("9:00 PM", 'h:mm a') },
             thursday: (this.props.workingHours.thursday) ? this.props.workingHours.thursday : { day: 'Thursday', open: true, openTimings: moment("9:00 AM", 'h:mm a'), closingTime: moment("9:00 PM", 'h:mm a') },
             friday: (this.props.workingHours.friday) ? this.props.workingHours.friday : { day: 'Friday', open: true, openTimings: moment("9:00 AM", 'h:mm a'), closingTime: moment("9:00 PM", 'h:mm a') },
             saturday: (this.props.workingHours.saturday) ? this.props.workingHours.saturday : { day: 'Saturday', open: true, openTimings: moment("9:00 AM", 'h:mm a'), closingTime: moment("9:00 PM", 'h:mm a') },
             sunday: (this.props.workingHours.sunday) ? this.props.workingHours.sunday : { day: 'Sunday', open: true, openTimings: moment("9:00 AM", 'h:mm a'), closingTime: moment("9:00 PM", 'h:mm a') },
-
-
         }
         this.props.getWorkingHours((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254');
     }
@@ -30,7 +28,7 @@ class Workinghours extends Component {
     }
     onChangeTime(event, timeStr) {
         if (event && timeStr) {
-            console.log(event, timeStr,'timeStr');
+            console.log(event, timeStr, 'timeStr');
             let dayKey = event.keyName;
             let changeKeyName = event.changeKeyName
             let updatedDay = this.state[dayKey];
@@ -48,7 +46,7 @@ class Workinghours extends Component {
         updateTimeObject.saturday = this.state.saturday;
         updateTimeObject.sunday = this.state.sunday;
         updateTimeObject.userID = (this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254';
-
+        // console.log(updateTimeObject, "UPDATETIMINGSSS")
         this.props.updateWorkingHours(updateTimeObject);
 
     }
@@ -111,7 +109,7 @@ class Workinghours extends Component {
                     <button onClick={this.updateTimings.bind(this)} style={{ minWidth: 80 }} className="buttonAdd"
                     // onClick={() => this.setModal2Visible(true)}
                     >
-                        <span className="buttonmatter" style={{ fontSize: 12, }}>Update Timing</span>
+                        <span className="buttonmatter" style={{ fontSize: 12, }}>Save Timing</span>
                     </button>
                 </div>
 

@@ -1,6 +1,6 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
-import { setUserCredentials, getBookings, cancledAndApproveBooking } from "../store/action/action";
+import { setUserCredentials, getBookings, cancledAndApproveBooking, getStylists } from "../store/action/action";
 import {
     Link
 } from 'react-router-dom';
@@ -35,6 +35,7 @@ class Bookings extends Component {
         this.modalExport = this.modalExport.bind(this);
         let bookingDate = new Date();
         this.props.getBookings((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254', bookingDate);
+        this.props.getStylists((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254');
     }
 
 
@@ -122,33 +123,31 @@ class Bookings extends Component {
 
     prepareCSVData() {
         console.log(this.state.bookedService, "bookedService");
-        if (this.state.filteredUnsortBookings && this.state.filteredUnsortBookings.length > 0) {
-            let unPrepCSVData = this.state.filteredUnsortBookings;
-            let preparedCSVData = [];
+        // if (this.state.filteredUnsortBookings && this.state.filteredUnsortBookings.length > 0) {
+        //     let unPrepCSVData = this.state.filteredUnsortBookings;
+        //     let preparedCSVData = [];
 
-            unPrepCSVData.map((booking, index) => {
-                let bookingObj = {
-                    ["Hours"]: booking.bookingHour,
-                    // ["Required Services"]: booking.requiredServices.toString(),
-                    // ["Required Services"]: booking.requiredServices.toString(),
-                    ["Booker Name"]: booking.bookerId.fullName,
-                    ["Booker Email"]: booking.bookerId.email,
-                    ["Booker Phone"]: booking.bookerId.phoneNumber,
-                    ["Stylist Name"]: booking.stylistId.fullname
-
-                }
-                preparedCSVData.push(bookingObj);
-            });
-
-            return preparedCSVData;
-        }
+        //     unPrepCSVData.map((booking, index) => {
+        //         let bookingObj = {
+        //             ["Hours"]: booking.bookingHour,
+        //             // ["Required Services"]: booking.requiredServices.toString(),
+        //             // ["Required Services"]: booking.requiredServices.toString(),
+        //             ["Booker Name"]: booking.bookerId.fullName,
+        //             ["Booker Email"]: booking.bookerId.email,
+        //             ["Booker Phone"]: booking.bookerId.phoneNumber,
+        //             ["Stylist Name"]: booking.stylistId.fullname
+        //         }
+        //         preparedCSVData.push(bookingObj);
+        //     });
+        //     return preparedCSVData;
+        // }
 
     }
 
     render() {
         const { slider, bookingData, currentDate, filteredUnsortBookings, bookedService, bookedPackage } = this.state
         let reactSwipeEl;
-        console.log('filteredUnsortBookings', bookingData)
+        console.log('currentDate', currentDate)
 
         return (
             <div style={{
@@ -178,16 +177,14 @@ class Bookings extends Component {
                         {/* {
                             (filteredUnsortBookings.length > 0) ? ( */}
 
-                        <CSVLink
+                        {/* <CSVLink
                             className="btn btn-light"
                             style={{ width: "60%", margin: "2%", borderWidth: 0.5, borderColor: "grey", height: 40 }}
-
                             filename={new Date().toLocaleDateString() + '.csv'}
-
                             data={(filteredUnsortBookings.length > 0) ? this.prepareCSVData() : []}
                         >
                             Export Bookings
-                         </CSVLink>
+                         </CSVLink> */}
 
 
                         {/* ) : null
@@ -564,6 +561,9 @@ function mapDispatchToProp(dispatch) {
         },
         cancledAndApproveBooking: (bookingStatus, _id) => {
             dispatch(cancledAndApproveBooking(bookingStatus, _id));
+        },
+        getStylists: (userId) => {
+            dispatch(getStylists(userId));
         },
     })
 

@@ -302,6 +302,7 @@ export function addStylist(stylist) {
 
 
 export function getStylists(userID) {
+    // alert("getStylist")
     console.log(userID, "USERID")
     return dispatch => {
         var options = {
@@ -620,6 +621,43 @@ export function cancledAndApproveBooking(bookingStatus, _id) {
             })
     }
 }
+
+
+
+export function assignStylist(stylistId, _id) {
+    return dispatch => {
+        console.log(stylistId, _id, "bookerId")
+        let objClone = {
+            stylistId: stylistId,
+            _id: _id
+        }
+        var options = {
+            method: 'POST',
+            url: `${baseURL.baseURL}/bookings/assignStylist/`,
+            headers:
+            {
+                'cache-control': 'no-cache',
+                "Allow-Cross-Origin": '*',
+            },
+            data: objClone
+        }
+        axios(options)
+            .then(result => {
+                let response = result.data.message
+                console.log(response, "Update_booking_status")
+                swal.fire(
+                    'Success!',
+                    response,
+                    'success'
+                )
+            })
+            .catch(err => {
+                let error = JSON.parse(JSON.stringify(err))
+                console.log(error, 'ERRROR', err)
+            })
+    }
+}
+
 
 
 
