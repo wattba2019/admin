@@ -1,6 +1,6 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
-import { setUserCredentials, getBookings, cancledAndApproveBooking, getStylists } from "../store/action/action";
+import { setUserCredentials, getBookings, cancledAndApproveBooking, getStylists, getWorkingHours } from "../store/action/action";
 import {
     Link
 } from 'react-router-dom';
@@ -22,6 +22,7 @@ class Bookings extends Component {
         super(props);
         this.state = {
             currentDate: new Date(),
+            dateInMiliSeconds: new Date(),
             filteredUnsortBookings: [],
             bookingData: [],
             bookingDetails: [],
@@ -30,12 +31,15 @@ class Bookings extends Component {
             slider: [1,],
             bookedService: [],
             bookedPackage: [],
+            workingHours: null,
         }
         this.setModal2Visible = this.setModal2Visible.bind(this);
         this.modalExport = this.modalExport.bind(this);
         let bookingDate = new Date();
         this.props.getBookings((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254', bookingDate);
         this.props.getStylists((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254');
+        this.props.getWorkingHours((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254');
+
     }
 
 
@@ -46,27 +50,103 @@ class Bookings extends Component {
         })
     }
 
+
+    componentDidMount() {
+        // alert("WORK")
+        let { dateInMiliSeconds, workingHours } = this.state
+        if (workingHours) {
+            let weekday = new Array(7);
+            weekday[0] = "sunday";
+            weekday[1] = "monday";
+            weekday[2] = "tuesday";
+            weekday[3] = "wednesday";
+            weekday[4] = "thursday";
+            weekday[5] = "friday";
+            weekday[6] = "saturday";
+            let day = weekday[dateInMiliSeconds.getDay()];
+
+            // let currentDayShopOpen = workingHours[day].open;
+            let currentDayShopOpen = workingHours[day] ? workingHours[day].open : null;
+            let start = workingHours[day] ? workingHours[day].openTimings : null;
+            let end = workingHours[day] ? workingHours[day].closingTime : null;
+
+            console.log(start, end, "hours")
+
+            // let currentDate1 = moment(new Date().getTime()).format('YYYY-MM-DD');
+            // console.log(currentDate1, "currentDate1")
+
+            // if (currentDate1 === currentDate) {
+            // let start = workingHours[day] ? workingHours[day].openTimings : null;
+            // let end = workingHours[day] ? workingHours[day].closingTime : null;
+
+
+            // let start = workingHours[day] ? workingHours[day].openTimings : null;
+            // let end = workingHours[day] ? workingHours[day].closingTime : null;
+
+            if (start && end) {
+                let returnValue = this.getTimeStops(start, end,);
+                console.log(start, end, "currentDayShopOpen")
+                this.setState({
+                    slots: returnValue,
+                    day: day,
+                })
+            }
+
+
+            // }
+
+        }
+
+    }
+
+    getTimeStops(start, end,) {
+        // console.log(start, end, ampmCurrent, "ampmCurrent")
+        var startTime = moment(start, 'h:mm a');
+        var endTime = moment(end, 'h:mm a');
+        if (endTime.isBefore(startTime)) {
+            endTime.add(1, 'day');
+        }
+        var timeStops = [];
+        while (startTime <= endTime) {
+            // console.log(startTime, currentTime, "currentTime", startTime > currentTime)
+            timeStops.push(new moment(startTime).format('h:mm a'));
+            startTime.add(60, 'minutes');
+        }
+        return timeStops;
+    }
+
     componentWillReceiveProps(nextProps) {
+        console.log(nextProps.workingHours, "workingHours")
         if (nextProps.bookings) {
             this.setState({
                 bookingData: nextProps.bookings.bookingSort,
                 filteredUnsortBookings: nextProps.bookings.filteredBookings,
                 bookedService: nextProps.bookedService,
                 bookedPackage: nextProps.bookedPackage,
-            })
+                workingHours: nextProps.workingHours,
+            }
+                , () => {
+                    this.componentDidMount()
+                }
+            )
         }
     }
 
     datePicker = (date, dateString) => {
         if (dateString != "") {
             this.setState({
-                currentDate: dateString
+                currentDate: dateString,
+                dateInMiliSeconds: new Date(dateString)
+            }, () => {
+                this.componentDidMount()
             })
             this.props.getBookings((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254', dateString);
         }
         else {
             this.setState({
                 currentDate: new Date(),
+            }, () => {
+                this.componentDidMount()
             })
             let bookingDate = new Date();
             this.props.getBookings((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254', bookingDate);
@@ -106,6 +186,8 @@ class Bookings extends Component {
         date.setDate(date.getDate() + 1);
         this.setState({
             currentDate: date,
+        }, () => {
+            this.componentDidMount()
         })
         this.props.getBookings((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254', date);
     }
@@ -117,37 +199,83 @@ class Bookings extends Component {
         date.setDate(date.getDate() - 1);
         this.setState({
             currentDate: date,
+        }, () => {
+            this.componentDidMount()
         })
         this.props.getBookings((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254', date);
     }
 
     prepareCSVData() {
         console.log(this.state.bookedService, "bookedService");
-        // if (this.state.filteredUnsortBookings && this.state.filteredUnsortBookings.length > 0) {
-        //     let unPrepCSVData = this.state.filteredUnsortBookings;
-        //     let preparedCSVData = [];
+        if (this.state.filteredUnsortBookings && this.state.filteredUnsortBookings.length > 0 && this.state.bookedService.length != 0) {
+            let unPrepCSVData = this.state.filteredUnsortBookings;
+            let preparedCSVData = [];
+            unPrepCSVData.map((booking, index) => {
+                let bookingObj = {
+                    ["Hours"]: booking.bookingHour,
+                    ["Booker Name"]: booking.bookerId.fullName,
+                    ["Booker Email"]: booking.bookerId.email,
+                    ["Booker Phone"]: booking.bookerId.phoneNumber,
 
-        //     unPrepCSVData.map((booking, index) => {
-        //         let bookingObj = {
-        //             ["Hours"]: booking.bookingHour,
-        //             // ["Required Services"]: booking.requiredServices.toString(),
-        //             // ["Required Services"]: booking.requiredServices.toString(),
-        //             ["Booker Name"]: booking.bookerId.fullName,
-        //             ["Booker Email"]: booking.bookerId.email,
-        //             ["Booker Phone"]: booking.bookerId.phoneNumber,
-        //             ["Stylist Name"]: booking.stylistId.fullname
-        //         }
-        //         preparedCSVData.push(bookingObj);
-        //     });
-        //     return preparedCSVData;
-        // }
+                    //pack1
+                    ["Required Services_1"]: this.state.bookedService[0] ? this.state.bookedService[0].serviceName : "N/A",
+                    ["Required Services_1 Price"]: this.state.bookedService[0] ? this.state.bookedService[0].price : "N/A",
+
+                    ["Extra Service_1 A"]: this.state.bookedService[0] && this.state.bookedService[0].extraServices[0] ? this.state.bookedService[0].extraServices[0].serviceName : "N/A",
+                    ["Extra Service_1 A Price"]: this.state.bookedService[0] && this.state.bookedService[0].extraServices[0] ? this.state.bookedService[0].extraServices[0].price : "N/A",
+
+                    ["Extra Service_1 B"]: this.state.bookedService[0] && this.state.bookedService[0].extraServices[1] ? this.state.bookedService[0].extraServices[1].serviceName : "N/A",
+                    ["Extra Service_1 B Price"]: this.state.bookedService[0] && this.state.bookedService[0].extraServices[1] ? this.state.bookedService[0].extraServices[1].price : "N/A",
+
+                    ["Extra Service_1 C"]: this.state.bookedService[0] && this.state.bookedService[0].extraServices[2] ? this.state.bookedService[0].extraServices[2].serviceName : "N/A",
+                    ["Extra Service_1 C Price"]: this.state.bookedService[0] && this.state.bookedService[0].extraServices[2] ? this.state.bookedService[0].extraServices[2].price : "N/A",
+
+                    //pack2
+                    ["Required Services_2"]: this.state.bookedService[1] ? this.state.bookedService[1].serviceName : "N/A",
+                    ["Required Services_2 Price"]: this.state.bookedService[1] ? this.state.bookedService[1].price : "N/A",
+
+                    ["Extra Service_2 A"]: this.state.bookedService[1] && this.state.bookedService[1].extraServices[0] ? this.state.bookedService[1].extraServices[0].serviceName : "N/A",
+                    ["Extra Service_2 A Price"]: this.state.bookedService[1] && this.state.bookedService[1].extraServices[0] ? this.state.bookedService[1].extraServices[0].price : "N/A",
+
+                    ["Extra Service_2 B"]: this.state.bookedService[1] && this.state.bookedService[1].extraServices[1] ? this.state.bookedService[1].extraServices[1].serviceName : "N/A",
+                    ["Extra Service_2 B Price"]: this.state.bookedService[1] && this.state.bookedService[1].extraServices[1] ? this.state.bookedService[1].extraServices[1].price : "N/A",
+
+                    ["Extra Service_2 C"]: this.state.bookedService[1] && this.state.bookedService[1].extraServices[2] ? this.state.bookedService[1].extraServices[2].serviceName : "N/A",
+                    ["Extra Service_2 C Price"]: this.state.bookedService[1] && this.state.bookedService[1].extraServices[2] ? this.state.bookedService[1].extraServices[2].price : "N/A",
+
+                    //pack3
+                    ["Required Services_3"]: this.state.bookedService[2] ? this.state.bookedService[2].serviceName : "N/A",
+                    ["Required Services_3 Price"]: this.state.bookedService[2] ? this.state.bookedService[2].price : "N/A",
+
+                    ["Extra Service_3 A"]: this.state.bookedService[2] && this.state.bookedService[2].extraServices[0] ? this.state.bookedService[2].extraServices[0].serviceName : "N/A",
+                    ["Extra Service_3 A Price"]: this.state.bookedService[2] && this.state.bookedService[2].extraServices[0] ? this.state.bookedService[2].extraServices[0].price : "N/A",
+
+                    ["Extra Service_3 B"]: this.state.bookedService[2] && this.state.bookedService[2].extraServices[1] ? this.state.bookedService[2].extraServices[1].serviceName : "N/A",
+                    ["Extra Service_3 B Price"]: this.state.bookedService[2] && this.state.bookedService[2].extraServices[1] ? this.state.bookedService[2].extraServices[1].price : "N/A",
+
+                    ["Extra Service_3 C"]: this.state.bookedService[2] && this.state.bookedService[2].extraServices[2] ? this.state.bookedService[2].extraServices[2].serviceName : "N/A",
+                    ["Extra Service_3 C Price"]: this.state.bookedService[2] && this.state.bookedService[2].extraServices[2] ? this.state.bookedService[2].extraServices[2].price : "N/A",
+
+                    // ["Stylist Name"]: booking.stylistId.fullname
+                }
+                preparedCSVData.push(bookingObj);
+            });
+            return preparedCSVData;
+        }
+        else {
+            let preparedCSVData = [];
+            return preparedCSVData;
+        }
 
     }
 
     render() {
-        const { slider, bookingData, currentDate, filteredUnsortBookings, bookedService, bookedPackage } = this.state
+        const { slider, bookingData, currentDate, filteredUnsortBookings, bookedService, bookedPackage, workingHours, slots } = this.state
         let reactSwipeEl;
-        console.log('currentDate', currentDate)
+
+        if (slots) {
+            console.log('slots', slots)
+        }
 
         return (
             <div style={{
@@ -174,21 +302,19 @@ class Bookings extends Component {
                         >
                             <span className="buttonmatter" style={{ fontSize: 12, }}>Refresh</span>
                         </button>
-                        {/* {
-                            (filteredUnsortBookings.length > 0) ? ( */}
-
-                        {/* <CSVLink
-                            className="btn btn-light"
-                            style={{ width: "60%", margin: "2%", borderWidth: 0.5, borderColor: "grey", height: 40 }}
-                            filename={new Date().toLocaleDateString() + '.csv'}
-                            data={(filteredUnsortBookings.length > 0) ? this.prepareCSVData() : []}
-                        >
-                            Export Bookings
-                         </CSVLink> */}
-
-
-                        {/* ) : null
-                        } */}
+                        {
+                            (filteredUnsortBookings.length > 0) ? (
+                                <CSVLink
+                                    className="btn btn-light"
+                                    style={{ width: "60%", margin: "2%", borderWidth: 0.5, borderColor: "grey", height: 40 }}
+                                    filename={new Date().toLocaleDateString() + '.csv'}
+                                    data={this.prepareCSVData()}
+                                // data={"null"}
+                                >
+                                    Export Bookings
+                                </CSVLink>
+                            ) : null
+                        }
 
                         {/* <button type="button" className="btn btn-light" style={{ width: "60%", margin: "2%", borderWidth: 0.5, borderColor: "grey", height: 40 }}
                             onClick={() => this.modalExport(true)}
@@ -270,8 +396,20 @@ class Bookings extends Component {
                                                     <tbody
                                                     // style={{ background: "orange", }}
                                                     >
-
                                                         {
+                                                            slots && slots.map((key, index) => {
+                                                                return (
+                                                                    <BookingRaw key={index}
+                                                                        modalOpen={(data) => this.setModal2Visible(true, data)}
+                                                                        time={key}
+                                                                        lock={bookingData[moment(key, ["h:mm A"]).format("HH")] ? "#49BE56" : "#F45671"}
+                                                                        data={bookingData[moment(key, ["h:mm A"]).format("HH")]}
+                                                                    />
+                                                                )
+                                                            })
+                                                        }
+
+                                                        {/* {
                                                             (bookingData["7"]) ? (
                                                                 <BookingRaw
                                                                     modalOpen={(data) => this.setModal2Visible(true, data)}
@@ -520,7 +658,7 @@ class Bookings extends Component {
                                                                     modalOpen={(data) => this.setModal2Visible(true, data)}
                                                                     time="12:00 am" lock="#49BE56"
                                                                 />
-                                                        }
+                                                        } */}
 
                                                     </tbody>
                                                 </table>
@@ -552,6 +690,7 @@ function mapStateToProp(state) {
         bookings: state.root.bookings,
         bookedService: state.root.bookedService,
         bookedPackage: state.root.bookedPackage,
+        workingHours: state.root.workingHours,
     })
 }
 function mapDispatchToProp(dispatch) {
@@ -564,6 +703,9 @@ function mapDispatchToProp(dispatch) {
         },
         getStylists: (userId) => {
             dispatch(getStylists(userId));
+        },
+        getWorkingHours: (userId) => {
+            dispatch(getWorkingHours(userId));
         },
     })
 

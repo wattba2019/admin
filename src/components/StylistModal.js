@@ -88,7 +88,11 @@ class StylistModal extends Component {
 
     }
 
-
+    handleShopOpenStatus(dayName) {
+        // let updatedDay = this.state[dayName];
+        // updatedDay.open = !updatedDay.open;
+        // this.setState({ [dayName]: updatedDay })
+    }
 
 
 
@@ -96,7 +100,7 @@ class StylistModal extends Component {
         const { that, services, } = this.props
         const { fileList, gArr, errUploadImgLimit, } = this.state;
 
-        console.log(that.state.previewImage, "previewImage")
+        // console.log(that.state.previewImage, "previewImage")
 
         const uploadButton = (
             <div>
@@ -204,7 +208,7 @@ class StylistModal extends Component {
                                     </div>
                                     {
                                         that.state.workingDaysNTime.map((dayBrTime, index) => {
-                                            // console.log(dayBrTime,'dayBrTimedayBrTime')
+                                            // console.log(dayBrTime, 'dayBrTimedayBrTime')
                                             return (
                                                 <div key={index} style={{
                                                     display: "flex", flex: 1, color: "black", flexDirection: "row", justifyContent: "space-between", alignItems: "center", height: 30,
@@ -221,7 +225,11 @@ class StylistModal extends Component {
                                                     {/* CheckBox */}
 
                                                     <div style={{ display: "flex", flex: 1, fontWeight: "normal", justifyContent: "center", alignItems: "center", }}>
-                                                        <div style={{ display: "flex", height: 20, width: 20, backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
+                                                        <div
+                                                            onClick={that.handleShopOpenStatus.bind(that, dayBrTime)}
+                                                            style={(dayBrTime.working) ? { display: "flex", height: 20, width: 20, backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 } : { display: "flex", height: 20, width: 20, backgroundColor: "#d3d3d3", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}
+                                                        // style={{ display: "flex", height: 20, width: 20, backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}
+                                                        >
                                                             <IoMdCheckmark style={{ color: "white", }} />
                                                         </div>
                                                     </div>
@@ -310,7 +318,7 @@ class StylistModal extends Component {
 
                                 {
                                     that.state.plainOptions.map((service, index) => {
-                                        console.log(service, index, that.state.services, "INSIDE_MAP")
+                                        // console.log(service, index, that.state.services, "INSIDE_MAP")
                                         return (
                                             <div key={index} style={{
                                                 display: "flex", width: "100%", justifyContent: "center", alignItems: "center", marginTop: 10, minWidth: "80%",

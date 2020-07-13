@@ -24,11 +24,13 @@ class Workinghours extends Component {
     handleShopOpenStatus(dayName) {
         let updatedDay = this.state[dayName];
         updatedDay.open = !updatedDay.open;
+        // console.log(dayName, updatedDay, "handleShopOpenStatus")
+
         this.setState({ [dayName]: updatedDay })
     }
     onChangeTime(event, timeStr) {
         if (event && timeStr) {
-            console.log(event, timeStr, 'timeStr');
+            // console.log(event, timeStr, 'timeStr');
             let dayKey = event.keyName;
             let changeKeyName = event.changeKeyName
             let updatedDay = this.state[dayKey];
@@ -36,6 +38,7 @@ class Workinghours extends Component {
             this.setState({ [dayKey]: updatedDay })
         }
     }
+
     updateTimings() {
         let updateTimeObject = {};
         updateTimeObject.monday = this.state.monday;
@@ -50,6 +53,8 @@ class Workinghours extends Component {
         this.props.updateWorkingHours(updateTimeObject);
 
     }
+
+
     componentDidUpdate(prevProps) {
         // Typical usage (don't forget to compare props):
         if (Object.keys(prevProps.workingHours).length !== Object.keys(this.props.workingHours).length) {
@@ -61,10 +66,25 @@ class Workinghours extends Component {
                 friday: this.props.workingHours.friday,
                 saturday: this.props.workingHours.saturday,
                 sunday: this.props.workingHours.sunday,
-
             })
         }
     }
+
+    componentWillReceiveProps(nextProps) {
+        // console.log(nextProps.workingHours, "willReceiveProps")
+        this.setState({
+            monday: nextProps.workingHours.monday,
+            tuesday: nextProps.workingHours.tuesday,
+            wednesday: nextProps.workingHours.wednesday,
+            thursday: nextProps.workingHours.thursday,
+            friday: nextProps.workingHours.friday,
+            saturday: nextProps.workingHours.saturday,
+            sunday: nextProps.workingHours.sunday,
+        })
+    }
+
+
+
     // getSnapshotBeforeUpdate(prevProps, prevState) {
     //     console.log(prevProps, prevState, this.props, this.state, 'inside lifecyle');
     //     if (Object.keys(prevProps.workingHours).length !== Object.keys(this.props.workingHours).length) {

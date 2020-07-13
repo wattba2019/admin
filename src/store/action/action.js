@@ -377,6 +377,7 @@ export function updateStylist(stylist, indexToEdit) {
 
 
 export function getWorkingHours(userID) {
+    console.log(userID, "getWorkingHours")
     return dispatch => {
         var options = {
             method: 'GET',
@@ -749,7 +750,7 @@ export function updateProfile(updatedUserData) {
 
 export function updateProfileImg(imgFile, _id) {
     return dispatch => {
-        // console.log(imgFile, _id, "DATA_INSIDE_ACTION")
+        console.log(imgFile, _id, "DATA_INSIDE_ACTION")
         var bodyFormData = new FormData();
         bodyFormData.append('img', imgFile);
         bodyFormData.append('_id', _id);

@@ -27,7 +27,7 @@ class BookingDetailsModal extends Component {
 
     render() {
         const { modal2Visible, bookingDetails, bookedService, bookedPackage } = this.props.modalState;
-        console.log(bookingDetails.stylistId, "INSIDEMODAL")
+        // console.log(bookingDetails.stylistId, "INSIDEMODAL")
 
         let selectedbookedService = []
         let selectedbookedPackage = []

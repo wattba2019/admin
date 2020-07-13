@@ -25,8 +25,8 @@ class BookingsRaw extends Component {
         }
     }
     render() {
-        const {time, lock, data, modalOpen} = this.props;
-        console.log(data,"BookingDataTest")
+        const { time, lock, data, modalOpen } = this.props;
+        console.log(data, "BookingDataTest")
         return (
             <tr>
                 <td scope="row">
@@ -317,7 +317,7 @@ class BookingsRaw extends Component {
                         [1, 2, 3, 4, 5, 6].map((key, index) => {
                             // console.log(key, index, "BOOKINGROW")
                             return (
-                                <td scope="row" key={index} >
+                                <td key={index} scope="row" key={index} >
                                     <a
                                         style={{
                                             minWidth: 80,

@@ -7,11 +7,11 @@ class WorkingHoursCard extends Component {
     constructor(props) {
         super(props);
     }
-    handleShopOpenStatus(dayName) {
-        let updatedDay = this.state[dayName];
-        updatedDay.open = !updatedDay.open;
-        this.setState({ [dayName]: updatedDay })
-    }
+    // handleShopOpenStatus(dayName) {
+    //     let updatedDay = this.state[dayName];
+    //     updatedDay.open = !updatedDay.open;
+    //     this.setState({ [dayName]: updatedDay })
+    // }
     render() {
         const { that } = this.props
         return (
@@ -28,7 +28,7 @@ class WorkingHoursCard extends Component {
                     {
                         Object.keys(that.state).map((dayKey, index) => {
                             let day = that.state[dayKey];
-                            // console.log(day,'day', moment(day.openTimings, 'h:mm a'))
+                            // console.log(day, 'day', moment(day.openTimings, 'h:mm a'))
                             return (
                                 (day.day) ? (
                                     <div key={index} className="cardshadow" style={{
@@ -39,7 +39,7 @@ class WorkingHoursCard extends Component {
                                             <div>
                                                 {day.day}
                                             </div>
-                                            <div onClick={that.handleShopOpenStatus.bind(that, dayKey)} style={(day.open) ? { display: "flex", backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 } : { display: "flex", backgroundColor: "#d3d3d3", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
+                                            <div onClick={that.handleShopOpenStatus.bind(that, dayKey)} style={(day.open === true) ? { display: "flex", backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 } : { display: "flex", backgroundColor: "#d3d3d3", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
                                                 <IoMdCheckmark style={{ color: "white", }} />
                                             </div>
 
@@ -82,7 +82,6 @@ class WorkingHoursCard extends Component {
                                             }}>
                                                 <TimePicker
                                                     value={moment(day.closingTime, 'h:mm a')}
-
                                                     style={{ width: 100, margin: "1%" }}
                                                     use12Hours format="h:mm a"
                                                     // placeholder={"Time"}
@@ -91,6 +90,7 @@ class WorkingHoursCard extends Component {
                                                             e.keyName = dayKey;
                                                             e.changeKeyName = 'closingTime'
                                                         }
+                                                        // console.log(e, f, "onchangeTIme")
                                                         that.onChangeTime(e, f);
                                                     }}
                                                 />

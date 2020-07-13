@@ -146,7 +146,17 @@ class StyleList extends Component {
         }
     }
 
-
+    handleShopOpenStatus(dayName) {
+        let cloneStateworkingDaysNTime = this.state.workingDaysNTime
+        for (let j = 0; j < cloneStateworkingDaysNTime.length; j++) {
+            const daySlot = cloneStateworkingDaysNTime[j];
+            const weekDay = cloneStateworkingDaysNTime[j].day;
+            if (weekDay === dayName.day) {
+                daySlot.working = !daySlot.working;
+            }
+        }
+        this.setState({ workingDaysNTime: cloneStateworkingDaysNTime })
+    }
 
     onChangeCheckBox = (checkedList, index) => {
         const { services } = this.state
@@ -359,11 +369,11 @@ class StyleList extends Component {
             for (let index = 0; index < cloneService.length; index++) {
                 const element = cloneService[index].serviceName;
                 serviceOptionsArr.push(element)
-                console.log(element, "ELEMENT")
+                // console.log(element, "ELEMENT")
 
             }
         }
-        console.log(serviceOptionsArr, "CLONE")
+        // console.log(serviceOptionsArr, "CLONE")
         this.setState({
             plainOptions: serviceOptionsArr
         })
@@ -373,7 +383,7 @@ class StyleList extends Component {
 
     render() {
 
-        console.log(this.state.services, "RENDER")
+        // console.log(this.state.services, "RENDER")
         //this.props.stylists
 
         let stylists = [];
