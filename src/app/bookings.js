@@ -186,6 +186,7 @@ class Bookings extends Component {
         date.setDate(date.getDate() + 1);
         this.setState({
             currentDate: date,
+            dateInMiliSeconds: new Date(date)
         }, () => {
             this.componentDidMount()
         })
@@ -199,6 +200,7 @@ class Bookings extends Component {
         date.setDate(date.getDate() - 1);
         this.setState({
             currentDate: date,
+            dateInMiliSeconds: new Date(date)
         }, () => {
             this.componentDidMount()
         })
@@ -402,7 +404,7 @@ class Bookings extends Component {
                                                                     <BookingRaw key={index}
                                                                         modalOpen={(data) => this.setModal2Visible(true, data)}
                                                                         time={key}
-                                                                        lock={bookingData[moment(key, ["h:mm A"]).format("HH")] ? "#49BE56" : "#F45671"}
+                                                                        lock={bookingData[moment(key, ["h:mm A"]).format("HH")] ? "#49BE56" : "grey"}
                                                                         data={bookingData[moment(key, ["h:mm A"]).format("HH")]}
                                                                     />
                                                                 )

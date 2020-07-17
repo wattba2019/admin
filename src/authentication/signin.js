@@ -20,6 +20,8 @@ class Signin extends Component {
             //objID 
             // email: 'abddullahshah@gmail.com',
             // password: '123456',
+            // email: 'akaptom@gmail.com',
+            // password: 'Password123',
             email: '',
             password: '',
         }

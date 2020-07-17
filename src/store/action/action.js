@@ -390,8 +390,9 @@ export function getWorkingHours(userID) {
         };
         axios(options)
             .then((wokringHours) => {
-                console.log(wokringHours, 'fetched wokringHours');
+                console.log(wokringHours, 'fetched_wokringHours11111');
                 if (Object.keys(wokringHours).length > 0) {
+                    console.log(wokringHours.data.workingHours, 'fetched_wokringHours');
                     dispatch({ type: ActionTypes.FETCHED_WORKINGHOURS, payload: wokringHours.data.workingHours })
                 }
             })

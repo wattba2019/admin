@@ -9,6 +9,7 @@ const INITIAL_STATE = {
     specialPackages: [],
     stylists: [],
     workingHours: {},
+    // workingHours: null,
     bookings: null,
     gallery: [],
     bookedService: [],

@@ -1,7 +1,7 @@
 var baseURL = {
     // ok url
     baseURL: "https://fathomless-citadel-43321.herokuapp.com",
-    // baseURL: "http://192.168.43.206:3002",
+    // baseURL: "http://192.168.0.110:3002",
 }
 
 

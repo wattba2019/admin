@@ -21,11 +21,14 @@ import SpecialOffers from './specialOffers';
 import StyleList from './stylelist';
 import Workinghours from './workingHours';
 import history from '../History';
+// import Switch from "react-switch";
+// import Switch from '@material-ui/core/Switch';
 
 class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            checked: false,
             loader: false,
             showerror: false,
             shopImage: "",
@@ -36,6 +39,7 @@ class Home extends Component {
             // route: "WorkingHours"
             // route: "SpecialOffers"
         }
+        this.handleChange = this.handleChange.bind(this);
     }
 
     imagePick(file) {
@@ -89,6 +93,11 @@ class Home extends Component {
         history.push('Signin')
     }
 
+    handleChange(checked) {
+        this.setState({ checked });
+    }
+
+
     render() {
         const { shopImage, businessName } = this.state;
         return (
@@ -122,9 +131,26 @@ class Home extends Component {
                                         <div>
                                             <h4 onClick={() => this.routeChanger("ShopProfile")} className="shopeName" style={{ marginTop: 10, }}>{businessName}</h4>
                                         </div>
+
+
+                                        {/* <div style={{ background: "green" }}>
+                                            <div style={{ fontWeight: "bold", color: "white", }}>Online</div>
+                                            <Switch onChange={this.handleChange} uncheckedIcon={false} height={18} width={20} checked={this.state.checked} />
+                                        </div> */}
+
+                                        {/* <Switch
+                                            checked={true}
+                                            onChange={this.handleChange}
+                                            color="primary"
+                                            name="checkedB"
+                                            inputProps={{ 'aria-label': 'primary checkbox' }}
+                                        /> */}
+
                                     </center>
                                 </div>
                             </div>
+
+
                             <div className="buttonsidebar" style={{ background: this.state.route === "Bookings" ? 'rgba(199, 174, 176, 0.2)' : null, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 20, width: "95%", height: 50, }}>
                                 <div style={{ display: "flex", width: "90%", }}>
                                     <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
