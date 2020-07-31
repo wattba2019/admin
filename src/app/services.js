@@ -34,7 +34,8 @@ class Services extends Component {
             modal2Visible: false,
             modal2VisibleEdit: false,
             editService: {},
-            indexToEdit: undefined
+            indexToEdit: undefined,
+            
         }
         this.state.extraServiceqtyArr = Array.apply(null, { length: this.state.extraServiceqty });
 
@@ -44,7 +45,6 @@ class Services extends Component {
         this.addExtraService = this.addExtraService.bind(this);
         this.saveService = this.saveService.bind(this);
         this.setModal2VisibleEdit = this.setModal2VisibleEdit.bind(this);
-
         this.props.getServices((this.props.uid) ? this.props.uid : '5dfb488f662af31be47f3254');
     }
 

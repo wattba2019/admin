@@ -144,7 +144,7 @@ class StylistCard extends Component {
                                             </div>
                                         </div>
 
-                                        <div style={{
+                                        {/* <div style={{
                                             display: "flex", flex: 1, flexDirection: "column", background: "#F7F8F8",
                                             background: "green"
                                         }}>
@@ -168,7 +168,8 @@ class StylistCard extends Component {
                                                     Gallery
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> */}
+                                        
                                     </div>
                                 </div>
                             )

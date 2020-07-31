@@ -1,9 +1,18 @@
 import React, { Component, } from 'react';
 import { MdDeleteForever } from 'react-icons/md';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { Form, Modal } from "antd";
+import { Form, Modal, Menu, Dropdown, Button, message, Tooltip } from "antd";
+import { DownOutlined, UserOutlined } from '@ant-design/icons';
 
 class ServiceModal extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            dropdownTitle: "Select Service",
+            serviceNameCheck: undefined,
+        }
+    }
 
     handleSubmit = e => {
         const { that } = this.props;
@@ -17,13 +26,46 @@ class ServiceModal extends Component {
         });
     };
 
+    handleButtonClick(e) {
+        message.info('Click on left button.', e);
+        console.log('click left button', e);
+    }
+
+    handleMenuClick(e) {
+        const { that } = this.props;
+        message.info(e.item.props.children);
+        console.log('click', e.item.props.children);
+        this.setState({
+            serviceNameCheck: e.item.props.children,
+            dropdownTitle: e.item.props.children
+        })
+
+        if (e.item.props.children != "More") {
+            that.setState({
+                serviceName: e.item.props.children,
+            })
+        }
+
+        if (e.item.props.children === "More") {
+            that.setState({
+                serviceName: "",
+            })
+        }
+
+    }
+
+    clearState() {
+        this.setState({ serviceNameCheck: undefined })
+        this.setState({ dropdownTitle: "Select Service" })
+    }
+
     render() {
         // console.log(this.props, '****')
         const { serviceName, price, extraService, extraServiceqtyArr, modal2Visible, modal2VisibleEdit } = this.props.modalState;
         const { that } = this.props;
+        const { dropdownTitle, serviceNameCheck } = this.state;
         const { getFieldDecorator } = this.props.form;
 
-        console.log(that.state, 'that.state')
         return (
             <Modal
                 footer={null}
@@ -33,10 +75,12 @@ class ServiceModal extends Component {
                 onOk={() => {
                     this.props.setModal2Visible(false);
                     this.props.setModal2VisibleEdit(false);
+                    this.clearState();
                 }}
                 onCancel={() => {
                     this.props.setModal2Visible(false);
                     this.props.setModal2VisibleEdit(false);
+                    this.clearState();
 
                 }}
             >
@@ -48,40 +92,146 @@ class ServiceModal extends Component {
                     </div>
 
                     <Form onSubmit={this.handleSubmit} className="login-form">
-                        <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center" }}>
-                            <Form.Item>
-                                {getFieldDecorator('ServiceName', {
-                                    rules: [
-                                        { required: false, message: 'Please type service name!' },
-                                        { max: 26, message: 'Service Name must be maximum 26 characters.' }
-                                    ],
-                                })(
-                                    <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
-                                        <div style={{ width: "82%", }}>
-                                            <input required type="text" className="form-control" placeholder="Service Name" aria-label="Service Name" aria-describedby="basic-addon1" value={serviceName} onChange={(e) => { that.setState({ serviceName: e.target.value }) }} />
-                                        </div>
-                                    </div>
-                                )}
-                            </Form.Item>
 
-                            <Form.Item>
-                                {getFieldDecorator('price', {
-                                    rules: [
-                                        { required: false, message: 'Please type price!' },
-                                        { max: 7, message: 'Price must be max 7 characters.' }
-                                    ],
-                                })(
+                        {
+                            (serviceNameCheck === "More") ? (
+                                <div style={{
+                                    display: "flex", flex: 1,
+                                    width: "100%",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}>
+                                    <Form.Item>
+                                        {getFieldDecorator('ServiceName', {
+                                            rules: [
+                                                { required: false, message: 'Please type service name!' },
+                                                { max: 26, message: 'Service Name must be maximum 26 characters.' }
+                                            ],
+                                        })(
+                                            <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
+                                                <div style={{ width: "82%", }}>
+                                                    <input required type="text" className="form-control" placeholder="Service Name" aria-label="Service Name" aria-describedby="basic-addon1" value={serviceName} onChange={(e) => { that.setState({ serviceName: e.target.value }) }} />
+
+                                                    {/* {
+                                                    (serviceNameCheck === "More") ? (
+                                                        <input required type="text" className="form-control" placeholder="Service Name" aria-label="Service Name" aria-describedby="basic-addon1" value={serviceName} onChange={(e) => { that.setState({ serviceName: e.target.value }) }} />
+                                                    ) :
+                                                        <Dropdown.Button
+                                                            overlay={
+                                                                <Menu style={{ width: 200, }} onClick={(e) => { this.handleMenuClick(e) }}>
+                                                                    <Menu.Item key="1" >Haircut</Menu.Item>
+                                                                    <Menu.Item key="2" >Coloring</Menu.Item>
+                                                                    <Menu.Item key="3" >Styling</Menu.Item>
+                                                                    <Menu.Item key="4" >Shaving</Menu.Item>
+                                                                    <Menu.Item key="5" >Childrens Haircut</Menu.Item>
+                                                                    <Menu.Item key="6" >Waxing</Menu.Item>
+                                                                    <Menu.Item key="7" >More</Menu.Item>
+                                                                </Menu>
+                                                            } placement="bottomCenter">
+                                                            {dropdownTitle}
+                                                        </Dropdown.Button>
+                                                } */}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </Form.Item>
+
+                                    <Form.Item>
+                                        {getFieldDecorator('price', {
+                                            rules: [
+                                                { required: false, message: 'Please type price!' },
+                                                { max: 7, message: 'Price must be max 7 characters.' }
+                                            ],
+                                        })(
+                                            <div
+                                                // style={{ display: "flex", flex: 1, marginLeft: "32%", }}
+                                                style={{ display: "flex", flex: 1, marginLeft: "1.5%" }}
+                                            >
+                                                <div style={{ width: "60%", }}>
+                                                    <input required type="Number" className="form-control" placeholder="Price $" aria-label="Price $" aria-describedby="basic-addon1" value={price} onChange={(e) => { that.setState({ price: e.target.value }) }} />
+                                                </div>
+                                            </div>
+
+                                            // <div
+                                            //     // style={{ display: "flex", flex: 1, marginLeft: "32%", }}
+                                            //     style={{ display: "flex", flex: 1, marginLeft: serviceNameCheck === "More" ? "1.5%" : "32%", }}
+                                            // >
+                                            //     <div style={{ width: serviceNameCheck === "More" ? "60%" : "90%", }}>
+                                            //         <input required type="Number" className="form-control" placeholder="Price $" aria-label="Price $" aria-describedby="basic-addon1" value={price} onChange={(e) => { that.setState({ price: e.target.value }) }} />
+                                            //     </div>
+                                            // </div>
+                                        )}
+                                    </Form.Item>
+
                                     <div style={{ display: "flex", flex: 1, margin: "1.5%", }} >
-                                        <div style={{ width: "65%", }}>
-                                            <input required type="Number" className="form-control" placeholder="Price $" aria-label="Price $" aria-describedby="basic-addon1" value={price} onChange={(e) => { that.setState({ price: e.target.value }) }} />
-                                        </div>
                                     </div>
-                                )}
-                            </Form.Item>
+                                </div>
 
-                            <div style={{ display: "flex", flex: 1, margin: "1.5%", }} >
-                            </div>
-                        </div>
+                            ) :
+                                <div style={{
+                                    display: "flex", flex: 1,
+                                    flexDirection: "column",
+                                    width: "100%",
+                                    // justifyContent: "center",
+                                    // alignItems: "center",
+                                    // background: "red"
+                                }}>
+                                    <Form.Item>
+                                        {getFieldDecorator('ServiceName', {
+                                            rules: [
+                                                { required: false, message: 'Please type service name!' },
+                                                { max: 26, message: 'Service Name must be maximum 26 characters.' }
+                                            ],
+                                        })(
+                                            <div style={{ display: "flex", flex: 1.5, }} >
+                                                <div style={{ width: "82%", }}>
+                                                    <Dropdown.Button
+                                                        overlay={
+                                                            <Menu style={{ width: 200, }} onClick={(e) => { this.handleMenuClick(e) }}>
+                                                                <Menu.Item key="1" >Haircut</Menu.Item>
+                                                                <Menu.Item key="2" >Coloring</Menu.Item>
+                                                                <Menu.Item key="3" >Styling</Menu.Item>
+                                                                <Menu.Item key="4" >Shaving</Menu.Item>
+                                                                <Menu.Item key="5" >Childrens Haircut</Menu.Item>
+                                                                <Menu.Item key="6" >Waxing</Menu.Item>
+                                                                <Menu.Item key="7" >More</Menu.Item>
+                                                            </Menu>
+                                                        } placement="bottomCenter">
+                                                        {dropdownTitle}
+                                                    </Dropdown.Button>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </Form.Item>
+
+                                    <Form.Item>
+                                        {getFieldDecorator('price', {
+                                            rules: [
+                                                { required: false, message: 'Please type price!' },
+                                                { max: 7, message: 'Price must be max 7 characters.' }
+                                            ],
+                                        })(
+                                            <div
+                                                style={{ display: "flex", flex: 1, }}
+                                            >
+                                                <div style={{ width: "35%", }}>
+                                                    <input required type="Number" className="form-control" placeholder="Price $" aria-label="Price $" aria-describedby="basic-addon1" value={price} onChange={(e) => { that.setState({ price: e.target.value }) }} />
+                                                </div>
+                                            </div>
+                                            // <div
+                                            //     // style={{ display: "flex", flex: 1, marginLeft: "32%", }}
+                                            //     style={{ display: "flex", flex: 1, marginLeft: serviceNameCheck === "More" ? "1.5%" : "32%", }}
+                                            // >
+                                            //     <div style={{ width: serviceNameCheck === "More" ? "60%" : "90%", }}>
+                                            //         <input required type="Number" className="form-control" placeholder="Price $" aria-label="Price $" aria-describedby="basic-addon1" value={price} onChange={(e) => { that.setState({ price: e.target.value }) }} />
+                                            //     </div>
+                                            // </div>
+                                        )}
+                                    </Form.Item>
+
+                                </div>
+                        }
+
 
                         <div style={{ marginTop: 10, fontSize: 18 }}>
                             Extra Service

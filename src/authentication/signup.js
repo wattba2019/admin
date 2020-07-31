@@ -80,64 +80,80 @@ class Signup extends Component {
     signup() {
         const { email, password, about, businessName, telephone, websiteUrl, addressline1, addressline2, markers } = this.state;
         if (email !== '' && password !== '' && about !== '' && businessName !== '' && telephone !== '' && addressline1 !== '' && addressline2 !== '') {
-            this.setState({
-                loader: !this.state.loader
-            })
-            let user = {
-                email: email,
-                password: password,
-                about: about,
-                businessName: businessName,
-                telePhone: telephone,
-                websiteUrl: websiteUrl,
-                addressLine1: addressline1,
-                addressLine2: addressline2,
-                location: {
-                    type: "Point",
-                    coordinates: [markers[0].position.lat, markers[0].position.lng] //current location
-                    // coordinates: [24.8825, 67.0694] //bahadrabad lat long
-                    // coordinates: [24.8960, 67.0814] //national statium lat long
-                    // coordinates: [24.9814 67.0543] //national statium lat long
-                },
-                createdAt: new Date().getTime()
-            }
-            var options = {
-                method: 'POST',
-                url: `${this.props.bseUrl}/signupadmin/`,
-                headers:
-                {
-                    'cache-control': 'no-cache',
-                    "Allow-Cross-Origin": '*',
-                },
-                data: user
-            };
-            axios(options)
-                .then((data) => {
-                    console.log(data.data, "USER_SIGN_UP_SUCCESSFULLY")
-                    this.setState({
-                        loader: !this.state.loader
-                    })
-                    swal.fire(
-                        'Success!',
-                        data.data.message,
-                        'success'
-                    )
-                    history.push("Signin")
-                }).catch((err) => {
-                    console.log(err.response.data.message, "ERROR_ON_SIGN_UP")
-                    // alert(err.response.data.message)
-                    this.setState({
-                        loader: !this.state.loader,
-                        err: err.response.data.message,
-                        showerror: true
-                    }, () => {
-                        setTimeout(() => {
-                            this.setState({
-                                showerror: false
-                            })
-                        }, 10000)
-                    })
+            if (password.length >= 6) {
+                this.setState({
+                    loader: !this.state.loader
                 })
+                let user = {
+                    email: email,
+                    password: password,
+                    about: about,
+                    businessName: businessName,
+                    telePhone: telephone,
+                    websiteUrl: websiteUrl,
+                    addressLine1: addressline1,
+                    addressLine2: addressline2,
+                    location: {
+                        type: "Point",
+                        coordinates: [markers[0].position.lat, markers[0].position.lng] //current location
+                        // coordinates: [24.8825, 67.0694] //bahadrabad lat long
+                        // coordinates: [24.8960, 67.0814] //national statium lat long
+                        // coordinates: [24.9814 67.0543] //national statium lat long
+                    },
+                    createdAt: new Date().getTime()
+                }
+                var options = {
+                    method: 'POST',
+                    url: `${this.props.bseUrl}/signupadmin/`,
+                    headers:
+                    {
+                        'cache-control': 'no-cache',
+                        "Allow-Cross-Origin": '*',
+                    },
+                    data: user
+                };
+                axios(options)
+                    .then((data) => {
+                        console.log(data.data, "USER_SIGN_UP_SUCCESSFULLY")
+                        this.setState({
+                            loader: !this.state.loader
+                        })
+                        swal.fire(
+                            'Success!',
+                            data.data.message,
+                            'success'
+                        )
+                        history.push("Signin")
+                    }).catch((err) => {
+                        console.log(err.response.data.message, "ERROR_ON_SIGN_UP")
+                        // alert(err.response.data.message)
+                        this.setState({
+                            loader: !this.state.loader,
+                            err: err.response.data.message,
+                            showerror: true
+                        }, () => {
+                            setTimeout(() => {
+                                this.setState({
+                                    showerror: false
+                                })
+                            }, 10000)
+                        })
+                    })
+            }
+            else {
+                this.setState({
+                    err: "Password must be minimum 6 characters.",
+                    showerror: true
+                }, () => {
+                    setTimeout(() => {
+                        this.setState({
+                            showerror: false
+                        })
+                    }, 10000)
+                })
+            }
+
+
         }
         else {
             this.setState({

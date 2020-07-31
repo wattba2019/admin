@@ -348,7 +348,7 @@ class ShopProfile extends Component {
                                     <Form.Item>
                                         {getFieldDecorator('Password', {
                                             rules: [{ required: true, message: 'Please type password!' }],
-                                            rules: [{ max: 6, message: 'Password must be maximum 6 characters.' },],
+                                            rules: [{ max: 6, message: 'Password must be minimum 6 characters.' },],
                                         })(
                                             <div style={{ display: "flex", flex: 1, marginTop: 20, width: 250 }} >
                                                 <input type="password" className="form-control" placeholder="New Password" aria-label="New Password" aria-describedby="basic-addon1" value={password} onChange={(e) => { this.setState({ password: e.target.value }) }} />
@@ -358,7 +358,7 @@ class ShopProfile extends Component {
                                     <Form.Item>
                                         {getFieldDecorator('ConfirmPassword', {
                                             rules: [{ required: true, message: 'Please type password!' }],
-                                            rules: [{ max: 6, message: 'Password must be maximum 6 characters.' },],
+                                            rules: [{ max: 6, message: 'Password must be minimum 6 characters.' },],
                                         })(
                                             <div style={{ display: "flex", flex: 1, marginTop: 0, width: 250 }} >
                                                 <input type="password" className="form-control" placeholder="Confirm Password" aria-label="Confirm Password" aria-describedby="basic-addon1" value={confirmPassword} onChange={(e) => { this.setState({ confirmPassword: e.target.value }) }} />
