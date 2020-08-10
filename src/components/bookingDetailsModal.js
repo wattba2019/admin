@@ -113,6 +113,13 @@ class BookingDetailsModal extends Component {
                                 <div style={{ display: "flex", flexDirection: "column", flex: 2, }}>
                                     <p>Booking Date</p>
                                     <p>Booking Status</p>
+
+                                    {
+                                        (bookingDetails.cancledFromCustomer) ? (
+                                            <p>Cancellation Time</p>
+                                        ) : null
+                                    }
+
                                 </div>
 
                                 <div style={{ display: "flex", flexDirection: "column", flex: 2, fontWeight: "bold" }}>
@@ -122,8 +129,23 @@ class BookingDetailsModal extends Component {
                                             <p style={{ color: "orange" }}>{bookingDetails.bookingStatus}</p>
                                         ) :
                                             (bookingDetails.bookingStatus === "Cancled") ? (
-                                                <p style={{ color: "red" }}>{bookingDetails.bookingStatus}</p>
+                                                (bookingDetails.cancledFromCustomer) ? (
+                                                    <div>
+                                                        < p style={{ color: "red" }}>Cancled From Customer</p>
+                                                        {/* < p style={{ color: "red" }}>Cancellation Time</p> */}
+                                                        {/* <p> {moment(bookingDetails.bookingDateTime).format("dddd, MMMM Do YYYY")}</p> */}
+
+                                                    </div>
+                                                ) :
+
+                                                    < p style={{ color: "red" }}>{bookingDetails.bookingStatus}</p>
                                             ) : <p style={{ color: "green" }}>{bookingDetails.bookingStatus}</p>
+                                    }
+
+                                    {
+                                        (bookingDetails.cancledFromCustomer) ? (
+                                            <p style={{ marginTop: 0 }}> {moment(bookingDetails.bookingCancledTime).format("dddd, MMMM Do YYYY")} {moment(bookingDetails.bookingCancledTime).format("LT")}</p>
+                                        ) : null
                                     }
                                 </div>
                             </div>
@@ -382,17 +404,20 @@ class BookingDetailsModal extends Component {
                             display: "flex", flex: 2, flexDirection: "row", flexWrap: "wrap", alignItems: "center", justifyContent: "center", zIndex: 1, width: "100%", marginTop: 10, minWidth: 200,
                             background: "#F7F8F8",
                         }}>
-
-
                             {
                                 (bookingDetails.bookingStatus != "Approved" && bookingDetails.bookingStatus != "Complete") ? (
-                                    <button className="buttonAdd" style={{ minWidth: 140, width: "35%", margin: "1%" }}
-                                        // onClick={() => this.setModal2Visible(false, bookingDetails)}
-                                        onClick={() => this.cancledAndApproveBooking("Approved", bookingDetails._id, false)}
-                                    >
-                                        {/* <span className="buttonmatter" style={{ fontSize: 15, }}>Update Booking</span> */}
-                                        <span className="buttonmatter" style={{ fontSize: 15, }}>Approve Booking</span>
-                                    </button>
+
+
+                                    (!bookingDetails.cancledFromCustomer) ? (
+                                        <button className="buttonAdd" style={{ minWidth: 140, width: "35%", margin: "1%" }}
+                                            onClick={() => this.cancledAndApproveBooking("Approved", bookingDetails._id, false)}
+                                        >
+                                            <span className="buttonmatter" style={{ fontSize: 15, }}>Approve Booking</span>
+                                        </button>
+
+                                    ) : null
+
+
                                 ) :
                                     (bookingDetails.bookingStatus != "Complete") ? (
                                         <button className="buttonAdd" style={{ minWidth: 140, width: "35%", margin: "1%" }}
@@ -403,7 +428,6 @@ class BookingDetailsModal extends Component {
                                             <span className="buttonmatter" style={{ fontSize: 15, }}>Complete</span>
                                         </button>
                                     ) : null
-
                             }
 
 
