@@ -9,9 +9,10 @@ import { GiWorld } from 'react-icons/gi';
 import SimpleMap from '../components/googlemap';
 import history from '../History';
 import { changePassword, updateProfile, } from "../store/action/action";
-import { Form, Input, Checkbox, Modal } from 'antd';
+import { Form, Input, Checkbox, Modal, message } from 'antd';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng, } from 'react-places-autocomplete';
+import { FiChevronDown } from 'react-icons/fi';
 
 class ShopProfile extends Component {
     constructor(props) {
@@ -24,6 +25,7 @@ class ShopProfile extends Component {
             confirmPassword: '',
             about: '',
             businessName: '',
+            businessType: '',
             telephone: '',
             websiteUrl: '',
             addressline1: '',
@@ -74,6 +76,7 @@ class ShopProfile extends Component {
                 email: userData.email,
                 about: userData.about,
                 businessName: userData.businessName,
+                businessType: userData.businessType,
                 telephone: userData.telePhone,
                 websiteUrl: userData.websiteUrl,
                 addressline1: userData.addressLine1,
@@ -100,6 +103,7 @@ class ShopProfile extends Component {
                 email: nextProps.userProfile.email,
                 about: nextProps.userProfile.about,
                 businessName: nextProps.userProfile.businessName,
+                businessType: nextProps.userProfile.businessType,
                 telephone: nextProps.userProfile.telePhone,
                 websiteUrl: nextProps.userProfile.websiteUrl,
                 addressline1: nextProps.userProfile.addressLine1,
@@ -143,12 +147,13 @@ class ShopProfile extends Component {
     };
 
     updateProfileData = () => {
-        const { email, about, businessName, telephone, websiteUrl, addressline1, addressline2, markers } = this.state
-        if (email !== '' && about !== '' && businessName !== '' && telephone !== '' && addressline1 !== '' && addressline2 !== "") {
+        const { email, about, businessName, businessType, telephone, websiteUrl, addressline1, addressline2, markers } = this.state
+        if (email !== '' && about !== '' && businessName !== '' && businessType != '' && telephone !== '' && addressline1 !== '' && addressline2 !== "") {
             let cloneUpdatedUser = {
                 email: email,
                 about: about,
                 businessName: businessName,
+                businessType: businessType,
                 telePhone: telephone,
                 websiteUrl: websiteUrl,
                 addressLine1: addressline1,
@@ -212,10 +217,15 @@ class ShopProfile extends Component {
             .catch(error => console.error('Error', error));
     };
 
+    handleMenuClick(e) {
+        message.info(e);
+        this.setState({ businessType: e })
+    }
 
     render() {
-        const { email, password, confirmPassword, about, businessName, telephone, websiteUrl, addressline1, addressline2, showerror, err, showerrorpassword, markers } = this.state;
+        const { email, password, confirmPassword, about, businessName, businessType, telephone, websiteUrl, addressline1, addressline2, showerror, err, showerrorpassword, markers } = this.state;
         const { getFieldDecorator } = this.props.form;
+        console.log(businessType, "businessType")
         return (
             <div style={{
                 display: "flex", width: "100%", justifyContent: "center", alignItems: "center",
@@ -250,6 +260,51 @@ class ShopProfile extends Component {
                                 <span required className="input-group-text" id="basic-addon1" style={{ backgroundColor: "#EC5F59" }}><TiBusinessCard style={{ color: "white", }} /></span>
                             </div>
                             <input type="text" className="form-control" placeholder="Business Name" aria-label="Business Name" aria-describedby="basic-addon1" value={businessName} onChange={(e) => { this.setState({ businessName: e.target.value }) }} />
+                        </div>
+
+                        {/* Business type */}
+                        <div style={{ marginTop: 10, display: "flex", flexDirection: "row", background: "white", border: '1px solid #CED4DA', }}>
+                            <div className="input-group-prepend">
+                                <span className="input-group-text" id="basic-addon1" style={{ backgroundColor: "#EC5F59" }}><TiBusinessCard style={{ color: "white" }} /></span>
+                            </div>
+                            <div class="dropdown"
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    marginLeft: "2.5%",
+                                    width: "85%",
+                                    alignItems: "center",
+                                    justifyContent: "space-between"
+                                }}>
+                                <div style={{ fontSize: 15 }}>
+                                    {
+                                        // businessType != '' ? businessType : "Business Type"
+                                        businessType
+                                    }
+                                </div>
+                                <div
+                                    style={{
+                                        height: 38,
+                                        display: "flex",
+                                        color: "black",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        // background: "red"
+                                    }}>
+
+                                    <FiChevronDown />
+                                </div>
+
+                                <div style={{ width: "100%", marginTop: "100%", zIndex: 10 }} class="dropdown-content">
+                                    <a style={{ display: "flex", }} onClick={() => { this.handleMenuClick("Salons") }} >Salons</a>
+                                    <a style={{ display: "flex", }} onClick={() => { this.handleMenuClick("Barbershop") }}>Barbershop</a>
+                                    <a style={{ display: "flex", }} onClick={() => { this.handleMenuClick("Beauty Salons, Spas & Other") }} >Beauty Salons, Spas & Other</a>
+                                    <a style={{ display: "flex", }} onClick={() => { this.handleMenuClick("Salons + Beauty Salons, Spas & Other") }} >Salons + Beauty Salons, Spas & Other</a>
+                                    <a style={{ display: "flex", }} onClick={() => { this.handleMenuClick("Barbershop + Salon") }}>Barbershop + Salon</a>
+                                    <a style={{ display: "flex", }} onClick={() => { this.handleMenuClick("Barbershop + Beauty Salons, Spas & Other") }}>Barbershop + Beauty Salons, Spas & Other</a>
+                                    <a style={{ display: "flex", }} onClick={() => { this.handleMenuClick("Salons + Barbershop + Spa/Other") }} >Salons + Barbershop + Spa/Other</a>
+                                </div>
+                            </div>
                         </div>
 
                         {/* telePhone */}
@@ -345,7 +400,7 @@ class ShopProfile extends Component {
                             <div style={{ width: "100%", marginLeft: "40%", marginTop: 20, justifyContent: "center", alignItems: "flex-start" }} className="center">
                                 <h6 className="input-group mb-6 inputCenter" >Change Password</h6>
                                 <Form onSubmit={this.handleSubmit} className="login-form">
-                                    
+
                                     <Form.Item>
                                         {getFieldDecorator('Password', {
                                             // rules: [{ required: true, message: 'Please type password!' }],

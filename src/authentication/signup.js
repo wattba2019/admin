@@ -1,27 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { signupAction } from '../store/action/action';
-import {
-    Link
-} from 'react-router-dom';
-// import Modal1 from 'react-responsive-modal';
+// router
+import { Link } from 'react-router-dom';
+import history from '../History';
 import '../custom.css'
 import axios from 'axios';
+// antd design and sweet alert loader
+import { message, Modal } from 'antd';
+import "antd/dist/antd.css";
 import Loader from 'react-loader-spinner'
+import swal from 'sweetalert2';
+// google api's
+import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng, } from 'react-places-autocomplete';
+// icons
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { MdEmail, MdDescription, MdLocalPhone, MdLock } from 'react-icons/md';
 import { TiBusinessCard } from 'react-icons/ti';
 import { GiWorld } from 'react-icons/gi';
-// import SimpleMap from '../components/googlemap';
-import history from '../History';
-import swal from 'sweetalert2';
-// import NewGooeleMap from '../components/newGooleMap';
-import { Modal, AutoComplete } from "antd";
-import "antd/dist/antd.css";
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-// import AutoComplete from './components/autoComplete';
-
-import PlacesAutocomplete, { geocodeByAddress, getLatLng, } from 'react-places-autocomplete';
+import { FiChevronDown } from 'react-icons/fi';
 
 class Signup extends Component {
     constructor(props) {
@@ -50,11 +47,11 @@ class Signup extends Component {
             password: '',
             about: '',
             businessName: '',
+            businessType: '',
             telephone: '',
             websiteUrl: '',
             addressline1: '',
             addressline2: '',
-
         }
         this.signup = this.signup.bind(this);
     }
@@ -67,7 +64,7 @@ class Signup extends Component {
         const { latLng } = coord;
         const lat = latLng.lat();
         const lng = latLng.lng();
-        console.log(lat, lng, latLng, "onMarkerDragEnd")
+        // console.log(lat, lng, latLng, "onMarkerDragEnd")
         this.setState(prevState => {
             const markers = [...this.state.markers];
             markers[index] = { ...markers[index], position: { lat, lng } };
@@ -75,11 +72,9 @@ class Signup extends Component {
         });
     };
 
-
-
     signup() {
-        const { email, password, about, businessName, telephone, websiteUrl, addressline1, addressline2, markers } = this.state;
-        if (email !== '' && password !== '' && about !== '' && businessName !== '' && telephone !== '' && addressline1 !== '' && addressline2 !== '') {
+        const { email, password, about, businessName, businessType, telephone, websiteUrl, addressline1, addressline2, markers } = this.state;
+        if (email !== '' && password !== '' && about !== '' && businessName !== '' && businessType !== '' && telephone !== '' && addressline1 !== '' && addressline2 !== '') {
             if (password.length >= 6) {
                 this.setState({
                     loader: !this.state.loader
@@ -89,6 +84,7 @@ class Signup extends Component {
                     password: password,
                     about: about,
                     businessName: businessName,
+                    businessType: businessType,
                     telePhone: telephone,
                     websiteUrl: websiteUrl,
                     addressLine1: addressline1,
@@ -102,6 +98,8 @@ class Signup extends Component {
                     },
                     createdAt: new Date().getTime()
                 }
+
+                console.log(user, "USER_")
                 var options = {
                     method: 'POST',
                     url: `${this.props.bseUrl}/signupadmin/`,
@@ -152,8 +150,6 @@ class Signup extends Component {
                     }, 10000)
                 })
             }
-
-
         }
         else {
             this.setState({
@@ -167,7 +163,6 @@ class Signup extends Component {
                 }, 10000)
             })
         }
-
     }
 
     handleChange = address => {
@@ -177,9 +172,7 @@ class Signup extends Component {
     handleSelect = address => {
         geocodeByAddress(address)
             .then(results => getLatLng(results[0]))
-            // .then(latLng => console.log('Success', latLng));
             .then(latLng => {
-
                 var points = [
                     { lat: latLng.lat, lng: latLng.lng },
                 ]
@@ -187,9 +180,6 @@ class Signup extends Component {
                 for (var i = 0; i < points.length; i++) {
                     bounds.extend(points[i]);
                 }
-
-                console.log(bounds, "bounds")
-
                 let markers = [
                     {
                         name: "Current position",
@@ -209,23 +199,17 @@ class Signup extends Component {
             .catch(error => console.error('Error', error));
     };
 
+    handleMenuClick(e) {
+        message.info(e);
+        this.setState({ businessType: e })
+    }
+
     render() {
         const {
-            open, email, password,
-            about, businessName,
-            telephone, websiteUrl,
-            addressline1, addressline2,
-            err, showerror, loader, markers
+            email, password, about, businessName, businessType,
+            telephone, websiteUrl, addressline1,
+            addressline2, err, showerror, loader,
         } = this.state;
-
-        // console.log(markers[0]., "bseUrl")
-
-        // var bounds = new this.props.google.maps.LatLngBounds();
-        // for (var i = 0; i < points.length; i++) {
-        //     bounds.extend(points[i]);
-        // }
-
-        // console.log(markers[0].position.lat, markers[0].position.lng, "markers")
         return (
             <div>
                 <div style={{ display: "flex", flexBasis: "100%", backgroundColor: "#F7F8F8" }}>
@@ -234,6 +218,7 @@ class Signup extends Component {
                             <center>
                                 <div style={{ width: "50%", }} className="center">
                                     <h2 className="input-group mb-6 inputCenter" >Signup</h2>
+
 
                                     {/* Email */}
                                     <div className="input-group mb-3" style={{ marginTop: 20 }}>
@@ -267,6 +252,50 @@ class Signup extends Component {
                                         <input type="text" className="form-control" placeholder="Business Name" aria-label="Business Name" aria-describedby="basic-addon1" value={businessName} onChange={(e) => { this.setState({ businessName: e.target.value }) }} />
                                     </div>
 
+                                    {/* Business type */}
+                                    <div style={{ marginTop: 10, display: "flex", flexDirection: "row", background: "white", border: '1px solid #CED4DA', }}>
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text" id="basic-addon1" style={{ backgroundColor: "#EC5F59" }}><TiBusinessCard style={{ color: "white" }} /></span>
+                                        </div>
+                                        <div class="dropdown"
+                                            style={{
+                                                display: "flex",
+                                                flexDirection: "row",
+                                                marginLeft: "2.5%",
+                                                width: "85%",
+                                                alignItems: "center",
+                                                justifyContent: "space-between"
+                                            }}>
+                                            <div style={{ fontSize: 15 }}>
+                                                {
+                                                    businessType != '' ? businessType : "Business Type"
+                                                }
+                                            </div>
+                                            <div
+                                                style={{
+                                                    height: 38,
+                                                    display: "flex",
+                                                    color: "black",
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                    // background: "red"
+                                                }}>
+
+                                                <FiChevronDown />
+                                            </div>
+
+                                            <div style={{ width: "100%", marginTop: "100%", zIndex: 10 }} class="dropdown-content">
+                                                <a style={{ display: "flex", }} onClick={() => { this.handleMenuClick("Salons") }} >Salons</a>
+                                                <a style={{ display: "flex", }} onClick={() => { this.handleMenuClick("Barbershop") }}>Barbershop</a>
+                                                <a style={{ display: "flex", }} onClick={() => { this.handleMenuClick("Beauty Salons, Spas & Other") }} >Beauty Salons, Spas & Other</a>
+                                                <a style={{ display: "flex", }} onClick={() => { this.handleMenuClick("Salons + Beauty Salons, Spas & Other") }} >Salons + Beauty Salons, Spas & Other</a>
+                                                <a style={{ display: "flex", }} onClick={() => { this.handleMenuClick("Barbershop + Salon") }}>Barbershop + Salon</a>
+                                                <a style={{ display: "flex", }} onClick={() => { this.handleMenuClick("Barbershop + Beauty Salons, Spas & Other") }}>Barbershop + Beauty Salons, Spas & Other</a>
+                                                <a style={{ display: "flex", }} onClick={() => { this.handleMenuClick("Salons + Barbershop + Spa/Other") }} >Salons + Barbershop + Spa/Other</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     {/* telePhone */}
                                     <div className="input-group mb-3" style={{ marginTop: 10 }}>
                                         <div className="input-group-prepend">
@@ -298,17 +327,6 @@ class Signup extends Component {
                                         </div>
                                         <input type="text" className="form-control" placeholder="Post code" aria-label="Post code" aria-describedby="basic-addon1" value={addressline2} onChange={(e) => { this.setState({ addressline2: e.target.value }) }} />
                                     </div>
-
-                                    {/* <center>
-                                        <div className="textLink" onClick={() => this.setModalVisible(true)}>Shop Location
-                                        </div>
-                                        <div style={{ display: "flex", }}>
-                                            <img style={{ borderRadius: 15 }} alt="googleMap" src={require('../assets/londonmap.png')}
-                                                width="100%"
-                                                height={80}
-                                            />
-                                        </div>
-                                    </center> */}
 
                                     {/* google map */}
                                     <div className="input-group mb-3" style={{ marginTop: 10 }}>
@@ -355,7 +373,6 @@ class Signup extends Component {
                     <div style={{ display: "flex", flexBasis: "50%", }}>
                         <img alt="BackGroundImage" src={require('../assets/signinBackground.png')}
                             width="100%"
-                            // height="90%"
                             height={window.innerHeight}
                         />
                     </div>
@@ -372,9 +389,7 @@ class Signup extends Component {
                             width={"60%"}
                             minWidth={"60%"}
                         >
-                            <div
-                            // style={{ background: "red", }}
-                            >
+                            <div>
                                 <PlacesAutocomplete
                                     value={this.state.address}
                                     onChange={this.handleChange}
@@ -418,7 +433,6 @@ class Signup extends Component {
                                         //uk
                                         // lat: 54.992218402853496,
                                         // lng: -2.7072125843446315,
-
                                         lat: this.state.initialCenter[0],
                                         lng: this.state.initialCenter[1]
                                     }}
@@ -436,15 +450,11 @@ class Signup extends Component {
                                         />
                                     ))}
                                 </Map>
-
                             </div>
                         </Modal>
                     </div>
-
-
-
                 </div>
-            </div >
+            </div>
         )
     }
 }
@@ -458,8 +468,6 @@ function mapDispatchToProp(dispatch) {
     return ({
     })
 }
-
-// export default connect(mapStateToProp, mapDispatchToProp)(Signup);
 
 export default GoogleApiWrapper({
     apiKey: ("AIzaSyBQHKZTwhPJX_9IevM5jKC8kmz0NzqAaBk")

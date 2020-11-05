@@ -1,64 +1,65 @@
-
-.button{
-border:0.5px solid #EC5F59;
-border-radius: 5px;
-width: 60%;
-height: 40px;   
-position: relative;
-background-color: rgba(241, 90,103, 1);
-background-image: linear-gradient(#E96A69, #F45671);
-}
-.buttonAdd{
-    border:0.5px solid #EC5F59;
-    border-radius: 5px;
-    width: 15%;
-    height: 40px;   
-    position: relative;
-    background-color: rgba(241, 90,103, 1);
-    background-image: linear-gradient(#E96A69, #F45671);
-    }
-.buttonSave{
-        border:0.5px solid #EC5F59;
-        border-radius: 5px;
-        width: 15%;
-        height: 40px;   
-     /* top: 50; */
-        position: relative;
-        background-color: rgba(241, 90,103, 1);
-        background-image: linear-gradient(#E96A69, #F45671);
-}
-    
-
-.buttonmatter{
-color: white;
-cursor: pointer;
-}
-
-.buttonsidebar{
-    border-top:0.5px solid #EC5F59;
+.button {
+    border: 0.5px solid #EC5F59;
     border-radius: 5px;
     width: 60%;
-    height: 40px;   
+    height: 40px;
+    position: relative;
+    background-color: rgba(241, 90, 103, 1);
+    background-image: linear-gradient(#E96A69, #F45671);
+}
+
+.buttonAdd {
+    border: 0.5px solid #EC5F59;
+    border-radius: 5px;
+    width: 15%;
+    height: 40px;
+    position: relative;
+    background-color: rgba(241, 90, 103, 1);
+    background-image: linear-gradient(#E96A69, #F45671);
+}
+
+.buttonSave {
+    border: 0.5px solid #EC5F59;
+    border-radius: 5px;
+    width: 15%;
+    height: 40px;
+    /* top: 50; */
+    position: relative;
+    background-color: rgba(241, 90, 103, 1);
+    background-image: linear-gradient(#E96A69, #F45671);
+}
+
+.buttonmatter {
+    color: white;
+    cursor: pointer;
+}
+
+.buttonsidebar {
+    border-top: 0.5px solid #EC5F59;
+    border-radius: 5px;
+    width: 60%;
+    height: 40px;
     position: relative;
     /* background-color: rgba(241, 90,103, 1); */
     /* background-image: linear-gradient(#E96A69, #F45671); */
     cursor: pointer;
 }
-.buttonsidebar:hover{
+
+.buttonsidebar:hover {
     background-color: rgba(199, 174, 176, 0.2);
     cursor: pointer;
 }
 
-
-.textLink{
-color:#007BFE;
-/* text-decoration: none; */
+.textLink {
+    color: #007BFE;
+    /* text-decoration: none; */
 }
 
-.textLink:hover{
-color:  rgb(2, 90, 184);;
-cursor: pointer;
-text-decoration: underline;
+.textLink:hover {
+    color: rgb(2, 90, 184);
+    ;
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .sidenav {
@@ -71,21 +72,23 @@ text-decoration: underline;
     /* background-color: #111; */
     overflow-x: hidden;
     padding-top: 20px;
-    background-color: rgba(241, 90,103, 1);
+    background-color: rgba(241, 90, 103, 1);
     background-image: linear-gradient(#D95A4F, #F45671);
-  }
-  
-  .main {
-    margin-left: 220px; 
-    /* background-color: rgba(241, 90,103, 1); */
+}
 
-  }
-  
-  @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-  }
- 
+.main {
+    margin-left: 220px;
+    /* background-color: rgba(241, 90,103, 1); */
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+    .sidenav a {
+        font-size: 18px;
+    }
+}
 
 /* 
 .sideBarBackGroud{
@@ -93,133 +96,173 @@ text-decoration: underline;
     background-color: rgba(241, 90,103, 1);
     background-image: linear-gradient(#D95A4F, #F45671);
     } */
-    
+
 /* .drawerBackground {
     width: 100%;
 } */
-    
+
 .drawerBackgroundnested {
     /* background-color:white;
     width: 100px;
     height: 100px;
     border-radius: 50px;
     margin: 0 auto; */
-
     width: 100px;
-    height:100px;
+    height: 100px;
     border-radius: 50%;
     background: white;
 }
-   
+
 .profileinputnone {
     display: none;
     cursor: pointer;
-   }
-   
-   .profileImage {
-     /* height:90%;
+}
+
+.profileImage {
+    /* height:90%;
      width: 90%;
      border-radius: 50px; */
-     margin-top: 4%;
-     width: 90px;
-     height: 90px;
-     border-radius: 50%;
-     
-    }
-   
-    .profileImageupload {
-     background-color: whitesmoke;
-     height:35%;
-     width: 35%;
-     position: relative;
-     top: -32%;
-     left: 38%;
-     border-radius: 80px;
-     justify-content: center;
-     align-items: center;
-    }
-
-    .stylistImageupload {
-        /* position: absolute; */
-        background-color: whitesmoke;
-        /* background-color: red; */
-        height:20px;
-        width: 10%;
-        position: relative;
-        top: -28px;
-        left: 60%;
-        border-radius: 80px;
-        justify-content: center;
-        align-items: center;
-       }
-
-
-    .cardshadow{
-        padding: 10px;
-        color: white;
-        box-shadow: 2px 2px 8px #aaaaaa;
-        }
-
-.cardshadowcenter{
-    /* color: white; */
-    /* box-shadow: 2px 2px 8px  #aaaaaa; */
-    box-shadow: 2px 2px 30px 2px  #aaaaaa;
-
-/* -webkit-box-shadow: 3px 3px 23px 1px #aaaaaa;  */
-/* box-shadow: 3px 3px 23px 1px #aaaaaa; */
-    
+    margin-top: 4%;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
 }
 
-.boxShadow{
-    /* box-shadow: 2px 2px 30px 2px  #aaaaaa; */
-    /* box-shadow: 2px 2px 8px #aaaaaa; */
-    
-    -webkit-box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
-     -moz-box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
-     box-shadow: -1px 0px 19px -6px rgba(0,0,0,0.75);
+.profileImageupload {
+    background-color: whitesmoke;
+    height: 35%;
+    width: 35%;
+    position: relative;
+    top: -32%;
+    left: 38%;
+    border-radius: 80px;
+    justify-content: center;
+    align-items: center;
 }
-        
-.cardshadowWithButton{
+
+.stylistImageupload {
+    /* position: absolute; */
+    background-color: whitesmoke;
+    /* background-color: red; */
+    height: 20px;
+    width: 10%;
+    position: relative;
+    top: -28px;
+    left: 60%;
+    border-radius: 80px;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardshadow {
+    padding: 10px;
     color: white;
     box-shadow: 2px 2px 8px #aaaaaa;
- }
-
-            
-    .cardButtonBorder{
-        border-top:1px solid #C3C3C4;
-    }
-            
-    .cardButtonBorderRight{
-        border-right:1px solid #C3C3C4;
-    }
-
-    .cardButtonBorder:hover{
-        cursor: pointer;
-    }
-
-
-    .minWidthfor2ndcard{
-overflow: visible;   
-/* scroll-behavior: auto; */
-/* overflow: -moz-scrollbars-none; */
- }
-
-
-         
- .shopeName{
-   color:white ;
 }
 
-.shopeName:hover{
+.cardshadowcenter {
+    /* color: white; */
+    /* box-shadow: 2px 2px 8px  #aaaaaa; */
+    box-shadow: 2px 2px 30px 2px #aaaaaa;
+    /* -webkit-box-shadow: 3px 3px 23px 1px #aaaaaa;  */
+    /* box-shadow: 3px 3px 23px 1px #aaaaaa; */
+}
+
+.boxShadow {
+    /* box-shadow: 2px 2px 30px 2px  #aaaaaa; */
+    /* box-shadow: 2px 2px 8px #aaaaaa; */
+    -webkit-box-shadow: -1px 0px 19px -6px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px 0px 19px -6px rgba(0, 0, 0, 0.75);
+    box-shadow: -1px 0px 19px -6px rgba(0, 0, 0, 0.75);
+}
+
+.cardshadowWithButton {
+    color: white;
+    box-shadow: 2px 2px 8px #aaaaaa;
+}
+
+.cardButtonBorder {
+    border-top: 1px solid #C3C3C4;
+}
+
+.cardButtonBorderRight {
+    border-right: 1px solid #C3C3C4;
+}
+
+.cardButtonBorder:hover {
     cursor: pointer;
 }
 
-.specialPackImgCard{
-    /* padding: 10; */
-    border-right:0.5px solid #CED4DA;
-    border-left:0.5px solid #CED4DA;
-    border-top:0.5px solid #CED4DA;
-    border-bottom:0.5px solid #CED4DA;
-    /* border-radius: 5; */
+.minWidthfor2ndcard {
+    overflow: visible;
+    /* scroll-behavior: auto; */
+    /* overflow: -moz-scrollbars-none; */
+}
 
+.shopeName {
+    color: white;
+}
+
+.shopeName:hover {
+    cursor: pointer;
+}
+
+.specialPackImgCard {
+    /* padding: 10; */
+    border-right: 0.5px solid #CED4DA;
+    border-left: 0.5px solid #CED4DA;
+    border-top: 0.5px solid #CED4DA;
+    border-bottom: 0.5px solid #CED4DA;
+    /* border-radius: 5; */
+}
+
+.dropbtn {
+    /* background-color: #4CAF50; */
+    color: white;
+    /* padding: 16px; */
+    height: 40px;
+    font-size: 16px;
+    border: none;
+}
+
+.dropdown {
+    /* display: flex; */
+    /* flex-direction: row; */
+    /* justify-content: space-between; */
+    width: 100%;
+    /* height: 30; */
+    position: relative;
+    display: inline-block;
+    /* border-style: solid;
+    border-color: coral; */
+    /* background-color: rgb(2, 90, 184); */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    cursor: pointer;
+    /* background-color: #3e8e41; */
 }

@@ -20,10 +20,10 @@ class Signin extends Component {
             //objID 
             // email: 'abddullahshah@gmail.com',
             // password: '123456',
-            // email: 'akaptom@gmail.com',
-            // password: 'Password123',
-            email: '',
-            password: '',
+            email: 'mynameisabdullah1@hotmail.com',
+            password: '123456',
+            // email: '',
+            // password: '',
         }
         this.signin = this.signin.bind(this);
     }
@@ -91,7 +91,7 @@ class Signin extends Component {
                                     <h2 className="input-group mb-6 inputCenter" >Sign in</h2>
 
                                     {/* Email */}
-                                    <div className="input-group mb-3" style={{ marginTop: 20 }}>
+                                    <div className="input-group mb-3" style={{ marginTop: 20, }}>
                                         <div className="input-group-prepend">
                                             <span className="input-group-text" id="basic-addon1" style={{ backgroundColor: "#EC5F59" }}><MdEmail style={{ color: "white", }} /></span>
                                         </div>
