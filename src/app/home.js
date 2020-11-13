@@ -1,19 +1,15 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
 import { setUserCredentials, updateProfileImg } from "../store/action/action";
-// import {
-//     Link
-// } from 'react-router-dom';
 import '../custom.css'
-// import axios from 'axios';
-// import Loader from 'react-loader-spinner'
-// import swal from 'sweetalert2';
+//icons
 import { MdCameraEnhance } from 'react-icons/md';
 import { FaRegCalendarCheck, } from 'react-icons/fa';
 import { GiScissors } from 'react-icons/gi';
 import { AiOutlineUser, AiFillGift } from 'react-icons/ai';
 import { FiClock } from 'react-icons/fi';
 import { GoSignOut } from 'react-icons/go';
+//components
 import ShopProfile from './profile';
 import Bookings from './bookings';
 import Services from './services';
@@ -21,35 +17,31 @@ import SpecialOffers from './specialOffers';
 import StyleList from './stylelist';
 import Workinghours from './workingHours';
 import history from '../History';
-// import Switch from "react-switch";
-// import Switch from '@material-ui/core/Switch';
 
 class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            checked: false,
+            // checked: false,
             loader: false,
             showerror: false,
             shopImage: "",
             // route: "ShopProfile"
-            route: "Bookings"
-            // route: "Services" 
+            // route: "Bookings"
+            route: "Services" 
             // route: "Stylelists"
             // route: "WorkingHours"
             // route: "SpecialOffers"
         }
-        this.handleChange = this.handleChange.bind(this);
+        // this.handleChange = this.handleChange.bind(this);
     }
 
     imagePick(file) {
-        // alert("INSIDE_Parrent")
         const { _id } = this.state
         if (file) {
             this.props.updateProfileImg(file, _id)
         }
     }
-
 
     routeChanger(routeName) {
         this.setState({
@@ -57,14 +49,8 @@ class Home extends Component {
         })
     }
 
-    // componentWillMount() {
-    //     let user = localStorage.getItem('userProfile')
-    //     this.props.setUserCredentials(JSON.parse(user))
-    // }
-
     componentDidMount() {
         let userData = this.props.userProfile
-        // console.log(userData, "USER_DATA_IN_HOME_MENU")
         if (userData != undefined) {
             this.setState({
                 shopImage: userData.coverImage,
@@ -88,15 +74,13 @@ class Home extends Component {
     }
 
     logout() {
-        // localStorage.removeItem("userProfiles");
         localStorage.clear();
         history.push('Signin')
     }
 
-    handleChange(checked) {
-        this.setState({ checked });
-    }
-
+    // handleChange(checked) {
+    //     this.setState({ checked });
+    // }
 
     render() {
         const { shopImage, businessName } = this.state;
@@ -132,25 +116,9 @@ class Home extends Component {
                                             <h4 onClick={() => this.routeChanger("ShopProfile")} className="shopeName" style={{ marginTop: 10, }}>{businessName}</h4>
                                         </div>
 
-
-                                        {/* <div style={{ background: "green" }}>
-                                            <div style={{ fontWeight: "bold", color: "white", }}>Online</div>
-                                            <Switch onChange={this.handleChange} uncheckedIcon={false} height={18} width={20} checked={this.state.checked} />
-                                        </div> */}
-
-                                        {/* <Switch
-                                            checked={true}
-                                            onChange={this.handleChange}
-                                            color="primary"
-                                            name="checkedB"
-                                            inputProps={{ 'aria-label': 'primary checkbox' }}
-                                        /> */}
-
                                     </center>
                                 </div>
                             </div>
-
-
                             <div className="buttonsidebar" style={{ background: this.state.route === "Bookings" ? 'rgba(199, 174, 176, 0.2)' : null, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 20, width: "95%", height: 50, }}>
                                 <div style={{ display: "flex", width: "90%", }}>
                                     <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
@@ -191,16 +159,6 @@ class Home extends Component {
                                     </div>
                                 </div>
                             </div>
-                            {/* <div className="buttonsidebar" style={{ background: this.state.route === "WorkingCalendar" ? 'rgba(199, 174, 176, 0.2)' : null, display: "flex", alignItems: "center", justifyContent: "center", width: "95%", height: 50, }}>
-                                <div style={{ display: "flex", width: "90%", }}>
-                                    <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
-                                        <FaRegCalendarAlt style={{ color: "white", fontSize: 18, marginTop: 5 }} />
-                                    </div>
-                                    <div onClick={() => this.routeChanger("WorkingCalendar")} style={{ flex: 6, color: "white", fontSize: 18, justifyContent: "center", alignItems: "center", alignSelf: "center", textAlign: "left", marginLeft: 10, }}>
-                                        Working Calendar
-                                        </div>
-                                </div>
-                            </div> */}
                             <div className="buttonsidebar" style={{ background: this.state.route === "SpecialOffers" ? 'rgba(199, 174, 176, 0.2)' : null, display: "flex", alignItems: "center", justifyContent: "center", width: "95%", height: 50, background: "white" }}>
                                 <div style={{ display: "flex", width: "90%", }}>
                                     <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
@@ -211,7 +169,6 @@ class Home extends Component {
                                         </div>
                                 </div>
                             </div>
-
                             <div className="buttonsidebar" style={{ display: "flex", marginTop: "100%", alignItems: "center", justifyContent: "center", width: "100%", height: 50, }}>
                                 <div style={{ display: "flex", width: "90%", }}>
                                     <div style={{ flex: 1, justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
@@ -228,15 +185,8 @@ class Home extends Component {
                 </div>
 
                 <div className="main">
-                    <div
-                        style={{
-                            display: "flex", flexBasis: "85%",
-                            height: window.innerHeight,
-                            backgroundColor: "#F7F8F8"
-                            // background: "red"
-                        }}>
+                    <div style={{ display: "flex", flexBasis: "85%", height: window.innerHeight, backgroundColor: "#F7F8F8" }}>
                         <div style={{ width: "100%", height: "8%", float: "right", textAlign: "right", }}>
-
                             {
                                 (this.state.route != "ShopProfile") ? (
                                     <img alt="BackGroundImage" src={require('../assets/logo.png')} style={{ marginRight: "4%", marginTop: "0.5%" }}
@@ -245,7 +195,6 @@ class Home extends Component {
                                     />
                                 ) : null
                             }
-
                             {
                                 (this.state.route === "ShopProfile") ? (<ShopProfile />) : null
                             }
@@ -264,7 +213,6 @@ class Home extends Component {
                             {
                                 (this.state.route === "SpecialOffers") ? (<SpecialOffers />) : null
                             }
-
                         </div>
                     </div>
                 </div>

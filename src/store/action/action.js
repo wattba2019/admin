@@ -17,42 +17,50 @@ export function setUserCredentials(userCredentials) {
 
 export function addService(service) {
     return dispatch => {
-        console.log('inside action', service);
-        var options = {
-            method: 'POST',
-            url: `${baseURL.baseURL}/servicesandgallery/add/`,
-            headers:
-            {
-                'cache-control': 'no-cache',
-                "Allow-Cross-Origin": '*',
-            },
-            data: service
-        };
-        axios(options)
-            .then((data) => {
-                console.log(data.data.result, "Service added successfully.");
-                dispatch({ type: ActionTypes.ADD_SERVICE, payload: data.data.result })
-                swal.fire(
-                    'Success!',
-                    data.data.message,
-                    'success'
-                )
-            }).catch((err) => {
-                console.log(err.response.data.message, "ERROR_ON_SAVING")
-                // alert(err.response.data.message)
-                swal.fire(
-                    'Error!',
-                    'Something went wrong.',
-                    'error'
-                )
-
-            })
+        // console.log('inside_action', service);
+        if (service.categoryName != "") {
+            var options = {
+                method: 'POST',
+                url: `${baseURL.baseURL}/servicesandgallery/add/`,
+                headers:
+                {
+                    'cache-control': 'no-cache',
+                    "Allow-Cross-Origin": '*',
+                },
+                data: service
+            };
+            axios(options)
+                .then((data) => {
+                    console.log(data.data.result, "Service added successfully.");
+                    dispatch({ type: ActionTypes.ADD_SERVICE, payload: data.data.result })
+                    swal.fire(
+                        'Success!',
+                        data.data.message,
+                        'success'
+                    )
+                }).catch((err) => {
+                    console.log(err.response.data.message, "ERROR_ON_SAVING")
+                    // alert(err.response.data.message)
+                    swal.fire(
+                        'Error!',
+                        'Something went wrong.',
+                        'error'
+                    )
+                })
+        }
+        else {
+            swal.fire(
+                'Error!',
+                'Please select category.',
+                'error'
+            )
+        }
     }
 }
 
 
 export function getServices(userID) {
-    console.log("ITS_WORKING", userID)
+    // console.log("ITS_WORKING", userID)
     return dispatch => {
         var options = {
             method: 'GET',
@@ -390,9 +398,9 @@ export function getWorkingHours(userID) {
         };
         axios(options)
             .then((wokringHours) => {
-                console.log(wokringHours, 'fetched_wokringHours11111');
-                if (Object.keys(wokringHours).length > 0) {
-                    console.log(wokringHours.data.workingHours, 'fetched_wokringHours');
+                // console.log(wokringHours, 'fetched_wokringHours');
+                if (Object.keys(wokringHours).length > 0 && wokringHours.data.workingHours != null) {
+                    // console.log(wokringHours.data.workingHours, 'fetched_wokringHours');
                     dispatch({ type: ActionTypes.FETCHED_WORKINGHOURS, payload: wokringHours.data.workingHours })
                 }
             })
@@ -403,11 +411,9 @@ export function getWorkingHours(userID) {
     }
 }
 
-
-
-export function updateWorkingHours(workingHours) {
+export function updateWorkingHours(workingHours, autoAdd) {
     return dispatch => {
-        console.log('inside workingHours action', workingHours);
+        console.log('inside_workingHours_action', workingHours);
         var options = {
             method: 'POST',
             url: `${baseURL.baseURL}/workinghours/${workingHours.userID}`,
@@ -423,11 +429,13 @@ export function updateWorkingHours(workingHours) {
                 console.log(data, "stylist updated successfully.");
                 // stylist.indexToEdit = indexToEdit;
                 dispatch({ type: ActionTypes.FETCHED_WORKINGHOURS, payload: workingHours })
-                swal.fire(
-                    'Success!',
-                    data.data.message,
-                    'success'
-                )
+                if (!autoAdd) {
+                    swal.fire(
+                        'Success!',
+                        data.data.message,
+                        'success'
+                    )
+                }
             }).catch((err) => {
                 console.error(err, "ERROR_ON_SAVING")
                 // alert(err.response.data.message)
@@ -436,7 +444,6 @@ export function updateWorkingHours(workingHours) {
                     'Something went wrong.',
                     'error'
                 )
-
             })
     }
 }

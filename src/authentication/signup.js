@@ -19,6 +19,7 @@ import { MdEmail, MdDescription, MdLocalPhone, MdLock } from 'react-icons/md';
 import { TiBusinessCard } from 'react-icons/ti';
 import { GiWorld } from 'react-icons/gi';
 import { FiChevronDown } from 'react-icons/fi';
+import { updateWorkingHours } from '../store/action/action'
 
 class Signup extends Component {
     constructor(props) {
@@ -43,15 +44,25 @@ class Signup extends Component {
                     }
                 }
             ],
-            email: '',
-            password: '',
-            about: '',
-            businessName: '',
-            businessType: '',
-            telephone: '',
-            websiteUrl: '',
-            addressline1: '',
-            addressline2: '',
+            // email: '',
+            // password: '',
+            // about: '',
+            // businessName: '',
+            // businessType: '',
+            // telephone: '',
+            // websiteUrl: '',
+            // addressline1: '',
+            // addressline2: '',
+
+            email: 'mynameisabdullah1@hotmail.com',
+            password: '123456',
+            about: 'test',
+            businessName: 'Saad cutz',
+            businessType: 'Saloon',
+            telephone: '03452153709',
+            websiteUrl: 'test.com',
+            addressline1: '786',
+            addressline2: '786',
         }
         this.signup = this.signup.bind(this);
     }
@@ -98,7 +109,6 @@ class Signup extends Component {
                     },
                     createdAt: new Date().getTime()
                 }
-
                 console.log(user, "USER_")
                 var options = {
                     method: 'POST',
@@ -112,7 +122,7 @@ class Signup extends Component {
                 };
                 axios(options)
                     .then((data) => {
-                        console.log(data.data, "USER_SIGN_UP_SUCCESSFULLY")
+                        console.log(data.data.result._id, "USER_SIGN_UP_SUCCESSFULLY")
                         this.setState({
                             loader: !this.state.loader
                         })
@@ -121,6 +131,17 @@ class Signup extends Component {
                             data.data.message,
                             'success'
                         )
+                        let updateTimeObject = {
+                            monday: { day: 'Monday', open: true, openTimings: "9:00 am", closingTime: "9:00 pm" },
+                            tuesday: { day: 'Tuesday', open: true, openTimings: "9:00 am", closingTime: "9:00 pm" },
+                            wednesday: { day: 'Wednesday', open: true, openTimings: "9:00 am", closingTime: "9:00 pm" },
+                            thursday: { day: 'Thursday', open: true, openTimings: "9:00 am", closingTime: "9:00 pm" },
+                            friday: { day: 'Friday', open: true, openTimings: "9:00 am", closingTime: "9:00 pm" },
+                            saturday: { day: 'Saturday', open: true, openTimings: "9:00 am", closingTime: "9:00 pm" },
+                            sunday: { day: 'Sunday', open: true, openTimings: "9:00 am", closingTime: "9:00 pm" },
+                            userID: data.data.result._id,
+                        };
+                        this.props.updateWorkingHours(updateTimeObject, true);
                         history.push("Signin")
                     }).catch((err) => {
                         console.log(err.response.data.message, "ERROR_ON_SIGN_UP")
@@ -137,6 +158,8 @@ class Signup extends Component {
                             }, 10000)
                         })
                     })
+
+
             }
             else {
                 this.setState({
@@ -466,6 +489,9 @@ function mapStateToProp(state) {
 }
 function mapDispatchToProp(dispatch) {
     return ({
+        updateWorkingHours: (workingHours, autoAdd) => {
+            dispatch(updateWorkingHours(workingHours, autoAdd));
+        }
     })
 }
 
