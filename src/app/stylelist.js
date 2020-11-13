@@ -1,21 +1,22 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
 import { addStylist, getStylists, updateStylist, getGallery, getServices } from "../store/action/action";
-import { Input, Icon } from "antd";
+import { Input } from "antd";
 import "antd/dist/antd.css";
 import '../custom.css'
 // components
 import StylistModal from '../components/StylistModal';
 import StylistCard from '../components/StylistCard';
 
-function getBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-    });
-}
+// function getBase64(file) {
+//     return new Promise((resolve, reject) => {
+//         const reader = new FileReader();
+//         reader.readAsDataURL(file);
+//         reader.onload = () => resolve(reader.result);
+//         reader.onerror = error => reject(error);
+//     });
+// }
+
 const { Search } = Input;
 class StyleList extends Component {
     constructor(props) {
@@ -62,7 +63,7 @@ class StyleList extends Component {
             serviceNameFieldQty: [1],
             previewVisible: false,
             previewImage: '',
-            fileList: [],
+            // fileList: [],
             services: [],
             serviceqty: 1,
             editStylist: {},
@@ -310,7 +311,7 @@ class StyleList extends Component {
                 stylists = this.props.stylists;
             }
         }
-      
+
         return (
             <div style={{ display: "flex", flexDirection: "column", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", background: "#F7F8F8", }}>
 

@@ -2,10 +2,10 @@ import "../index.css";
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
 import { IoMdCheckmark } from 'react-icons/io';
-import { Modal, TimePicker, Upload, Icon, message, Form, Radio, Checkbox } from "antd";
+import { Modal, TimePicker, Upload, Icon, message, Form, Radio } from "antd";
 import moment from 'moment';
 import TextareaAutosize from 'react-textarea-autosize';
-import { uploadGallery, updateGallery, getGallery } from "../store/action/action";
+import { uploadGallery, updateGallery } from "../store/action/action";
 
 class StylistModal extends Component {
     constructor(props) {
@@ -278,9 +278,9 @@ class StylistModal extends Component {
                                         beforeUpload={this.beforeUploadEvent.bind(this)}>
                                         {fileList.length >= 12 ? null : uploadButton}
                                     </Upload>
-                                    <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
+                                    {/* <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
                                         <img alt="example" style={{ width: '100%' }} src={that.state.previewImage} />
-                                    </Modal>
+                                    </Modal> */}
                                 </div>
                             </div>
                             <div style={{ display: "flex", flex: 1, flexDirection: "column", justifyContent: "center", alignItems: "center", }}>

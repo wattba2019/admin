@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { changePassword, updateProfile, uploadGallery, updateGallery, } from "../store/action/action";
+import { changePassword, updateProfile, uploadGallery, updateGallery, getGallery } from "../store/action/action";
 import '../custom.css'
-import { Form, Modal, message } from 'antd';
+import { Modal, Upload, Icon, message, Form, } from "antd";
 import "antd/dist/antd.css";
 // icons
 import { FaMapMarkerAlt } from 'react-icons/fa';
@@ -10,8 +10,8 @@ import { MdEmail, MdDescription, MdLocalPhone } from 'react-icons/md';
 import { TiBusinessCard } from 'react-icons/ti';
 import { GiWorld } from 'react-icons/gi';
 import { FiChevronDown } from 'react-icons/fi';
-// import SimpleMap from '../components/googlemap';
-// import history from '../History';
+import SimpleMap from '../components/googlemap';
+import history from '../History';
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng, } from 'react-places-autocomplete';
 
@@ -41,8 +41,40 @@ class ShopProfile extends Component {
                     }
                 }
             ],
+            gArr: [],
+            // fileList: [],
+            // fileList: [
+            //     {
+            //         uid: 1,
+            //         name: 'image.png',
+            //         status: 'done',
+            //         url: "https://fathomless-citadel-43321.herokuapp.com/servicesandgallery/1605290929626_IMG-20200903-WA0004.jpg"
+            //     },
+            //     {
+            //         uid: 2,
+            //         name: 'image.png',
+            //         status: 'done',
+            //         url: "https://fathomless-citadel-43321.herokuapp.com/servicesandgallery/1605290929626_IMG-20200903-WA0004.jpg"
+            //     },
+            //     {
+            //         uid: 3,
+            //         name: 'image.png',
+            //         status: 'done',
+            //         url: "https://fathomless-citadel-43321.herokuapp.com/servicesandgallery/1605290929626_IMG-20200903-WA0004.jpg"
+            //     },
+            //     {
+            //         uid: 4,
+            //         name: 'image.png',
+            //         status: 'done',
+            //         url: "https://fathomless-citadel-43321.herokuapp.com/servicesandgallery/1605290929626_IMG-20200903-WA0004.jpg"
+            //     },
+            // ],
+            errUploadImgLimit: false,
+            previewImage: '',
+            flag: false
 
         }
+        this.props.getGallery(this.props.uid);
     }
 
     onMarkerDragEnd = (coord, index) => {
@@ -82,9 +114,60 @@ class ShopProfile extends Component {
                 markers: markers
             })
         }
+        // this.props.getGallery(this.props.uid);
     }
 
-    componentWillReceiveProps(nextProps) {
+
+    beforeUploadEvent(file, fileList) {
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+        if (!isJpgOrPng) {
+            message.error('You can only upload JPG/PNG file!');
+        }
+        const isLt2M = file.size / 1024 / 1024 < 10;
+        if (!isLt2M) {
+            message.error('Image must smaller than 10MB!');
+        }
+        return false;
+    }
+
+    uploadGallery = () => {
+        const { gArr } = this.state
+        let fileList = this.state.fileList
+        if (gArr.length === 0) {
+            this.props.uploadGallery(fileList, this.props.userProfile._id)
+        }
+        else {
+            this.props.updateGallery(fileList, this.props.userProfile._id)
+        }
+        this.setState({
+            fileList: [],
+            gArr: [],
+        })
+    }
+
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        if (nextProps.gallery.length != 0) {
+            let arr = []
+            for (var i = 0; i < nextProps.gallery.length; i++) {
+                const element = nextProps.gallery[i];
+                const obj = {
+                    uid: i,
+                    name: 'image.png',
+                    status: 'done',
+                    url: element,
+                }
+                arr.push(obj)
+                console.log(element, "nextProps_gallery")
+            }
+            this.setState({
+                fileList: arr,
+                gArr: arr,
+                flag: !this.state.flag
+            })
+
+            console.log(nextProps.gallery, "nextProps_gallery")
+        }
+
         if (nextProps.userProfile) {
             let markers = [{
                 name: "Current position",
@@ -106,6 +189,29 @@ class ShopProfile extends Component {
             })
         }
     }
+
+    // componentWillReceiveProps(nextProps) {
+    //     if (nextProps.userProfile) {
+    //         let markers = [{
+    //             name: "Current position",
+    //             position: {
+    //                 lat: nextProps.userProfile.location.coordinates[0],
+    //                 lng: nextProps.userProfile.location.coordinates[1],
+    //             }
+    //         }]
+    //         this.setState({
+    //             email: nextProps.userProfile.email,
+    //             about: nextProps.userProfile.about,
+    //             businessName: nextProps.userProfile.businessName,
+    //             businessType: nextProps.userProfile.businessType,
+    //             telephone: nextProps.userProfile.telePhone,
+    //             websiteUrl: nextProps.userProfile.websiteUrl,
+    //             addressline1: nextProps.userProfile.addressLine1,
+    //             addressline2: nextProps.userProfile.addressLine2,
+    //             markers: markers,
+    //         })
+    //     }
+    // }
 
     changePassword = () => {
         const { email, password, confirmPassword } = this.state
@@ -213,8 +319,14 @@ class ShopProfile extends Component {
     }
 
     render() {
-        const { email, password, confirmPassword, about, businessName, businessType, telephone, websiteUrl, addressline1, addressline2, showerror, err, showerrorpassword, markers } = this.state;
+        const { email, password, confirmPassword, about, businessName, businessType, telephone, websiteUrl, addressline1, addressline2, showerror, err, showerrorpassword, markers, fileList, errUploadImgLimit, } = this.state;
         const { getFieldDecorator } = this.props.form;
+        const uploadButton = (
+            <div>
+                <Icon type="plus" />
+            </div>
+        );
+        console.log(fileList, this.state.flag, "fileList_")
         return (
             <div style={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", background: "#F7F8F8", }}>
                 <div style={{ display: "flex", width: "55%", minWidth: 500, height: window.innerHeight, justifyContent: "center", background: "#F7F8F8" }}>
@@ -246,7 +358,7 @@ class ShopProfile extends Component {
                             <div className="input-group-prepend">
                                 <span className="input-group-text" id="basic-addon1" style={{ backgroundColor: "#EC5F59" }}><TiBusinessCard style={{ color: "white" }} /></span>
                             </div>
-                            <div class="dropdown"
+                            <div className="dropdown"
                                 style={{ display: "flex", flexDirection: "row", marginLeft: "2.5%", width: "85%", alignItems: "center", justifyContent: "space-between" }}>
                                 <div style={{ fontSize: 15 }}>
                                     {businessType}
@@ -254,7 +366,7 @@ class ShopProfile extends Component {
                                 <div style={{ height: 38, display: "flex", color: "black", justifyContent: "center", alignItems: "center" }}>
                                     <FiChevronDown />
                                 </div>
-                                <div style={{ width: "100%", marginTop: "100%", zIndex: 10 }} class="dropdown-content">
+                                <div style={{ width: "100%", marginTop: "100%", zIndex: 10 }} className="dropdown-content">
                                     <a style={{ display: "flex", }} onClick={() => { this.handleMenuClick("Salons") }} >Salons</a>
                                     <a style={{ display: "flex", }} onClick={() => { this.handleMenuClick("Barbershop") }}>Barbershop</a>
                                     <a style={{ display: "flex", }} onClick={() => { this.handleMenuClick("Beauty Salons, Spas & Other") }} >Beauty Salons, Spas & Other</a>
@@ -328,7 +440,7 @@ class ShopProfile extends Component {
                     </div>
                 </div>
 
-                <div className="cardshadowcenter" style={{ display: "flex", width: "45%", minWidth: 400, flexDirection: "column", background: "white", justifyContent: "flex-end", alignItems: "flex-end", height: window.innerHeight, backgroundColor: "red" }}>
+                <div className="cardshadowcenter" style={{ display: "flex", width: "45%", minWidth: 400, flexDirection: "column", background: "white", justifyContent: "flex-end", alignItems: "flex-end", height: window.innerHeight, }}>
                     <img
                         alt="BackGroundImage"
                         src={require('../assets/logo.png')}
@@ -336,10 +448,10 @@ class ShopProfile extends Component {
                         width="140"
                         height="7%" />
 
-                    <div style={{ display: "flex", flex: 1, flexDirection: "column", width: "100%", backgroundColor: "green" }}>
-                        <div style={{ display: "flex", flex: 1, width: "100%", backgroundColor: "green" }}>
+                    <div style={{ display: "flex", flex: 1, flexDirection: "column", width: "100%", }}>
+                        <div style={{ display: "flex", flex: 1, width: "100%", }}>
                             <center>
-                                <div style={{ width: "100%", marginLeft: "40%", marginTop: 20, justifyContent: "center", alignItems: "flex-start" }} className="center">
+                                <div style={{ width: "100%", marginLeft: "15%", marginTop: 20, justifyContent: "center", alignItems: "flex-start" }} className="center">
                                     <h6 className="input-group mb-6 inputCenter" >Change Password</h6>
                                     <Form onSubmit={this.handleSubmit} className="login-form">
                                         <Form.Item>
@@ -384,8 +496,78 @@ class ShopProfile extends Component {
                             </center>
                         </div>
 
-                        <div style={{ display: "flex", flex: 1.6, width: "100%", backgroundColor: "yellow" }}>
-                            test
+                        <div style={{ display: "flex", flex: 1.6, width: "100%", }}>
+                            {/* 3rd card */}
+                            <div style={{ display: "flex", flexDirection: "column", flex: 3, padding: "2.5%", }}>
+                                <div style={{ display: "flex", flex: 10, flexDirection: "column", }}>
+                                    <div style={{ fontSize: 18, marginRight: 20 }}>
+                                        Gallery
+                                    </div>
+                                    {
+                                        (errUploadImgLimit != false) ? (
+                                            <div style={{ fontSize: 10, marginRight: 20, color: "red" }}>
+                                                You can not upload more then 12 picture.
+                                            </div>
+                                        ) : <div style={{ fontSize: 10, marginRight: 20, color: "grey" }}>
+                                                You can add 12 picture in Gallery.
+                                        </div>
+                                    }
+
+                                    {
+                                        (fileList) ? (
+                                            <div className="clearfix" style={{ marginTop: 10, }}>
+                                                <Upload
+                                                    showUploadList={{ showPreviewIcon: false }}
+                                                    defaultFileList={fileList}
+                                                    action=""
+                                                    listType={'picture-card'}
+                                                    multiple={false}
+                                                    onChange={(info) => {
+                                                        const isJpgOrPng = info.file.type === 'image/jpeg' || info.file.type === 'image/png' || (info.file.url);
+                                                        if (!isJpgOrPng) {
+                                                            this.setState({ fileList: [] })
+                                                        } else {
+                                                            if (info.fileList.length <= 12 && fileList.length <= 12) {
+                                                                this.setState({
+                                                                    fileList: info.fileList,
+                                                                    errUploadImgLimit: false
+                                                                })
+                                                            }
+                                                            else {
+                                                                this.setState({
+                                                                    fileList: [],
+                                                                    errUploadImgLimit: true
+                                                                })
+                                                            }
+                                                        }
+                                                    }}
+                                                    beforeUpload={this.beforeUploadEvent.bind(this)}
+                                                >
+                                                    {fileList.length >= 12 ? null : uploadButton}
+                                                </Upload>
+
+                                            </div>
+                                        ) : <div style={{ fontSize: 10, marginRight: 20, color: "red" }}>Loading</div>
+                                    }
+
+                                </div>
+                                <div style={{ display: "flex", flex: 1, flexDirection: "column", marginLeft: "3%", }}>
+                                    {/* <button className="buttonAdd" style={{ minWidth: 140, width: "32%", height: 35, margin: "1%", }}
+                                        onClick={() => this.uploadGallery()}>
+                                        <span className="buttonmatter" style={{ fontSize: 15, }}>{'Save Gallery'}</span>
+                                    </button> */}
+
+                                    <div style={{ display: "flex", flex: 1, marginTop: 15 }} >
+                                        <button
+                                            className="button"
+                                            onClick={() => this.uploadGallery()}
+                                            style={{ marginTop: 10, width: "100%" }} >
+                                            <span className="buttonmatter">Save Gallery</span>
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -466,6 +648,8 @@ function mapStateToProp(state) {
     return ({
         bseUrl: state.root.bseUrl,
         userProfile: state.root.userProfile,
+        uid: state.root.userProfile._id,
+        gallery: state.root.gallery,
     })
 }
 
@@ -477,7 +661,15 @@ function mapDispatchToProp(dispatch) {
         updateProfile: (data1) => {
             dispatch(updateProfile(data1));
         },
-
+        uploadGallery: (data, id) => {
+            dispatch(uploadGallery(data, id));
+        },
+        updateGallery: (data, id) => {
+            dispatch(updateGallery(data, id));
+        },
+        getGallery: (userId) => {
+            dispatch(getGallery(userId));
+        },
     })
 }
 
