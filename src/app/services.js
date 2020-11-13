@@ -14,12 +14,12 @@ class Services extends Component {
             categoryName: "",
             serviceName: "",
             price: "",
-            extraService: [],
-            extraServiceqty: 1,
             modal2Visible: false,
             modal2VisibleEdit: false,
             editService: {},
             indexToEdit: undefined,
+            extraService: [],
+            extraServiceqty: 1,
         }
         this.state.extraServiceqtyArr = Array.apply(null, { length: this.state.extraServiceqty });
         this.setModal2Visible = this.setModal2Visible.bind(this);
@@ -37,7 +37,6 @@ class Services extends Component {
 
     setModal2VisibleEdit(modal2VisibleEdit, editService, indexToEdit) {
         if (modal2VisibleEdit) {
-            // console.log(editService, 'editService');
             let serviceName = editService.serviceName;
             let price = editService.price;
             let extraService = editService.extraServices;
@@ -48,7 +47,7 @@ class Services extends Component {
         else {
             let serviceName = '';
             let price = '';
-            let extraService = {};
+            let extraService = [];
             let extraServiceqty = 1;
             let extraServiceqtyArr = Array.apply(null, { length: extraServiceqty });
             let editService = {};
@@ -76,16 +75,13 @@ class Services extends Component {
 
     delExtraService = (index) => {
         if (index) {
-            // let extraService = this.state.extraService.slice(0)
-            let extraService = this.state.extraService
-            console.log(index, extraService, "delExtraServicse")
+            let extraService = this.state.extraService.slice(0)
             extraService.splice(index, 1)
             let extraServiceqty = this.state.extraServiceqty
             extraServiceqty = --extraServiceqty;
             let extraServiceqtyArr = Array.apply(null, { length: extraServiceqty });
             this.setState({ extraServiceqty, extraServiceqtyArr, extraService });
         }
-
     }
 
     saveService() {
@@ -121,8 +117,6 @@ class Services extends Component {
 
     render() {
         const { services } = this.props;
-        const { extraServiceqtyArr } = this.state;
-        console.log(extraServiceqtyArr, "extraServiceextraService")
         return (
             <div style={{ display: "flex", flexDirection: "column", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", }}>
                 <div style={{ display: "flex", flex: 1, width: "90%", justifyContent: "space-between" }}>

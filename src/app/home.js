@@ -28,12 +28,11 @@ class Home extends Component {
             shopImage: "",
             // route: "ShopProfile"
             // route: "Bookings"
-            route: "Services" 
-            // route: "Stylelists"
+            // route: "Services" 
+            route: "Stylelists"
             // route: "WorkingHours"
             // route: "SpecialOffers"
         }
-        // this.handleChange = this.handleChange.bind(this);
     }
 
     imagePick(file) {
@@ -77,10 +76,6 @@ class Home extends Component {
         localStorage.clear();
         history.push('Signin')
     }
-
-    // handleChange(checked) {
-    //     this.setState({ checked });
-    // }
 
     render() {
         const { shopImage, businessName } = this.state;

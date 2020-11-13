@@ -1,19 +1,13 @@
 import "../index.css";
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
-import { MdDeleteForever } from 'react-icons/md';
-import { AiOutlinePlus } from 'react-icons/ai';
 import { IoMdCheckmark } from 'react-icons/io';
-import { Modal, TimePicker, Upload, Icon, message, Checkbox } from "antd";
+import { Modal, TimePicker, Upload, Icon, message, Form, Radio, Checkbox } from "antd";
 import moment from 'moment';
 import TextareaAutosize from 'react-textarea-autosize';
-import axios from 'axios';
-import { uploadGallery, updateGallery, } from "../store/action/action";
-import { Form, Radio } from 'antd';
-const CheckboxGroup = Checkbox.Group;
+import { uploadGallery, updateGallery, getGallery } from "../store/action/action";
 
 class StylistModal extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -21,13 +15,11 @@ class StylistModal extends Component {
             fileList: [],
             errUploadImgLimit: false,
             value: "Male",
-
         }
     }
 
     onChangeRadio = e => {
         const { that } = this.props
-        console.log('radio checked', e.target.value);
         this.setState({
             value: e.target.value,
         });
@@ -51,9 +43,6 @@ class StylistModal extends Component {
     uploadGallery = () => {
         const { gArr } = this.state
         let fileList = this.state.fileList
-
-        console.log(fileList, gArr, "UP===========>")
-
         if (gArr.length === 0) {
             this.props.uploadGallery(fileList, this.props.userProfile._id)
         }
@@ -65,8 +54,6 @@ class StylistModal extends Component {
             gArr: [],
         })
     }
-
-
 
     UNSAFE_componentWillReceiveProps(nextProps) {
         let arr = []
@@ -80,58 +67,41 @@ class StylistModal extends Component {
             }
             arr.push(obj)
         }
-
         this.setState({
             fileList: arr,
             gArr: arr,
         })
-
     }
-
-    handleShopOpenStatus(dayName) {
-        // let updatedDay = this.state[dayName];
-        // updatedDay.open = !updatedDay.open;
-        // this.setState({ [dayName]: updatedDay })
-    }
-
-
 
     render() {
-        const { that, services, } = this.props
-        const { fileList, gArr, errUploadImgLimit, } = this.state;
-
-        // console.log(that.state.previewImage, "previewImage")
-
+        const { that } = this.props
+        const { fileList, errUploadImgLimit, } = this.state;
         const uploadButton = (
             <div>
                 <Icon type="plus" />
-                {/* <div style={{ fontSize: 12 }} className="ant-upload-text">Add Image</div> */}
             </div>
         );
         return (
             <Modal
                 footer={null}
-                // title="Vertically centered modal dialog"
                 centered
                 visible={that.state.modal2Visible || that.state.modal2VisibleEdit}
                 onOk={() => that.setModal2Visible(false)}
                 onCancel={() => { that.setModal2Visible(false); that.setModal2VisibleEdit(false) }}
-                bodyStyle={{ height: 500, }}
+                bodyStyle={{ height: 500 }}
                 width={"80%"}
                 minWidth={"60%"}
-                bodyStyle={{ padding: 0, }}
+                bodyStyle={{ padding: 0 }}
             >
                 <div style={{ display: "flex", flex: 1, width: "100%", flexDirection: "column", fontSize: "1.1vw", fontWeight: "bold", background: "red" }}>
 
                     {/* Body */}
                     <div style={{ display: "flex", flex: 8, flexWrap: "wrap", minWidth: 140, }}>
                         {/* 1st card */}
-
                         <div style={{ display: "flex", flexWrap: "wrap", flexDirection: "column", flex: 3, background: "#F7F8F8", padding: "2.5%", }}>
                             <div style={{ fontSize: 18 }}>
                                 New Stylist
                             </div>
-
                             {/* Full Name */}
                             <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", marginTop: 10, }}>
                                 <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
@@ -140,7 +110,6 @@ class StylistModal extends Component {
                                     </div>
                                 </div>
                             </div>
-
                             {/* Designation */}
                             <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", marginTop: 10, }}>
                                 <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
@@ -149,15 +118,13 @@ class StylistModal extends Component {
                                     </div>
                                 </div>
                             </div>
-
+                            {/* Gender */}
                             <div style={{ display: "flex", flex: 1, width: "100%", marginTop: 10, marginLeft: 10 }}>
-                                {/* <Radio.Group onChange={this.onChangeRadio} value={this.state.value}> */}
                                 <Radio.Group onChange={this.onChangeRadio} value={that.state.gender}>
                                     <Radio value={"Male"}>Male</Radio>
                                     <Radio value={"Female"}>Female</Radio>
                                 </Radio.Group>
                             </div>
-
                             {/* description */}
                             <div style={{ display: "flex", flex: 1, flexDirection: "column", width: "100%", fontSize: "1.1vw", fontWeight: "bold", }}>
                                 <div style={{ marginTop: 10, fontSize: 18 }}>
@@ -171,32 +138,10 @@ class StylistModal extends Component {
                                 </div>
                             </div>
 
-                            {/* {
-                                (that.state.errDesc != '') ? (
-                                    <div style={{ display: "flex", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", }}>
-                                        <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
-                                            <div style={{ width: "70%", minWidth: 200, fontSize: 12, color: "red", marginLeft: 10 }}>
-                                                <span>{that.state.errDesc}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ) : null
-                            } */}
-
                             {/* working days */}
-                            <div style={{
-                                display: "flex", flex: 1, flexDirection: "row", height: 500,
-                                // background: "red"
-                            }}>
-
-                                <div style={{
-                                    display: "flex", flexDirection: "column", flex: 1.5, height: 300, marginTop: 10
-                                    // background: "red"
-                                }}>
-                                    <div style={{
-                                        display: "flex",
-                                        // background: "yellow"
-                                    }}>
+                            <div style={{ display: "flex", flex: 1, flexDirection: "row", height: 500, }}>
+                                <div style={{ display: "flex", flexDirection: "column", flex: 1.5, height: 300, marginTop: 10 }}>
+                                    <div style={{ display: "flex", }}>
                                         <div style={{ display: "flex", flex: 2 }}>
                                             <p style={{ fontSize: 14 }}>Working Days</p>
                                         </div>
@@ -206,63 +151,43 @@ class StylistModal extends Component {
                                             <p style={{ fontSize: 14 }}>Break</p>
                                         </div>
                                     </div>
+
                                     {
                                         that.state.workingDaysNTime.map((dayBrTime, index) => {
-                                            // console.log(dayBrTime, 'dayBrTimedayBrTime')
                                             return (
-                                                <div key={index} style={{
-                                                    display: "flex", flex: 1, color: "black", flexDirection: "row", justifyContent: "space-between", alignItems: "center", height: 30,
-                                                    // background: "green"
-                                                }}>
+                                                <div key={index} style={{ display: "flex", flex: 1, color: "black", flexDirection: "row", justifyContent: "space-between", alignItems: "center", height: 30, }}>
                                                     {/* Day */}
-                                                    <div style={{
-                                                        display: "flex", flex: 1, fontSize: 14, fontWeight: "normal",
-                                                        // background: "orange"
-                                                    }}>
+                                                    <div style={{ display: "flex", flex: 1, fontSize: 14, fontWeight: "normal" }}>
                                                         {dayBrTime.day}
                                                     </div>
-
                                                     {/* CheckBox */}
-
                                                     <div style={{ display: "flex", flex: 1, fontWeight: "normal", justifyContent: "center", alignItems: "center", }}>
                                                         <div
                                                             onClick={that.handleShopOpenStatus.bind(that, dayBrTime)}
                                                             style={(dayBrTime.working) ? { display: "flex", height: 20, width: 20, backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 } : { display: "flex", height: 20, width: 20, backgroundColor: "#d3d3d3", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}
-                                                        // style={{ display: "flex", height: 20, width: 20, backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}
                                                         >
                                                             <IoMdCheckmark style={{ color: "white", }} />
                                                         </div>
                                                     </div>
-
                                                     {/* Time Picker */}
-
-                                                    <div style={{
-                                                        display: "flex", flex: 3, flexDirection: "row", justifyContent: "center", alignItems: "center", height: 40,
-                                                        // background: "yellow"
-                                                    }}>
+                                                    <div style={{ display: "flex", flex: 3, flexDirection: "row", justifyContent: "center", alignItems: "center", height: 40, }}>
                                                         <TimePicker
                                                             style={{ width: 95, margin: "1%" }}
                                                             use12Hours format="h:mm a"
-                                                            // placeholder={"Time"}
-                                                            // onChange={this.onChange}
                                                             defaultValue={moment(that.state.workingDaysNTime[index].brStart, 'h:mm a')}
                                                             onChange={(e, f) => {
-                                                                console.log(e, f, index, dayBrTime, 'e, f, index, dayBrTime');
                                                                 e.index = index;
                                                                 e.brDaysTime = dayBrTime;
                                                                 e.brType = 'start'
                                                                 that.onChange(e, f);
                                                             }}
-
                                                         />
                                                         <span style={{ margin: "1%", fontWeight: "normal" }}>to</span>
                                                         <TimePicker
                                                             defaultValue={moment(that.state.workingDaysNTime[index].brEnd, 'h:mm a')}
                                                             style={{ width: 95, margin: "1%" }}
                                                             use12Hours format="h:mm a"
-                                                            // placeholder={"Time"}
                                                             onChange={(e, f) => {
-                                                                console.log(e, f, index, dayBrTime, 'e, f, index, dayBrTime');
                                                                 e.index = index;
                                                                 e.brDaysTime = dayBrTime;
                                                                 e.brType = 'end'
@@ -279,158 +204,37 @@ class StylistModal extends Component {
                         </div>
 
                         {/* 2nd card */}
-
-                        <div className="cardshadowcenter" style={{
-                            display: "flex", flexDirection: "column", flex: 2, padding: "2.5%", zIndex: 1,
-                            background: "#FFFFFF"
-                        }}>
-                            <div style={{
-                                display: "flex", flex: 10, flexDirection: "column",
-                                // background: "red"
-                            }}>
+                        <div className="cardshadowcenter" style={{ display: "flex", flexDirection: "column", flex: 2, padding: "2.5%", zIndex: 1, background: "#FFFFFF" }}>
+                            <div style={{ display: "flex", flex: 10, flexDirection: "column" }}>
                                 <div style={{ fontSize: 18 }}>
                                     Services provided
                                 </div>
-
-                                {/* {
-                                    that.state.serviceqtyArr.map((service, index) => {
-                                        return (
-                                            <div key={index} style={{
-                                                display: "flex", width: "100%", justifyContent: "center", alignItems: "center", marginTop: 10, minWidth: "80%",
-                                                // background: "red"
-                                            }}>
-                                                <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
-                                                    <div style={{ width: "95%", }}>
-                                                        <input type="text" className="form-control" placeholder="Service Name" aria-label="Service Name" aria-describedby="basic-addon1" value={(that.state.services && that.state.services[index]) ? that.state.services[index] : ''} onChange={(e) => { that.addService(e.target.value, "serviceName", index) }} />
-                                                    </div>
-                                                </div>
-                                                <div style={{ display: "flex", height: 28, width: 28, backgroundColor: "#49BE56", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                                    <IoMdCheckmark style={{ color: "white", }} />
-                                                </div>
-                                                <div onClick={() => that.delserviceField(index)} style={{ display: "flex", height: 28, width: 28, backgroundColor: "#EC5F59", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5, marginLeft: "5%" }}>
-                                                    <MdDeleteForever className="buttonmatter" style={{ color: "white", fontSize: 20, }} />
-                                                </div>
-                                            </div>
-                                        )
-                                    })
-                                } */}
-
-
                                 {
                                     that.state.plainOptions.map((service, index) => {
-                                        // console.log(service, index, that.state.services, "INSIDE_MAP")
                                         return (
-                                            <div key={index} style={{
-                                                display: "flex", width: "100%", justifyContent: "center", alignItems: "center", marginTop: 10, minWidth: "80%",
-                                                // background: "red"
-                                            }}>
+                                            <div key={index} style={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", marginTop: 10, minWidth: "80%", }}>
                                                 <div style={{ display: "flex", flex: 1.5, margin: "1.5%", }} >
                                                     <div style={{ width: "95%", }}>
                                                         <input disabled type="text" className="form-control" placeholder="Service Name" aria-label="Service Name" aria-describedby="basic-addon1" value={service} />
                                                     </div>
                                                 </div>
-                                                <div style={{
-                                                    cursor: "pointer",
-                                                    display: "flex", height: 28, width: 28,
-                                                    borderRadius: 25,
-                                                    justifyContent: "center", alignItems: "center",
-                                                    padding: 5,
-                                                    backgroundColor: that.state.services.includes(service) ? "#49BE56" : "grey",
-                                                }}
+                                                <div style={{ cursor: "pointer", display: "flex", height: 28, width: 28, borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5, backgroundColor: that.state.services.includes(service) ? "#49BE56" : "grey", }}
                                                     onClick={() => {
                                                         that.onChangeCheckBox(service, index)
-                                                        this.setState({
-                                                            flagRender: true
-                                                        })
-                                                    }}
-                                                >
+                                                        this.setState({ flagRender: true })
+                                                    }}>
                                                     <IoMdCheckmark style={{ color: "white", }} />
                                                 </div>
-                                                {/* <div onClick={() => that.delserviceField(index)} style={{ display: "flex", height: 28, width: 28, backgroundColor: "#EC5F59", borderRadius: 25, justifyContent: "center", alignItems: "center", padding: 5, marginLeft: "5%" }}>
-                                                    <MdDeleteForever className="buttonmatter" style={{ color: "white", fontSize: 20, }} />
-                                                </div> */}
                                             </div>
                                         )
                                     })
                                 }
-
-
-
-
-                                {/* <div>
-                                    <div
-                                        className="site-checkbox-all-wrapper"
-                                    >
-                                        <Checkbox
-                                            indeterminate={that.state.indeterminate}
-                                            onChange={that.onCheckAllChange}
-                                            checked={that.state.checkAll}
-                                        >
-                                            Check all
-                                        </Checkbox>
-                                    </div>
-                                    <hr />
-
-                                    <div>
-                                        <CheckboxGroup
-                                            style={{
-                                                display: "flex", flex: 1, flexDirection: "column",
-                                                padding: 10,
-                                                // background: "red",
-                                            }}
-                                            options={that.state.plainOptions}
-                                            value={that.state.checkedList}
-                                            onChange={that.onChangeCheckBox}
-                                        />
-                                    </div>
-                                </div> */}
-
-
-
-
-
-
-
                             </div>
-
-
-
-
-
-
-                            {/* <div style={{
-                                display: "flex", flex: 1, flexDirection: "column",
-                                // background: "green"
-                            }}>
-                                <div style={{ marginTop: 10, display: "flex", flexDirection: "row", alignItems: "center" }}>
-                                    <div onClick={that.addServiceField} className="btn btn-light" style={{ display: "flex", backgroundColor: "#EC5F59", borderRadius: 50, justifyContent: "center", alignItems: "center", padding: 5 }}>
-                                        <AiOutlinePlus style={{ color: "#ffffff", fontSize: 25 }} />
-                                    </div>
-                                    <div style={{ marginLeft: "2%", fontSize: 14 }}>
-                                        Add Extra Service
-                                </div>
-                                </div>
-                            </div> */}
-
-
-
-
                         </div>
 
-
-
-
                         {/* 3rd card */}
-
-                        <div style={{
-                            display: "flex", flexDirection: "column", flex: 3, padding: "2.5%",
-                            background: "#F7F8F8"
-                            // background: "red"
-                        }}>
-                            <div style={{
-                                display: "flex", flex: 10, flexDirection: "column",
-                                // background: "red"
-                            }}>
+                        <div style={{ display: "flex", flexDirection: "column", flex: 3, padding: "2.5%", background: "#F7F8F8" }}>
+                            <div style={{ display: "flex", flex: 10, flexDirection: "column" }}>
                                 <div style={{ fontSize: 18 }}>
                                     Gallery
                                 </div>
@@ -445,28 +249,18 @@ class StylistModal extends Component {
                                 }
                                 <div className="clearfix" style={{ marginTop: 10, }}>
                                     <Upload
-                                        // fileList={fileList}
-                                        // action={() => this.uploadGallery()}
-                                        showUploadList={{
-                                            showPreviewIcon: false,
-                                            // showRemoveIcon: false
-                                        }}
+                                        showUploadList={{ showPreviewIcon: false }}
                                         defaultFileList={fileList}
                                         action=""
                                         listType={'picture-card'}
                                         multiple={false}
-                                        // onRemove={this.handleRemove}
                                         onChange={(info) => {
-                                            // console.log(info, 'On_change_Function');
                                             const isJpgOrPng = info.file.type === 'image/jpeg' || info.file.type === 'image/png' || (info.file.url);
                                             if (!isJpgOrPng) {
-                                                // alert("NOT_JPEG")
                                                 this.setState({ fileList: [] })
                                                 that.setModal2Visible(false)
                                                 that.setModal2VisibleEdit(false)
-
                                             } else {
-                                                // alert("JPEG_and_url")
                                                 if (info.fileList.length <= 12 && fileList.length <= 12) {
                                                     this.setState({
                                                         fileList: info.fileList,
@@ -481,10 +275,7 @@ class StylistModal extends Component {
                                                 }
                                             }
                                         }}
-                                        // onRemove={(data) => this.removeImg(data)}
-                                        beforeUpload={this.beforeUploadEvent.bind(this)}
-                                    >
-                                        {/* {fileList.length >= 12 ? null : uploadButton} */}
+                                        beforeUpload={this.beforeUploadEvent.bind(this)}>
                                         {fileList.length >= 12 ? null : uploadButton}
                                     </Upload>
                                     <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
@@ -492,13 +283,9 @@ class StylistModal extends Component {
                                     </Modal>
                                 </div>
                             </div>
-                            <div style={{
-                                display: "flex", flex: 1, flexDirection: "column", justifyContent: "center", alignItems: "center",
-                                // background: "green"
-                            }}>
+                            <div style={{ display: "flex", flex: 1, flexDirection: "column", justifyContent: "center", alignItems: "center", }}>
                                 <button className="buttonAdd" style={{ minWidth: 140, width: "30%", height: 35, margin: "1%", }}
-                                    onClick={() => this.uploadGallery()}
-                                >
+                                    onClick={() => this.uploadGallery()}>
                                     <span className="buttonmatter" style={{ fontSize: 15, }}>{'Save'}</span>
                                 </button>
                             </div>
@@ -506,26 +293,17 @@ class StylistModal extends Component {
                     </div>
 
                     {/* Footer */}
-                    <div className="cardshadowWithButton" style={{
-                        display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", flex: 2, zIndex: 1, width: "100%",
-                        background: "#F7F8F8",
-                    }}>
-
+                    <div className="cardshadowWithButton" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", flex: 2, zIndex: 1, width: "100%", background: "#F7F8F8", }}>
                         <button className="buttonAdd" style={{ minWidth: 140, width: "20%", margin: "1%" }} onClick={that.saveStylist.bind(that)} >
                             <span className="buttonmatter" style={{ fontSize: 15, }}>{(that.state.modal2Visible) ? 'Add Stylist' : 'Save Stylist'}</span>
                         </button>
-
                         <button type="button" className="btn btn-light" style={{ width: "20%", margin: "1%", minWidth: 140, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => { that.setModal2Visible(false); that.setModal2VisibleEdit(false) }}>Cancel</button>
-
                     </div>
                 </div>
-            </Modal >
-
-
+            </Modal>
         );
     }
 }
-
 
 function mapStateToProp(state) {
     return ({
@@ -547,7 +325,5 @@ function mapDispatchToProp(dispatch) {
 
     })
 }
-// export default connect(mapStateToProp, mapDispatchToProp)(StylistModal);
-// export default StylistModal;
 const WrappedSpecialOfferModal = Form.create({ name: 'normal_login' })(connect(mapStateToProp, mapDispatchToProp)(StylistModal));
 export default WrappedSpecialOfferModal;

@@ -809,6 +809,7 @@ export function updateProfileImg(imgFile, _id) {
 
 export function getGallery(userID) {
     return dispatch => {
+        console.log(userID, "userID")
         var options = {
             method: 'GET',
             url: `${baseURL.baseURL}/galleryget/${userID}`,
@@ -866,7 +867,6 @@ export function uploadGallery(imgFile, _id) {
 export function updateGallery(oldImages, _id) {
     return dispatch => {
         console.log(oldImages, _id, "DATA_INSIDE_ACTION_UPDATE_IMG")
-
         let fileData = []
         let urlData = []
         for (let index = 0; index < oldImages.length; index++) {
