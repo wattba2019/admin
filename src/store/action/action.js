@@ -267,48 +267,6 @@ export function updateSpecialOffer(specialOffer, indexToEdit, base64) {
 
 /* Actions for Stylists */
 
-
-
-
-export function addStylist(stylist) {
-    return dispatch => {
-        console.log('inside action', stylist);
-        var options = {
-            method: 'POST',
-            url: `${baseURL.baseURL}/stylist/${stylist.userId}`,
-            headers:
-            {
-                'cache-control': 'no-cache',
-                "Allow-Cross-Origin": '*',
-            },
-            data: stylist
-        };
-        axios(options)
-            .then((data) => {
-                console.log(data, "Stylist added successfully.");
-                dispatch({ type: ActionTypes.ADD_STYLIST, payload: data.data })
-                swal.fire(
-                    'Success!',
-                    'Stylist Added',
-                    'success'
-                )
-            }).catch((err) => {
-                // console.log(err.response.data.message, "ERROR_ON_SAVING")
-                // alert(err.response.data.message)
-                swal.fire(
-                    'Error!',
-                    'Something went wrong.',
-                    'error'
-                )
-
-            })
-    }
-}
-
-
-
-
-
 export function getStylists(userID) {
     // alert("getStylist")
     console.log(userID, "USERID")
@@ -334,29 +292,215 @@ export function getStylists(userID) {
     }
 }
 
+// backup //
+
+// export function addStylist(stylist) {
+//     return dispatch => {
+//         console.log('inside action', stylist);
+//         var options = {
+//             method: 'POST',
+//             url: `${baseURL.baseURL}/stylist/${stylist.userId}`,
+//             headers:
+//             {
+//                 'cache-control': 'no-cache',
+//                 "Allow-Cross-Origin": '*',
+//             },
+//             data: stylist
+//         };
+//         axios(options)
+//             .then((data) => {
+//                 console.log(data, "Stylist added successfully.");
+//                 dispatch({ type: ActionTypes.ADD_STYLIST, payload: data.data })
+//                 swal.fire(
+//                     'Success!',
+//                     'Stylist Added',
+//                     'success'
+//                 )
+//             }).catch((err) => {
+//                 // console.log(err.response.data.message, "ERROR_ON_SAVING")
+//                 // alert(err.response.data.message)
+//                 swal.fire(
+//                     'Error!',
+//                     'Something went wrong.',
+//                     'error'
+//                 )
+
+//             })
+//     }
+// }
+
+// export function updateStylist(stylist, indexToEdit) {
+//     return dispatch => {
+//         console.log('inside action', stylist, indexToEdit);
+//         var options = {
+//             method: 'PUT',
+//             url: `${baseURL.baseURL}/stylist/${stylist._id}/`,
+//             headers:
+//             {
+//                 'cache-control': 'no-cache',
+//                 "Allow-Cross-Origin": '*',
+//             },
+//             data: stylist
+//         };
+//         axios(options)
+//             .then((data) => {
+//                 console.log(data, "stylist updated successfully.");
+//                 stylist.indexToEdit = indexToEdit;
+//                 dispatch({ type: ActionTypes.UPDATE_STYLIST, payload: stylist })
+//                 swal.fire(
+//                     'Success!',
+//                     data.data.message,
+//                     'success'
+//                 )
+//             }).catch((err) => {
+//                 console.error(err, "ERROR_ON_SAVING")
+//                 // alert(err.response.data.message)
+//                 swal.fire(
+//                     'Error!',
+//                     'Something went wrong.',
+//                     'error'
+//                 )
+//             })
+//     }
+// }
+
+// export function updateStylist(stylist, indexToEdit) {
+//     return dispatch => {
+//         console.log('inside action', stylist, indexToEdit);
+//         var options = {
+//             method: 'PUT',
+//             url: `${baseURL.baseURL}/stylist/${stylist._id}/`,
+//             headers:
+//             {
+//                 'cache-control': 'no-cache',
+//                 "Allow-Cross-Origin": '*',
+//             },
+//             data: stylist
+//         };
+//         axios(options)
+//             .then((data) => {
+//                 console.log(data, "stylist updated successfully.");
+//                 stylist.indexToEdit = indexToEdit;
+
+//                 dispatch({ type: ActionTypes.UPDATE_STYLIST, payload: stylist })
+
+//                 swal.fire(
+//                     'Success!',
+//                     data.data.message,
+//                     'success'
+//                 )
+//             }).catch((err) => {
+//                 console.error(err, "ERROR_ON_SAVING")
+//                 // alert(err.response.data.message)
+//                 swal.fire(
+//                     'Error!',
+//                     'Something went wrong.',
+//                     'error'
+//                 )
+
+//             })
+//     }
+// }
 
 
-
-export function updateStylist(stylist, indexToEdit) {
+export function addStylist(stylist, imgFile) {
     return dispatch => {
-        console.log('inside action', stylist, indexToEdit);
+        // console.log('Inside_Action', stylist, imgFile);
+        var bodyFormData = new FormData();
+        bodyFormData.append('userId', stylist.userId);
+        bodyFormData.append('fullname', stylist.fullname);
+        bodyFormData.append('gender', stylist.gender);
+        bodyFormData.append('designation', stylist.designation);
+        bodyFormData.append('description', stylist.description);
+        bodyFormData.append('workingDays', JSON.stringify(stylist.workingDays));
+        bodyFormData.append('serviceProvided', stylist.serviceProvided);
+        for (var i = 0; i < imgFile.length; i++) {
+            bodyFormData.append("imgs", imgFile[i].originFileObj);
+        }
         var options = {
-            method: 'PUT',
-            url: `${baseURL.baseURL}/stylist/${stylist._id}/`,
+            method: 'POST',
+            url: `${baseURL.baseURL}/stylistGallery/addStylistGalleryImages/`,
             headers:
             {
                 'cache-control': 'no-cache',
                 "Allow-Cross-Origin": '*',
+                'Accept': 'application/json',
             },
-            data: stylist
+            data: bodyFormData
         };
         axios(options)
             .then((data) => {
-                console.log(data, "stylist updated successfully.");
+                console.log(data, "Stylist_added_successfully");
+                dispatch({ type: ActionTypes.ADD_STYLIST, payload: data.data })
+                swal.fire(
+                    'Success!',
+                    'Stylist Added',
+                    'success'
+                )
+            }).catch((err) => {
+                swal.fire(
+                    'Error!',
+                    'Something went wrong.',
+                    'error'
+                )
+
+            })
+    }
+}
+
+
+export function updateStylist(stylist, indexToEdit, oldImages) {
+    return dispatch => {
+        let fileData = []
+        let urlData = []
+        for (let index = 0; index < oldImages.length; index++) {
+            const element = oldImages[index];
+            if (element.originFileObj) {
+                fileData.push(element)
+            }
+            else {
+                urlData.push(element.url)
+            }
+        }
+        var bodyFormData = new FormData();
+        // add stylist id and data
+        bodyFormData.append('_id', stylist._id);
+        bodyFormData.append('userId', stylist.userId);
+        bodyFormData.append('fullname', stylist.fullname);
+        bodyFormData.append('gender', stylist.gender);
+        bodyFormData.append('designation', stylist.designation);
+        bodyFormData.append('description', stylist.description);
+        bodyFormData.append('workingDays', JSON.stringify(stylist.workingDays));
+        bodyFormData.append('serviceProvided', stylist.serviceProvided);
+        // add img files
+        for (var i = 0; i < fileData.length; i++) {
+            bodyFormData.append("imgs", fileData[i].originFileObj);
+        }
+        // add img url old imgs
+        for (var i = 0; i < urlData.length; i++) {
+            bodyFormData.append("oldImages", urlData[i]);
+        }
+        // add stylist data
+        console.log('inside_action', stylist, oldImages);
+        var options = {
+            method: 'POST',
+            url: `${baseURL.baseURL}/stylistGallery/updateStylistGalleryImages/`,
+            headers:
+            {
+                'cache-control': 'no-cache',
+                "Allow-Cross-Origin": '*',
+                'Accept': 'application/json',
+            },
+            data: bodyFormData
+        };
+        axios(options)
+            .then((data) => {
+                // console.log(data, "stylist updated successfully.");
                 stylist.indexToEdit = indexToEdit;
+                console.log(data.data.data, "stylist_updated_successfully.");
 
-                dispatch({ type: ActionTypes.UPDATE_STYLIST, payload: stylist })
-
+                let updatedStylist = data.data.data
+                dispatch({ type: ActionTypes.UPDATE_STYLIST, payload: updatedStylist })
                 swal.fire(
                     'Success!',
                     data.data.message,
@@ -375,13 +519,7 @@ export function updateStylist(stylist, indexToEdit) {
     }
 }
 
-/* Actions for Stylists */
 
-
-
-
-
-/* Actions for Working Hours */
 
 
 export function getWorkingHours(userID) {
@@ -413,7 +551,6 @@ export function getWorkingHours(userID) {
 
 export function updateWorkingHours(workingHours, autoAdd) {
     return dispatch => {
-        console.log('inside_workingHours_action', workingHours);
         var options = {
             method: 'POST',
             url: `${baseURL.baseURL}/workinghours/${workingHours.userID}`,
@@ -426,8 +563,7 @@ export function updateWorkingHours(workingHours, autoAdd) {
         };
         axios(options)
             .then((data) => {
-                console.log(data, "stylist updated successfully.");
-                // stylist.indexToEdit = indexToEdit;
+                // console.log(data, "stylist updated successfully.");
                 dispatch({ type: ActionTypes.FETCHED_WORKINGHOURS, payload: workingHours })
                 if (!autoAdd) {
                     swal.fire(
@@ -437,7 +573,7 @@ export function updateWorkingHours(workingHours, autoAdd) {
                     )
                 }
             }).catch((err) => {
-                console.error(err, "ERROR_ON_SAVING")
+                // console.error(err, "ERROR_ON_SAVING")
                 // alert(err.response.data.message)
                 swal.fire(
                     'Error!',
@@ -448,24 +584,7 @@ export function updateWorkingHours(workingHours, autoAdd) {
     }
 }
 
-/* Actions for Working Hours */
-
-
-
-
-
-
-
-
-
-
-
-/* Actions for Bookings */
-
-
-
 export function getBookings(shopId, bookingDate) {
-    console.log(shopId, bookingDate, "DATA_IN_ACTION")
     return dispatch => {
         var options = {
             method: 'GET',
@@ -478,7 +597,6 @@ export function getBookings(shopId, bookingDate) {
         };
         axios(options)
             .then((bookings) => {
-                console.log(bookings, 'fetched_bookings');
                 dispatch({ type: ActionTypes.FETCHED_BOOKINGS, payload: bookings.data })
                 let booking = bookings.data.bookingSort
                 const keys = Object.keys(booking)
@@ -488,12 +606,11 @@ export function getBookings(shopId, bookingDate) {
                     let arr = booking[key]
                     for (let index = 0; index < arr.length; index++) {
                         let idArr = arr[index].requiredServiceId
-                        console.log(arr[index], "INSIDE_LOOP")
-
+                        // console.log(arr[index], "INSIDE_LOOP")
                         if (arr[index].package === false || arr[index].package === "false") {
                             for (let k = 0; k < idArr.length; k++) {
                                 const element = idArr[k];
-                                console.log(element, "THIS_IS_SERVICE")
+                                // console.log(element, "THIS_IS_SERVICE")
                                 // Check if a value exists in the fruits array
                                 if (serviceId.indexOf(element) === -1) {
                                     serviceId.push(element)
@@ -503,7 +620,7 @@ export function getBookings(shopId, bookingDate) {
                         else {
                             for (let k = 0; k < idArr.length; k++) {
                                 const element = idArr[k];
-                                console.log(element, "THIS_IS_PACKAGE")
+                                // console.log(element, "THIS_IS_PACKAGE")
                                 // Check if a value exists in the fruits array
                                 if (packageId.indexOf(element) === -1) {
                                     packageId.push(element)
@@ -512,27 +629,18 @@ export function getBookings(shopId, bookingDate) {
                         }
                     }
                 }
-
-                console.log(serviceId, packageId, "PACKID")
+                // console.log(serviceId, packageId, "PACKID")
                 dispatch(getBookedService(serviceId));
                 dispatch(getBookedPackage(packageId));
             })
             .catch((err) => {
                 console.log(err, "Error in fetching bookings")
-                // alert(err.response.data.message)
             })
     }
 }
 
-
-
-
-/* Actions for Bookings */
-
-
 export function getBookedService(serviceId) {
     return dispatch => {
-        console.log(serviceId, "serviceId")
         if (serviceId != undefined) {
             let idsCloneData = { serviceId: serviceId }
             var options = {
@@ -548,7 +656,7 @@ export function getBookedService(serviceId) {
             axios(options)
                 .then(result => {
                     let bookedService = result.data.data
-                    console.log(bookedService, "Fetch_Booked_Services")
+                    // console.log(bookedService, "Fetch_Booked_Services")
                     dispatch({ type: ActionTypes.FETCHED_BOOKED_SERVICE, payload: bookedService })
                 })
                 .catch(err => {
@@ -562,11 +670,8 @@ export function getBookedService(serviceId) {
     }
 }
 
-
-
 export function getBookedPackage(packageId) {
     return dispatch => {
-        console.log(packageId, "packageId")
         if (packageId != undefined) {
             let idsCloneData = { packageId: packageId }
             var options = {
@@ -582,7 +687,7 @@ export function getBookedPackage(packageId) {
             axios(options)
                 .then(result => {
                     let bookedPackage = result.data.data
-                    console.log(bookedPackage, "Fetch_Booked_Package")
+                    // console.log(bookedPackage, "Fetch_Booked_Package")
                     dispatch({ type: ActionTypes.FETCHED_BOOKED_PACKAGE, payload: bookedPackage })
                 })
                 .catch(err => {
@@ -595,7 +700,6 @@ export function getBookedPackage(packageId) {
         }
     }
 }
-
 
 export function cancledAndApproveBooking(bookingStatus, _id) {
     return dispatch => {
@@ -617,7 +721,7 @@ export function cancledAndApproveBooking(bookingStatus, _id) {
         axios(options)
             .then(result => {
                 let response = result.data.message
-                console.log(response, "Update_booking_status")
+                // console.log(response, "Update_booking_status")
                 swal.fire(
                     'Success!',
                     response,
@@ -631,11 +735,8 @@ export function cancledAndApproveBooking(bookingStatus, _id) {
     }
 }
 
-
-
 export function assignStylist(stylistId, _id) {
     return dispatch => {
-        console.log(stylistId, _id, "bookerId")
         let objClone = {
             stylistId: stylistId,
             _id: _id
@@ -653,7 +754,7 @@ export function assignStylist(stylistId, _id) {
         axios(options)
             .then(result => {
                 let response = result.data.message
-                console.log(response, "Update_booking_status")
+                // console.log(response, "Update_booking_status")
                 swal.fire(
                     'Success!',
                     response,
@@ -666,10 +767,6 @@ export function assignStylist(stylistId, _id) {
             })
     }
 }
-
-
-
-
 
 export function changePassword(email, password, rePassword) {
     return dispatch => {
@@ -726,8 +823,6 @@ export function changePassword(email, password, rePassword) {
     }
 }
 
-
-
 export function updateProfile(updatedUserData) {
     return dispatch => {
         console.log(updatedUserData, "DATA_INSIDE_ACTION")
@@ -743,8 +838,6 @@ export function updateProfile(updatedUserData) {
         };
         axios(options)
             .then((data) => {
-                // console.log(data.data.user, "profile updated successfully.");
-                console.log(data.data.currentCityandCountryName, "profile updated successfully.");
                 localStorage.setItem('userProfile', JSON.stringify(data.data.user));
                 dispatch({ type: ActionTypes.SAVE_USER, payload: data.data.user })
                 swal.fire(
@@ -754,7 +847,6 @@ export function updateProfile(updatedUserData) {
                 )
             }).catch((err) => {
                 console.error(err, "ERROR_ON_SAVING")
-                // alert(err.response.data.message)
                 swal.fire(
                     'Error!',
                     'Something went wrong.',
@@ -763,8 +855,6 @@ export function updateProfile(updatedUserData) {
             })
     }
 }
-
-
 
 export function updateProfileImg(imgFile, _id) {
     return dispatch => {
@@ -804,8 +894,6 @@ export function updateProfileImg(imgFile, _id) {
             })
     }
 }
-
-
 
 export function getGallery(userID) {
     return dispatch => {
@@ -863,7 +951,6 @@ export function uploadGallery(imgFile, _id) {
     }
 }
 
-
 export function updateGallery(oldImages, _id) {
     return dispatch => {
         console.log(oldImages, _id, "DATA_INSIDE_ACTION_UPDATE_IMG")
@@ -920,7 +1007,6 @@ export function updateGallery(oldImages, _id) {
     }
 }
 
-
 export function updateStylistImg(imgFile, _id, userId) {
     return dispatch => {
         console.log(imgFile, _id, userId, "DATA_INSIDE_ACTION")
@@ -959,3 +1045,94 @@ export function updateStylistImg(imgFile, _id, userId) {
             })
     }
 }
+
+// stylist images working
+// export function uploadGallery(imgFile, stylistName) {
+//     return dispatch => {
+//         console.log(imgFile, stylistName, "DATA_INSIDE_ACTION_ADD_IMG")
+
+//         var bodyFormData = new FormData();
+//         bodyFormData.append('userId', Date.now() + "_" + stylistName);
+//         for (var i = 0; i < imgFile.length; i++) {
+//             bodyFormData.append("imgs", imgFile[i].originFileObj);
+//         }
+//         var options = {
+//             method: 'post',
+//             url: `${baseURL.baseURL}/servicesandgallery/addGalleryImages/`,
+//             headers:
+//             {
+//                 'cache-control': 'no-cache',
+//                 "Allow-Cross-Origin": '*',
+//                 contentType: 'application/json',
+//             },
+//             data: bodyFormData
+//         };
+//         axios(options)
+//             .then((data) => {
+//                 console.log(data, "profile updated successfully.");
+//                 swal.fire(
+//                     'Success!',
+//                     data.data.message,
+//                     'success'
+//                 )
+//             }).catch((err) => {
+//                 console.error(err, "ERROR_ON_SAVING")
+//             })
+//     }
+// }
+
+// export function updateGallery(oldImages, _id) {
+//     return dispatch => {
+//         console.log(oldImages, _id, "DATA_INSIDE_ACTION_UPDATE_IMG")
+//         let fileData = []
+//         let urlData = []
+//         for (let index = 0; index < oldImages.length; index++) {
+//             const element = oldImages[index];
+//             if (element.originFileObj) {
+//                 // console.log(element, "FILE")
+//                 fileData.push(element)
+//             }
+//             else {
+//                 // console.log(element, "URL")
+//                 urlData.push(element.url)
+//             }
+//         }
+
+//         var bodyFormData = new FormData();
+//         // add user id
+//         bodyFormData.append('userId', _id);
+//         // add img files
+//         for (var i = 0; i < fileData.length; i++) {
+//             bodyFormData.append("imgs", fileData[i].originFileObj);
+//         }
+//         // add img url old imgs
+//         for (var i = 0; i < urlData.length; i++) {
+//             bodyFormData.append("oldImages", urlData[i]);
+//         }
+
+//         var options = {
+//             method: 'post',
+//             url: `${baseURL.baseURL}/servicesandgallery/updateGalleryImages/`,
+//             headers:
+//             {
+//                 'cache-control': 'no-cache',
+//                 "Allow-Cross-Origin": '*',
+//                 contentType: 'application/json',
+//             },
+//             data: bodyFormData
+//         };
+//         axios(options)
+//             .then((data) => {
+//                 console.log(data, "Gallery updated successfully.");
+//                 swal.fire(
+//                     'Success!',
+//                     data.data.message,
+//                     'success'
+//                 )
+//             }).catch((err) => {
+//                 console.error(err, "ERROR_ON_SAVING")
+//             })
+
+
+//     }
+// }

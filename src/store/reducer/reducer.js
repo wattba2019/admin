@@ -90,13 +90,14 @@ export default (state = INITIAL_STATE, action) => {
             };
 
         case ActionTypes.UPDATE_STYLIST:
-            let editedStylist = state.stylists.slice(0);
-            let indexToUpdateStylist = action.payload.indexToEdit;
-            editedStylist.splice(indexToUpdateStylist, 1, action.payload);
-            console.log('inside reducer', action.payload, editedStylist)
+            // let editedStylist = state.stylists.slice(0);
+            // let indexToUpdateStylist = action.payload.indexToEdit;
+            // editedStylist.splice(indexToUpdateStylist, 1, action.payload);
+            // console.log('inside reducer', action.payload, editedStylist)
             return {
                 ...state,
-                stylists: editedStylist
+                // stylists: editedStylist
+                stylists: action.payload
             };
 
         case ActionTypes.FETCHED_WORKINGHOURS:

@@ -8,15 +8,6 @@ import '../custom.css'
 import StylistModal from '../components/StylistModal';
 import StylistCard from '../components/StylistCard';
 
-// function getBase64(file) {
-//     return new Promise((resolve, reject) => {
-//         const reader = new FileReader();
-//         reader.readAsDataURL(file);
-//         reader.onload = () => resolve(reader.result);
-//         reader.onerror = error => reject(error);
-//     });
-// }
-
 const { Search } = Input;
 class StyleList extends Component {
     constructor(props) {
@@ -63,7 +54,6 @@ class StyleList extends Component {
             serviceNameFieldQty: [1],
             previewVisible: false,
             previewImage: '',
-            // fileList: [],
             services: [],
             serviceqty: 1,
             editStylist: {},
@@ -155,18 +145,6 @@ class StyleList extends Component {
 
     handleCancel = () => this.setState({ previewVisible: false });
 
-    // handlePreview = async file => {
-    //     if (!file.url && !file.preview) {
-    //         file.preview = await getBase64(file.originFileObj);
-    //     }
-    //     this.setState({
-    //         previewImage: file.url || file.preview,
-    //         previewVisible: true,
-    //     });
-    // };
-
-    // handleChange = ({ fileList }) => this.setState({ fileList });
-
     setModal2Visible(modal2Visible) {
         this.setState({ modal2Visible });
     }
@@ -188,31 +166,7 @@ class StyleList extends Component {
         })
     }
 
-    // addServiceField = (input, type, index) => {
-    //     let serviceqty = this.state.serviceqty
-    //     serviceqty = ++serviceqty;
-    //     let serviceqtyArr = Array.apply(null, { length: serviceqty });
-    //     this.setState({ serviceqty, serviceqtyArr });
-    // }
-
-    // addExtraServiceField = () => {
-    //     let data = this.state.serviceNameFieldQty
-    //     if (data.length <= 7) {
-    //         data.push(1)
-    //     }
-    //     this.setState({ serviceNameFieldQty: data });
-    // }
-
-    // delserviceField = (index) => {
-    //     let services = this.state.services
-    //     services.splice(index, 1)
-    //     let serviceqty = this.state.serviceqty
-    //     serviceqty = --serviceqty;
-    //     let serviceqtyArr = Array.apply(null, { length: serviceqty });
-    //     this.setState({ serviceqty, serviceqtyArr, services }, () => { console.log(this.state) });
-    // }
-
-    saveStylist() {
+    saveStylist(files) {
         let stylist = {
             fullname: this.state.stylistFullName,
             gender: this.state.gender,
@@ -234,7 +188,7 @@ class StyleList extends Component {
                 })
             }
             else {
-                this.props.addStylist(stylist);
+                this.props.addStylist(stylist, files);
                 this.setState({
                     errDesc: '',
                     errFullName: ''
@@ -243,7 +197,8 @@ class StyleList extends Component {
         }
         else {
             stylist._id = this.state.editStylist._id;
-            this.props.updateStylist(stylist, this.state.indexToEdit);
+            console.log(stylist, "USER_ID")
+            this.props.updateStylist(stylist, this.state.indexToEdit, files);
         }
         let serviceqtyArr = Array.apply(null, { length: 1 });
         this.setState({
@@ -334,7 +289,7 @@ class StyleList extends Component {
 
                 <StylistCard that={this} stylists={stylists} />
                 <div>
-                    <StylistModal that={this} />
+                    <StylistModal that={this} stylists={stylists} editStylist={this.state.editStylist} />
                 </div>
             </div>
         )
@@ -352,8 +307,8 @@ function mapStateToProp(state) {
 
 function mapDispatchToProp(dispatch) {
     return ({
-        addStylist: (stylist) => {
-            dispatch(addStylist(stylist));
+        addStylist: (stylist, files) => {
+            dispatch(addStylist(stylist, files));
         },
         getStylists: (userId) => {
             dispatch(getStylists(userId));
@@ -361,8 +316,8 @@ function mapDispatchToProp(dispatch) {
         getGallery: (userId) => {
             dispatch(getGallery(userId));
         },
-        updateStylist: (stylist, indexToEdit) => {
-            dispatch(updateStylist(stylist, indexToEdit));
+        updateStylist: (stylist, indexToEdit, files) => {
+            dispatch(updateStylist(stylist, indexToEdit, files));
         },
         getServices: (uid) => {
             dispatch(getServices(uid));

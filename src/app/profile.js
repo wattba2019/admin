@@ -556,7 +556,6 @@ class ShopProfile extends Component {
                                         onClick={() => this.uploadGallery()}>
                                         <span className="buttonmatter" style={{ fontSize: 15, }}>{'Save Gallery'}</span>
                                     </button> */}
-
                                     <div style={{ display: "flex", flex: 1, marginTop: 15 }} >
                                         <button
                                             className="button"
@@ -565,7 +564,6 @@ class ShopProfile extends Component {
                                             <span className="buttonmatter">Save Gallery</span>
                                         </button>
                                     </div>
-
                                 </div>
                             </div>
                         </div>

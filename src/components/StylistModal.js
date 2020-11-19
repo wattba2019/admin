@@ -55,27 +55,56 @@ class StylistModal extends Component {
         })
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        let arr = []
-        for (var i = 0; i < nextProps.gallery.length; i++) {
-            const element = nextProps.gallery[i];
-            const obj = {
-                uid: i,
-                name: 'xxx.png',
-                status: 'done',
-                url: element,
-            }
-            arr.push(obj)
-        }
-        this.setState({
-            fileList: arr,
-            gArr: arr,
-        })
-    }
+    // UNSAFE_componentWillReceiveProps(nextProps) {
+    // let arr = []
+    // for (var i = 0; i < nextProps.gallery.length; i++) {
+    //     const element = nextProps.gallery[i];
+    //     const obj = {
+    //         uid: i,
+    //         name: 'xxx.png',
+    //         status: 'done',
+    //         url: element,
+    //     }
+    //     arr.push(obj)
+    // }
+    // this.setState({
+    //     fileList: arr,
+    //     gArr: arr,
+    // })
+    // }
 
+    UNSAFE_componentWillReceiveProps(props) {
+        const { that, stylists, editStylist } = props
+        if (that.state.modal2VisibleEdit && editStylist != undefined) {
+            // console.log(editStylist ? editStylist.galleryImages : null, that.state.modal2VisibleEdit, "stylistsstylistsstylists")
+            let arr = []
+            for (var i = 0; i < editStylist.galleryImages.length; i++) {
+                const element = editStylist.galleryImages[i];
+                const obj = {
+                    uid: i,
+                    name: 'xxx.png',
+                    status: 'done',
+                    url: element,
+                }
+                arr.push(obj)
+            }
+            this.setState({
+                fileList: arr,
+                gArr: arr,
+            }, () => {
+                // console.log(arr, this.state.fileList, "stylistsstylistsstylists")
+            })
+        }
+    }
     render() {
-        const { that } = this.props
+        const { that, stylists, editStylist } = this.props
         const { fileList, errUploadImgLimit, } = this.state;
+
+        // if (that.state.modal2VisibleEdit && editStylist != undefined) {
+        //     console.log(editStylist ? editStylist.galleryImages : null, that.state.modal2VisibleEdit, "stylistsstylistsstylists")
+        //     console.log(fileList, "fileList")
+        // }
+
         const uploadButton = (
             <div>
                 <Icon type="plus" />
@@ -86,8 +115,8 @@ class StylistModal extends Component {
                 footer={null}
                 centered
                 visible={that.state.modal2Visible || that.state.modal2VisibleEdit}
-                onOk={() => that.setModal2Visible(false)}
-                onCancel={() => { that.setModal2Visible(false); that.setModal2VisibleEdit(false) }}
+                onOk={() => { that.setModal2Visible(false); this.setState({ fileList: [] }) }}
+                onCancel={() => { that.setModal2Visible(false); that.setModal2VisibleEdit(false); this.setState({ fileList: [] }) }}
                 bodyStyle={{ height: 500 }}
                 width={"80%"}
                 minWidth={"60%"}
@@ -151,7 +180,6 @@ class StylistModal extends Component {
                                             <p style={{ fontSize: 14 }}>Break</p>
                                         </div>
                                     </div>
-
                                     {
                                         that.state.workingDaysNTime.map((dayBrTime, index) => {
                                             return (
@@ -248,53 +276,115 @@ class StylistModal extends Component {
                                         </div>
                                 }
                                 <div className="clearfix" style={{ marginTop: 10, }}>
-                                    <Upload
-                                        showUploadList={{ showPreviewIcon: false }}
-                                        defaultFileList={fileList}
-                                        action=""
-                                        listType={'picture-card'}
-                                        multiple={false}
-                                        onChange={(info) => {
-                                            const isJpgOrPng = info.file.type === 'image/jpeg' || info.file.type === 'image/png' || (info.file.url);
-                                            if (!isJpgOrPng) {
-                                                this.setState({ fileList: [] })
-                                                that.setModal2Visible(false)
-                                                that.setModal2VisibleEdit(false)
-                                            } else {
-                                                if (info.fileList.length <= 12 && fileList.length <= 12) {
-                                                    this.setState({
-                                                        fileList: info.fileList,
-                                                        errUploadImgLimit: false
-                                                    })
+                                    {that.state.modal2Visible &&
+                                        <Upload
+                                            action=""
+                                            showUploadList={{ showPreviewIcon: false }}
+                                            defaultFileList={fileList}
+                                            listType={'picture-card'}
+                                            multiple={false}
+                                            onChange={(info) => {
+                                                const isJpgOrPng = info.file.type === 'image/jpeg' || info.file.type === 'image/png' || (info.file.url);
+                                                if (!isJpgOrPng) {
+                                                    this.setState({ fileList: [] })
+                                                    that.setModal2Visible(false)
+                                                    that.setModal2VisibleEdit(false)
+                                                } else {
+                                                    if (info.fileList.length <= 12 && fileList.length <= 12) {
+                                                        this.setState({
+                                                            fileList: info.fileList,
+                                                            errUploadImgLimit: false
+                                                        })
+                                                    }
+                                                    else {
+                                                        this.setState({
+                                                            fileList: [],
+                                                            errUploadImgLimit: true
+                                                        })
+                                                    }
                                                 }
-                                                else {
-                                                    this.setState({
-                                                        fileList: [],
-                                                        errUploadImgLimit: true
-                                                    })
-                                                }
-                                            }
-                                        }}
-                                        beforeUpload={this.beforeUploadEvent.bind(this)}>
-                                        {fileList.length >= 12 ? null : uploadButton}
-                                    </Upload>
-                                    {/* <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
-                                        <img alt="example" style={{ width: '100%' }} src={that.state.previewImage} />
-                                    </Modal> */}
+                                            }}
+                                            beforeUpload={this.beforeUploadEvent.bind(this)}>
+                                            {fileList.length >= 12 ? null : uploadButton}
+                                        </Upload>
+                                    }
+                                    {
+                                        (fileList.length && !that.state.modal2Visible) ? (
+                                            <Upload
+                                                action=""
+                                                showUploadList={{ showPreviewIcon: false }}
+                                                defaultFileList={fileList}
+                                                listType={'picture-card'}
+                                                multiple={false}
+                                                onChange={(info) => {
+                                                    const isJpgOrPng = info.file.type === 'image/jpeg' || info.file.type === 'image/png' || (info.file.url);
+                                                    if (!isJpgOrPng) {
+                                                        this.setState({ fileList: [] })
+                                                        that.setModal2Visible(false)
+                                                        that.setModal2VisibleEdit(false)
+                                                    } else {
+                                                        if (info.fileList.length <= 12 && fileList.length <= 12) {
+                                                            this.setState({
+                                                                fileList: info.fileList,
+                                                                errUploadImgLimit: false
+                                                            })
+                                                        }
+                                                        else {
+                                                            this.setState({
+                                                                fileList: [],
+                                                                errUploadImgLimit: true
+                                                            })
+                                                        }
+                                                    }
+                                                }}
+                                                beforeUpload={this.beforeUploadEvent.bind(this)}>
+                                                {fileList.length >= 12 ? null : uploadButton}
+                                            </Upload>
+                                        ) : null
+                                    }
+
+                                    {
+                                        (fileList.length == 0 && !that.state.modal2Visible) ? (
+                                            <Upload
+                                                action=""
+                                                showUploadList={{ showPreviewIcon: false }}
+                                                defaultFileList={fileList}
+                                                listType={'picture-card'}
+                                                multiple={false}
+                                                onChange={(info) => {
+                                                    const isJpgOrPng = info.file.type === 'image/jpeg' || info.file.type === 'image/png' || (info.file.url);
+                                                    if (!isJpgOrPng) {
+                                                        this.setState({ fileList: [] })
+                                                        that.setModal2Visible(false)
+                                                        that.setModal2VisibleEdit(false)
+                                                    } else {
+                                                        if (info.fileList.length <= 12 && fileList.length <= 12) {
+                                                            this.setState({
+                                                                fileList: info.fileList,
+                                                                errUploadImgLimit: false
+                                                            })
+                                                        }
+                                                        else {
+                                                            this.setState({
+                                                                fileList: [],
+                                                                errUploadImgLimit: true
+                                                            })
+                                                        }
+                                                    }
+                                                }}
+                                                beforeUpload={this.beforeUploadEvent.bind(this)}>
+                                                {fileList.length >= 12 ? null : uploadButton}
+                                            </Upload>
+                                        ) : null
+                                    }
                                 </div>
-                            </div>
-                            <div style={{ display: "flex", flex: 1, flexDirection: "column", justifyContent: "center", alignItems: "center", }}>
-                                <button className="buttonAdd" style={{ minWidth: 140, width: "30%", height: 35, margin: "1%", }}
-                                    onClick={() => this.uploadGallery()}>
-                                    <span className="buttonmatter" style={{ fontSize: 15, }}>{'Save'}</span>
-                                </button>
                             </div>
                         </div>
                     </div>
 
                     {/* Footer */}
                     <div className="cardshadowWithButton" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", flex: 2, zIndex: 1, width: "100%", background: "#F7F8F8", }}>
-                        <button className="buttonAdd" style={{ minWidth: 140, width: "20%", margin: "1%" }} onClick={that.saveStylist.bind(that)} >
+                        <button className="buttonAdd" style={{ minWidth: 140, width: "20%", margin: "1%" }} onClick={that.saveStylist.bind(that, fileList)} >
                             <span className="buttonmatter" style={{ fontSize: 15, }}>{(that.state.modal2Visible) ? 'Add Stylist' : 'Save Stylist'}</span>
                         </button>
                         <button type="button" className="btn btn-light" style={{ width: "20%", margin: "1%", minWidth: 140, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => { that.setModal2Visible(false); that.setModal2VisibleEdit(false) }}>Cancel</button>
@@ -311,7 +401,7 @@ function mapStateToProp(state) {
         uid: state.root.userProfile._id,
         userProfile: state.root.userProfile,
         gallery: state.root.gallery,
-        services: state.root.services
+        services: state.root.services,
     })
 }
 function mapDispatchToProp(dispatch) {
@@ -322,7 +412,6 @@ function mapDispatchToProp(dispatch) {
         updateGallery: (data, id) => {
             dispatch(updateGallery(data, id));
         },
-
     })
 }
 const WrappedSpecialOfferModal = Form.create({ name: 'normal_login' })(connect(mapStateToProp, mapDispatchToProp)(StylistModal));
