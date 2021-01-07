@@ -44,25 +44,25 @@ class Signup extends Component {
                     }
                 }
             ],
-            // email: '',
-            // password: '',
-            // about: '',
-            // businessName: '',
-            // businessType: '',
-            // telephone: '',
-            // websiteUrl: '',
-            // addressline1: '',
-            // addressline2: '',
+            email: '',
+            password: '',
+            about: '',
+            businessName: '',
+            businessType: '',
+            telephone: '',
+            websiteUrl: '',
+            addressline1: '',
+            addressline2: '',
 
-            email: 'mynameisabdullah1@hotmail.com',
-            password: '123456',
-            about: 'test',
-            businessName: 'Saad cutz',
-            businessType: 'Saloon',
-            telephone: '03452153709',
-            websiteUrl: 'test.com',
-            addressline1: '786',
-            addressline2: '786',
+            // email: 'mynameisabdullah1@hotmail.com',
+            // password: '123456',
+            // about: 'test',
+            // businessName: 'Saad cutz',
+            // businessType: 'Saloon',
+            // telephone: '03452153709',
+            // websiteUrl: 'test.com',
+            // addressline1: '786',
+            // addressline2: '786',
         }
         this.signup = this.signup.bind(this);
     }
@@ -306,6 +306,15 @@ class Signup extends Component {
 
                                                 <FiChevronDown />
                                             </div>
+
+{/* - Salons
+- Barbershop
+- Beauty Salons, Spas & Other
+- Salons + Beauty Salons, Spas & Other
+- Barbershop + Salon
+- Barbershop + Beauty Salons, Spas & Other
+- Salons + Barbershop + Spa/Other */}
+
 
                                             <div style={{ width: "100%", marginTop: "100%", zIndex: 10 }} class="dropdown-content">
                                                 <a style={{ display: "flex", }} onClick={() => { this.handleMenuClick("Salons") }} >Salons</a>

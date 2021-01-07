@@ -1,6 +1,6 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
-import { addStylist, getStylists, updateStylist, getGallery, getServices } from "../store/action/action";
+import { addStylist, getStylists, updateStylist, deleteStylist, getGallery, getServices } from "../store/action/action";
 import { Input } from "antd";
 import "antd/dist/antd.css";
 import '../custom.css'
@@ -197,7 +197,7 @@ class StyleList extends Component {
         }
         else {
             stylist._id = this.state.editStylist._id;
-            console.log(stylist, "USER_ID")
+            // console.log(stylist, "USER_ID")
             this.props.updateStylist(stylist, this.state.indexToEdit, files);
         }
         let serviceqtyArr = Array.apply(null, { length: 1 });
@@ -253,6 +253,56 @@ class StyleList extends Component {
         })
     }
 
+    deleteStylist(bolean, _id, stylists) {
+        this.setState({
+            plainOptions: ['Loading',],
+            checkedList: [],
+            indeterminate: true,
+            checkAll: false,
+            errDesc: '',
+            errFullName: '',
+            loader: false,
+            showerror: false,
+            stylistFullName: '',
+            designation: '',
+            gender: 'Male',
+            stylistDescription: '',
+            modal2Visible: false,
+            modal2VisibleEdit: false,
+            search: [],
+            workingDaysNTime: [
+                {
+                    day: 'Monday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
+                },
+                {
+                    day: 'Tuesday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
+                },
+                {
+                    day: 'Wednesday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
+                },
+                {
+                    day: 'Thursday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
+                },
+                {
+                    day: 'Friday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
+                },
+                {
+                    day: 'Saturday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
+                },
+                {
+                    day: 'Sunday', brStart: '10:00 AM', brEnd: '10:00 PM', working: true,
+                },
+            ],
+            serviceNameFieldQty: [1],
+            previewVisible: false,
+            previewImage: '',
+            services: [],
+            serviceqty: 1,
+            editStylist: {},
+            indexToEdit: undefined
+        });
+        this.props.deleteStylist(_id, stylists, this.state.indexToEdit)
+    }
 
     render() {
         let stylists = [];
@@ -266,7 +316,6 @@ class StyleList extends Component {
                 stylists = this.props.stylists;
             }
         }
-
         return (
             <div style={{ display: "flex", flexDirection: "column", flex: 1, width: "100%", justifyContent: "center", alignItems: "center", background: "#F7F8F8", }}>
 
@@ -312,6 +361,9 @@ function mapDispatchToProp(dispatch) {
         },
         getStylists: (userId) => {
             dispatch(getStylists(userId));
+        },
+        deleteStylist: (_id, stylists, index) => {
+            dispatch(deleteStylist(_id, stylists, index));
         },
         getGallery: (userId) => {
             dispatch(getGallery(userId));

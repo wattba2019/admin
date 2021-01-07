@@ -18,6 +18,7 @@ class Services extends Component {
             modal2VisibleEdit: false,
             editService: {},
             indexToEdit: undefined,
+            // extraService: ["1","1"],
             extraService: [],
             extraServiceqty: 1,
         }

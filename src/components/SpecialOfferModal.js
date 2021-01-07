@@ -1,11 +1,7 @@
 import React, { Component, } from 'react';
-
-import { Button, Modal, Upload, Icon, message } from "antd";
+import { Button, Modal, Upload, Icon, message, Menu, Dropdown, Form, } from "antd";
 import TextareaAutosize from 'react-textarea-autosize';
-import { Form, Input, Checkbox } from 'antd';
 import { AiOutlineDelete } from 'react-icons/ai';
-
-
 
 class SpecialOfferModal extends Component {
     state = {
@@ -13,14 +9,12 @@ class SpecialOfferModal extends Component {
         offerDescription: "",
         base64: ""
     }
-
     uploadProps = {
         listType: 'picture',
         multiple: false,
     };
 
     beforeUploadEvent(file, fileList) {
-        // alert("Work")
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
             message.error('You can only upload JPG/PNG file!');
@@ -39,12 +33,10 @@ class SpecialOfferModal extends Component {
 
     getBase64 = (file) => {
         const { that } = this.props;
-        // alert("work")
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = () => resolve(
-                // reader.result
                 // console.log(reader.result)
                 that.setState({
                     base64: reader.result
@@ -87,32 +79,42 @@ class SpecialOfferModal extends Component {
     };
 
     handleChange = ({ }) => {
-        alert("Estate Empty Base64")
         const { that } = this.props;
         that.setState({ base64: "", imageFile: {}, })
+    }
+
+    handleMenuClick(e) {
+        const { that } = this.props;
+        message.info(e.item.props.children);
+        that.setState({
+            serviceNameCheck: e.item.props.children,
+            dropdownTitle: e.item.props.children
+        })
     }
 
     render() {
         const { email } = this.props.modalState;
         const { that } = this.props;
         const { getFieldDecorator } = this.props.form;
-        console.log(that.state.imageFile, that.state.base64, "IMAGESSSS")
+        // console.log(that.state.imageFile, that.state.base64, "IMAGESSSS")
+
         return (
             <Modal
                 footer={null}
-                // title="Vertically centered modal dialog"
                 centered
                 multiple={false}
                 visible={that.state.modal2Visible || that.state.modal2VisibleEdit}
                 onOk={() => {
                     this.props.setModal2Visible(false);
                     this.props.setModal2VisibleEdit(false);
-                    // this.handleChange(false);
                 }}
                 onCancel={() => {
+                    that.setState({
+                        dropdownTitle: "Select Offer Type",
+                        serviceNameCheck: undefined,
+                    })
                     this.props.setModal2Visible(false);
                     this.props.setModal2VisibleEdit(false);
-                    // this.handleChange(false);
                 }}
             >
                 <div style={{ display: "flex", flex: 1, flexDirection: "column", width: "100%", fontSize: "1.1vw", fontWeight: "bold", }}>
@@ -121,6 +123,21 @@ class SpecialOfferModal extends Component {
                         {
                             (that.state.modal2VisibleEdit) ? (<span>Edit Offer</span>) : (<span>New Offer</span>)
                         }
+                    </div>
+
+                    <div style={{ display: "flex", flex: 1, marginTop: 10 }} >
+                        <Dropdown.Button
+                            overlay={
+                                <Menu onClick={(e) => { this.handleMenuClick(e) }}>
+                                    <Menu.Item key="1" >Salons</Menu.Item>
+                                    <Menu.Item key="2" >Barbershop</Menu.Item>
+                                    <Menu.Item key="3" >Beauty Salons, Spas & Other</Menu.Item>
+                                </Menu>
+                            }
+                            placement="bottomCenter"
+                        >
+                            {that.state.dropdownTitle}	&nbsp;
+                        </Dropdown.Button>
                     </div>
 
                     <div style={{ marginTop: 10 }}>

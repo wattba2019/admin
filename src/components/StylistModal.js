@@ -18,6 +18,27 @@ class StylistModal extends Component {
         }
     }
 
+    UNSAFE_componentWillReceiveProps(props) {
+        const { that, stylists, editStylist } = props
+        if (that.state.modal2VisibleEdit && editStylist != undefined) {
+            let arr = []
+            for (var i = 0; i < editStylist.galleryImages.length; i++) {
+                const element = editStylist.galleryImages[i];
+                const obj = {
+                    uid: i,
+                    name: 'xxx.png',
+                    status: 'done',
+                    url: element,
+                }
+                arr.push(obj)
+            }
+            this.setState({
+                fileList: arr,
+                gArr: arr,
+            })
+        }
+    }
+
     onChangeRadio = e => {
         const { that } = this.props
         this.setState({
@@ -55,56 +76,9 @@ class StylistModal extends Component {
         })
     }
 
-    // UNSAFE_componentWillReceiveProps(nextProps) {
-    // let arr = []
-    // for (var i = 0; i < nextProps.gallery.length; i++) {
-    //     const element = nextProps.gallery[i];
-    //     const obj = {
-    //         uid: i,
-    //         name: 'xxx.png',
-    //         status: 'done',
-    //         url: element,
-    //     }
-    //     arr.push(obj)
-    // }
-    // this.setState({
-    //     fileList: arr,
-    //     gArr: arr,
-    // })
-    // }
-
-    UNSAFE_componentWillReceiveProps(props) {
-        const { that, stylists, editStylist } = props
-        if (that.state.modal2VisibleEdit && editStylist != undefined) {
-            // console.log(editStylist ? editStylist.galleryImages : null, that.state.modal2VisibleEdit, "stylistsstylistsstylists")
-            let arr = []
-            for (var i = 0; i < editStylist.galleryImages.length; i++) {
-                const element = editStylist.galleryImages[i];
-                const obj = {
-                    uid: i,
-                    name: 'xxx.png',
-                    status: 'done',
-                    url: element,
-                }
-                arr.push(obj)
-            }
-            this.setState({
-                fileList: arr,
-                gArr: arr,
-            }, () => {
-                // console.log(arr, this.state.fileList, "stylistsstylistsstylists")
-            })
-        }
-    }
     render() {
         const { that, stylists, editStylist } = this.props
         const { fileList, errUploadImgLimit, } = this.state;
-
-        // if (that.state.modal2VisibleEdit && editStylist != undefined) {
-        //     console.log(editStylist ? editStylist.galleryImages : null, that.state.modal2VisibleEdit, "stylistsstylistsstylists")
-        //     console.log(fileList, "fileList")
-        // }
-
         const uploadButton = (
             <div>
                 <Icon type="plus" />
@@ -387,7 +361,11 @@ class StylistModal extends Component {
                         <button className="buttonAdd" style={{ minWidth: 140, width: "20%", margin: "1%" }} onClick={that.saveStylist.bind(that, fileList)} >
                             <span className="buttonmatter" style={{ fontSize: 15, }}>{(that.state.modal2Visible) ? 'Add Stylist' : 'Save Stylist'}</span>
                         </button>
-                        <button type="button" className="btn btn-light" style={{ width: "20%", margin: "1%", minWidth: 140, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => { that.setModal2Visible(false); that.setModal2VisibleEdit(false) }}>Cancel</button>
+                        {/* <button type="button" className="btn btn-light" style={{ width: "20%", margin: "1%", minWidth: 140, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => { that.setModal2Visible(false); that.setModal2VisibleEdit(false) }}>Cancel</button> */}
+                        {
+                            that.state.modal2VisibleEdit &&
+                            <button type="button" className="btn btn-light" style={{ width: "20%", margin: "1%", minWidth: 140, borderWidth: 0.5, borderColor: "grey", height: 40 }} onClick={() => { that.deleteStylist(false, editStylist._id, stylists) }}>Discard</button>
+                        }
                     </div>
                 </div>
             </Modal>

@@ -42,33 +42,7 @@ class ShopProfile extends Component {
                 }
             ],
             gArr: [],
-            // fileList: [],
-            // fileList: [
-            //     {
-            //         uid: 1,
-            //         name: 'image.png',
-            //         status: 'done',
-            //         url: "https://fathomless-citadel-43321.herokuapp.com/servicesandgallery/1605290929626_IMG-20200903-WA0004.jpg"
-            //     },
-            //     {
-            //         uid: 2,
-            //         name: 'image.png',
-            //         status: 'done',
-            //         url: "https://fathomless-citadel-43321.herokuapp.com/servicesandgallery/1605290929626_IMG-20200903-WA0004.jpg"
-            //     },
-            //     {
-            //         uid: 3,
-            //         name: 'image.png',
-            //         status: 'done',
-            //         url: "https://fathomless-citadel-43321.herokuapp.com/servicesandgallery/1605290929626_IMG-20200903-WA0004.jpg"
-            //     },
-            //     {
-            //         uid: 4,
-            //         name: 'image.png',
-            //         status: 'done',
-            //         url: "https://fathomless-citadel-43321.herokuapp.com/servicesandgallery/1605290929626_IMG-20200903-WA0004.jpg"
-            //     },
-            // ],
+            fileList: [],
             errUploadImgLimit: false,
             previewImage: '',
             flag: false
@@ -139,10 +113,10 @@ class ShopProfile extends Component {
         else {
             this.props.updateGallery(fileList, this.props.userProfile._id)
         }
-        this.setState({
-            fileList: [],
-            gArr: [],
-        })
+        // this.setState({
+        //     fileList: [],
+        //     gArr: [],
+        // })
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -162,9 +136,8 @@ class ShopProfile extends Component {
             this.setState({
                 fileList: arr,
                 gArr: arr,
-                flag: !this.state.flag
+                flag: true
             })
-
             console.log(nextProps.gallery, "nextProps_gallery")
         }
 
@@ -189,29 +162,6 @@ class ShopProfile extends Component {
             })
         }
     }
-
-    // componentWillReceiveProps(nextProps) {
-    //     if (nextProps.userProfile) {
-    //         let markers = [{
-    //             name: "Current position",
-    //             position: {
-    //                 lat: nextProps.userProfile.location.coordinates[0],
-    //                 lng: nextProps.userProfile.location.coordinates[1],
-    //             }
-    //         }]
-    //         this.setState({
-    //             email: nextProps.userProfile.email,
-    //             about: nextProps.userProfile.about,
-    //             businessName: nextProps.userProfile.businessName,
-    //             businessType: nextProps.userProfile.businessType,
-    //             telephone: nextProps.userProfile.telePhone,
-    //             websiteUrl: nextProps.userProfile.websiteUrl,
-    //             addressline1: nextProps.userProfile.addressLine1,
-    //             addressline2: nextProps.userProfile.addressLine2,
-    //             markers: markers,
-    //         })
-    //     }
-    // }
 
     changePassword = () => {
         const { email, password, confirmPassword } = this.state
@@ -319,14 +269,14 @@ class ShopProfile extends Component {
     }
 
     render() {
-        const { email, password, confirmPassword, about, businessName, businessType, telephone, websiteUrl, addressline1, addressline2, showerror, err, showerrorpassword, markers, fileList, errUploadImgLimit, } = this.state;
+        const { email, password, confirmPassword, about, businessName, businessType, telephone, websiteUrl, addressline1, addressline2, showerror, err, showerrorpassword, markers, fileList, errUploadImgLimit, flag } = this.state;
         const { getFieldDecorator } = this.props.form;
         const uploadButton = (
             <div>
                 <Icon type="plus" />
             </div>
         );
-        console.log(fileList, this.state.flag, "fileList_")
+        console.log(fileList, flag, "fileList_")
         return (
             <div style={{ display: "flex", width: "100%", justifyContent: "center", alignItems: "center", background: "#F7F8F8", }}>
                 <div style={{ display: "flex", width: "55%", minWidth: 500, height: window.innerHeight, justifyContent: "center", background: "#F7F8F8" }}>
@@ -513,9 +463,12 @@ class ShopProfile extends Component {
                                         </div>
                                     }
 
-                                    {
-                                        (fileList) ? (
-                                            <div className="clearfix" style={{ marginTop: 10, }}>
+                                    {/* {
+                                        (flag === false) ? (
+                                            <div
+                                                className="clearfix"
+                                                style={{ marginTop: 10 }}
+                                            >
                                                 <Upload
                                                     showUploadList={{ showPreviewIcon: false }}
                                                     defaultFileList={fileList}
@@ -545,10 +498,98 @@ class ShopProfile extends Component {
                                                 >
                                                     {fileList.length >= 12 ? null : uploadButton}
                                                 </Upload>
-
                                             </div>
-                                        ) : <div style={{ fontSize: 10, marginRight: 20, color: "red" }}>Loading</div>
+                                        ) : null
+                                        // <div style={{ fontSize: 10, marginRight: 20, color: "red" }}>Loading</div>
+                                    } */}
+
+
+                                    {
+                                        (fileList.length && flag === true) ? (
+                                            <div
+                                                className="clearfix"
+                                                style={{ marginTop: 10 }}
+                                            >
+                                                <Upload
+                                                    showUploadList={{ showPreviewIcon: false }}
+                                                    defaultFileList={fileList}
+                                                    action=""
+                                                    listType={'picture-card'}
+                                                    multiple={false}
+                                                    onChange={(info) => {
+                                                        const isJpgOrPng = info.file.type === 'image/jpeg' || info.file.type === 'image/png' || (info.file.url);
+                                                        if (!isJpgOrPng) {
+                                                            this.setState({ fileList: [] })
+                                                        } else {
+                                                            if (info.fileList.length <= 12 && fileList.length <= 12) {
+                                                                this.setState({
+                                                                    fileList: info.fileList,
+                                                                    errUploadImgLimit: false
+                                                                })
+                                                            }
+                                                            else {
+                                                                this.setState({
+                                                                    fileList: [],
+                                                                    errUploadImgLimit: true
+                                                                })
+                                                            }
+                                                        }
+                                                    }}
+                                                    beforeUpload={this.beforeUploadEvent.bind(this)}
+                                                >
+                                                    {fileList.length >= 12 ? null : uploadButton}
+                                                    {/* test */}
+                                                </Upload>
+                                            </div>
+                                        ) :
+                                            null
+                                        // <div style={{ fontSize: 10, marginRight: 20, color: "red" }}>Loading</div>
                                     }
+
+                                    {
+                                        (fileList && flag === false) ? (
+                                            <div
+                                                className="clearfix"
+                                                style={{ marginTop: 10 }}
+                                            >
+                                                <Upload
+                                                    showUploadList={{ showPreviewIcon: false }}
+                                                    defaultFileList={fileList}
+                                                    action=""
+                                                    listType={'picture-card'}
+                                                    multiple={false}
+                                                    onChange={(info) => {
+                                                        const isJpgOrPng = info.file.type === 'image/jpeg' || info.file.type === 'image/png' || (info.file.url);
+                                                        if (!isJpgOrPng) {
+                                                            this.setState({ fileList: [] })
+                                                        } else {
+                                                            if (info.fileList.length <= 12 && fileList.length <= 12) {
+                                                                this.setState({
+                                                                    fileList: info.fileList,
+                                                                    errUploadImgLimit: false
+                                                                })
+                                                            }
+                                                            else {
+                                                                this.setState({
+                                                                    fileList: [],
+                                                                    errUploadImgLimit: true
+                                                                })
+                                                            }
+                                                        }
+                                                    }}
+                                                    beforeUpload={this.beforeUploadEvent.bind(this)}
+                                                >
+                                                    {fileList.length >= 12 ? null : uploadButton}
+                                                </Upload>
+                                            </div>
+                                        ) :
+                                            null
+                                        // <div style={{ fontSize: 10, marginRight: 20, color: "red" }}>Loading</div>
+                                    }
+
+                                   
+
+
 
                                 </div>
                                 <div style={{ display: "flex", flex: 1, flexDirection: "column", marginLeft: "3%", }}>

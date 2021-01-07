@@ -31,17 +31,16 @@ class ServiceModal extends Component {
             serviceNameCheck: e.item.props.children,
             dropdownTitle: e.item.props.children
         })
-        if (e.item.props.children != "More") {
+        if (e.item.props.children != "Others") {
             that.setState({
                 categoryName: e.item.props.children,
             })
         }
-        if (e.item.props.children === "More") {
+        if (e.item.props.children === "Others") {
             that.setState({
                 categoryName: "",
             })
         }
-
     }
 
     clearState() {
@@ -54,6 +53,8 @@ class ServiceModal extends Component {
         const { that } = this.props;
         const { dropdownTitle, serviceNameCheck } = this.state;
         const { getFieldDecorator } = this.props.form;
+
+        console.log(extraService, "EXTRA")
         return (
             <Modal
                 footer={null}
@@ -79,7 +80,7 @@ class ServiceModal extends Component {
 
                     <Form onSubmit={this.handleSubmit} className="login-form">
                         {
-                            (serviceNameCheck === "More") ? (
+                            (serviceNameCheck === "Others") ? (
                                 <div style={{
                                     display: "flex", flex: 1,
                                     width: "100%",
@@ -155,29 +156,29 @@ class ServiceModal extends Component {
                                                                 <Menu.Item key="7" >More</Menu.Item> */}
 
                                                                 <Menu.Item key="1" >Haircut</Menu.Item>
-                                                                <Menu.Item key="2" >Coloring</Menu.Item>
-                                                                <Menu.Item key="3" >Styling</Menu.Item>
-                                                                <Menu.Item key="4" >Shaving</Menu.Item>
-                                                                <Menu.Item key="5" >Childrens Haircut</Menu.Item>
-                                                                <Menu.Item key="6" >Waxing</Menu.Item>
+                                                                <Menu.Item key="2" >Style</Menu.Item>
+                                                                <Menu.Item key="3" >Hair Color</Menu.Item>
+                                                                <Menu.Item key="4" >Shave</Menu.Item>
+                                                                <Menu.Item key="5" >Children Haircut</Menu.Item>
+                                                                <Menu.Item key="6" >Wax</Menu.Item>
 
                                                                 <Menu.Item key="7" >Ladies Haircuts</Menu.Item>
                                                                 <Menu.Item key="8" >Blow Dry</Menu.Item>
-                                                                {/* <Menu.Item key="9" >Hair Coloring</Menu.Item> */}
-                                                                <Menu.Item key="9" >Men's Haircuts</Menu.Item>
-                                                                {/* <Menu.Item key="11" >Styling</Menu.Item> */}
-                                                                {/* <Menu.Item key="12" >Children's HairCuts</Menu.Item> */}
-                                                                <Menu.Item key="10" >Treatments</Menu.Item>
-                                                                <Menu.Item key="11" >Bridal & Weding</Menu.Item>
+                                                                <Menu.Item key="9" >Hair Coloring</Menu.Item>
+                                                                <Menu.Item key="10" >Men's Haircuts</Menu.Item>
+                                                                <Menu.Item key="11" >Styling</Menu.Item>
+                                                                <Menu.Item key="12" >Children's HairCuts</Menu.Item>
+                                                                <Menu.Item key="13" >Treatments</Menu.Item>
+                                                                <Menu.Item key="14" >Bridal & Weding</Menu.Item>
 
-                                                                <Menu.Item key="12" >Nails</Menu.Item>
-                                                                <Menu.Item key="13" >Brows & Lashes</Menu.Item>
-                                                                {/* <Menu.Item key="17" >Waxing</Menu.Item> */}
-                                                                <Menu.Item key="14" >Body Treatment</Menu.Item>
-                                                                <Menu.Item key="15" >Hair Treatments</Menu.Item>
-                                                                <Menu.Item key="16" >Tanning</Menu.Item>
-                                                                <Menu.Item key="17" >Men’s Grooming</Menu.Item>
-                                                                <Menu.Item key="18" >More</Menu.Item>
+                                                                <Menu.Item key="15" >Nails</Menu.Item>
+                                                                <Menu.Item key="16" >Brows & Lashes</Menu.Item>
+                                                                <Menu.Item key="17" >Waxing</Menu.Item>
+                                                                <Menu.Item key="18" >Body Treatment</Menu.Item>
+                                                                <Menu.Item key="19" >Hair Treatments</Menu.Item>
+                                                                <Menu.Item key="20" >Tanning</Menu.Item>
+                                                                <Menu.Item key="21" >Men’s Grooming</Menu.Item>
+                                                                <Menu.Item key="22" >Others</Menu.Item>
 
                                                             </Menu>
                                                         } placement="bottomCenter">

@@ -135,46 +135,52 @@ export function updateService(service, indexToEdit) {
 export function addSpecialOffer(specialOffer) {
     return dispatch => {
         console.log('specialOffer', specialOffer);
-        var bodyFormData = new FormData();
-        bodyFormData.append('packageName', specialOffer.packageName);
-        bodyFormData.append('packageDescription', specialOffer.packageDescription);
-        bodyFormData.append('price', specialOffer.price);
-        bodyFormData.append('imgs', specialOffer.packageImage);
-        bodyFormData.append('userId', specialOffer.userId);
-        var options = {
-            method: 'POST',
-            url: `${baseURL.baseURL}/packagesandoffers/add/`,
-            headers:
-            {
-                'cache-control': 'no-cache',
-                "Allow-Cross-Origin": '*',
-            },
-            data: bodyFormData
-        };
-        axios(options)
-            .then((data) => {
-                console.log(data, "Special offer added successfully.");
-                dispatch({ type: ActionTypes.ADD_SPECIAL_OFFER, payload: data.data.result })
-                swal.fire(
-                    'Success!',
-                    "Special offer added successfully.",
-                    'success'
-                )
-            }).catch((err) => {
-                // console.log(err.response.data.message, "ERROR_ON_SAVING")
-                console.log(err, "Error in adding special offers")
-
-                // alert(err.response.data.message)
-                swal.fire(
-                    'Error!',
-                    'Something went wrong.',
-                    'error'
-                )
-
-            })
+        if (specialOffer.businessType != undefined) {
+            var bodyFormData = new FormData();
+            bodyFormData.append('packageName', specialOffer.packageName);
+            bodyFormData.append('packageDescription', specialOffer.packageDescription);
+            bodyFormData.append('price', specialOffer.price);
+            bodyFormData.append('imgs', specialOffer.packageImage);
+            bodyFormData.append('userId', specialOffer.userId);
+            bodyFormData.append('businessType', specialOffer.businessType);
+            var options = {
+                method: 'POST',
+                url: `${baseURL.baseURL}/packagesandoffers/add/`,
+                headers:
+                {
+                    'cache-control': 'no-cache',
+                    "Allow-Cross-Origin": '*',
+                },
+                data: bodyFormData
+            };
+            axios(options)
+                .then((data) => {
+                    console.log(data, "Special offer added successfully.");
+                    dispatch({ type: ActionTypes.ADD_SPECIAL_OFFER, payload: data.data.result })
+                    swal.fire(
+                        'Success!',
+                        "Special offer added successfully.",
+                        'success'
+                    )
+                }).catch((err) => {
+                    // console.log(err.response.data.message, "ERROR_ON_SAVING")
+                    console.log(err, "Error in adding special offers")
+                    swal.fire(
+                        'Error!',
+                        'Something went wrong.',
+                        'error'
+                    )
+                })
+        }
+        else {
+            swal.fire(
+                'Error!',
+                "Please Select Offer Type",
+                'error'
+            )
+        }
     }
 }
-
 
 export function getSpecialPackages(userID) {
     return dispatch => {
@@ -202,68 +208,60 @@ export function getSpecialPackages(userID) {
 export function updateSpecialOffer(specialOffer, indexToEdit, base64) {
     return dispatch => {
         console.log('insideaction', specialOffer, indexToEdit);
-        // console.log('insideaction', specialOffer.packageImage.packageImage);
-
-        var bodyFormData = new FormData();
-        bodyFormData.append('packageName', specialOffer.packageName);
-        bodyFormData.append('packageDescription', specialOffer.packageDescription);
-        bodyFormData.append('price', specialOffer.price);
-        bodyFormData.append('userId', specialOffer.userId);
-
-        if (specialOffer.packageImage.packageImage) {
-            bodyFormData.append('packageImage', specialOffer.packageImage.packageImage);
+        if (specialOffer.businessType != undefined) {
+            var bodyFormData = new FormData();
+            bodyFormData.append('packageName', specialOffer.packageName);
+            bodyFormData.append('packageDescription', specialOffer.packageDescription);
+            bodyFormData.append('price', specialOffer.price);
+            bodyFormData.append('userId', specialOffer.userId);
+            bodyFormData.append('businessType', specialOffer.businessType);
+            if (specialOffer.packageImage.packageImage) {
+                bodyFormData.append('packageImage', specialOffer.packageImage.packageImage);
+            }
+            else {
+                bodyFormData.append('imgs', specialOffer.packageImage);
+            }
+            var options = {
+                method: 'PUT',
+                url: `${baseURL.baseURL}/packagesandoffers/${specialOffer._id}/`,
+                headers:
+                {
+                    'cache-control': 'no-cache',
+                    "Allow-Cross-Origin": '*',
+                },
+                data: bodyFormData
+            };
+            axios(options)
+                .then((data) => {
+                    console.log(data, "package updated successfully.");
+                    specialOffer.indexToEdit = indexToEdit;
+                    specialOffer.base64 = base64;
+                    dispatch({ type: ActionTypes.UPDATE_SPECIAL_OFFER, payload: specialOffer })
+                    swal.fire(
+                        'Success!',
+                        data.data.message,
+                        'success'
+                    )
+                }).catch((err) => {
+                    console.error(err, "ERROR_ON_SAVING")
+                    swal.fire(
+                        'Error!',
+                        'Something went wrong.',
+                        'error'
+                    )
+                })
         }
         else {
-            bodyFormData.append('imgs', specialOffer.packageImage);
+            swal.fire(
+                'Error!',
+                "Please Select Offer Type",
+                'error'
+            )
         }
-
-        var options = {
-            method: 'PUT',
-            url: `${baseURL.baseURL}/packagesandoffers/${specialOffer._id}/`,
-            headers:
-            {
-                'cache-control': 'no-cache',
-                "Allow-Cross-Origin": '*',
-            },
-            data: bodyFormData
-        };
-        axios(options)
-            .then((data) => {
-                console.log(data, "package updated successfully.");
-                specialOffer.indexToEdit = indexToEdit;
-                specialOffer.base64 = base64;
-                dispatch({ type: ActionTypes.UPDATE_SPECIAL_OFFER, payload: specialOffer })
-
-                swal.fire(
-                    'Success!',
-                    data.data.message,
-                    'success'
-                )
-            }).catch((err) => {
-                console.error(err, "ERROR_ON_SAVING")
-                // alert(err.response.data.message)
-                swal.fire(
-                    'Error!',
-                    'Something went wrong.',
-                    'error'
-                )
-
-            })
     }
 }
 
-
-
-
-
-
-
-
-
 /* Actions for Special Offer */
-
-
-
 
 /* Actions for Stylists */
 
@@ -405,46 +403,55 @@ export function getStylists(userID) {
 
 export function addStylist(stylist, imgFile) {
     return dispatch => {
-        // console.log('Inside_Action', stylist, imgFile);
-        var bodyFormData = new FormData();
-        bodyFormData.append('userId', stylist.userId);
-        bodyFormData.append('fullname', stylist.fullname);
-        bodyFormData.append('gender', stylist.gender);
-        bodyFormData.append('designation', stylist.designation);
-        bodyFormData.append('description', stylist.description);
-        bodyFormData.append('workingDays', JSON.stringify(stylist.workingDays));
-        bodyFormData.append('serviceProvided', stylist.serviceProvided);
-        for (var i = 0; i < imgFile.length; i++) {
-            bodyFormData.append("imgs", imgFile[i].originFileObj);
-        }
-        var options = {
-            method: 'POST',
-            url: `${baseURL.baseURL}/stylistGallery/addStylistGalleryImages/`,
-            headers:
-            {
-                'cache-control': 'no-cache',
-                "Allow-Cross-Origin": '*',
-                'Accept': 'application/json',
-            },
-            data: bodyFormData
-        };
-        axios(options)
-            .then((data) => {
-                console.log(data, "Stylist_added_successfully");
-                dispatch({ type: ActionTypes.ADD_STYLIST, payload: data.data })
-                swal.fire(
-                    'Success!',
-                    'Stylist Added',
-                    'success'
-                )
-            }).catch((err) => {
-                swal.fire(
-                    'Error!',
-                    'Something went wrong.',
-                    'error'
-                )
+        if (stylist.serviceProvided.length) {
+            var bodyFormData = new FormData();
+            bodyFormData.append('userId', stylist.userId);
+            bodyFormData.append('fullname', stylist.fullname);
+            bodyFormData.append('gender', stylist.gender);
+            bodyFormData.append('designation', stylist.designation);
+            bodyFormData.append('description', stylist.description);
+            bodyFormData.append('workingDays', JSON.stringify(stylist.workingDays));
+            bodyFormData.append('serviceProvided', stylist.serviceProvided);
+            for (var i = 0; i < imgFile.length; i++) {
+                bodyFormData.append("imgs", imgFile[i].originFileObj);
+            }
+            var options = {
+                method: 'POST',
+                url: `${baseURL.baseURL}/stylistGallery/addStylistGalleryImages/`,
+                headers:
+                {
+                    'cache-control': 'no-cache',
+                    "Allow-Cross-Origin": '*',
+                    'Accept': 'application/json',
+                },
+                data: bodyFormData
+            };
+            axios(options)
+                .then((data) => {
+                    console.log(data, "Stylist_added_successfully");
+                    dispatch({ type: ActionTypes.ADD_STYLIST, payload: data.data })
+                    swal.fire(
+                        'Success!',
+                        'Stylist Added',
+                        'success'
+                    )
+                }).catch((err) => {
+                    swal.fire(
+                        'Error!',
+                        'Something went wrong.',
+                        'error'
+                    )
 
-            })
+                })
+        }
+        else {
+            swal.fire(
+                'Error!',
+                'Please select service',
+                'error'
+            )
+        }
+
     }
 }
 
@@ -471,17 +478,21 @@ export function updateStylist(stylist, indexToEdit, oldImages) {
         bodyFormData.append('designation', stylist.designation);
         bodyFormData.append('description', stylist.description);
         bodyFormData.append('workingDays', JSON.stringify(stylist.workingDays));
-        bodyFormData.append('serviceProvided', stylist.serviceProvided);
-        // add img files
-        for (var i = 0; i < fileData.length; i++) {
-            bodyFormData.append("imgs", fileData[i].originFileObj);
+        // bodyFormData.append('serviceProvided', stylist.serviceProvided);
+        bodyFormData.append('serviceProvided', JSON.stringify(stylist.serviceProvided));
+
+        if (fileData.length) {
+            // add img files
+            for (var i = 0; i < fileData.length; i++) {
+                bodyFormData.append("imgs", fileData[i].originFileObj);
+            }
         }
         // add img url old imgs
         for (var i = 0; i < urlData.length; i++) {
             bodyFormData.append("oldImages", urlData[i]);
         }
         // add stylist data
-        console.log('inside_action', stylist, oldImages);
+        console.log('inside_action', stylist.userId,);
         var options = {
             method: 'POST',
             url: `${baseURL.baseURL}/stylistGallery/updateStylistGalleryImages/`,
@@ -495,11 +506,9 @@ export function updateStylist(stylist, indexToEdit, oldImages) {
         };
         axios(options)
             .then((data) => {
-                // console.log(data, "stylist updated successfully.");
-                stylist.indexToEdit = indexToEdit;
-                console.log(data.data.data, "stylist_updated_successfully.");
-
+                // stylist.indexToEdit = indexToEdit;
                 let updatedStylist = data.data.data
+                // console.log(updatedStylist, "stylist_updated_successfully.");
                 dispatch({ type: ActionTypes.UPDATE_STYLIST, payload: updatedStylist })
                 swal.fire(
                     'Success!',
@@ -514,10 +523,54 @@ export function updateStylist(stylist, indexToEdit, oldImages) {
                     'Something went wrong.',
                     'error'
                 )
-
             })
     }
 }
+
+
+export function deleteStylist(_id, stylists, index) {
+    return dispatch => {
+        let currentStylist = stylists[index]
+        if (_id != undefined) {
+            let idsCloneData = {
+                _id: _id,
+                userId: currentStylist.userId
+            }
+            var options = {
+                method: 'POST',
+                url: `${baseURL.baseURL}/stylistGallery/deleteStylist/`,
+                headers:
+                {
+                    'cache-control': 'no-cache',
+                    "Allow-Cross-Origin": '*',
+                },
+                data: idsCloneData
+            }
+            axios(options)
+                .then(result => {
+                    let data = result.data
+                    let updatedStylist = data.data
+                    dispatch({ type: ActionTypes.UPDATE_STYLIST, payload: updatedStylist })
+                    swal.fire(
+                        'Success!',
+                        data.message,
+                        'success'
+                    )
+                })
+                .catch(err => {
+                    let error = JSON.parse(JSON.stringify(err))
+                    console.log(error, 'ERRROR', err)
+                    swal.fire(
+                        'Error!',
+                        'Something went wrong.',
+                        'error'
+                    )
+                })
+        }
+    }
+}
+
+
 
 
 

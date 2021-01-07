@@ -20,10 +20,10 @@ class Signin extends Component {
             //objID 
             // email: 'abddullahshah@gmail.com',
             // password: '123456',
-            // email: 'mynameisabdullah1@hotmail.com',
-            // password: '123456',
-            email: '',
-            password: '',
+            email: 'mynameisabdullah1@hotmail.com',
+            password: '123456',
+            // email: '',
+            // password: '',
         }
         this.signin = this.signin.bind(this);
     }
