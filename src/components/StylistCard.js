@@ -107,7 +107,7 @@ class StylistCard extends Component {
                                                 display: "flex", flex: 3, padding: 5, marginTop: "25%", color: "#535353", fontWeight: "normal", fontSize: 10, flexDirection: "column", alignItems: "center", textAlign: "center",
                                                 // background: "orange"
                                             }}>
-                                                {stylist.description.substring(0, 70)}
+                                                {stylist.description.substring(0, 30)}
                                                 {/* Crazy stylist that uses fire to bend the air Crazy stylist that uses fire to bend the air */}
                                             </div>
 

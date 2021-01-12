@@ -3,6 +3,7 @@ import { MdDeleteForever } from 'react-icons/md';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { Form, Modal, Menu, Dropdown, message, } from "antd";
 
+const { SubMenu } = Menu;
 class ServiceModal extends Component {
     constructor(props) {
         super(props);
@@ -146,7 +147,7 @@ class ServiceModal extends Component {
                                                 <div style={{ width: "82%", }}>
                                                     <Dropdown.Button
                                                         overlay={
-                                                            <Menu style={{ width: 200, marginTop: "20%" }} onClick={(e) => { this.handleMenuClick(e) }}>
+                                                            <Menu style={{ width: 250, }} onClick={(e) => { this.handleMenuClick(e) }}>
                                                                 {/* <Menu.Item key="1" >Haircut</Menu.Item>
                                                                 <Menu.Item key="2" >Coloring</Menu.Item>
                                                                 <Menu.Item key="3" >Styling</Menu.Item>
@@ -155,30 +156,36 @@ class ServiceModal extends Component {
                                                                 <Menu.Item key="6" >Waxing</Menu.Item>
                                                                 <Menu.Item key="7" >More</Menu.Item> */}
 
-                                                                <Menu.Item key="1" >Haircut</Menu.Item>
-                                                                <Menu.Item key="2" >Style</Menu.Item>
-                                                                <Menu.Item key="3" >Hair Color</Menu.Item>
-                                                                <Menu.Item key="4" >Shave</Menu.Item>
-                                                                <Menu.Item key="5" >Children Haircut</Menu.Item>
-                                                                <Menu.Item key="6" >Wax</Menu.Item>
+                                                                <SubMenu title="Barbers">
+                                                                    <Menu.Item key="1" >Haircut</Menu.Item>
+                                                                    <Menu.Item key="2" >Style</Menu.Item>
+                                                                    <Menu.Item key="3" >Hair Color</Menu.Item>
+                                                                    <Menu.Item key="4" >Shave</Menu.Item>
+                                                                    <Menu.Item key="5" >Children Haircut</Menu.Item>
+                                                                    <Menu.Item key="6" >Wax</Menu.Item>
+                                                                </SubMenu>
 
-                                                                <Menu.Item key="7" >Ladies Haircuts</Menu.Item>
-                                                                <Menu.Item key="8" >Blow Dry</Menu.Item>
-                                                                <Menu.Item key="9" >Hair Coloring</Menu.Item>
-                                                                <Menu.Item key="10" >Men's Haircuts</Menu.Item>
-                                                                <Menu.Item key="11" >Styling</Menu.Item>
-                                                                <Menu.Item key="12" >Children's HairCuts</Menu.Item>
-                                                                <Menu.Item key="13" >Treatments</Menu.Item>
-                                                                <Menu.Item key="14" >Bridal & Weding</Menu.Item>
+                                                                <SubMenu title="Saloon">
+                                                                    <Menu.Item key="7" >Ladies Haircuts</Menu.Item>
+                                                                    <Menu.Item key="8" >Blow Dry</Menu.Item>
+                                                                    <Menu.Item key="9" >Hair Coloring</Menu.Item>
+                                                                    <Menu.Item key="10" >Men's Haircuts</Menu.Item>
+                                                                    <Menu.Item key="11" >Styling</Menu.Item>
+                                                                    <Menu.Item key="12" >Children's HairCuts</Menu.Item>
+                                                                    <Menu.Item key="13" >Treatments</Menu.Item>
+                                                                    <Menu.Item key="14" >Bridal & Weding</Menu.Item>
+                                                                </SubMenu>
 
-                                                                <Menu.Item key="15" >Nails</Menu.Item>
-                                                                <Menu.Item key="16" >Brows & Lashes</Menu.Item>
-                                                                <Menu.Item key="17" >Waxing</Menu.Item>
-                                                                <Menu.Item key="18" >Body Treatment</Menu.Item>
-                                                                <Menu.Item key="19" >Hair Treatments</Menu.Item>
-                                                                <Menu.Item key="20" >Tanning</Menu.Item>
-                                                                <Menu.Item key="21" >Men’s Grooming</Menu.Item>
-                                                                <Menu.Item key="22" >Others</Menu.Item>
+                                                                <SubMenu title="Beauty saloon spy & others">
+                                                                    <Menu.Item key="15" >Nails</Menu.Item>
+                                                                    <Menu.Item key="16" >Brows & Lashes</Menu.Item>
+                                                                    <Menu.Item key="17" >Waxing</Menu.Item>
+                                                                    <Menu.Item key="18" >Body Treatment</Menu.Item>
+                                                                    <Menu.Item key="19" >Hair Treatments</Menu.Item>
+                                                                    <Menu.Item key="20" >Tanning</Menu.Item>
+                                                                    <Menu.Item key="21" >Men’s Grooming</Menu.Item>
+                                                                    <Menu.Item key="22" >Others</Menu.Item>
+                                                                </SubMenu>
 
                                                             </Menu>
                                                         } placement="bottomCenter">
