@@ -18,7 +18,7 @@ export function setUserCredentials(userCredentials) {
 export function addService(service) {
     return dispatch => {
         // console.log('inside_action', service);
-        if (service.categoryName != "") {
+        if (service.categoryName != "" && service.serviceName != "" && service.price != "") {
             var options = {
                 method: 'POST',
                 url: `${baseURL.baseURL}/servicesandgallery/add/`,
@@ -51,7 +51,7 @@ export function addService(service) {
         else {
             swal.fire(
                 'Error!',
-                'Please select category.',
+                'Category, Service Name and Price are required',
                 'error'
             )
         }
@@ -87,38 +87,46 @@ export function getServices(userID) {
 
 export function updateService(service, indexToEdit) {
     return dispatch => {
-        console.log('inside action', service);
-        var options = {
-            method: 'PUT',
-            url: `${baseURL.baseURL}/servicesget/${service._id}/`,
-            headers:
-            {
-                'cache-control': 'no-cache',
-                "Allow-Cross-Origin": '*',
-            },
-            data: service
-        };
-        axios(options)
-            .then((data) => {
-                console.log(data.data, "Service updated successfully.");
-                service.indexToEdit = indexToEdit;
-                dispatch({ type: ActionTypes.UPDATE_SERVICES, payload: service })
+        // console.log('inside action', service);
+        if (service.categoryName != "" && service.serviceName != "" && service.price != "") {
+            var options = {
+                method: 'PUT',
+                url: `${baseURL.baseURL}/servicesget/${service._id}/`,
+                headers:
+                {
+                    'cache-control': 'no-cache',
+                    "Allow-Cross-Origin": '*',
+                },
+                data: service
+            };
+            axios(options)
+                .then((data) => {
+                    console.log(data.data, "Service updated successfully.");
+                    service.indexToEdit = indexToEdit;
+                    dispatch({ type: ActionTypes.UPDATE_SERVICES, payload: service })
+                    swal.fire(
+                        'Success!',
+                        'Service updated successfully.',
+                        'success'
+                    )
+                }).catch((err) => {
+                    // console.log(err.response.data.message, "ERROR_ON_SAVING")
+                    // alert(err.response.data.message)
+                    swal.fire(
+                        'Error!',
+                        'Something went wrong.',
+                        'error'
+                    )
 
-                swal.fire(
-                    'Success!',
-                    'Service updated successfully.',
-                    'success'
-                )
-            }).catch((err) => {
-                // console.log(err.response.data.message, "ERROR_ON_SAVING")
-                // alert(err.response.data.message)
-                swal.fire(
-                    'Error!',
-                    'Something went wrong.',
-                    'error'
-                )
-
-            })
+                })
+        }
+        else {
+            swal.fire(
+                'Error!',
+                'Category, Service Name and Price are required',
+                'error'
+            )
+        }
     }
 }
 
