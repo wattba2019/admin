@@ -419,7 +419,8 @@ export function addStylist(stylist, imgFile) {
             bodyFormData.append('designation', stylist.designation);
             bodyFormData.append('description', stylist.description);
             bodyFormData.append('workingDays', JSON.stringify(stylist.workingDays));
-            bodyFormData.append('serviceProvided', stylist.serviceProvided);
+            bodyFormData.append('serviceProvided', JSON.stringify(stylist.serviceProvided));
+
             for (var i = 0; i < imgFile.length; i++) {
                 bodyFormData.append("imgs", imgFile[i].originFileObj);
             }
